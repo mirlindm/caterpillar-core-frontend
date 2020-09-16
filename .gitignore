@@ -6,8 +6,6 @@
 # configuration
 config
 
-# script folder
-scripts
 
 # testing
 /coverage
