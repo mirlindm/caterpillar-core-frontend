@@ -1,0 +1,51 @@
+.par {
+    margin-top: 40px;
+    background-color: #272B30;
+    width: 100%;
+    border: 1px solid black;
+    padding: 50px;
+    margin: 20px;
+    border-radius: 5px;
+    margin-bottom: 50px;
+
+}
+
+.par3{
+    background-color: #272B30;
+    width: 100%;
+    border: 1px solid black;
+    padding: 50px;
+    margin: 20px;
+    border-radius: 5px;
+    
+}
+
+
+.Anchor {
+    text-decoration: underline;
+    color: white;
+}
+
+.Anchor:active {
+    text-decoration: underline;
+  }
+
+.Anchor:hover {
+    text-decoration: underline;
+    background-color: #29cbd1;
+    color: white;
+    padding: 1px 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.Anchor:visited {
+    text-decoration: none;
+    background-color: #29cbd1;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }

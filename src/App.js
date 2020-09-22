@@ -7,6 +7,7 @@ import NavigationBar from './components/NavigationBar';
 import Welcome from './components/Welcome';
 import Footer from './components/Footer';
 import Registry from './components/Registry';
+import About from './components/About';
 
 class App extends Component {
 
@@ -19,19 +20,22 @@ class App extends Component {
     return (
       <Router>
         <NavigationBar />
-
+        
         <Container>
           <Row>
             <Col lg={12} style={marginTop}>
               <Switch>
                 <Route path="/" exact component={Welcome} />
                 <Route path="/registry" exact component={Registry} />
+                <Route path="/login" exact  />
+                <Route path="/about" exact component={About} />
               </Switch>
-              {/* <Welcome/>
-              <Registry /> */}
+              
+             {/* <Registry /> */}
             </Col>
           </Row>
         </Container>
+        
         <Footer/>
       </Router>
     );
