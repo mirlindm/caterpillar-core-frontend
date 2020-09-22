@@ -14,7 +14,7 @@ class App extends Component {
 
   render() {
     const marginTop = {
-      marginTop: "20px"
+      marginTop: "40px"
     };
 
     return (
@@ -34,6 +34,13 @@ class App extends Component {
              {/* <Registry /> */}
             </Col>
           </Row>
+
+          {/* <Row>
+            <Col lg={12} style={marginTop}>
+              <Registry/>
+            </Col>
+          </Row> */}
+          
         </Container>
         
         <Footer/>
