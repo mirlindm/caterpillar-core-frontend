@@ -5,6 +5,7 @@ import {Card, Form, Button, Col, Dropdown, Table} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import classes from './Registry.css'
+import axios from 'axios';
 
 
 class Registry extends Component {
@@ -18,6 +19,16 @@ class Registry extends Component {
         this.registryChangeHandler = this.registryChangeHandler.bind(this);
         this.createRegistryHandler = this.createRegistryHandler.bind(this);
 
+    }
+
+    // Get Request to fetch the registries based on the id on the database
+    componentDidMount() {
+        axios.get('http://localhost:3000/registries/:registryId')
+            .then(response => {
+                console.log(response.data)
+            }).catch(e => {
+                console.log('Error: ', e)
+            })
     }
 
     createRegistryHandler(event) {
