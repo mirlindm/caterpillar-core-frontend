@@ -17,8 +17,11 @@ class Welcome extends Component {
                 and generates a set of smart contracts that captures the underlying behavior...
                 </p>
                 <p>
+                    <Button href={"registry"} variant="outline-info">Get Started</Button> {' '}
+                
                     <Button href={"about"} variant="outline-info">Learn More About Caterpillar</Button>
                 </p>
+
                 
               </Jumbotron>
         );
