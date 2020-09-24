@@ -1,0 +1,12 @@
+.Content {
+    margin-top: 40px;
+    background-color: #272B30;
+    width: 100%;
+    border: 1px solid black;
+    padding: 50px;
+    margin: 20px;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    color: white;
+    font-weight: bold;
+}

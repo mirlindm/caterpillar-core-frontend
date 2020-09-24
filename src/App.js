@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Welcome from './components/Welcome';
 import Footer from './components/Footer';
-import Registry from './components/Registry';
+//import Registry1 from './components/Registry';
+import Registry from './components/Registry/Registry';
 import About from './components/About';
 
 class App extends Component {
