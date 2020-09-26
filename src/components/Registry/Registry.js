@@ -5,7 +5,7 @@ import RegistryCreate from './RegistryCreate/RegistryCreate';
 import RegistryId from './RegistryId/RegistryId';
 import RegistryAddress from './RegistryAddress/RegistryAddress';
 
-import {Dropdown} from 'react-bootstrap'; 
+import {Dropdown, Alert} from 'react-bootstrap'; 
 
 import classes from './Registry.css'
 //import axios from 'axios';
@@ -17,34 +17,21 @@ class Registry extends Component {
 
         this.state = {
             registriesById: [],
-            registriesByAddress: []
+            registriesByAddress: [],
+            showPrompt: undefined
         }
 
-        // this.registryChangeHandler = this.registryChangeHandler.bind(this);
-        // this.createRegistryHandler = this.createRegistryHandler.bind(this);
 
     }
 
-    // Get Request to fetch the registries based on the id on the database
-    // componentDidMount() {
-    //     axios.get('http://localhost:3000/registries/5f5f87445049684650496b5b')
-    //     .then(response => response.data             
-    //     ).then((data) => {
-    //         console.log(data) 
-    //         this.setState({registriesById: data})  
-    //     })
-    //     .catch(e => {
-    //         console.log('Error: ', e)
-    //     })
-       
-    // }
 
-  
+    selectYesHandler = (event) => {
+        this.setState({showPrompt: true})
+    }
 
-   
-
-    
-
+    selectNoHandler = (event) => {
+        this.setState({showPrompt: false})
+    }
 
     render () {
         return (
@@ -59,24 +46,39 @@ class Registry extends Component {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item href="#/yes" active>Yes, create a new one!</Dropdown.Item>
-                        <Dropdown.Item href="#/no">No, use existing one instead!</Dropdown.Item>
+                        <Dropdown.Item href="#/yes" active onSelect={this.selectYesHandler}>Yes, create a new one</Dropdown.Item>
+                        <Dropdown.Item href="#/no" onSelect={this.selectNoHandler}>No, use existing one instead</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
 
-            {/* Use existing registry - in this case we need to run the get requests to the server and list the registries  */}
+            {
+                this.state.showPrompt === undefined ?
+                <div style={{textAlign: "center", marginLeft: "30px"}}>
+                    <Alert variant="danger">
+                        <Alert.Heading >Please, choose how do you want to proceed!</Alert.Heading>
+                    </Alert>
+                </div>
+                :
+                this.state.showPrompt ?
+                /* Create new Registry  */
+                <RegistryCreate/>
+                : 
+
+                 /* Use existing registry - in this case we need to run the get requests to the server and list the registries  */
             
+                /* 1st: Fetch Registries from the Blockchain Address  */
+                <Aux>
+                <RegistryAddress/> 
 
-            {/* 1st: Fetch Registries from the Blockchain Address  */}
-            <RegistryAddress> </RegistryAddress>
+                {/*  2nd: Fetch Registries from their id in the database   */}
+                <RegistryId/>
+                </Aux>
+            }
 
-            {/* 2nd: Fetch Registries from their id in the database  */}
-            <RegistryId> </RegistryId>
            
 
-            {/* Create new Registry  */}
-            <RegistryCreate> </RegistryCreate>
+            
     
             </Aux>
           

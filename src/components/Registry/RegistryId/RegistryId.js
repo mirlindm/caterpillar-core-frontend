@@ -13,7 +13,8 @@ class RegistryId extends Component {
         super(props);
 
         this.state = {
-            registriesById: []
+            registriesById: [],
+            id: ''
         }
 
         // this.registryChangeHandler = this.registryChangeHandler.bind(this);
@@ -23,7 +24,16 @@ class RegistryId extends Component {
 
       // Get Request to fetch the registries based on the id on the database
       componentDidMount() {
-        axios.get('http://localhost:3000/registries/5f5f87445049684650496b5b')
+          this.getRegistriesByIdHandler();
+      
+       
+    }
+
+    getRegistriesByIdHandler = (event) => {
+        const URL = 'http://localhost:3000/registries/'
+        const id = this.state.id;
+
+        axios.get(URL+id)
         .then(response => response.data             
         ).then((data) => {
             console.log(data) 
@@ -32,22 +42,34 @@ class RegistryId extends Component {
         .catch(e => {
             console.log('Error: ', e)
         })
-       
-    }
-
-    getRegistriesByIdHandler(event)  {
      
     }
+
+    registryChangeHandler = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
 
     render() {
 
         const fontSettings = {
             fontSize: "10px",
             fontFamily: "verdana",
-            margin: "0 auto",
+            margin: "0",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "block",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
             overflowWrap: "break-word",
             wordWrap: "break-word",
-            hyphens: "auto"
+            hyphens: "auto",
+            textAlign: "center",
+            maxWidth: "120ch",
+            lineHeight: "1.5em",
+            position: "relative"
           };
 
         return (
@@ -57,7 +79,7 @@ class RegistryId extends Component {
             <div className={classes.Content}>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header>
-                        <p style={{ margin: 0}}>Fetch Registries by their ID</p>
+                        <p style={{ margin: 0}}>Fetch Registriy by its ID</p>
                     </Card.Header>
 
                     
@@ -68,8 +90,8 @@ class RegistryId extends Component {
                                       {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
                                       <Form.Control required
                                           type="text"
-                                          name="registry"
-                                          value={this.state.registry}
+                                          name="id"
+                                          
                                           onChange={this.registryChangeHandler}
                                           className={"bg-dark text-white"}
                                           placeholder="Enter Registry ID" />
@@ -84,34 +106,39 @@ class RegistryId extends Component {
                           </Card.Footer>
                       </Form>
                       
-                      <p style={{textAlign:"center", marginTop: "10px"}}> Registry found: </p>
-                      <Table style={{width: "10px", margin: "0", padding: "0"}} bordered hover striped variant="dark">
-                          <thead>
-                              <tr>
-                                  <th style={{textAlign:"center"}}> Contract Name: </th>
-                                  <th style={{textAlign:"center"}}> ABI </th>
-                                  {/* <th style={{textAlign:"center"}}> Byte Code </th> */}
-                                  <th style={{textAlign:"center"}}> Solidity Code </th>
-                                  <th style={{textAlign:"center"}}> Address </th>           
-                              </tr>
-                          </thead>
-                          <tbody>
-                           {
+                      <p style={{textAlign:"center", marginTop: "20px"}}> Registry found: </p>
+
+                      <Table style={{marginLeft: "0px"}} bordered hover striped variant="dark">
+                          {
                                this.state.registriesById.length === 0 ?
-                               <tr align="center">
-                                   <td>No registries found!</td>
-                               </tr> :
-                            //    this.state.registriesById.map((registry) => (
-                                <tr>
-                                    <td> <p style={fontSettings}> {this.state.registriesById.contractName}</p> </td> 
-                                    <td><p style={fontSettings}>{this.state.registriesById.abi}</p></td> 
-                                    {/* <td><p style={fontSettings}>{this.state.registriesById.bytecode}</p></td>  */}
-                                    <td><p style={fontSettings}>{this.state.registriesById.solidityCode}</p></td> 
-                                    <td><p style={fontSettings}>{this.state.registriesById.address}</p></td> 
-                                </tr>
-                            //    ))
-                           }
-                          </tbody>
+                                <thead>
+                                    <tr align="center">
+                                        <th>No registries found!</th>
+                                    </tr> 
+                                </thead> :
+                                    <tbody>
+                                        <tr>
+                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Contract Name: </th>
+                                        <th style={{textAlign:"center", paddingRight:"50px"}}>  {this.state.registriesById.contractName}</th> 
+                                        </tr>
+                                        <tr>
+                                        <th style={{textAlign:"center", paddingRight:"50px"}}> ABI: </th>
+                                        <th style={fontSettings}>  {this.state.registriesById.abi}</th> 
+                                        </tr>
+                                        <tr >
+                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Byte Code: </th>
+                                        <th style={fontSettings}>  {this.state.registriesById.bytecode}</th> 
+                                        </tr>
+                                        <tr>
+                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Solidity Code: </th>
+                                        <th style={fontSettings}>  {this.state.registriesById.solidityCode}</th> 
+                                        </tr>
+                                        <tr>
+                                        <th style={{textAlign:"center", paddingRight:"50px"}}> address: </th>
+                                        <th style={fontSettings}>  {this.state.registriesById.address}</th> 
+                                        </tr>
+                                    </tbody>
+                               }
                       </Table>       
                 </Card>
             </div>
