@@ -91,7 +91,7 @@ class RegistryId extends Component {
                                       <Form.Control required
                                           type="text"
                                           name="id"
-                                          
+                                          value={this.state.id}
                                           onChange={this.registryChangeHandler}
                                           className={"bg-dark text-white"}
                                           placeholder="Enter Registry ID" />

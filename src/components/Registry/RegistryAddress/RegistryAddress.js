@@ -12,14 +12,34 @@ class RegistryAddress extends Component {
         super(props);
 
         this.state = {
-            registriesByAddress: []
+            registriesByAddress: [],
+            address: ''
         }
 
        
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/registries/0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2/address')
+        this.getRegistriesByAddressHandler();
+        // axios.get('http://localhost:3000/registries/0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2/address')
+        // .then(response => response.data             
+        // ).then((data) => {
+        //     console.log(data) 
+        //     this.setState({registriesByAddress: data})  
+        // })
+        // .catch(e => {
+        //     console.log('Error: ', e)
+        // })
+
+    }
+
+
+    getRegistriesByAddressHandler = (event) => {
+        const URL = 'http://localhost:3000/registries/';
+        const URL_END = '/address';
+        const address = this.state.address;
+
+        axios.get(URL+address+URL_END)
         .then(response => response.data             
         ).then((data) => {
             console.log(data) 
@@ -28,10 +48,18 @@ class RegistryAddress extends Component {
         .catch(e => {
             console.log('Error: ', e)
         })
+     
+    }
 
+
+    registryChangeHandler = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
 
     render() {
+
         const fontSettings = {
             fontSize: "10px",
             fontFamily: "verdana",
@@ -61,15 +89,15 @@ class RegistryAddress extends Component {
                     </Card.Header>
 
                     
-                    <Form onSubmit={this.createRegistryHandler} id="registry">
+                    <Form onSubmit={this.getRegistriesByAddressHandler} id="registry">
                          <Card.Body>
                              <Form.Row>
                                   <Form.Group as={Col} controlId="formGridTitle" >
                                       {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
                                       <Form.Control required
                                           type="text"
-                                          name="registry"
-                                          value={this.state.registry}
+                                          name="address"
+                                          value={this.state.address}
                                           onChange={this.registryChangeHandler}
                                           className={"bg-dark text-white"}
                                           placeholder="Enter Blockchain Address" />
