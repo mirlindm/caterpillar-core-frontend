@@ -1,0 +1,29 @@
+
+.Anchor {
+    text-decoration: underline;
+    color: white;    
+}
+
+.Anchor:active {
+    text-decoration: underline;
+  }
+
+.Anchor:hover {
+    text-decoration: underline;
+    background-color: #B0E0E6;
+    color: white;
+    padding: 1px 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.Anchor:visited {
+    text-decoration: none;
+    background-color: #29cbd1;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }

@@ -104,43 +104,43 @@ class RegistryAddress extends Component {
                                   </Form.Group>
                               </Form.Row>
                           
-                          </Card.Body>
+                          </Card.Body>  
                           <Card.Footer style={{"textAlign": "right"}}>
-                              <Button variant="success" type="submit">
+                              <Button variant="info" type="submit">
                                 Load Registries
                               </Button>
                           </Card.Footer>
                       </Form>
 
-                      <p style={{textAlign:"center", marginTop: "20px"}}> Registry found: </p>
+                      <p style={{textAlign:"center", marginTop: "20px", color: "#008B8B"}}> Registry found: </p>
 
                       <Table  style={{marginLeft: "0px"}} bordered hover striped variant="dark">
                       {
                                this.state.registriesByAddress.length === 0 ?
                                 <thead>
                                     <tr align="center">
-                                        <th>No registries found!</th>
+                                        <th style={{color: "#008B8B"}}>No registry found!</th>
                                     </tr> 
                                 </thead> :
                                     <tbody>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Contract Name: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Contract Name: </th>
                                         <th style={{textAlign:"center", paddingRight:"50px"}}>  {this.state.registriesByAddress.contractName}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> ABI: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> ABI: </th>
                                         <th style={fontSettings}>  {this.state.registriesByAddress.abi}</th> 
                                         </tr>
                                         <tr >
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Byte Code: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Byte Code: </th>
                                         <th style={fontSettings}>  {this.state.registriesByAddress.bytecode}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Solidity Code: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> Solidity Code: </th>
                                         <th style={fontSettings}>  {this.state.registriesByAddress.solidityCode}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> address: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> address: </th>
                                         <th style={fontSettings}>  {this.state.registriesByAddress.address}</th> 
                                         </tr>
                                     </tbody>

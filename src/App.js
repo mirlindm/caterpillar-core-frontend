@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import NavigationBar from './components/NavigationBar';
 import Welcome from './components/Welcome';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 import Registry from './components/Registry/Registry';
 import About from './components/About';
 import Login from './components/Login/Login'
@@ -15,7 +15,7 @@ class App extends Component {
 
   render() {
     const marginTop = {
-      marginTop: "40px"
+      marginTop: "30px"
     };
 
     return (

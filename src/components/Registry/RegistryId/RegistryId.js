@@ -100,20 +100,20 @@ class RegistryId extends Component {
                           
                           </Card.Body>
                           <Card.Footer style={{"textAlign": "right"}}>
-                              <Button variant="success" type="submit">
+                              <Button variant="info" type="submit">
                                 Load Registries
                               </Button>
                           </Card.Footer>
                       </Form>
                       
-                      <p style={{textAlign:"center", marginTop: "20px"}}> Registry found: </p>
+                      <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> Registry found: </p>
 
                       <Table style={{marginLeft: "0px"}} bordered hover striped variant="dark">
                           {
                                this.state.registriesById.length === 0 ?
                                 <thead>
                                     <tr align="center">
-                                        <th>No registries found!</th>
+                                        <th style={{color: "#008B8B"}}>No registry found!</th>
                                     </tr> 
                                 </thead> :
                                     <tbody>

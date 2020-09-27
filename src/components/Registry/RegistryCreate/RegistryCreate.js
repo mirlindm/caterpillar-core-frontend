@@ -61,7 +61,7 @@ class RegistryCreate extends Component {
                           
                           </Card.Body>
                           <Card.Footer style={{"textAlign": "right"}}>
-                              <Button variant="success" type="submit">
+                              <Button variant="info" type="submit">
                               <FontAwesomeIcon icon={faPlus} /> Create Registry
                               </Button>
                           </Card.Footer>

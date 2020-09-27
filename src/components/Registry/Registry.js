@@ -18,7 +18,8 @@ class Registry extends Component {
         this.state = {
             registriesById: [],
             registriesByAddress: [],
-            showPrompt: undefined
+            showPrompt: undefined,
+            getRegistryPrompt: ''
         }
 
 
@@ -33,6 +34,16 @@ class Registry extends Component {
         this.setState({showPrompt: false})
     }
 
+    selectAddressHandler = (event) => {
+        this.setState({getRegistryPrompt: 'address'})
+    }
+    selectIdHandler = (event) => {
+        this.setState({getRegistryPrompt: 'id'})
+    }
+
+
+
+
     render () {
         return (
             <Aux>
@@ -41,7 +52,7 @@ class Registry extends Component {
             <div  className={classes.Content}> <p>Do you want to create a new registry ?</p>
             
                 <Dropdown>
-                    <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
                         Select from menu
                     </Dropdown.Toggle>
 
@@ -55,8 +66,8 @@ class Registry extends Component {
             {
                 this.state.showPrompt === undefined ?
                 <div style={{textAlign: "center", marginLeft: "30px"}}>
-                    <Alert variant="danger">
-                        <Alert.Heading >Please, choose how do you want to proceed!</Alert.Heading>
+                    <Alert variant="info">
+                        <Alert.Heading style={{fontSize: "large"}}>Please, select how do you want to proceed!</Alert.Heading>
                     </Alert>
                 </div>
                 :
@@ -64,22 +75,37 @@ class Registry extends Component {
                 /* Create new Registry  */
                 <RegistryCreate/>
                 : 
-
-                 /* Use existing registry - in this case we need to run the get requests to the server and list the registries  */
-            
-                /* 1st: Fetch Registries from the Blockchain Address  */
                 <Aux>
-                <RegistryAddress/> 
+                 {/* here we implement the second dropdown  */}
+                <div  className={classes.Content}> <p>How do you want to fetch the registry?</p>
+            
+                <Dropdown  >
+                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                        Select from menu
+                    </Dropdown.Toggle>
 
-                {/*  2nd: Fetch Registries from their id in the database   */}
-                <RegistryId/>
+                    <Dropdown.Menu>
+                        <Dropdown.Item href="#/address" onSelect={this.selectAddressHandler}>By the Address</Dropdown.Item>
+                        <Dropdown.Item href="#/id" onSelect={this.selectIdHandler}>By the ID</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                </div>
+
+                  {/* Use existing registry - in this case we need to run the get requests to the server and list the registries    */}
+
+                {
+                    this.state.getRegistryPrompt === "address" ?
+                    //  1st: Fetch Registries from the Blockchain Address  
+                    <RegistryAddress/> 
+                    :
+                    this.state.getRegistryPrompt === "id" ?
+                    //   2nd: Fetch Registries from their id in the database   
+                    <RegistryId/>
+                    : null
+
+                }
                 </Aux>
             }
-
-           
-
-            
-    
             </Aux>
           
             
