@@ -5,32 +5,51 @@ import {Card, Form, Button, Col} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import classes from './RegistryCreate.css';
-//import axios from 'axios';
+import RegistryToast from '../RegistryToast/RegistryToast'; 
+
+import axios from 'axios';
 
 class RegistryCreate extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            show: false,
+            registry: [],
             registriesById: [],
             registriesByAddress: []
         }
 
-        this.registryChangeHandler = this.registryChangeHandler.bind(this);
+        // this.registryChangeHandler = this.registryChangeHandler.bind(this);
         this.createRegistryHandler = this.createRegistryHandler.bind(this);
 
     }
 
+
     createRegistryHandler(event) {
-        alert('registry code: ' + this.state.registry);
+        //alert('registry code: ' + this.state.registry);
         event.preventDefault();
+
+        axios.post("http://localhost:3000/registries")
+            .then(response => {
+                if(response.data != null) {
+                    console.log(response)
+                    this.setState({show: true, registry: response.data});
+                    setTimeout(() => this.setState({show: false}), 3000)
+                } else {
+                    this.setState({show: false});
+                }
+        });
+        this.setState({registry: []})
     }
 
-    registryChangeHandler(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+    // registryChangeHandler(event) {
+    //     this.setState({
+    //         [event.target.name]: event.target.value
+    //     });
+    // }
+
+    
 
 
     render() {
@@ -38,37 +57,55 @@ class RegistryCreate extends Component {
 
             //Create new registry
 
-            
-            <div className={classes.Content} >
-                  <Card className={"border border-dark bg-dark text-white"}>
-                      <Card.Header>
-                          <p style={{ margin: 0}}>Create a new Runtime Registry</p>
+            <div>
+                <div style={{"display" : this.state.show ? "block" : "none"}}>
+                    <RegistryToast children={{show: this.state.show, message: "Registry Created Successfully."}} />
+                </div>
+
+                <div className={classes.Content} >
+                    <Card className={"border border-dark bg-dark text-white"}>
+                        <Card.Header>
+                            <p style={{ margin: 0}}>Create a new Runtime Registry</p>
                         </Card.Header>
-                      <Form onSubmit={this.createRegistryHandler} id="registry">
-                         <Card.Body>
-                             <Form.Row>
-                                  <Form.Group as={Col} controlId="formGridTitle" >
-                                      <Form.Label>Registry Hash Code</Form.Label> 
-                                      <Form.Control required autoComplete="off"
-                                          type="text"
-                                          name="registry"
-                                          value={this.state.registry}
-                                          onChange={this.registryChangeHandler}
-                                          className={"bg-dark text-white"}
-                                          placeholder="Enter Registry Code" />
-                                  </Form.Group>
-                              </Form.Row>
-                          
-                          </Card.Body>
-                          <Card.Footer style={{"textAlign": "right"}}>
-                              <Button variant="info" type="submit">
-                              <FontAwesomeIcon icon={faPlus} /> Create Registry
-                              </Button>
-                          </Card.Footer>
-                      </Form>
-                  </Card>
+                        
+                        <Form onSubmit={this.createRegistryHandler} id="registry">
+                            <Card.Body>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridTitle" >
+                                        
+                                        {/* <Form.Control autoComplete="off"
+                                            type="text"
+                                            name="registry"
+                                            value={this.state.registry}
+                                            
+                                            className={"bg-dark text-white"}
+                                            placeholder="Enter Registry Code" /> */}
+
+                                            {
+                                                this.state.registry.length === 0 ?
+                                                <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> No registry found ... </p>
+                                                :
+                                                <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
+                                            }
+                                    </Form.Group>
+                                </Form.Row>
+                            
+                            </Card.Body>
+
+                            <Card.Footer style={{"textAlign": "right"}}>
+                                <Button variant="info" type="submit">
+                                <FontAwesomeIcon icon={faPlus} /> Create New Registry
+                                </Button>
+                            </Card.Footer>
+                        </Form>
+                    </Card>
+                </div>
+
+
+
             </div>
             
+                        
 
         );
     }
