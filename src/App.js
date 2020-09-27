@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; 
 
-import NavigationBar from './components/NavigationBar';
-import Welcome from './components/Welcome';
+import NavigationBar from './components/NavigationBar/NavigationBar';
+import Welcome from './components/Welcome/Welcome';
 import Footer from './components/Footer/Footer';
 import Registry from './components/Registry/Registry';
-import About from './components/About';
+import About from './components/About/About';
 import Login from './components/Login/Login'
 
 class App extends Component {

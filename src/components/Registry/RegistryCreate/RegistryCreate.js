@@ -49,7 +49,7 @@ class RegistryCreate extends Component {
                              <Form.Row>
                                   <Form.Group as={Col} controlId="formGridTitle" >
                                       <Form.Label>Registry Hash Code</Form.Label> 
-                                      <Form.Control required
+                                      <Form.Control required autoComplete="off"
                                           type="text"
                                           name="registry"
                                           value={this.state.registry}

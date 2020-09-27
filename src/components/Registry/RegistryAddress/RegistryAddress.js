@@ -58,6 +58,10 @@ class RegistryAddress extends Component {
         });
     }
 
+    resetRegistryInput = () =>  {
+        this.setState({address: ''})
+    }
+
     render() {
 
         const fontSettings = {
@@ -89,12 +93,12 @@ class RegistryAddress extends Component {
                     </Card.Header>
 
                     
-                    <Form onSubmit={this.getRegistriesByAddressHandler} id="registry">
+                    <Form onReset={this.resetRegistryInput} onSubmit={this.getRegistriesByAddressHandler} id="registry">
                          <Card.Body>
                              <Form.Row>
                                   <Form.Group as={Col} controlId="formGridTitle" >
                                       {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
-                                      <Form.Control required
+                                      <Form.Control required autoComplete="off"
                                           type="text"
                                           name="address"
                                           value={this.state.address}
@@ -108,7 +112,12 @@ class RegistryAddress extends Component {
                           <Card.Footer style={{"textAlign": "right"}}>
                               <Button variant="info" type="submit">
                                 Load Registries
+                              </Button> {' '}
+
+                              <Button variant="info" type="reset">
+                                Reset
                               </Button>
+
                           </Card.Footer>
                       </Form>
 

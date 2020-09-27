@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import classes from './About.css'
+import {Button} from 'react-bootstrap';
 
 class About extends Component {
     render () {
@@ -23,7 +24,11 @@ class About extends Component {
                 The latter can also be used by third party software to interact in a programmatic way via Caterpillar 
                 with the instances of business process running on the blockchain.
                 <br/> <br/>
+                
                 You can find more information on how to run Caterpillar Rest Api by clicking <a className={classes.Anchor} href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
+                <br/>
+                <br />
+                <Button href={"/"} variant="outline-info">Back Home</Button> 
                 </p>
             </div>
         );

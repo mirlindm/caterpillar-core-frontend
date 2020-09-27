@@ -51,6 +51,10 @@ class RegistryId extends Component {
         });
     }
 
+    resetRegistryInput = (event) => {
+        this.setState({id: ''})
+    }
+
 
     render() {
 
@@ -83,12 +87,12 @@ class RegistryId extends Component {
                     </Card.Header>
 
                     
-                    <Form onSubmit={this.getRegistriesByIdHandler} id="registry">
+                    <Form onReset={this.resetRegistryInput} onSubmit={this.getRegistriesByIdHandler} id="registry">
                          <Card.Body>
                              <Form.Row>
                                   <Form.Group as={Col} controlId="formGridTitle" >
                                       {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
-                                      <Form.Control required
+                                      <Form.Control required autoComplete="off"
                                           type="text"
                                           name="id"
                                           value={this.state.id}
@@ -102,6 +106,10 @@ class RegistryId extends Component {
                           <Card.Footer style={{"textAlign": "right"}}>
                               <Button variant="info" type="submit">
                                 Load Registries
+                              </Button> {' '}
+
+                              <Button variant="info" type="reset">
+                                Reset
                               </Button>
                           </Card.Footer>
                       </Form>
