@@ -83,7 +83,7 @@ class RegistryId extends Component {
             <div className={classes.Content}>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header>
-                        <p style={{ margin: 0}}>Fetch Registriy by its ID</p>
+                        <p style={{ margin: 0,  fontWeight: "bolder", fontSize: "large"}}>Fetch Registriy by its ID</p>
                     </Card.Header>
 
                     

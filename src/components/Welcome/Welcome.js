@@ -7,8 +7,10 @@ class Welcome extends Component {
     render() {
         
         return (
-            <Jumbotron className="bg-dark text-white">
-                <h1>Welcome to Caterpillar</h1>
+            <Jumbotron className="bg-dark text-white" style={{border: "1px solid #008B8B"}}>
+                <h1 style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
+                    Welcome to Caterpillar
+                </h1>
                 <br/>
                 <p>
                 Caterpillar is a Business Process Management System (BPMS) prototype

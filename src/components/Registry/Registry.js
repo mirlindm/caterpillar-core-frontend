@@ -67,7 +67,7 @@ class Registry extends Component {
                 this.state.showPrompt === undefined ?
                 <div style={{textAlign: "center", margin: "0 200px"}}>
                     <Alert variant="info">
-                        <Alert.Heading style={{fontSize: "large"}}>Please, select how do you want to proceed!</Alert.Heading>
+                        <Alert.Heading style={{fontSize: "large"}}>Please, select above how do you wish to proceed!</Alert.Heading>
                     </Alert>
                 </div>
                 :

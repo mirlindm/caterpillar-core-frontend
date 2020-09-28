@@ -1,24 +1,24 @@
 .par {
-    margin-top: 40px;
+    
     background-color: #272B30;
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid #008B8B;
     padding: 50px;
-    margin: 20px;
+    margin: auto;
     border-radius: 5px;
     margin-bottom: 50px;
 
 }
 
-.par3{
+/* .par3{
     background-color: #272B30;
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid #008B8B;
     padding: 50px;
     margin: 20px;
     border-radius: 5px;
     
-}
+} */
 
 
 .Anchor {

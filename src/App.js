@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; 
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Welcome from './components/Welcome/Welcome';

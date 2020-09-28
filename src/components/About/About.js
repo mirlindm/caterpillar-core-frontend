@@ -7,9 +7,10 @@ class About extends Component {
     render () {
         return (
             <div className="text-white">
-                <h2>Learn more about Caterpillar</h2>
-                
-                <p className={classes.par}>
+                <div className={classes.par}> 
+                <h2 style={{fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
+                <br/>
+                <p>
                 Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and
                 that relies on the translation of process models into smart contracts. 
                 More specifically, Caterpillar accepts as input a process model specified in BPMN and generates 
@@ -30,6 +31,10 @@ class About extends Component {
                 <br />
                 <Button href={"/"} variant="outline-info">Back Home</Button> 
                 </p>
+
+
+                </div>
+               
             </div>
         );
     }
