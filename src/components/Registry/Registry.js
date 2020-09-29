@@ -76,6 +76,7 @@ class Registry extends Component {
                 <RegistryCreate/>
                 : 
                 <Aux>
+                    
                  {/* here we implement the second dropdown  */}
                 <div  className={classes.Content}> <p>How do you want to fetch the registry?</p>
             

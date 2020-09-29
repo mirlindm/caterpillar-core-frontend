@@ -34,9 +34,9 @@ class RegistryId extends Component {
         });
     }
 
-     componentDidMount() {
-        this.getRegistriesByIdHandler();
-    } 
+    //  componentDidMount() {
+    //     this.getRegistriesByIdHandler();
+    // } 
 
 
     getRegistriesByIdHandler = (e) =>  {
@@ -97,7 +97,7 @@ class RegistryId extends Component {
                     </Card.Header>
 
                     
-                    <Form onReset={this.resetRegistryInput} onSubmit={this.getRegistriesByIdHandler} id="registry">
+                    <Form onReset={this.resetRegistryInput} onSubmit={ e => {e.preventDefault(); this.getRegistriesByIdHandler()}} id="registry">
                          <Card.Body>
                              <Form.Row>
                                   <Form.Group as={Col} controlId="formGridTitle" >
@@ -131,7 +131,7 @@ class RegistryId extends Component {
                                this.state.registriesById.length === 0 ?
                                 <thead>
                                     <tr align="center">
-                                        <th style={{color: "#008B8B"}}>{this.state.errorMessage}</th>
+                                        <th style={{color: "#008B8B"}}>No registry found!</th>
                                     </tr> 
                                 </thead> :
                                     <tbody>

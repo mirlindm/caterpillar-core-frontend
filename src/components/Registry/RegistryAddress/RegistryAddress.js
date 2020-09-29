@@ -19,19 +19,19 @@ class RegistryAddress extends Component {
        
     }
 
-    componentDidMount() {
-        this.getRegistriesByAddressHandler();
-        // axios.get('http://localhost:3000/registries/0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2/address')
-        // .then(response => response.data             
-        // ).then((data) => {
-        //     console.log(data) 
-        //     this.setState({registriesByAddress: data})  
-        // })
-        // .catch(e => {
-        //     console.log('Error: ', e)
-        // })
+    // componentDidMount() {
+    //     this.getRegistriesByAddressHandler();
+    //     // axios.get('http://localhost:3000/registries/0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2/address')
+    //     // .then(response => response.data             
+    //     // ).then((data) => {
+    //     //     console.log(data) 
+    //     //     this.setState({registriesByAddress: data})  
+    //     // })
+    //     // .catch(e => {
+    //     //     console.log('Error: ', e)
+    //     // })
 
-    }
+    // }
 
 
     getRegistriesByAddressHandler = (event) => {
@@ -46,7 +46,8 @@ class RegistryAddress extends Component {
             this.setState({registriesByAddress: data})  
         })
         .catch(e => {
-            console.log('Error: ', e)
+            console.log(e.toString());
+            
         })
      
     }
@@ -93,7 +94,7 @@ class RegistryAddress extends Component {
                     </Card.Header>
 
                     
-                    <Form onReset={this.resetRegistryInput} onSubmit={this.getRegistriesByAddressHandler} id="registry">
+                    <Form onReset={this.resetRegistryInput} onSubmit={e => {e.preventDefault(); this.getRegistriesByAddressHandler()}} id="registry">
                          <Card.Body>
                              <Form.Row>
                                   <Form.Group as={Col} controlId="formGridTitle" >
