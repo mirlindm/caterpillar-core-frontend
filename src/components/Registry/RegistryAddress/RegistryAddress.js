@@ -149,7 +149,7 @@ class RegistryAddress extends Component {
                                         <th style={fontSettings}>  {this.state.registriesByAddress.solidityCode}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> address: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> Address: </th>
                                         <th style={fontSettings}>  {this.state.registriesByAddress.address}</th> 
                                         </tr>
                                     </tbody>

@@ -11,7 +11,7 @@ class Login extends Component {
 
             <Form>
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Label style={{ fontFamily: "Trocchi sans-serif", fontSize: "20px", fontWeight: "normal", lineHeight: "20px" }}>Email address</Form.Label>
+                        <Form.Label style={{ fontFamily: "Trocchi sans-serif", fontSize: "17px", fontWeight: "normal", lineHeight: "15px" }}>Email address</Form.Label>
                         <Form.Control type="email" autoComplete="off" placeholder="Enter email" />
                         <Form.Text className="text-muted" style={{color: "#008B8B"}}>
                         We'll never share your email with anyone else.
@@ -19,11 +19,11 @@ class Login extends Component {
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
-                        <Form.Label style={{fontFamily: "Trocchi sans-serif", fontSize: "20px", fontWeight: "normal", lineHeight: "20px" }} >Password</Form.Label>
+                        <Form.Label style={{fontFamily: "Trocchi sans-serif", fontSize: "17px", fontWeight: "normal", lineHeight: "15px" }} >Password</Form.Label>
                         <Form.Control type="password" placeholder="Enter Password" />
                     </Form.Group>
                   
-                    <Button variant="outline-info" type="submit">
+                    <Button variant="outline-info" type="submit" style={{fontFamily: "Trocchi sans-serif", fontSize: "20px", fontWeight: "normal", lineHeight: "20px" }}>
                         Submit
                     </Button>
                 </Form>

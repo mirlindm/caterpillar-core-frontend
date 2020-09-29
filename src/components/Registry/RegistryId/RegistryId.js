@@ -14,24 +14,39 @@ class RegistryId extends Component {
 
         this.state = {
             registriesById: [],
-            id: ''
+            id: '',
+            errorMessage: 'No registry found'
         }
 
         // this.registryChangeHandler = this.registryChangeHandler.bind(this);
         // this.createRegistryHandler = this.createRegistryHandler.bind(this);
+        // this.getRegistriesByIdHandler = this.getRegistriesByIdHandler.bind(this);
 
     }
 
       // Get Request to fetch the registries based on the id on the database
-      componentDidMount() {
-          this.getRegistriesByIdHandler();
-      
-       
+   
+      // Set the state to the value of the input with same name as the state
+    registryChangeHandler = (event) => {
+        
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
 
-    getRegistriesByIdHandler = (event) => {
+     componentDidMount() {
+        this.getRegistriesByIdHandler();
+    } 
+
+
+    getRegistriesByIdHandler = (e) =>  {
+        // e.preventDefault();      
         const URL = 'http://localhost:3000/registries/'
         const id = this.state.id;
+
+        // if(!id){
+
+        // }
 
         axios.get(URL+id)
         .then(response => response.data             
@@ -39,19 +54,14 @@ class RegistryId extends Component {
             console.log(data) 
             this.setState({registriesById: data})  
         })
-        .catch(e => {
-            console.log('Error: ', e)
+        .catch(err => {
+            if(err)
+            this.setState({errorMessage: err.toString()})
         })
      
     }
 
-    registryChangeHandler = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
-
-    resetRegistryInput = (event) => {
+    resetRegistryInput = () => {
         this.setState({id: ''})
     }
 
@@ -121,28 +131,28 @@ class RegistryId extends Component {
                                this.state.registriesById.length === 0 ?
                                 <thead>
                                     <tr align="center">
-                                        <th style={{color: "#008B8B"}}>No registry found!</th>
+                                        <th style={{color: "#008B8B"}}>{this.state.errorMessage}</th>
                                     </tr> 
                                 </thead> :
                                     <tbody>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Contract Name: </th>
+                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Contract Name: </th>
                                         <th style={{textAlign:"center", paddingRight:"50px"}}>  {this.state.registriesById.contractName}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> ABI: </th>
+                                        <th style={{textAlign:"center",  color: "#008B8B", paddingRight:"50px"}}> ABI: </th>
                                         <th style={fontSettings}>  {this.state.registriesById.abi}</th> 
                                         </tr>
                                         <tr >
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Byte Code: </th>
+                                        <th style={{textAlign:"center",  color: "#008B8B", paddingRight:"50px"}}> Byte Code: </th>
                                         <th style={fontSettings}>  {this.state.registriesById.bytecode}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> Solidity Code: </th>
+                                        <th style={{textAlign:"center",  color: "#008B8B", paddingRight:"50px"}}> Solidity Code: </th>
                                         <th style={fontSettings}>  {this.state.registriesById.solidityCode}</th> 
                                         </tr>
                                         <tr>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}> address: </th>
+                                        <th style={{textAlign:"center",  color: "#008B8B", paddingRight:"50px"}}> Address: </th>
                                         <th style={fontSettings}>  {this.state.registriesById.address}</th> 
                                         </tr>
                                     </tbody>
