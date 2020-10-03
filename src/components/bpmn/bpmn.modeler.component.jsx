@@ -8,6 +8,8 @@ import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camu
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
 import {Jumbotron, Form} from 'react-bootstrap';
 
+import BpmnModelerTest from '../Modeler/BpmnModeler';
+
 import Aux from '../../hoc/Auxiliary';
 
 class BpmnModelerComponent extends Component {
@@ -54,11 +56,13 @@ class BpmnModelerComponent extends Component {
     render = () => {
         return(
             <Aux>
+            <BpmnModelerTest />
+            <p> *************************************************** </p>
             <div className="container text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", marginBottom: "20px"}}>
             <p style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Create or submit your Model</p>
                 <Form>
                     <Form.Group>
-                        <Form.File  style={{fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "17px", fontWeight: "normal", lineHeight: "15px"}} id="exampleFormControlFile1" label="Example file input" />
+                        <Form.File style={{fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "17px", fontWeight: "normal", lineHeight: "15px"}} id="exampleFormControlFile1" label="Please upload files with .bpmnn extension only" />
                     </Form.Group>
                 </Form>
             </div>

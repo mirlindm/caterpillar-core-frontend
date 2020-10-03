@@ -10,7 +10,6 @@ import Footer from './components/Footer/Footer';
 import Registry from './components/Registry/Registry';
 import About from './components/About/About';
 import Login from './components/Login/Login'
-// import BpmnModeler from './components/Modeler/BpmnModeler';
 import BpmnModelerComponent from './components/bpmn/bpmn.modeler.component';
 
 class App extends Component {
@@ -25,7 +24,7 @@ class App extends Component {
       <Router>
         <NavigationBar />
         
-        
+        {/* <BpmnModeler/> */}
         <Container>
           <Row>
             <Col lg={12} style={marginTop}>
