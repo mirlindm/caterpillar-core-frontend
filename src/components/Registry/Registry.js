@@ -49,7 +49,7 @@ class Registry extends Component {
             <Aux>
                 {/* Ask  user if they want to create a new registry or use an existing one */}
 
-            <div  className={classes.Content}> <p>Do you want to create a new registry ?</p>
+            <div  className={classes.Content}> <p style={{  fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>Do you want to create a new registry ?</p>
             
                 <Dropdown>
                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
