@@ -10,6 +10,7 @@ import Footer from './components/Footer/Footer';
 import Registry from './components/Registry/Registry';
 import About from './components/About/About';
 import Login from './components/Login/Login'
+import Modeler from './components/Modeler/Modeler';
 
 class App extends Component {
 
@@ -29,6 +30,7 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={Welcome} />
                 <Route path="/registry" exact component={Registry} />
+                <Route path="/modeler" exact component={Modeler} />
                 <Route path="/login" exact component={Login} />
                 <Route path="/about" exact component={About} />
               </Switch>
