@@ -17,7 +17,8 @@ class RegistryCreate extends Component {
             show: false,
             registry: [],
             registriesById: [],
-            registriesByAddress: []
+            registriesByAddress: [],
+            errorMessage: 'No registry found!'
         }
 
         // this.registryChangeHandler = this.registryChangeHandler.bind(this);
@@ -39,6 +40,9 @@ class RegistryCreate extends Component {
                 } else {
                     this.setState({show: false});
                 }
+        }).catch(e => { 
+            console.log(e);
+            this.setState({errorMessage: e.toString()})
         });
         this.setState({registry: []})
     }
@@ -80,10 +84,10 @@ class RegistryCreate extends Component {
                                             
                                             className={"bg-dark text-white"}
                                             placeholder="Enter Registry Code" /> */}
-
+                                            
                                             {
                                                 this.state.registry.length === 0 ?
-                                                <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> No registry found ... </p>
+                                                <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>
                                                 :
                                                 <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
                                             }
