@@ -10,7 +10,8 @@ import Footer from './components/Footer/Footer';
 import Registry from './components/Registry/Registry';
 import About from './components/About/About';
 import Login from './components/Login/Login'
-import Modeler from './components/Modeler/Modeler';
+// import BpmnModeler from './components/Modeler/BpmnModeler';
+import BpmnModelerComponent from './components/bpmn/bpmn.modeler.component';
 
 class App extends Component {
 
@@ -24,13 +25,14 @@ class App extends Component {
       <Router>
         <NavigationBar />
         
+        
         <Container>
           <Row>
             <Col lg={12} style={marginTop}>
               <Switch>
                 <Route path="/" exact component={Welcome} />
                 <Route path="/registry" exact component={Registry} />
-                <Route path="/modeler" exact component={Modeler} />
+                <Route path="/modeler" exact component={BpmnModelerComponent} />
                 <Route path="/login" exact component={Login} />
                 <Route path="/about" exact component={About} />
               </Switch>
