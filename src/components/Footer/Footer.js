@@ -8,7 +8,7 @@ class Footer extends Component {
         let fullYear = new Date().getFullYear();
 
         return (
-            <Navbar fixed="bottom" bg="dark" variant="dark" style={{borderTop:"1px solid black"}}>
+            <Navbar fixed="bottom" bg="dark" variant="dark" style={{borderTop:"0px solid lightdark"}}>
                 <Container>
                     <Col lg={12} className="text-center text-muted">
                         <div style={{color: "white"}}>

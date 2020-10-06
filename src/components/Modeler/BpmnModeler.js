@@ -48,15 +48,16 @@ function BpmnModelerTest() {
 
   return (
     <div className="App">
-      <div
-        id="container"
-        style={{
-          border: "1px solid #000000",
-          height: "90vh",
-          width: "90vw",
-          margin: "auto"
-        }}
-      ></div>
+        <div
+          id="container"
+          style={{
+            border: "1px solid #000000",
+            height: "90vh",
+            width: "90vw",
+            margin: "auto"
+          }}
+        ></div>
+        <div style={{marginTop: "40px", paddingTop: "10px"}}>   </div>
     </div>
   );
 }
