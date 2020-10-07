@@ -4,7 +4,7 @@ import Aux from '../../hoc/Auxiliary';
 import BpmnModelerTest from '../Modeler/BpmnModeler';
 import BpmnModelerComponent from './bpmn.modeler.component.jsx';
 
-import {Dropdown, Alert} from 'react-bootstrap'; 
+import {Dropdown, Alert, Table} from 'react-bootstrap'; 
 
 import classes from './BpmnModelling.css'
 
@@ -20,19 +20,19 @@ class BpmnModelling extends Component {
     }
 
     selectYesHandler = () => {
-        this.setState({showPromptModel: true})
+        this.setState({showPromptModel: 'Upload Model'})
     }
 
     selectNoHandler = () => {
-        this.setState({showPromptModel: false})
+        this.setState({showPromptModel: 'Create Model'})
     }
 
     selectCompilationEngineHandler = () => {
-        this.setState({showPromptEngine: 'compilation'})
+        this.setState({showPromptEngine: 'Compilation Engine'})
     }
 
     selectInterpretationEngineHandler = () => {
-        this.setState({showPromptEngine: 'interpretation'})
+        this.setState({showPromptEngine: 'Interpretation Engine'})
     }
 
     render() {
@@ -64,7 +64,9 @@ class BpmnModelling extends Component {
                             <Dropdown.Item onSelect={this.selectInterpretationEngineHandler}>Interpretation Engine</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
+                    
                 </div>
+                
 
                 {
                     this.state.showPromptModel === undefined && this.showPromptEngine === undefined ?
@@ -72,49 +74,122 @@ class BpmnModelling extends Component {
                         <Alert variant="info">
                             <Alert.Heading style={{fontSize: "large"}}>Please, select above how do you wish to proceed!</Alert.Heading>
                         </Alert>
+                        <div style={{marginTop: "40px",  paddingTop: "10px"}}></div>
                     </div>
+                    
                     :
-                    this.state.showPromptModel  && this.state.showPromptEngine === undefined ?
+                    this.state.showPromptModel !== undefined  && this.state.showPromptEngine === undefined ?
                     <div style={{textAlign: "center", margin: "0 200px"}}>
                     <Alert variant="info">
-                        <Alert.Heading style={{fontSize: "large"}}>Please, select above how do you wish to proceed!</Alert.Heading>
+                        <Alert.Heading style={{fontSize: "large"}}>Please, select the engine to proceed with!</Alert.Heading>
                     </Alert>
                     </div>
                     :
-                    this.state.showPromptModel  && this.state.showPromptEngine === 'compilation' ?
+                    this.state.showPromptModel === undefined  && this.state.showPromptEngine !== undefined ?
+                    <div style={{textAlign: "center", margin: "0 200px"}}>
+                    <Alert variant="info">
+                        <Alert.Heading style={{fontSize: "large"}}>Please, upload a model or create a new one !</Alert.Heading>
+                    </Alert>
+                    </div>
+                    :
+                    this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
                     /* Upload existing model with compilation engine  */
                     <div>
-                        <div style={{textAlign: "center", color: "white", margin: "20px 20px"}}>
-                        Your configurations are: 
-                        <table style={{border: "1px solid #008B8B" }}>
+                        <div style={{textAlign: "center", backgroundColor: "#008B8B", color: "white", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
+                        <Table bordered hover striped variant="dark">
                             <tr>
-                                <th style={{border: "1px solid #008B8B", }}>BPMN Model</th>
-                                <th style={{border: "1px solid #008B8B", }}>Engine</th>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
                             </tr>
                             <tr>
-                                <td style={{border: "1px solid #008B8B", }}>
-                                <strong> Upload your model </strong>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptModel} </strong>
                                 </td>
-                                <td style={{border: "1px solid #008B8B", }}>
-                                <strong> Compilation </strong>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptEngine} </strong>
                                 </td>
-
                             </tr>
-                        </table>
+                        </Table>
+                        <p  style={{textAlign:"center", backgroundColor: "#008B8B", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
+                        </div> 
+                        <div style={{marginTop: "50px"}}> </div>
+                        <BpmnModelerComponent/>
+                    </div>                                        
+                    : 
+                    this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
+                    /* Upload existing model with interpretation engine  */
+                    <div>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
+                        <Table bordered hover striped variant="dark">
+                            <tr>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
+                            </tr>
+                            <tr>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptModel} </strong>
+                                </td>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptEngine} </strong>
+                                </td>
+                            </tr>
+                        </Table>
+                        <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
                         <BpmnModelerComponent/>
-                    </div>
-                    : 
-                    this.state.showPromptModel  && this.state.showPromptEngine === 'interpretation' ?
-                    /* Upload existing model with interpretation engine  */
-                    <BpmnModelerComponent/>
+                    </div>                                        
                     :
-                    this.state.showPromptModel === false  && this.state.showPromptEngine === 'compilation' ?
+                    this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
                     /* Create new model with compilation engine */
-                    <BpmnModelerTest/>
+                    <div>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
+                        <Table bordered hover striped variant="dark">
+                            <tr>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
+                            </tr>
+                            <tr>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptModel} </strong>
+                                </td>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptEngine} </strong>
+                                </td>
+                            </tr>
+                        </Table>
+                        <p  style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
+                        </div>
+                        <BpmnModelerTest/>
+                    </div>                                        
                     :
+                    this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
                     /* Create new model with interpretation engine */
-                    <BpmnModelerTest/>
+                    <div>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
+                        <Table bordered hover striped variant="dark">
+                            <tr>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
+                                <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
+                            </tr>
+                            <tr>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptModel} </strong>
+                                </td>
+                                <td style={{border: "1px solid #008B8B"}}>
+                                <strong> {this.state.showPromptEngine} </strong>
+                                </td>
+                            </tr>
+                        </Table>
+                        <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
+                        </div>
+                        <BpmnModelerTest/>
+                    </div>                                        
+                    :
+                    null
 
                 }
             </Aux>

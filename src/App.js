@@ -27,7 +27,7 @@ class App extends Component {
         <NavigationBar />
         
         
-        <TestModeller/>
+        {/* <BpmnModelerComponent></BpmnModelerComponent> */}
         <Container>
           <Row>
             <Col lg={12} style={marginTop}>

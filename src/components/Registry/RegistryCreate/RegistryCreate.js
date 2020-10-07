@@ -3,9 +3,10 @@ import React, {Component} from 'react';
 
 import {Card, Form, Button, Col} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faArrowAltCircleRight, faPlus} from '@fortawesome/free-solid-svg-icons';
 import classes from './RegistryCreate.css';
 import RegistryToast from '../RegistryToast/RegistryToast'; 
+import BpmnModelling from '../../bpmn/BpmnModelling';
 
 import axios from 'axios';
 
@@ -99,8 +100,12 @@ class RegistryCreate extends Component {
                             <Card.Footer style={{"textAlign": "right"}}>
                                 <Button variant="info" type="submit">
                                 <FontAwesomeIcon icon={faPlus} /> Create New Registry
-                                </Button>
+                                </Button> <br/>
+                                
                             </Card.Footer>
+                            <Button variant="info" href={"/modeler"} style={{marginTop: "15px", marginLeft: "812px", marginBottom: "5px" ,paddingRight: "32px"}}>
+                                <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
+                            </Button>
                         </Form>
                     </Card>
                 </div>

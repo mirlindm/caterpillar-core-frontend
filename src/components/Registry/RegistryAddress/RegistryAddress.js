@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 //import Aux from '../../../hoc/Auxiliary';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
-// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-// import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPlus, faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 import classes from './RegistryAddress.css';
 import axios from 'axios';
 
@@ -156,7 +156,11 @@ class RegistryAddress extends Component {
                                     </tbody>
                                }
                          
-                      </Table>       
+                      </Table>
+                      
+                        <Button variant="info" href={"/modeler"} style={{marginTop: "15px", marginLeft: "800px", marginBottom: "10px", marginRight: "15px",  paddingRight: "32px"}}>
+                            <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
+                        </Button>       
                 </Card>
             </div>
         );
