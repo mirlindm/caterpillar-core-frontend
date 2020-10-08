@@ -4,6 +4,12 @@ import Aux from '../../hoc/Auxiliary';
 import BpmnModelerTest from '../Modeler/BpmnModeler';
 import BpmnModelerComponent from './bpmn.modeler.component.jsx';
 
+import CCreateDiagram from './Compilation/CCreateDiagram';
+import CUploadDiagram from './Compilation/CUploadDiagram';
+import ICreateDiagram from './Interpretation/ICreateDiagram';
+import IUploadDiagram from './Interpretation/IUploadDiagram';
+
+
 import {Dropdown, Alert, Table} from 'react-bootstrap'; 
 
 import classes from './BpmnModelling.css'
@@ -114,7 +120,7 @@ class BpmnModelling extends Component {
                         <p  style={{textAlign:"center", backgroundColor: "#008B8B", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div> 
                         <div style={{marginTop: "50px"}}> </div>
-                        <BpmnModelerComponent/>
+                        <CUploadDiagram/>
                     </div>                                        
                     : 
                     this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
@@ -138,7 +144,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <BpmnModelerComponent/>
+                        <IUploadDiagram/>
                     </div>                                        
                     :
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
@@ -162,7 +168,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p  style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <BpmnModelerTest/>
+                        <CCreateDiagram/>
                     </div>                                        
                     :
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
@@ -186,7 +192,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <BpmnModelerTest/>
+                        <ICreateDiagram/>
                     </div>                                        
                     :
                     null

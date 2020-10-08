@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowAltCircleRight, faPlus} from '@fortawesome/free-solid-svg-icons';
 import classes from './RegistryCreate.css';
 import RegistryToast from '../RegistryToast/RegistryToast'; 
-import BpmnModelling from '../../bpmn/BpmnModelling';
+// import BpmnModelling from '../../bpmn/BpmnModelling';
 
 import axios from 'axios';
 

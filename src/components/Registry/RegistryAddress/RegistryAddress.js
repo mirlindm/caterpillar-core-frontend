@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus, faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
+import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 import classes from './RegistryAddress.css';
 import axios from 'axios';
 

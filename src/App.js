@@ -10,9 +10,9 @@ import Footer from './components/Footer/Footer';
 import Registry from './components/Registry/Registry';
 import About from './components/About/About';
 import Login from './components/Login/Login'
-import BpmnModelerComponent from './components/bpmn/bpmn.modeler.component';
+// import BpmnModelerComponent from './components/bpmn/bpmn.modeler.component';
 import BpmnModelling from './components/bpmn/BpmnModelling';
-import TestModeller from './components/bpmn/TestModeller';
+// import TestModeller from './components/bpmn/TestModeller';
 
 class App extends Component {
 

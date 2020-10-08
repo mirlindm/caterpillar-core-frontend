@@ -2,34 +2,22 @@ import React, { Component }  from 'react';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { emptyBpmn } from '../../asset/empty.bpmn';
+import { emptyBpmn } from '../../../asset/empty.bpmn';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
-import {Form, Button, Card} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
-import Aux from '../../hoc/Auxiliary';
+import Aux from '../../../hoc/Auxiliary';
 
-class BpmnModelerComponent extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            uploadedDiagram: undefined,
-         
-        }
-    }
-    
-    uploadDiagramHandler = (event) => {
-        event.preventDefault();
-        this.setState({uploadedDiagram: ''})
-    }
+class CCreateDiagram extends Component {
 
     modeler = null;
     
+    // implement a method to fire the HTTP request from the backend
+
     componentDidMount = () => {
         this.modeler = new BpmnModeler({
             container: '#bpmnview',
@@ -70,31 +58,15 @@ class BpmnModelerComponent extends Component {
     render = () => {
         return(
             <Aux>
-                {/* <BpmnModelerTest /> */}
                 
-                <div className="container text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", marginBottom: "40px"}}>
+                
+                <div className="container text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", marginBottom: "40px", marginTop: "40px"}}>
                     <p 
                     style={{fontFamily: "Trocchi", color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}
                     >
-                        Create or submit your Model
+                        Create Your Model Below
                     </p>
-                        <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
-                            <Form.Group >
-                                <Form.File 
-                                    style={{fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "17px", fontWeight: "normal", lineHeight: "15px"}} 
-                                    id="exampleFormControlFile1" 
-                                    label="Please upload files with .bpmnn extension only"
-                                    variant="outline-info" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Go!
-                            </Button>
-                            { this.state.uploadedDiagram === '' ?
-                            <p style={{fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "17px", fontWeight: "normal"}}> Please upload a valid diagram! </p>                        
-                            :
-                            null                        
-                            }
-                        </Form>
+
                         <div style={{marginTop: "10px"}}> </div>
                 </div>
                 
@@ -111,4 +83,4 @@ class BpmnModelerComponent extends Component {
     }
 }
 
-export default BpmnModelerComponent;
+export default CCreateDiagram;
