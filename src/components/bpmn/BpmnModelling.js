@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
-import BpmnModelerTest from '../Modeler/BpmnModeler';
-import BpmnModelerComponent from './bpmn.modeler.component.jsx';
+// import BpmnModelerTest from '../Modeler/BpmnModeler';
+// import BpmnModelerComponent from './bpmn.modeler.component.jsx';
+
 
 import CCreateDiagram from './Compilation/CCreateDiagram';
 import CUploadDiagram from './Compilation/CUploadDiagram';

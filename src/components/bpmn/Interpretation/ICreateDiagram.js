@@ -6,7 +6,7 @@ import { emptyBpmn } from '../../../asset/empty.bpmn';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
-import {Card} from 'react-bootstrap';
+import {Card, Button} from 'react-bootstrap';
 
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
@@ -17,6 +17,14 @@ class ICreateDiagram extends Component {
     modeler = null;
     
     // implement a method to fire the HTTP request from the backend
+
+
+    saveModelHandler = (event) => {
+        event.preventDefault();
+        
+        // post request to save the model
+        // implement a method to run the request from the backend for POST Model - Interpretation Engine
+    }
 
     componentDidMount = () => {
         this.modeler = new BpmnModeler({
@@ -58,13 +66,11 @@ class ICreateDiagram extends Component {
     render = () => {
         return(
             <Aux>
-                
-                
                 <div className="container text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", marginBottom: "40px", marginTop: "40px"}}>
                     <p 
-                    style={{fontFamily: "Trocchi", color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}
+                    style={{fontFamily: "Trocchi", color: "#008B8B", fontSize: "20px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}
                     >
-                        Create Your Model Below
+                        Create and Save Your Model Below
                     </p>
 
                         <div style={{marginTop: "10px"}}> </div>
@@ -76,6 +82,10 @@ class ICreateDiagram extends Component {
                         <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
                     </div>
                 </Card>
+
+                <Button onClick={this.saveModelHandler} variant="primary" type="submit" style={{border: "1px solid #008B8B", marginTop: "10px"}} >
+                    Save
+                </Button>
 
                 <div style={{marginTop: "40px", paddingTop: "10px"}}></div>
             </Aux>

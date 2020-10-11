@@ -64,7 +64,7 @@ class CCreateDiagram extends Component {
                     <p 
                     style={{fontFamily: "Trocchi", color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}
                     >
-                        Create Your Model Below
+                        Create and Save Your Model Below
                     </p>
 
                         <div style={{marginTop: "10px"}}> </div>
