@@ -57,8 +57,8 @@ class Registry extends Component {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item href="#/yes" active onSelect={this.selectYesHandler}>Yes, create a new one</Dropdown.Item>
-                        <Dropdown.Item href="#/no" onSelect={this.selectNoHandler}>No, use existing one instead</Dropdown.Item>
+                        <Dropdown.Item href="#/yes" active onSelect={this.selectYesHandler}>Create a new one</Dropdown.Item>
+                        <Dropdown.Item href="#/no" onSelect={this.selectNoHandler}>Use existing one instead</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </div>

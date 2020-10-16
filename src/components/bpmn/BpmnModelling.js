@@ -105,6 +105,7 @@ class BpmnModelling extends Component {
                         <div style={{textAlign: "center", backgroundColor: "#008B8B", color: "white", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
+                            <tbody>
                             <tr>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
@@ -117,6 +118,7 @@ class BpmnModelling extends Component {
                                 <strong> {this.state.showPromptEngine} </strong>
                                 </td>
                             </tr>
+                            </tbody>
                         </Table>
                         <p  style={{textAlign:"center", backgroundColor: "#008B8B", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div> 
@@ -130,6 +132,7 @@ class BpmnModelling extends Component {
                         <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
+                            <tbody>
                             <tr>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
@@ -142,6 +145,7 @@ class BpmnModelling extends Component {
                                 <strong> {this.state.showPromptEngine} </strong>
                                 </td>
                             </tr>
+                            </tbody>
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
@@ -154,6 +158,7 @@ class BpmnModelling extends Component {
                         <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
+                            <tbody>
                             <tr>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
@@ -166,6 +171,7 @@ class BpmnModelling extends Component {
                                 <strong> {this.state.showPromptEngine} </strong>
                                 </td>
                             </tr>
+                            </tbody>
                         </Table>
                         <p  style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
@@ -178,6 +184,7 @@ class BpmnModelling extends Component {
                         <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
+                            <tbody>
                             <tr>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>BPMN Model</th>
                                 <th style={{border: "1px solid #008B8B", textAlign:"center", color: "#008B8B"}}>Engine</th>
@@ -190,6 +197,7 @@ class BpmnModelling extends Component {
                                 <strong> {this.state.showPromptEngine} </strong>
                                 </td>
                             </tr>
+                            </tbody>
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>

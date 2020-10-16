@@ -13,6 +13,8 @@ import Login from './components/Login/Login'
 // import BpmnModelerComponent from './components/bpmn/bpmn.modeler.component';
 import BpmnModelling from './components/bpmn/BpmnModelling';
 // import TestModeller from './components/bpmn/TestModeller';
+// import Test from './components/app/app'
+// import TestingBPMN from './components/Testing/TestingBPMN'
 
 class App extends Component {
 
@@ -35,6 +37,7 @@ class App extends Component {
                 <Route path="/" exact component={Welcome} />
                 <Route path="/registry" exact component={Registry} />
                 <Route path="/modeler" exact component={BpmnModelling} />
+                {/* <Route path="/test" exact component={TestingBPMN} /> */}
                 <Route path="/login" exact component={Login} />
                 <Route path="/about" exact component={About} />
               </Switch>

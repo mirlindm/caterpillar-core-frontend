@@ -51,16 +51,29 @@ class ICreateDiagram extends Component {
         this.openBpmnDiagram(emptyBpmn);
     }
 
-    openBpmnDiagram = (xml) => {
-        this.modeler.importXML(xml, (error) => {
-            if (error) {
-                return console.log('fail import xml');
-            }
+    openBpmnDiagram = async (xml) => {
 
-            var canvas = this.modeler.get('canvas');
+        try {
+            const result = await this.modeler.importXML(xml);
+            const { warnings } = result;
+            console.log(warnings);
+    
+            var canvas = this.modeler.get("canvas");
+    
+            canvas.zoom("fit-viewport");
+    
+          } catch (err) {
+            console.log(err.message, err.warnings);
+          }
 
-            canvas.zoom('fit-viewport');
-        });
+
+        // this.modeler.importXML(xml, (error) => {
+        //     if (error) {
+        //         return console.log('fail import xml');
+        //     }
+            // var canvas = this.modeler.get('canvas');
+            // canvas.zoom('fit-viewport');
+        // });
     }
 
     render = () => {
