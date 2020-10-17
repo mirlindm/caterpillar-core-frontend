@@ -148,13 +148,15 @@ class RegistryId extends Component {
                                     </tbody>
                                }
                       </Table>  
-                      
+                      {this.state.id === '' ?
+                      null
+                      :
                       <Card.Footer style={{"textAlign": "right"}}>
                         <Button variant="info" href={"/modeler"} >
                             <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
                         </Button>   
                       </Card.Footer> 
-                                
+                    }      
                 </Card>
             </div>
         );

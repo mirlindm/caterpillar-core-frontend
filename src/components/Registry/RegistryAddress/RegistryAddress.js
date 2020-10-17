@@ -142,13 +142,15 @@ class RegistryAddress extends Component {
                                }
                 
                       </Table>
-
+                      {this.state.address === '' ?
+                      null
+                      :
                       <Card.Footer style={{"textAlign": "right"}}>
                         <Button variant="info" href={"/modeler"} >
                             <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
                         </Button>   
                       </Card.Footer>  
-                        
+                    }
                 </Card>
             </div>
         );
