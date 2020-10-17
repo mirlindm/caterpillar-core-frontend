@@ -19,21 +19,6 @@ class RegistryAddress extends Component {
        
     }
 
-    // componentDidMount() {
-    //     this.getRegistriesByAddressHandler();
-    //     // axios.get('http://localhost:3000/registries/0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2/address')
-    //     // .then(response => response.data             
-    //     // ).then((data) => {
-    //     //     console.log(data) 
-    //     //     this.setState({registriesByAddress: data})  
-    //     // })
-    //     // .catch(e => {
-    //     //     console.log('Error: ', e)
-    //     // })
-
-    // }
-
-
     getRegistriesByAddressHandler = (event) => {
         const URL = 'http://localhost:3000/registries/';
         const URL_END = '/address';
@@ -155,12 +140,15 @@ class RegistryAddress extends Component {
                                         </tr>
                                     </tbody>
                                }
-                         
+                
                       </Table>
-                      
-                        <Button variant="info" href={"/modeler"} style={{marginTop: "15px", marginLeft: "800px", marginBottom: "10px", marginRight: "15px",  paddingRight: "32px"}}>
+
+                      <Card.Footer style={{"textAlign": "right"}}>
+                        <Button variant="info" href={"/modeler"} >
                             <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                        </Button>       
+                        </Button>   
+                      </Card.Footer>  
+                        
                 </Card>
             </div>
         );

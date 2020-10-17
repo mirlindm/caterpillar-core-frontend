@@ -149,6 +149,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
+                        <div style={{marginTop: "50px"}}> </div>
                         <IUploadDiagram/>
                     </div>                                        
                     :

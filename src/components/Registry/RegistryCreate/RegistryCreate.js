@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-//import Aux from '../../../hoc/Auxiliary';
+
+import RegistryToast from '../RegistryToast/RegistryToast'; 
+import classes from './RegistryCreate.css';
 
 import {Card, Form, Button, Col} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowAltCircleRight, faPlus} from '@fortawesome/free-solid-svg-icons';
-import classes from './RegistryCreate.css';
-import RegistryToast from '../RegistryToast/RegistryToast'; 
-// import BpmnModelling from '../../bpmn/BpmnModelling';
 
 import axios from 'axios';
 
@@ -19,17 +18,14 @@ class RegistryCreate extends Component {
             registry: [],
             registriesById: [],
             registriesByAddress: [],
-            errorMessage: 'No registry found!'
+            errorMessage: 'No registry found!',
+          
         }
-
-        // this.registryChangeHandler = this.registryChangeHandler.bind(this);
         this.createRegistryHandler = this.createRegistryHandler.bind(this);
 
     }
 
-
     createRegistryHandler(event) {
-        //alert('registry code: ' + this.state.registry);
         event.preventDefault();
 
         axios.post("http://localhost:3000/registries")
@@ -47,15 +43,6 @@ class RegistryCreate extends Component {
         });
         this.setState({registry: []})
     }
-
-    // registryChangeHandler(event) {
-    //     this.setState({
-    //         [event.target.name]: event.target.value
-    //     });
-    // }
-
-    
-
 
     render() {
         return (
@@ -76,16 +63,7 @@ class RegistryCreate extends Component {
                         <Form onSubmit={this.createRegistryHandler} id="registry">
                             <Card.Body>
                                 <Form.Row>
-                                    <Form.Group as={Col} controlId="formGridTitle" >
-                                        
-                                        {/* <Form.Control autoComplete="off"
-                                            type="text"
-                                            name="registry"
-                                            value={this.state.registry}
-                                            
-                                            className={"bg-dark text-white"}
-                                            placeholder="Enter Registry Code" /> */}
-                                            
+                                    <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
                                                 this.state.registry.length === 0 ?
                                                 <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>
@@ -96,21 +74,26 @@ class RegistryCreate extends Component {
                                 </Form.Row>
                             
                             </Card.Body>
-
-                            <Card.Footer style={{"textAlign": "right"}}>
-                                <Button variant="info" type="submit">
-                                <FontAwesomeIcon icon={faPlus} /> Create New Registry
-                                </Button> <br/>
-                                
+                            
+                        
+                            <Card.Footer style={{"textAlign": "right"}}>  
+                            
+                                    <Button variant="info" type="submit">
+                                        <FontAwesomeIcon icon={faPlus} /> Create New Registry
+                                    </Button> <br/> <br/> 
+        
+                                    <Button variant="info" href={"/modeler"}>
+                                        <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
+                                    </Button>
+                                    
+                             
                             </Card.Footer>
-                            <Button variant="info" href={"/modeler"} style={{marginTop: "15px", marginLeft: "812px", marginBottom: "5px" ,paddingRight: "32px"}}>
-                                <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                            </Button>
+                            
                         </Form>
                     </Card>
                 </div>
 
-
+                            
 
             </div>
             

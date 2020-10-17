@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-//import Aux from '../../../hoc/Auxiliary';
+
+import classes from './RegistryId.css';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
-import classes from './RegistryId.css';
+
 import axios from 'axios';
 
 
@@ -25,25 +26,17 @@ class RegistryId extends Component {
    
       // Set the state to the value of the input with same name as the state
     registryChangeHandler = (event) => {
-        
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
-    //  componentDidMount() {
-    //     this.getRegistriesByIdHandler();
-    // } 
 
 
     getRegistriesByIdHandler = (e) =>  {
-        // e.preventDefault();      
+             
         const URL = 'http://localhost:3000/registries/'
         const id = this.state.id;
-
-        // if(!id){
-
-        // }
 
         axios.get(URL+id)
         .then(response => response.data             
@@ -156,9 +149,12 @@ class RegistryId extends Component {
                                }
                       </Table>  
                       
-                      <Button variant="info" href={"/modeler"} style={{marginTop: "15px", marginLeft: "800px", marginBottom: "10px", marginRight: "15px",  paddingRight: "32px"}}>
+                      <Card.Footer style={{"textAlign": "right"}}>
+                        <Button variant="info" href={"/modeler"} >
                             <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                      </Button>            
+                        </Button>   
+                      </Card.Footer> 
+                                
                 </Card>
             </div>
         );
