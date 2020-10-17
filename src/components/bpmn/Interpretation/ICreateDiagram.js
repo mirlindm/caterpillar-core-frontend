@@ -8,6 +8,8 @@ import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camu
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
 import {Card, Button} from 'react-bootstrap';
 
+import axios from 'axios';
+
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 import Aux from '../../../hoc/Auxiliary';
@@ -24,6 +26,17 @@ class ICreateDiagram extends Component {
         
         // post request to save the model
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
+
+        axios.post("http://localhost:3000/interpreter/models",{
+        bpmn: "process model created by the user",
+        name: "name provided by the user",
+        "registryAddress": "address of the runtime registry created or provided by the user"
+        })
+        .then(response => {
+            if(response.data != null) {
+                console.log(response);            
+            }})
+        .catch(e => console.log(e));
     }
 
     componentDidMount = () => {

@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import Aux from "../../../hoc/Auxiliary";
+
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-font/dist/css/bpmn-embedded.css";
@@ -9,9 +12,11 @@ import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 import { Card, Button } from "react-bootstrap";
 
+import axios from 'axios';
+
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
-import Aux from "../../../hoc/Auxiliary";
+
 
 class CCreateDiagram extends Component {
   modeler = null;
@@ -21,8 +26,23 @@ class CCreateDiagram extends Component {
   saveModelHandler = (event) => {
     event.preventDefault();
 
-    // post request to save the model
-    // implement a method to run the request from the backend for POST Model - Interpretation Engine
+     // post request to save the model
+     // implement a method to run the request from the backend for POST Model - Compilation Engine
+
+    axios.post("http://localhost:3000/models",{
+      bpmn: "process model created by the user",
+      name: "name provided by the user",
+      "registryAddress": "address of the runtime registry created or provided by the user"
+    })
+    .then(response => {
+        if(response.data != null) {
+            console.log(response)
+            this.setState({show: true, registry: response.data});
+        } else {
+            this.setState({show: false});
+        }
+        }).catch(e => console.log(e)
+        );
   };
 
   componentDidMount = () => {
@@ -48,11 +68,6 @@ class CCreateDiagram extends Component {
   };
 
   openBpmnDiagram = async (xml) => {
-    // this.modeler.importXML(xml, (error) => {
-    //   if (error) {
-    //     return console.log("fail import xml");
-    //   }
-
       try {
         const result = await this.modeler.importXML(xml);
         const { warnings } = result;

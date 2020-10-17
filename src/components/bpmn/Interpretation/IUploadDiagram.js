@@ -1,7 +1,12 @@
 import React, { Component }  from 'react';
 
+import BpmnModeler from "bpmn-js/lib/Modeler";
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
+import propertiesPanelModule from "bpmn-js-properties-panel";
+import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
+import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
+import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
 import {Form, Button, Card} from 'react-bootstrap';
 
@@ -10,20 +15,67 @@ import {Form, Button, Card} from 'react-bootstrap';
 import Aux from '../../../hoc/Auxiliary';
 
 class IUploadDiagram extends Component {
+    modeler = null;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            uploadedDiagram: undefined,
+            uploadedDiagramName: undefined,
          
         }
     }
     
+ 
+     // ************* copying below the part for BPMN Plugin
+    
+     uploadDiagramNameChangeHandler  = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
     uploadDiagramHandler = (event) => {
         event.preventDefault();
-        this.setState({uploadedDiagram: 'test'})
+    
+        this.modeler = new BpmnModeler({
+            container: "#bpmnview",
+            keyboard: {
+              bindTo: window
+            },
+            propertiesPanel: {
+              parent: "#propview"
+            },
+            additionalModules: [propertiesPanelModule, propertiesProviderModule],
+            moddleExtensions: {
+              camunda: camundaModdleDescriptor
+            }
+          });
+      
+          this.newBpmnDiagram();
     }
+
+
+
+    newBpmnDiagram = () => {
+        this.openBpmnDiagram(this.state.uploadedDiagramName);
+      };
+    
+      openBpmnDiagram = async (xml) => {
+          try {
+            const result = await this.modeler.importXML(xml);
+            const { warnings } = result;
+            console.log(warnings);
+    
+            var canvas = this.modeler.get("canvas");
+    
+            canvas.zoom("fit-viewport");
+    
+          } catch (err) {
+            console.log(err.message, err.warnings);
+          }
+      };
+     // *************
 
     saveModelHandler = (event) => {
         event.preventDefault();
@@ -62,14 +114,17 @@ class IUploadDiagram extends Component {
                                             fontSize: "17px", 
                                             fontWeight: "normal", 
                                             lineHeight: "15px"}} 
-                                    id="exampleFormControlFile1" 
+                                    id="exampleFormControlFile1"
+                                    name="uploadedDiagramName"
+                                    onChange={this.uploadDiagramNameChangeHandler} 
                                     label="Please upload files with .bpmnn extension only"
                                     variant="outline-info" />
+                                    
                             </Form.Group>
                             <Button variant="primary" type="submit">
-                                Go!
+                                View Model
                             </Button>
-                            { this.state.uploadedDiagram === undefined ?
+                            { this.state.uploadedDiagramName === undefined ?
 
                             <p 
                                 style={{fontFamily: "Trocchi sans-serif", 
@@ -88,14 +143,16 @@ class IUploadDiagram extends Component {
                                               marginTop: "10px", 
                                               width: "100%", 
                                               height: "100%"}}>
+                                                  
                                     <div id="bpmncontainer">
                                         <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
                                         <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
                                     </div>
+                                    
                                 </Card>
                                 <Button 
                                     onClick={this.saveModelHandler} 
-                                    variant="primary" type="submit" 
+                                    variant="primary" //type="submit" 
                                     style={{border: "1px solid #008B8B", marginTop: "10px"}}
                                 >
                                 Save
@@ -109,7 +166,7 @@ class IUploadDiagram extends Component {
                 </div>
 
                  {/* create some space from the footer */}
-                <div style={{marginTop: "40px", paddingTop: "10px"}}></div>
+                <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
             </Aux>
         )
     }
