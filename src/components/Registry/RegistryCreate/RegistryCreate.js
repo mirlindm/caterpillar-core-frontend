@@ -81,12 +81,12 @@ class RegistryCreate extends Component {
                                     <Button variant="info" type="submit">
                                         <FontAwesomeIcon icon={faPlus} /> Create New Registry
                                     </Button> <br/> <br/> 
-        
+                                    { this.state.registry.length !== 0 ?
                                     <Button variant="info" href={"/modeler"}>
                                         <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
                                     </Button>
-                                    
-                             
+                                    : null
+                                    }
                             </Card.Footer>
                             
                         </Form>

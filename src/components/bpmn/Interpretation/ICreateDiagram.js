@@ -1,4 +1,7 @@
 import React, { Component }  from 'react';
+
+import Aux from '../../../hoc/Auxiliary';
+
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
@@ -6,38 +9,17 @@ import { emptyBpmn } from '../../../asset/empty.bpmn';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
+
 import {Card, Button} from 'react-bootstrap';
 
 import axios from 'axios';
 
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
-import Aux from '../../../hoc/Auxiliary';
-
 class ICreateDiagram extends Component {
-
     modeler = null;
-    
-    // implement a method to fire the HTTP request from the backend
 
-
-    saveModelHandler = (event) => {
-        event.preventDefault();
-        
-        // post request to save the model
-        // implement a method to run the request from the backend for POST Model - Interpretation Engine
-
-        axios.post("http://localhost:3000/interpreter/models",{
-        bpmn: "process model created by the user",
-        name: "name provided by the user",
-        "registryAddress": "address of the runtime registry created or provided by the user"
-        })
-        .then(response => {
-            if(response.data != null) {
-                console.log(response);            
-            }})
-        .catch(e => console.log(e));
-    }
+    // ************* copying below the part for BPMN Plugin into componentDidMount
 
     componentDidMount = () => {
         this.modeler = new BpmnModeler({
@@ -56,7 +38,6 @@ class ICreateDiagram extends Component {
                 camunda: camundaModdleDescriptor
             }
         });
-
         this.newBpmnDiagram();
     }
 
@@ -70,23 +51,36 @@ class ICreateDiagram extends Component {
             const result = await this.modeler.importXML(xml);
             const { warnings } = result;
             console.log(warnings);
-    
-            var canvas = this.modeler.get("canvas");
-    
+
+            var canvas = this.modeler.get("canvas");    
             canvas.zoom("fit-viewport");
     
           } catch (err) {
             console.log(err.message, err.warnings);
           }
+    };
 
+    // *************
 
-        // this.modeler.importXML(xml, (error) => {
-        //     if (error) {
-        //         return console.log('fail import xml');
-        //     }
-            // var canvas = this.modeler.get('canvas');
-            // canvas.zoom('fit-viewport');
-        // });
+    saveModelHandler = (event) => {
+        event.preventDefault();
+        
+        // post request to save/deploy the model
+        // implement a method to run the request from the backend for POST Model - Interpretation Engine
+
+        axios.post("http://localhost:3000/interpreter/models",{
+            bpmn: "process model created by the user",
+            name: "name provided by the user",
+            registryAddress: "address of the runtime registry created or provided by the user"
+            })
+            .then(response => {
+                if(response.data != null) {
+                    console.log(response);            
+                } else {
+                    this.setState({show: false});
+                }
+            })
+            .catch(e => console.log(e.toString()));
     }
 
     render = () => {

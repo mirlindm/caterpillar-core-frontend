@@ -10,80 +10,78 @@ import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
+
 import { Card, Button } from "react-bootstrap";
 
 import axios from 'axios';
 
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
-
-
 class CCreateDiagram extends Component {
-  modeler = null;
+      modeler = null;
 
-  // implement a method to fire the HTTP request from the backend
+      // ************* copying below the part for BPMN Plugin into componentDidMount
+      
+      componentDidMount = () => {
+        this.modeler = new BpmnModeler({
+          container: "#bpmnview",
+          keyboard: {
+            bindTo: window
+          },
+          propertiesPanel: {
+            parent: "#propview"
+          },
+          additionalModules: [propertiesPanelModule, propertiesProviderModule],
+          moddleExtensions: {
+            camunda: camundaModdleDescriptor
+          }
+        });
 
-  saveModelHandler = (event) => {
-    event.preventDefault();
+        this.newBpmnDiagram();
+      };
 
-     // post request to save the model
-     // implement a method to run the request from the backend for POST Model - Compilation Engine
+      newBpmnDiagram = () => {
+        this.openBpmnDiagram(emptyBpmn);
+      };
 
-    axios.post("http://localhost:3000/models",{
-      bpmn: "process model created by the user",
-      name: "name provided by the user",
-      "registryAddress": "address of the runtime registry created or provided by the user"
-    })
-    .then(response => {
-        if(response.data != null) {
-            console.log(response)
-            this.setState({show: true, registry: response.data});
-        } else {
-            this.setState({show: false});
-        }
-        }).catch(e => console.log(e)
-        );
-  };
+      openBpmnDiagram = async (xml) => {
+          try {
+            const result = await this.modeler.importXML(xml);
+            const { warnings } = result;
+            console.log(warnings);
 
-  componentDidMount = () => {
-    this.modeler = new BpmnModeler({
-      container: "#bpmnview",
-      keyboard: {
-        bindTo: window
-      },
-      propertiesPanel: {
-        parent: "#propview"
-      },
-      additionalModules: [propertiesPanelModule, propertiesProviderModule],
-      moddleExtensions: {
-        camunda: camundaModdleDescriptor
-      }
-    });
+            var canvas = this.modeler.get("canvas");
 
-    this.newBpmnDiagram();
-  };
+            canvas.zoom("fit-viewport");
 
-  newBpmnDiagram = () => {
-    this.openBpmnDiagram(emptyBpmn);
-  };
+          } catch (err) {
+            console.log(err.message, err.warnings);
+          }
+      };
 
-  openBpmnDiagram = async (xml) => {
-      try {
-        const result = await this.modeler.importXML(xml);
-        const { warnings } = result;
-        console.log(warnings);
+      // *************
 
-        var canvas = this.modeler.get("canvas");
-
-        canvas.zoom("fit-viewport");
-
-      } catch (err) {
-        console.log(err.message, err.warnings);
-      }
-
-  
-    // });
-  };
+      saveModelHandler = (event) => {
+        event.preventDefault();
+    
+         // post request to save/deploy the model
+         // implement a method to run the request from the backend for POST Model - Compilation Engine
+    
+        axios.post("http://localhost:3000/models",{
+          bpmn: "process model created by the user",
+          name: "name provided by the user",
+          registryAddress: "address of the runtime registry created or provided by the user"
+          })
+          .then(response => {
+              if(response.data != null) {
+                  console.log(response)
+                  this.setState({show: true, registry: response.data});
+              } else {
+                  this.setState({show: false});
+              }
+            })
+            .catch(e => console.log(e.toString()));
+        };
 
   render = () => {
     return (

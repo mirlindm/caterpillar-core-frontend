@@ -1,5 +1,7 @@
 import React, { Component }  from 'react';
 
+import Aux from '../../../hoc/Auxiliary';
+
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
@@ -8,11 +10,12 @@ import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
+
 import {Form, Button, Card} from 'react-bootstrap';
 
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
+import axios from 'axios';
 
-import Aux from '../../../hoc/Auxiliary';
+// import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 class CUploadDiagram extends Component {
     modeler = null;
@@ -26,9 +29,9 @@ class CUploadDiagram extends Component {
         }
     }
 
-    // ************* copying below the part for BPMN Plugin
+    // ************* copying below the part for BPMN Plugin into a handler
     
-    uploadDiagramNameChangeHandler  = (event) => {
+    uploadDiagramNameChangeHandler = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -54,13 +57,11 @@ class CUploadDiagram extends Component {
           this.newBpmnDiagram();
     }
 
-
-
     newBpmnDiagram = () => {
         this.openBpmnDiagram(emptyBpmn);
-      };
+    };
     
-      openBpmnDiagram = async (xml) => {
+    openBpmnDiagram = async (xml) => {
           try {
             const result = await this.modeler.importXML(xml);
             const { warnings } = result;
@@ -74,15 +75,27 @@ class CUploadDiagram extends Component {
             console.log(err.message, err.warnings);
           }
       };
-     // *************
 
-  
+      // *************
 
     saveModelHandler = (event) => {
         event.preventDefault();
         
-        // post request to save the model
+        // post request to save/deploy the model
         // implement a method to run the request from the backend for POST Model - Compilation Engine
+        axios.post("http://localhost:3000/models",{
+            bpmn: "process model uploaded by the user",
+            name: "name provided by the user",
+            registryAddress: "address of the runtime registry created or provided by the user"
+            })
+            .then(response => {
+                if(response.data != null) {
+                    console.log(response)
+                } else {
+                    this.setState({show: false});
+                }
+            })
+            .catch(e => console.log(e.toString()));
     }
 
     render = () => {
@@ -120,9 +133,11 @@ class CUploadDiagram extends Component {
                                     variant="outline-info" />
                                     
                             </Form.Group>
+
                             <Button variant="primary" type="submit">
                                 View Model
                             </Button>
+
                             { this.state.uploadedDiagramName === undefined ?
                             <p 
                                 style={{fontFamily: "Trocchi sans-serif", 
