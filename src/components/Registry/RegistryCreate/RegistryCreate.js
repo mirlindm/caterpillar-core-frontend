@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import RegistryToast from '../RegistryToast/RegistryToast'; 
+import BpmnModelling from '../../bpmn/BpmnModelling';
 import classes from './RegistryCreate.css';
 
 import {Card, Form, Button, Col} from 'react-bootstrap'; 
@@ -68,7 +69,12 @@ class RegistryCreate extends Component {
                                                 this.state.registry.length === 0 ?
                                                 <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>
                                                 :
-                                                <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
+                                                <div>
+                                                    <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
+                                                    <div style={{"display" : "none"}}>
+                                                        <BpmnModelling registryCreateId={this.state.registry.ID} />
+                                                    </div>
+                                                </div>
                                             }
                                     </Form.Group>
                                 </Form.Row>

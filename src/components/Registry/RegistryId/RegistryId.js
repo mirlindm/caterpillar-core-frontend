@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+
+import BpmnModelling from '../../bpmn/BpmnModelling';
 import classes from './RegistryId.css';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
@@ -154,7 +156,10 @@ class RegistryId extends Component {
                       <Card.Footer style={{"textAlign": "right"}}>
                         <Button variant="info" href={"/modeler"} >
                             <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                        </Button>   
+                        </Button> 
+                        <div style={{"display" : "none"}}>
+                            <BpmnModelling registryIdAddress={this.state.registriesById.address} />
+                        </div>  
                       </Card.Footer> 
                     }      
                 </Card>

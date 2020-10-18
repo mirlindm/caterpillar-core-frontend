@@ -123,7 +123,7 @@ class BpmnModelling extends Component {
                         <p  style={{textAlign:"center", backgroundColor: "#008B8B", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div> 
                         <div style={{marginTop: "50px"}}> </div>
-                        <CUploadDiagram/>
+                        <CUploadDiagram registryCreateId={this.props.registryCreateId} registryIdAddress={this.props.registryIdAddress} registryAddressAddress={this.props.registryAddressAddress} />
                     </div>                                        
                     : 
                     this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?

@@ -86,7 +86,8 @@ class CUploadDiagram extends Component {
         axios.post("http://localhost:3000/models",{
             bpmn: "process model uploaded by the user",
             name: "name provided by the user",
-            registryAddress: "address of the runtime registry created or provided by the user"
+            //below line: registryAddress comes from the props of BpmnModelling that are defined in RegistryCreate Component.
+            registryAddress: this.props.registryCreateId || this.props.registryAddressAddress || this.props.registryIdAddress
             })
             .then(response => {
                 if(response.data != null) {

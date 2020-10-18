@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 //import Aux from '../../../hoc/Auxiliary';
 
+import BpmnModelling from '../../bpmn/BpmnModelling';
+
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
@@ -148,7 +150,10 @@ class RegistryAddress extends Component {
                       <Card.Footer style={{"textAlign": "right"}}>
                         <Button variant="info" href={"/modeler"} >
                             <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                        </Button>   
+                        </Button> 
+                        <div style={{"display" : "none"}}>
+                            <BpmnModelling registryAddressAddress={this.state.registriesByAddress.address} />
+                        </div>  
                       </Card.Footer>  
                     }
                 </Card>
