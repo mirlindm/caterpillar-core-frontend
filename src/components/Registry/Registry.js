@@ -7,7 +7,7 @@ import RegistryAddress from './RegistryAddress/RegistryAddress';
 
 import {Dropdown, Alert} from 'react-bootstrap'; 
 
-import classes from './Registry.css'
+import './Registry.css'
 //import axios from 'axios';
 
 
@@ -42,14 +42,12 @@ class Registry extends Component {
     }
 
 
-
-
     render () {
         return (
             <Aux>
                 {/* Ask  user if they want to create a new registry or use an existing one */}
 
-            <div  className={classes.Content}> <p style={{  fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>Do you want to create a new registry ?</p>
+            <div  className="Content"> <p style={{  fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>Do you want to create a new registry ?</p>
             
                 <Dropdown>
                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
@@ -66,7 +64,7 @@ class Registry extends Component {
             {
                 this.state.showPrompt === undefined ?
                 <div style={{textAlign: "center", margin: "0 200px"}}>
-                    <Alert variant="info">
+                    <Alert variant="info" >
                         <Alert.Heading style={{fontSize: "large"}}>Please, select above how do you wish to proceed!</Alert.Heading>
                     </Alert>
                 </div>
@@ -78,7 +76,7 @@ class Registry extends Component {
                 <Aux>
                     
                  {/* here we implement the second dropdown  */}
-                <div  className={classes.Content}> <p>How do you want to fetch the registry?</p>
+                <div  className="Content"> <p>How do you want to fetch the registry?</p>
             
                 <Dropdown  >
                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic">

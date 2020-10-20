@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {Navbar, Container, Col} from 'react-bootstrap';
-import classes from './Footer.css'
+import './Footer.css'
 
 class Footer extends Component {
     render() {
@@ -14,7 +14,7 @@ class Footer extends Component {
                         <div style={{color: "white"}}>
                             {fullYear} - {fullYear + 1},
                             All Rights Reserved -&nbsp;  
-                            <a className={classes.Anchor} style={{color: "#008B8B"}} href="https://github.com/orlenyslp/Caterpillar" target="_blank" rel="noopener noreferrer">
+                            <a className="Anchor" style={{color: "#008B8B"}} href="https://github.com/orlenyslp/Caterpillar" target="_blank" rel="noopener noreferrer">
                             Caterpillar
                             </a> 
                         </div>

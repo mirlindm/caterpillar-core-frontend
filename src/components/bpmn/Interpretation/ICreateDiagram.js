@@ -107,14 +107,16 @@ class ICreateDiagram extends Component {
                         <div style={{marginTop: "10px"}}> </div>
                 </div>
                 
-                <Card className="bg-gray-dark " style={{border: "2px solid #008B8B", width: "100%", height: "100%"}}>
+                <Card className="bg-gray-dark " style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}>
                     <div id="bpmncontainer">
                         <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
                         <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
                     </div>
                 </Card>
 
-                <Button onClick={this.saveModelHandler} variant="primary" type="submit" style={{border: "1px solid #008B8B", marginTop: "10px"}} >
+                <Button onClick={this.saveModelHandler} 
+                    variant="primary" type="submit" 
+                    style={{marginLeft: "-60px", border: "1px solid #008B8B", marginTop: "10px"}} >
                     Save
                 </Button>
 

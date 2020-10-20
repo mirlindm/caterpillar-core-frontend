@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 
 import {Jumbotron, Button} from 'react-bootstrap';
-//import classes from './Welcome.css';
 
 class Welcome extends Component {
     render() {
         
         return (
             <div>
-                <Jumbotron className="bg-dark text-white" style={{border: "1px solid #008B8B"}}>
+                <Jumbotron className="bg-dark text-white" style={{border: "1px solid #008B8B", background: "linear-gradient(to right, #343a40, #3A6073)"}}>
                     <h1 style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
                         Welcome to Caterpillar
                     </h1>

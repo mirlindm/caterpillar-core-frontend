@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 
 import BpmnModelling from '../../bpmn/BpmnModelling';
-import classes from './RegistryId.css';
+import './RegistryId.css';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -82,10 +82,10 @@ class RegistryId extends Component {
 
             //Fetch registry by ID
 
-            <div className={classes.Content}>
+            <div className="Content">
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header>
-                        <p style={{ margin: 0,  fontWeight: "bolder", fontSize: "large"}}>Fetch Registriy by its ID</p>
+                        <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registriy by its ID</p>
                     </Card.Header>
 
                     

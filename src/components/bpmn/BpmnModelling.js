@@ -9,11 +9,11 @@ import CCreateDiagram from './Compilation/CCreateDiagram';
 import CUploadDiagram from './Compilation/CUploadDiagram';
 import ICreateDiagram from './Interpretation/ICreateDiagram';
 import IUploadDiagram from './Interpretation/IUploadDiagram';
+import './BpmnModelling.css';
 
 
 import {Dropdown, Alert, Table} from 'react-bootstrap'; 
 
-import classes from './BpmnModelling.css'
 
 class BpmnModelling extends Component {
 
@@ -45,10 +45,11 @@ class BpmnModelling extends Component {
     render() {
         return (
             <Aux>
-                {/* I CAN CONFIGURE HERE THE ENGINE */}
+                {/* I CAN CONFIGURE HERE THE ENGINE */} 
                     {/* Ask  user if they want to upload a model or create a new one */}
 
-                <div  className={classes.Content}> <p style={{  fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>Upload your model or create a new one ?</p>
+                <div  className="Content"> 
+                    <p style={{  fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>Upload your model or create a new one ?</p>
                 
                     <Dropdown >
                         <Dropdown.Toggle variant="outline-info" id="dropdown-basic">

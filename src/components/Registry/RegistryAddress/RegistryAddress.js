@@ -6,7 +6,7 @@ import BpmnModelling from '../../bpmn/BpmnModelling';
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
-import classes from './RegistryAddress.css';
+import './RegistryAddress.css';
 import axios from 'axios';
 
 class RegistryAddress extends Component {
@@ -18,7 +18,6 @@ class RegistryAddress extends Component {
             address: ''
         }
 
-       
     }
 
     getRegistriesByAddressHandler = (event) => {
@@ -74,10 +73,10 @@ class RegistryAddress extends Component {
 
             //* 1st: Fetch Registries from the Blockchain Address 
 
-            <div className={classes.Content}>
+            <div className="Content">
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header>
-                        <p style={{ margin: 0, fontWeight: "bolder", fontSize: "large"}}>Fetch Registry by its Blockchain Address</p>
+                        <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registry by its Blockchain Address</p>
                     </Card.Header>
 
                     

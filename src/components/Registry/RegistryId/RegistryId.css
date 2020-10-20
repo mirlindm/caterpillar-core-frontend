@@ -1,11 +1,11 @@
 .Content {
-    background-color: #272B30;
+    background-color: #343a40;
     width: 100%;
     border: 1px solid #008B8B;
     padding: 50px;
     margin: auto;
     border-radius: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
     color: white;
     font-weight: bold;
 }

@@ -7,8 +7,12 @@ import { Link } from 'react-router-dom';
 class NavigationBar extends Component {
 
     render() {
+        // const fontSettings = {
+        //     backgroundColor: "#616161" 
+        // }
+        //style={fontSettings}
         return (
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="dark"  variant="dark"> 
                 <Link to={""} className="navbar-brand">
                     Caterpillar
                 </Link>

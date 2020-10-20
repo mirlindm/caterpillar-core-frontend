@@ -1,5 +1,7 @@
 .Content {
     background-color: #272B30;
+    background: -webkit-linear-gradient(to right, #343a40, #3A6073);
+    background: linear-gradient(to right, #343a40, #3A6073);
     width: 100%;
     border: 1px solid #008B8B;
     padding: 50px;
@@ -9,6 +11,4 @@
     color: white;
     font-weight: bolder;
     font-size: large;
-
-    
 }

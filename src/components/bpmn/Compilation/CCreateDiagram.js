@@ -113,7 +113,7 @@ class CCreateDiagram extends Component {
 
         <Card
           className="bg-gray-dark "
-          style={{ border: "2px solid #008B8B", width: "100%", height: "100%" }}
+          style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}
         >
           <div id="bpmncontainer">
             <div
@@ -137,12 +137,12 @@ class CCreateDiagram extends Component {
           onClick={this.saveModelHandler}
           variant="primary"
           type="submit"
-          style={{ border: "1px solid #008B8B", marginTop: "10px" }}
+          style={{marginLeft: "-60px", border: "1px solid #008B8B", marginTop: "10px" }}
         >
           Save
         </Button>
 
-        <div style={{ marginTop: "40px", paddingTop: "10px" }}></div>
+        <div style={{  marginTop: "40px", paddingTop: "10px"}}></div>
       </Aux>
     );
   };

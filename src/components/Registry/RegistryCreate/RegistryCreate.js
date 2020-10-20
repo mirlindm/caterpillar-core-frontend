@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import RegistryToast from '../RegistryToast/RegistryToast'; 
 import BpmnModelling from '../../bpmn/BpmnModelling';
-import classes from './RegistryCreate.css';
+import './RegistryCreate.css';
 
 import {Card, Form, Button, Col} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -55,10 +55,10 @@ class RegistryCreate extends Component {
                     <RegistryToast children={{show: this.state.show, message: "Registry Created Successfully."}} />
                 </div>
 
-                <div className={classes.Content} >
+                <div className="Content" >
                     <Card className={"border border-dark bg-dark text-white"}>
                         <Card.Header>
-                            <p style={{ margin: 0, fontWeight: "bolder", fontSize: "large"}}>Create a new Runtime Registry</p>
+                            <p style={{ margin: 0, fontSize: "medium"}}>Create a new Runtime Registry</p>
                         </Card.Header>
                         
                         <Form onSubmit={this.createRegistryHandler} id="registry">
@@ -98,13 +98,7 @@ class RegistryCreate extends Component {
                         </Form>
                     </Card>
                 </div>
-
-                            
-
             </div>
-            
-                        
-
         );
     }
 }

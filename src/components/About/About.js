@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import classes from './About.css'
+import './About.css'
 import {Button} from 'react-bootstrap';
 
 class About extends Component {
     render () {
         return (
             <div className="text-white">
-                <div className={classes.par}> 
+                <div className="par"> 
                 <h2 style={{fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
                 <br/>
                 <p>
@@ -26,7 +26,7 @@ class About extends Component {
                 with the instances of business process running on the blockchain.
                 <br/> <br/>
                 
-                You can find more information on how to run Caterpillar Rest Api by clicking <a className={classes.Anchor} href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
+                You can find more information on how to run Caterpillar Rest Api by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
                 <br />
                 <Button href={"/"} variant="outline-info">Back Home</Button> 
@@ -34,7 +34,7 @@ class About extends Component {
 
 
                 </div>
-               
+                <div style={{marginTop: "60px"}}>   </div>
             </div>
         );
     }
