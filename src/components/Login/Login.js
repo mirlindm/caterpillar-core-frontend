@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {Button, Form} from 'react-bootstrap';
 
-import classes from './Login.css'
+import './Login.css'
 
 class Login extends Component {
     render() {
         return(
-            <div className={classes.Content}> 
+            <div className="Content" style={{width: "50%"}}> 
            <p style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Please Login</p>
 
             <Form>
@@ -23,7 +23,7 @@ class Login extends Component {
                         <Form.Control type="password" placeholder="Enter Password" />
                     </Form.Group>
                   
-                    <Button variant="outline-info" type="submit" style={{fontFamily: "Trocchi sans-serif", fontSize: "20px", fontWeight: "normal", lineHeight: "20px" }}>
+                    <Button variant="outline-info" type="submit" style={{fontFamily: "Trocchi sans-serif", width: "100%", fontSize: "20px", fontWeight: "normal", lineHeight: "20px" }}>
                         Submit
                     </Button>
                 </Form>

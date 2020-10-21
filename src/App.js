@@ -9,6 +9,7 @@ import About from './components/About/About';
 import Welcome from './components/Welcome/Welcome';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import Footer from './components/Footer/Footer';
+import Login from './components/Login/Login';
 import Registry from './components/Registry/Registry';
 import BpmnModelling from './components/bpmn/BpmnModelling';
 
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/" exact component={Welcome} />
             <Route path="/registry" exact component={Registry} />
             <Route path="/modeler" exact component={BpmnModelling} />
+            <Route path="/login" exact component={Login} />
             <Route path="/about" exact component={About} />
           </Switch>
           
