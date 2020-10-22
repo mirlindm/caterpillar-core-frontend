@@ -1,11 +1,50 @@
-.Content {
-    background-color: #272B30;
-    width: 50px;
-    border: 1px solid #008B8B;
-    padding: 50px;
+.outer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    
+  }
+  
+.inner {
+    width: 450px;
     margin: auto;
-    border-radius: 10px;
-    margin-bottom: 40px; 
-    color: white;
-    font-weight: bold;
-}
+    background: #ffffff;
+    background-color: #343a40;
+    background: -webkit-linear-gradient(to right, #343a40, #3A6073);
+    background: linear-gradient(to right, #343a40, #3A6073);
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    border: 1px solid #008B8B; ;
+    transition: all .3s;
+  }
+  
+  .outer .form-control:focus {
+    border-color: #167bff;
+    box-shadow: none;
+  }
+  
+  .outer h3 {
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    padding-bottom: 20px;
+  }
+  
+  .custom-control-label {
+    font-weight: 400;
+  }
+  
+  .forgot-password,
+  .forgot-password a {
+    text-align: right;
+    font-size: 13px;
+    padding-top: 10px;
+    color: #7f7d7d;
+    margin: 0;
+  }
+  
+  .forgot-password a {
+    color: #167bff;
+  }

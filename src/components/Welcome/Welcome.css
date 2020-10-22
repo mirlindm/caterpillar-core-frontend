@@ -6,3 +6,14 @@
     border: 2px solid palevioletred;
     border-radius: 3px;
 }
+
+.read-more-link{
+    color: blueviolet;
+    text-decoration: underline;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+.extra-content{
+    color: cornflowerblue;
+    font-weight: 500;
+  }
