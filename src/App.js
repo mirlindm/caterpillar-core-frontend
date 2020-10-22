@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import Registry from './components/Registry/Registry';
 import BpmnModelling from './components/bpmn/BpmnModelling';
+import Error from './components/Error/Error';
 
 
 class App extends Component {
@@ -31,11 +32,13 @@ class App extends Component {
       <Row>
         <Col lg={12} style={marginTop}>
           <Switch>
-            <Route path="/" exact component={Welcome} />
+            <Route path="/" exact component={Login} />
+            <Route path="/welcome/:username" exact component={Welcome} />
             <Route path="/registry" exact component={Registry} />
             <Route path="/modeler" exact component={BpmnModelling} />
             <Route path="/login" exact component={Login} />
             <Route path="/about" exact component={About} />
+            <Route component={Error} />
           </Switch>
           
          {/* <Registry /> */}

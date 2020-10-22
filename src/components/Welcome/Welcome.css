@@ -17,3 +17,28 @@
     color: cornflowerblue;
     font-weight: 500;
   }
+
+.read-more-btn :hover {
+  text-decoration: none;
+  background-color: none;
+  outline: none;
+  }
+
+.read-more-btn :focus {
+    text-decoration: none;
+    background-color: none;
+    outline: none;
+    }
+
+.read-more-btn :visited {
+      text-decoration: none;
+      background-color: none;
+      outline: none;
+      
+  }
+
+.read-more-btn :active {
+    text-decoration: none;
+    background-color: none;
+    outline: none;
+}
