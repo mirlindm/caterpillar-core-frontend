@@ -1,10 +1,12 @@
 import React,{useState} from 'react';
 
+// import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
+
 import {Jumbotron, Button} from 'react-bootstrap';
 import './Welcome.css'
 
 function  Welcome(props) {
-    const [readMore,setReadMore]=useState(false);
+    const [readMore, setReadMore]=useState(false);
 
     const extraContent=<div>
         <p style={{marginTop: "-20px"}}>
@@ -14,6 +16,9 @@ function  Welcome(props) {
             Moreover, Caterpillar exhibits a REST API that can be used to interact with running instances of the deployed process models.
         </p>
     </div>
+
+    // const getUser = sessionStorage.getItem('authenticatedUser');
+    // console.log(this.getUser.username)
 
     const linkName = readMore ? 'Read Less <<' : 'Read More >>'
         
