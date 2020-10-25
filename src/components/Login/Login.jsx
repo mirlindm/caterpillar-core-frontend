@@ -33,7 +33,7 @@ export default class Login extends Component {
         }
 
         loginClicked(event) {
-            event.preventDefault();
+            
             //mirlind,pass
             if(this.state.username==='mirlind' && this.state.password==='pass'){
                 AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
@@ -95,7 +95,7 @@ export default class Login extends Component {
                             </div>
                         </div>
 
-                        <Button variant="outline-info" className="btn btn-dark btn-lg btn-block" onClick={this.loginClicked}>Log in</Button>
+                        <Button type="submit" variant="outline-info" className="btn btn-dark btn-lg btn-block" onClick={this.loginClicked}>Log in</Button>
                         <p className="forgot-password text-right">                
                         </p>
                     </form>

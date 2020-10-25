@@ -29,7 +29,8 @@ class About extends Component {
                 You can find more information on how to run Caterpillar Rest Api by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
                 <br />
-                <Button href={"/welcome/:username"} variant="outline-info">Back Home</Button> 
+                {/* hardcoded value below: /welcome/:mirlind */}
+                <Button href={"/welcome/mirlind"} variant="outline-info">Back Home</Button> 
                 </p>
 
 

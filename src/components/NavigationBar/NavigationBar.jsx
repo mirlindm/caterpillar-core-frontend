@@ -14,7 +14,7 @@ class NavigationBar extends Component {
                 {isUserLoggedIn && <Link to={"/welcome/:username"} className="navbar-brand">Caterpillar</Link>}
                 {!isUserLoggedIn && <Link to={"/login"} className="navbar-brand">Caterpillar</Link>}
                     <ul className="navbar-nav">
-                        {isUserLoggedIn && <li><Link to={"/registry"} className="nav-link">Runtime Registry</Link> </li>}
+                        {isUserLoggedIn ?  <li><Link to={"/registry"} className="nav-link">Runtime Registry</Link> </li> : null}
                         {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>}
                         {isUserLoggedIn && <li><Link to={"/about"} className="nav-link">About</Link></li>}
                     </ul>
