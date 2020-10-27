@@ -42,7 +42,7 @@ class App extends Component {
                       <AuthenticatedRoute path="/welcome/:username" exact component={Welcome} />
                       <AuthenticatedRoute path="/registry" exact component={Registry} />
                       <AuthenticatedRoute path="/modeler" exact component={BpmnModelling} />
-                      <AuthenticatedRoute path="/logout" exact component={Logout} />
+                      <Route path="/logout" exact component={Logout} />
                       <AuthenticatedRoute path="/about" exact component={About} />
 
                       <Route component={Error} />

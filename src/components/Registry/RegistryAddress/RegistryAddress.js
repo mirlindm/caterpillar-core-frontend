@@ -73,7 +73,7 @@ class RegistryAddress extends Component {
 
             //* 1st: Fetch Registries from the Blockchain Address 
 
-            <div className="Content">
+            <div className="Content"  style={{marginBottom: "70px"}}>
                 <Card className={"border border-dark bg-dark text-white"}>
                     <Card.Header>
                         <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registry by its Blockchain Address</p>
@@ -155,7 +155,7 @@ class RegistryAddress extends Component {
                         </div>  
                       </Card.Footer>  
                     }
-                </Card>
+                </Card>            
             </div>
         );
     }

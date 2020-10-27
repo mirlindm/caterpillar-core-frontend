@@ -12,6 +12,20 @@
 
 }
 
+.link-button {
+    border: 1px solid #008B8B;
+    border-radius: 7px;
+    padding: 7px;
+    color: #008B8B;
+}
+
+.link-button:hover {
+ text-decoration: none;
+ color: white;
+ background-color: #44bcd8;
+ padding: 10px;
+}
+
 /* .par3{
     background-color: #272B30;
     width: 100%;

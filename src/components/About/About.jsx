@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
+import {Link} from 'react-router-dom';
+
 import './About.css'
-import {Button} from 'react-bootstrap';
 
 class About extends Component {
     render () {
+
+        const getUser = sessionStorage.getItem('authenticatedUser').toString();
+
         return (
             <div className="text-white">
                 <div className="par"> 
@@ -30,12 +34,12 @@ class About extends Component {
                 <br/>
                 <br />
                 {/* hardcoded value below: /welcome/:mirlind */}
-                <Button href={"/welcome/mirlind"} variant="outline-info">Back Home</Button> 
+                <Link to={`/welcome/${getUser}`} className="link-button">Back Home</Link> 
                 </p>
 
 
                 </div>
-                <div style={{marginTop: "60px"}}>   </div>
+                <div style={{marginTop: "60px"}}></div>
             </div>
         );
     }

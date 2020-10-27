@@ -6,6 +6,8 @@ import {Jumbotron, Button} from 'react-bootstrap';
 import './Welcome.css'
 
 function  Welcome(props) {
+
+    
     const [readMore, setReadMore]=useState(false);
 
     const extraContent=<div>
@@ -17,8 +19,9 @@ function  Welcome(props) {
         </p>
     </div>
 
-    // const getUser = sessionStorage.getItem('authenticatedUser');
-    // console.log(this.getUser.username)
+    const getUser = sessionStorage.getItem('authenticatedUser').toString();
+
+    // {props.match.params.username} - was originally used (also in the in28mins video) to get the name of the current user
 
     const linkName = readMore ? 'Read Less <<' : 'Read More >>'
         
@@ -26,7 +29,7 @@ function  Welcome(props) {
             <div>
                 <Jumbotron className="bg-dark text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", background: "linear-gradient(to right, #343a40, #3A6073)"}}>
                     <h1 className="text-white" style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
-                        Hello <span style={{borderBottom: "1px solid #008B8B"}}>{props.match.params.username}</span>, Welcome to Caterpillar
+                        Hello <span style={{borderBottom: "1px solid #008B8B"}}> {getUser} </span>, Welcome to Caterpillar
                     </h1>
                     <br/>
                     <p onClick={()=>{setReadMore(!readMore)}}>Caterpillar is a Business Process Management System (BPMS) prototype

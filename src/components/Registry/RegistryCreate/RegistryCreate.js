@@ -55,8 +55,8 @@ class RegistryCreate extends Component {
                     <RegistryToast children={{show: this.state.show, message: "Registry Created Successfully."}} />
                 </div>
 
-                <div className="Content" >
-                    <Card className={"border border-dark bg-dark text-white"}>
+                <div className="Content">
+                    <Card className={"border border-dark bg-dark text-white"} >
                         <Card.Header>
                             <p style={{ margin: 0, fontSize: "medium"}}>Create a new Runtime Registry</p>
                         </Card.Header>
@@ -98,7 +98,10 @@ class RegistryCreate extends Component {
                         </Form>
                     </Card>
                 </div>
+                <div style={{marginTop: "70px"}}> </div>
+                
             </div>
+            
         );
     }
 }

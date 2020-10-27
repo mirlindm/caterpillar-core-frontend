@@ -5,7 +5,7 @@ import AuthenticationService from '../AuthenticationService/AuthenticationServic
 // import SuccessLogin from './SuccessLogin';
 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {Button, Alert, Form} from 'react-bootstrap';
+import {Alert, Form} from 'react-bootstrap';
 
 import './Login.css'
 
@@ -24,20 +24,21 @@ export default class Login extends Component {
         this.loginClicked = this.loginClicked.bind(this);
     }
 
-        inputChangeHandler(event) {
+    inputChangeHandler(event) {
             this.setState(
                 {
                     [event.target.name]: event.target.value
                 }
             )
-        }
+    }
 
         loginClicked(event) {
-            
+            event.preventDefault();            
             //mirlind,pass
-            if(this.state.username==='mirlind' && this.state.password==='pass'){
+            if(this.state.username === 'rait' && this.state.password === 'pass'){
                 AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
                 this.props.history.push(`/welcome/${this.state.username}`)
+                window.location.reload();
                 //this.setState({showSuccessMessage:true})
                 //this.setState({hasLoginFailed:false})
         }
@@ -67,7 +68,7 @@ export default class Login extends Component {
                         
                         <div className="form-group">
                             <label className="text-white">Username</label>
-                            <input type="username" 
+                            <input type="text" 
                                     name="username" 
                                     className="form-control" 
                                     placeholder="Enter email" 
@@ -95,7 +96,7 @@ export default class Login extends Component {
                             </div>
                         </div>
 
-                        <Button type="submit" variant="outline-info" className="btn btn-dark btn-lg btn-block" onClick={this.loginClicked}>Log in</Button>
+                        <button type="submit" variant="outline-info" className="btn btn-dark btn-lg btn-block" onClick={this.loginClicked}>Log in</button>
                         <p className="forgot-password text-right">                
                         </p>
                     </form>
