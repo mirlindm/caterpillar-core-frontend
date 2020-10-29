@@ -13,7 +13,7 @@ class About extends Component {
             <div className="text-white">
                 <div className="par"> 
                 <h2 style={{fontFamily: "Trocchi", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
-                <br/>
+                
                 <p>
                 Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and
                 that relies on the translation of process models into smart contracts. 
@@ -30,7 +30,7 @@ class About extends Component {
                 with the instances of business process running on the blockchain.
                 <br/> <br/>
                 
-                You can find more information on how to run Caterpillar Rest Api by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
+                You can find more information on how to run Caterpillar Rest Api Application by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
                 <br />
                 {/* hardcoded value below: /welcome/:mirlind */}

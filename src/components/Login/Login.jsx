@@ -54,7 +54,7 @@ export default class Login extends Component {
                 <div className="outer">
                     <div className="inner">
                     <form>
-                        <h3 style={{color: "white"}}>Log in to use Caterpillar <hr style={{backgroundColor: "#008B8B"}} /> </h3>  
+                        <h3 style={{color: "white"}}>Sign in to use Caterpillar <hr style={{backgroundColor: "#008B8B"}} /> </h3>  
 
                         {/* <InvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/> */}
                         {this.state.hasLoginFailed && 
@@ -71,7 +71,7 @@ export default class Login extends Component {
                             <input type="text" 
                                     name="username" 
                                     className="form-control" 
-                                    placeholder="Enter email" 
+                                    placeholder="Enter username" 
                                     onChange={this.inputChangeHandler} 
                                     required />
                             <Form.Text className="text-muted">
@@ -89,14 +89,20 @@ export default class Login extends Component {
                                    required />
                         </div>
 
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="custom-control-input" id="customCheck1" />
                                 <label className="custom-control-label text-white" htmlFor="customCheck1">Remember me</label>
                             </div>
-                        </div>
+                        </div> */}
+                        <br/>
+                        <button type="submit" 
+                            style={{border: "1px solid #008B8B"}} 
+                            className="btn btn-dark btn-lg btn-block" 
+                            onClick={this.loginClicked}>
+                                Login
+                        </button>
 
-                        <button type="submit" variant="outline-info" className="btn btn-dark btn-lg btn-block" onClick={this.loginClicked}>Log in</button>
                         <p className="forgot-password text-right">                
                         </p>
                     </form>

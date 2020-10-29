@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import {Route, Redirect} from 'react-router-dom';
+
 import RegistryToast from '../RegistryToast/RegistryToast'; 
 import BpmnModelling from '../../bpmn/BpmnModelling';
 import './RegistryCreate.css';
@@ -20,6 +22,7 @@ class RegistryCreate extends Component {
             registriesById: [],
             registriesByAddress: [],
             errorMessage: 'No registry found!',
+            goto: null
           
         }
         this.createRegistryHandler = this.createRegistryHandler.bind(this);
@@ -45,6 +48,10 @@ class RegistryCreate extends Component {
         this.setState({registry: []})
     }
 
+    gotofacebookHandler = (event) => {
+        this.setState({goto: 'fb'})
+    }
+
     render() {
         return (
 
@@ -67,15 +74,17 @@ class RegistryCreate extends Component {
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
                                                 this.state.registry.length === 0 ?
-                                                <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>
+                                                <p onClick={this.gotofacebookHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
                                                     <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
                                                     <div style={{"display" : "none"}}>
                                                         <BpmnModelling registryCreateId={this.state.registry.ID} />
                                                     </div>
-                                                </div>
+                                                </div>                                                                                        
                                             }
+                                           
+
                                     </Form.Group>
                                 </Form.Row>
                             
@@ -93,11 +102,19 @@ class RegistryCreate extends Component {
                                     </Button>
                                     : null
                                     }
-                            </Card.Footer>
-                            
+                            </Card.Footer>                                                        
                         </Form>
-                    </Card>
+                    </Card> <br/>
+                    
                 </div>
+                
+                    {
+                                this.state.goto === 'fb' ?
+                                // <Route  render={() => (window.location = "https://www.facebook.com")} />
+                                <BpmnModelling/>
+                                : null
+                    }
+                    
                 <div style={{marginTop: "70px"}}> </div>
                 
             </div>

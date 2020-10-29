@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 
 // import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
-
+import {Link} from 'react-router-dom';
 import {Jumbotron, Button} from 'react-bootstrap';
 import './Welcome.css'
 
@@ -29,22 +29,24 @@ function  Welcome(props) {
             <div>
                 <Jumbotron className="bg-dark text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", background: "linear-gradient(to right, #343a40, #3A6073)"}}>
                     <h1 className="text-white" style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
-                        Hello <span style={{borderBottom: "1px solid #008B8B"}}> {getUser} </span>, Welcome to Caterpillar
+                        Hello <span style={{borderBottom: "1px solid #008B8B"}}>{getUser}</span>, Welcome to Caterpillar
                     </h1>
                     <br/>
                     <p onClick={()=>{setReadMore(!readMore)}}>Caterpillar is a Business Process Management System (BPMS) prototype
                     that runs on top of Ethereum and that relies on the translation of process models into smart contracts. <Button className="read-more-btn" style={{borderTop: "none", borderRight: 'none', borderLeft: 'none'}} variant="outline-info" size="sm"> {linkName} </Button> </p>
                     {readMore && extraContent}
                     <p>
-                        <Button href={"/registry"} variant="outline-info">Get Started</Button> {' '}
+                        {/* <Button href={"/registry"} variant="outline-info">Get Started</Button> {' '} */}
+                        <Link to={'/registry'} className="link-button">Get Started</Link> {' '} 
                     
-                        <Button href={"/about"} variant="outline-info">Learn More About Caterpillar</Button>
+                        {/* <Button href={"/about"} variant="outline-info">Learn More About Caterpillar</Button> */}
+                        <Link to={'/about'} className="link-button">Learn More About Caterpillar</Link>
                     </p>
 
                     
                 </Jumbotron>
 
-                <div style={{marginTop: "40px", paddingTop: "10px"}}>   </div>
+                <div style={{marginTop: "60px", paddingTop: "10px"}}>   </div>
               </div>
         );
     };

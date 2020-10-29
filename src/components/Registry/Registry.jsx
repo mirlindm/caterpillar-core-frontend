@@ -16,8 +16,8 @@ class Registry extends Component {
         super(props);
 
         this.state = {
-            registriesById: [],
-            registriesByAddress: [],
+            // registriesById: [],
+            // registriesByAddress: [],
             showPrompt: undefined,
             getRegistryPrompt: ''
         }
@@ -48,8 +48,8 @@ class Registry extends Component {
                 {/* Ask  user if they want to create a new registry or use an existing one */}
 
             <div  className="Content"> 
-                <p style={{fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>
-                    Do you want to create a new registry ?
+                <p style={{fontFamily: "Trocchi sans-serif", color: "white", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>
+                    Do you want to create a new registry?
                 </p>
             
                 <Dropdown>
@@ -79,7 +79,7 @@ class Registry extends Component {
                 <Aux>
                     
                  {/* here we implement the second dropdown  */}
-                <div  className="Content"  > <p>How do you want to fetch the registry?</p>
+                <div  className="Content"> <p style={{fontFamily: "Trocchi sans-serif", color: "white", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>How do you want to fetch the registry?</p>
             
                 <Dropdown>
                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
@@ -93,8 +93,6 @@ class Registry extends Component {
                 </Dropdown>
                 </div>
                 
-               
-
                   {/* Use existing registry - in this case we need to run the get requests to the server and list the registries    */}
 
                 {

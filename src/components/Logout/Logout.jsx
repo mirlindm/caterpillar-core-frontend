@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {Redirect} from 'react-router-dom';
 
+import './Logout.css'
+
 class Logout extends Component {
     state = {
         redirect: false
@@ -18,12 +20,12 @@ class Logout extends Component {
     render() {
         return(
 
-        <div style={{margin: "30px"}}>
-            <hr style={{lineHeight: "5px"}} />
+        <div style={{margin: "40px"}}>
+            <hr className="style-one" />
 
-            <h2 style={{fontFamily: "Trocchi", color: "white", fontWeight: "normal", lineHeight: "48px", textAlign: "center"}}> You are logged out </h2>
+            <h2 style={{color: "white", fontWeight: "normal", lineHeight: "48px", textAlign: "center"}}> You are logged out </h2>
             
-            <div className="container text-muted" style={{fontFamily: "Trocchi", fontSize: "20px", fontWeight: "normal", lineHeight: "48px", textAlign: "center"}}> 
+            <div className="container text-muted" style={{ fontSize: "20px", fontWeight: "normal", lineHeight: "48px", textAlign: "center"}}> 
                 Thank you for using Caterpillar! <br/> <br/>
                 <span style={{color: "white"}}>
                 You will be redirected to the Login Page
@@ -35,7 +37,7 @@ class Logout extends Component {
                 }
 
             </div>
-            <hr/>
+            <hr className="style-one" />
         </div>
         );
     }
