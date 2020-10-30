@@ -4,6 +4,8 @@ import Aux from '../../hoc/Auxiliary';
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 // import BpmnModelerComponent from './bpmn.modeler.component.jsx';
 
+import './BpmnModelling.css';
+
 
 import CCreateDiagram from './Compilation/CCreateDiagram';
 import CUploadDiagram from './Compilation/CUploadDiagram';
@@ -49,7 +51,9 @@ class BpmnModelling extends Component {
                     {/* Ask  user if they want to upload a model or create a new one */}
 
                 <div  className="Content"> 
-                    <p style={{  fontFamily: "Trocchi sans-serif",  color: "#008B8B", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>Upload your model or create a new one ?</p>
+                    <p style={{fontFamily: "Trocchi sans-serif", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>
+                        Upload your model or create a new one?
+                    </p>
                 
                     <Dropdown >
                         <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
@@ -103,7 +107,7 @@ class BpmnModelling extends Component {
                     this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
                     /* Upload existing model with compilation engine  */
                     <div>
-                        <div style={{textAlign: "center", backgroundColor: "#008B8B", color: "white", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <div style={{textAlign: "center", backgroundColor: "#008B8B", color: "white", margin: "0px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
                             <tbody>
@@ -113,15 +117,15 @@ class BpmnModelling extends Component {
                             </tr>
                             <tr>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptModel} </strong>
+                                   <strong> {this.state.showPromptModel}  </strong>
                                 </td>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptEngine} </strong>
+                                   <strong> {this.state.showPromptEngine}  </strong> 
                                 </td>
                             </tr>
                             </tbody>
                         </Table>
-                        <p  style={{textAlign:"center", backgroundColor: "#008B8B", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
+                        <p  style={{textAlign:"center", fontSize: "20px", backgroundColor: "#008B8B", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div> 
                         <div style={{marginTop: "50px"}}> </div>
                         <CUploadDiagram registryCreateId={this.props.registryCreateId} registryIdAddress={this.props.registryIdAddress} registryAddressAddress={this.props.registryAddressAddress} />
@@ -130,7 +134,7 @@ class BpmnModelling extends Component {
                     this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
                     /* Upload existing model with interpretation engine  */
                     <div>
-                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "0px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
                             <tbody>
@@ -140,10 +144,10 @@ class BpmnModelling extends Component {
                             </tr>
                             <tr>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptModel} </strong>
+                                   <strong> {this.state.showPromptModel}  </strong>
                                 </td>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptEngine} </strong>
+                                   <strong> {this.state.showPromptEngine}  </strong> 
                                 </td>
                             </tr>
                             </tbody>
@@ -157,7 +161,7 @@ class BpmnModelling extends Component {
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
                     /* Create new model with compilation engine */
                     <div>
-                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "0px 120px", padding: "0 10px", border: "1px solid #008B8B", marginBottom: "20px", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
                             <tbody>
@@ -167,10 +171,10 @@ class BpmnModelling extends Component {
                             </tr>
                             <tr>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptModel} </strong>
+                                   <strong> {this.state.showPromptModel}  </strong>
                                 </td>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptEngine} </strong>
+                                   <strong> {this.state.showPromptEngine}  </strong> 
                                 </td>
                             </tr>
                             </tbody>
@@ -183,7 +187,7 @@ class BpmnModelling extends Component {
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
                     /* Create new model with interpretation engine */
                     <div>
-                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "20px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "0px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
                             <tbody>
@@ -193,10 +197,10 @@ class BpmnModelling extends Component {
                             </tr>
                             <tr>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptModel} </strong>
+                                   <strong> {this.state.showPromptModel}  </strong>
                                 </td>
                                 <td style={{border: "1px solid #008B8B"}}>
-                                <strong> {this.state.showPromptEngine} </strong>
+                                   <strong> {this.state.showPromptEngine}  </strong> 
                                 </td>
                             </tr>
                             </tbody>

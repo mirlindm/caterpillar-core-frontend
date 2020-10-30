@@ -15,7 +15,8 @@ class RegistryAddress extends Component {
 
         this.state = {
             registriesByAddress: [],
-            address: ''
+            address: '',
+            goto: null
         }
 
     }
@@ -38,7 +39,6 @@ class RegistryAddress extends Component {
      
     }
 
-
     registryChangeHandler = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -48,6 +48,10 @@ class RegistryAddress extends Component {
     resetRegistryInput = () =>  {
         this.setState({address: ''})
     }
+
+    goToModellerHandler = (event) => {
+        this.setState({goTo: 'modelling'})
+    } 
 
     render() {
 
@@ -69,93 +73,105 @@ class RegistryAddress extends Component {
             position: "relative"
           };
 
+
+
         return (
 
             //* 1st: Fetch Registries from the Blockchain Address 
+            <div>
+                <div className="Content"  style={{marginBottom: "70px"}}>
+                    <Card className={"border border-dark bg-dark text-white"}>
+                        <Card.Header>
+                            <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registry by its Blockchain Address</p>
+                        </Card.Header>
 
-            <div className="Content"  style={{marginBottom: "70px"}}>
-                <Card className={"border border-dark bg-dark text-white"}>
-                    <Card.Header>
-                        <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registry by its Blockchain Address</p>
-                    </Card.Header>
+                        
+                        <Form onReset={this.resetRegistryInput} onSubmit={e => {e.preventDefault(); this.getRegistriesByAddressHandler()}} id="registry">
+                            <Card.Body>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formGridTitle" >
+                                        {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
+                                        <Form.Control required autoComplete="off"
+                                            type="text"
+                                            name="address"
+                                            value={this.state.address}
+                                            onChange={this.registryChangeHandler}
+                                            className={"bg-dark text-white"}
+                                            placeholder="Enter Blockchain Address" />
+                                    </Form.Group>
+                                </Form.Row>
+                            
+                            </Card.Body>  
+                            <Card.Footer style={{"textAlign": "right"}}>
+                                <Button variant="info" type="submit">
+                                    Load Registries
+                                </Button> {' '}
 
+                                <Button variant="info" type="reset">
+                                    Reset
+                                </Button>
+
+                            </Card.Footer>
+                        </Form>
+
+                        <p style={{textAlign:"center", marginTop: "20px", color: "#008B8B"}}> Registry found: </p>
+
+                        <Table  style={{marginLeft: "0px"}} bordered hover striped variant="dark">
+                        {
+                                this.state.registriesByAddress.length === 0 ?
+                                    <thead>
+                                        <tr align="center">
+                                            <th onClick={this.goToModellerHandler} style={{color: "#008B8B"}}>No registry found!</th>
+                                        </tr> 
+                                    </thead> :
+                                        <tbody>
+                                            <tr>
+                                            <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Contract Name: </th>
+                                            <th style={{textAlign:"center", paddingRight:"50px"}}>  {this.state.registriesByAddress.contractName}</th> 
+                                            </tr>
+                                            <tr>
+                                            <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> ABI: </th>
+                                            <th style={fontSettings}>  {this.state.registriesByAddress.abi}</th> 
+                                            </tr>
+                                            <tr >
+                                            <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Byte Code: </th>
+                                            <th style={fontSettings}>  {this.state.registriesByAddress.bytecode}</th> 
+                                            </tr>
+                                            <tr>
+                                            <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> Solidity Code: </th>
+                                            <th style={fontSettings}>  {this.state.registriesByAddress.solidityCode}</th> 
+                                            </tr>
+                                            <tr>
+                                            <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> Address: </th>
+                                            <th onClick={this.goToModellerHandler} style={fontSettings}>  {this.state.registriesByAddress.address}</th> 
+                                            </tr>
+                                        </tbody>
+                                }
                     
-                    <Form onReset={this.resetRegistryInput} onSubmit={e => {e.preventDefault(); this.getRegistriesByAddressHandler()}} id="registry">
-                         <Card.Body>
-                             <Form.Row>
-                                  <Form.Group as={Col} controlId="formGridTitle" >
-                                      {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
-                                      <Form.Control required autoComplete="off"
-                                          type="text"
-                                          name="address"
-                                          value={this.state.address}
-                                          onChange={this.registryChangeHandler}
-                                          className={"bg-dark text-white"}
-                                          placeholder="Enter Blockchain Address" />
-                                  </Form.Group>
-                              </Form.Row>
-                          
-                          </Card.Body>  
-                          <Card.Footer style={{"textAlign": "right"}}>
-                              <Button variant="info" type="submit">
-                                Load Registries
-                              </Button> {' '}
+                        </Table>
+                        {this.state.address === '' ?
+                        null
+                        :
+                        <Card.Footer style={{"textAlign": "right"}}>
+                            <Button variant="info" href={"/modeler"} >
+                                <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
+                            </Button> 
+                            <div style={{"display" : "none"}}>
+                                <BpmnModelling registryAddressAddress={this.state.registriesByAddress.address} />
+                            </div>  
+                        </Card.Footer>  
+                        }
+                    </Card> 
+                            
+                </div>
+                {
+                    this.state.goTo === 'modelling' ?
+                    // <Route  render={() => (window.location = "https://www.example.com")} />
+                    <BpmnModelling/>
+                    : null
+                }                    
+                <div style={{marginTop: "60px"}}> </div>
 
-                              <Button variant="info" type="reset">
-                                Reset
-                              </Button>
-
-                          </Card.Footer>
-                      </Form>
-
-                      <p style={{textAlign:"center", marginTop: "20px", color: "#008B8B"}}> Registry found: </p>
-
-                      <Table  style={{marginLeft: "0px"}} bordered hover striped variant="dark">
-                      {
-                               this.state.registriesByAddress.length === 0 ?
-                                <thead>
-                                    <tr align="center">
-                                        <th style={{color: "#008B8B"}}>No registry found!</th>
-                                    </tr> 
-                                </thead> :
-                                    <tbody>
-                                        <tr>
-                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Contract Name: </th>
-                                        <th style={{textAlign:"center", paddingRight:"50px"}}>  {this.state.registriesByAddress.contractName}</th> 
-                                        </tr>
-                                        <tr>
-                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> ABI: </th>
-                                        <th style={fontSettings}>  {this.state.registriesByAddress.abi}</th> 
-                                        </tr>
-                                        <tr >
-                                        <th style={{textAlign:"center", color: "#008B8B", paddingRight:"50px"}}> Byte Code: </th>
-                                        <th style={fontSettings}>  {this.state.registriesByAddress.bytecode}</th> 
-                                        </tr>
-                                        <tr>
-                                        <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> Solidity Code: </th>
-                                        <th style={fontSettings}>  {this.state.registriesByAddress.solidityCode}</th> 
-                                        </tr>
-                                        <tr>
-                                        <th style={{textAlign:"center", color: "#008B8B",  paddingRight:"50px"}}> Address: </th>
-                                        <th style={fontSettings}>  {this.state.registriesByAddress.address}</th> 
-                                        </tr>
-                                    </tbody>
-                               }
-                
-                      </Table>
-                      {this.state.address === '' ?
-                      null
-                      :
-                      <Card.Footer style={{"textAlign": "right"}}>
-                        <Button variant="info" href={"/modeler"} >
-                            <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                        </Button> 
-                        <div style={{"display" : "none"}}>
-                            <BpmnModelling registryAddressAddress={this.state.registriesByAddress.address} />
-                        </div>  
-                      </Card.Footer>  
-                    }
-                </Card>            
             </div>
         );
     }

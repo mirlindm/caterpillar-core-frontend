@@ -5,13 +5,15 @@ import Aux from '../../../hoc/Auxiliary';
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { emptyBpmn } from "../../../asset/empty.bpmn";
+import { paymentBpmn } from "../../../asset/empty.bpmn";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
-import {Form, Button, Card} from 'react-bootstrap';
+import './CUploadDiagram.css';
+
+import {Form, Alert, Button, Card} from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -58,7 +60,7 @@ class CUploadDiagram extends Component {
     }
 
     newBpmnDiagram = () => {
-        this.openBpmnDiagram(emptyBpmn);
+        this.openBpmnDiagram(paymentBpmn);
     };
     
     openBpmnDiagram = async (xml) => {
@@ -105,57 +107,64 @@ class CUploadDiagram extends Component {
                 {/* <BpmnModelerTest /> */}
                     
                 <div className="container text-white" 
-                    style={{border: "1px solid #008B8B", 
-                            borderRadius: "10px", 
-                            marginBottom: "40px"}}
+                    style={{
+                            //borderBottom: "1px solid #008B8B",
+                            //width: "550px",                         
+                            marginBottom: "20px",
+                            marginTop: "-30px",
+                            textAlign: "center",
+                            marginLeft: "120px",
+                            marginRight: "120px"
+                        }}
                 >
-                    <p 
-                    style={{fontFamily: "Trocchi", 
-                            color: "#008B8B", 
-                            fontSize: "25px", 
-                            fontWeight: "normal", 
-                            lineHeight: "48px", 
-                            textAlign: "center" }}
-                    >
-                    Upload and Save Your Model Below
-                    </p>
+                
+                <Alert style={{marginLeft: "-15px", borderRadius: "10px", marginRight: "225px", color: "black"}} size="sm" variant="info">
+                    Create and Save Your Model Below 
+                </Alert>
+
+                </div>
                         <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
-                            <Form.Group >
+                            <Form.Group>
                                 <Form.File 
-                                    style={{fontFamily: "Trocchi sans-serif",  
-                                            color: "#008B8B", 
+                                    style={{
                                             fontSize: "17px", 
                                             fontWeight: "normal", 
-                                            lineHeight: "15px"}} 
+                                            lineHeight: "15px",
+                                            color: "white",                                            
+                                            display: "inline-block",                                            
+                                            cursor: "pointer" ,
+                                        }} 
                                     id="exampleFormControlFile1" 
                                     name="uploadedDiagramName"
                                     onChange={this.uploadDiagramNameChangeHandler}
-                                    label="Please upload files with .bpmnn extension only"
+                                    label="Please upload .bpmnn files"
                                     variant="outline-info" />
                                     
                             </Form.Group>
 
-                            <Button variant="primary" type="submit">
+                            <Button className="link-button" variant="primary" type="submit" style={{marginBottom: "10px"}}>
                                 View Model
                             </Button>
 
                             { this.state.uploadedDiagramName === undefined ?
-                            <p 
-                                style={{fontFamily: "Trocchi sans-serif", 
-                                        marginTop: "10px", 
-                                        color: "#008B8B", 
+                            <Alert variant="info" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
                                         fontSize: "17px", 
-                                        fontWeight: "normal"}}
+                                        fontWeight: "normal",
+                                        borderRadius: "10px"
+                                    }}
                             > 
-                            Please upload a valid diagram! 
-                            </p>                        
+                            *Please upload a valid diagram 
+                            </Alert>                        
                             :
-                            // where the BPMN Model will be rendered
+                            // where the BPMN Model will be rendered if there is an uploaded diagram already!
                             <Aux>
                                 <Card className="bg-gray-dark" 
                                       style={{border: "2px solid #008B8B", 
-                                            marginTop: "10px", 
-                                            width: "100%", 
+                                            // marginTop: "10px", 
+                                            width: "118%",
+                                            marginLeft: "-85px", 
                                             height: "100%"}}>
                                                 
                                     <div id="bpmncontainer">
@@ -167,7 +176,7 @@ class CUploadDiagram extends Component {
                                 <Button 
                                     onClick={this.saveModelHandler} 
                                     variant="primary"  //type="submit"
-                                    style={{border: "1px solid #008B8B", marginTop: "10px"}} 
+                                    style={{marginLeft: "-45px", width: "150px",border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
                                 >
                                   Save
                                 </Button>
@@ -177,7 +186,7 @@ class CUploadDiagram extends Component {
 
                         {/* create some space between the button/form and the surrounding border */}
                         <div style={{marginTop: "10px"}}> </div>
-                </div>
+                
                 
                 {/* create some space from the footer */}
                 <div style={{marginTop: "20px", paddingTop: "10px"}}></div>

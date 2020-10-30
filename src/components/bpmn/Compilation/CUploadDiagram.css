@@ -1,0 +1,12 @@
+.link-button {
+    border: 1px solid #008B8B;
+    border-radius: 7px;
+    color: white;
+  }
+  
+  .link-button:hover {
+  text-decoration: none;
+  padding: 7px;
+  color: white;
+  background-color: gray;
+  }

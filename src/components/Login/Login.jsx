@@ -95,7 +95,7 @@ export default class Login extends Component {
                                 <label className="custom-control-label text-white" htmlFor="customCheck1">Remember me</label>
                             </div>
                         </div> */}
-                        <br/>
+                  
                         <button type="submit" 
                             style={{border: "1px solid #008B8B"}} 
                             className="btn btn-dark btn-lg btn-block" 

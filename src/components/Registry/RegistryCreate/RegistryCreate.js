@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Route, Redirect} from 'react-router-dom';
+// import {Route, Redirect} from 'react-router-dom';
 
 import RegistryToast from '../RegistryToast/RegistryToast'; 
 import BpmnModelling from '../../bpmn/BpmnModelling';
@@ -22,7 +22,7 @@ class RegistryCreate extends Component {
             registriesById: [],
             registriesByAddress: [],
             errorMessage: 'No registry found!',
-            goto: null
+            goTo: null
           
         }
         this.createRegistryHandler = this.createRegistryHandler.bind(this);
@@ -48,8 +48,8 @@ class RegistryCreate extends Component {
         this.setState({registry: []})
     }
 
-    gotofacebookHandler = (event) => {
-        this.setState({goto: 'fb'})
+    goToModellerHandler = (event) => {
+        this.setState({goTo: 'modelling'})
     }
 
     render() {
@@ -73,11 +73,11 @@ class RegistryCreate extends Component {
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
-                                                this.state.registry.length === 0 ?
-                                                <p onClick={this.gotofacebookHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
+                                                this.state.registry.length === 0 ? //remove the onClick from the first paragraph - errorMessage. BPMN Modelling should appear only after the registry has been created. 
+                                                <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
-                                                    <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
+                                                    <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
                                                     <div style={{"display" : "none"}}>
                                                         <BpmnModelling registryCreateId={this.state.registry.ID} />
                                                     </div>
@@ -86,8 +86,7 @@ class RegistryCreate extends Component {
                                            
 
                                     </Form.Group>
-                                </Form.Row>
-                            
+                                </Form.Row>                            
                             </Card.Body>
                             
                         
@@ -107,14 +106,12 @@ class RegistryCreate extends Component {
                     </Card> <br/>
                     
                 </div>
-                
                     {
-                                this.state.goto === 'fb' ?
-                                // <Route  render={() => (window.location = "https://www.facebook.com")} />
+                                this.state.goTo === 'modelling' ?
+                                // <Route  render={() => (window.location = "https://www.example.com")} />
                                 <BpmnModelling/>
                                 : null
-                    }
-                    
+                    }                    
                 <div style={{marginTop: "70px"}}> </div>
                 
             </div>
