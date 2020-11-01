@@ -4,7 +4,7 @@ import './Error.css';
 
 import {Alert} from 'react-bootstrap'; 
 
-import Logo from '../../asset/icons/logo.png';
+import Logo from '../../assets/icons/logo.png';
 
 function Error(props) {
 

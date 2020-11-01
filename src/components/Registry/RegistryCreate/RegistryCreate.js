@@ -8,7 +8,7 @@ import './RegistryCreate.css';
 
 import {Card, Form, Button, Col} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowAltCircleRight, faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faPlus} from '@fortawesome/free-solid-svg-icons';
 
 import axios from 'axios';
 
@@ -73,7 +73,8 @@ class RegistryCreate extends Component {
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
-                                                this.state.registry.length === 0 ? //remove the onClick from the first paragraph - errorMessage. BPMN Modelling should appear only after the registry has been created. 
+                                                this.state.registry.length === 0 ? 
+                                                //remove the onClick from the first paragraph - errorMessage. BPMN Modelling should appear only after the registry has been created. 
                                                 <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
@@ -95,12 +96,12 @@ class RegistryCreate extends Component {
                                     <Button variant="info" type="submit">
                                         <FontAwesomeIcon icon={faPlus} /> Create New Registry
                                     </Button> <br/> <br/> 
-                                    { this.state.registry.length !== 0 ?
+                                    {/* { this.state.registry.length !== 0 ?
                                     <Button variant="info" href={"/modeler"}>
                                         <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
                                     </Button>
                                     : null
-                                    }
+                                    } */}
                             </Card.Footer>                                                        
                         </Form>
                     </Card> <br/>

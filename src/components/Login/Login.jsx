@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
-// import InvalidCredentials from './InvalidCredentials';
-// import SuccessLogin from './SuccessLogin';
+
 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Alert, Form} from 'react-bootstrap';
@@ -35,7 +34,7 @@ export default class Login extends Component {
         loginClicked(event) {
             event.preventDefault();            
             //mirlind,pass
-            if(this.state.username === 'rait' && this.state.password === 'pass'){
+            if(this.state.username === 'mirlind' && this.state.password === 'pass'){
                 AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
                 this.props.history.push(`/welcome/${this.state.username}`)
                 window.location.reload();

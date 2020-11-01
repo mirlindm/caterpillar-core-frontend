@@ -5,8 +5,8 @@ import BpmnModelling from '../../bpmn/BpmnModelling';
 import './RegistryId.css';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 
 import axios from 'axios';
 
@@ -149,7 +149,7 @@ class RegistryId extends Component {
                                         </tbody>
                                 }
                         </Table>  
-                        {this.state.id === '' ?
+                        {/* {this.state.id === '' ?
                         null
                         :
                         <Card.Footer style={{"textAlign": "right"}}>
@@ -160,7 +160,7 @@ class RegistryId extends Component {
                                 <BpmnModelling registryIdAddress={this.state.registriesById.address} />
                             </div>  
                         </Card.Footer> 
-                        }      
+                        }       */}
                     </Card>
                 </div>
                 {

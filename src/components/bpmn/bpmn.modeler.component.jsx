@@ -2,13 +2,12 @@ import React, { Component }  from 'react';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { emptyBpmn } from '../../asset/empty.bpmn';
+import { emptyBpmn } from '../../assets/empty.bpmn';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
 import {Form, Button, Card} from 'react-bootstrap';
 
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 import Aux from '../../hoc/Auxiliary';
 

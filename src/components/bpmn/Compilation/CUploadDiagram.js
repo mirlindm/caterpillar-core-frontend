@@ -5,7 +5,7 @@ import Aux from '../../../hoc/Auxiliary';
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { paymentBpmn } from "../../../asset/empty.bpmn";
+import { paymentBpmn } from "../../../assets/empty.bpmn";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
@@ -59,6 +59,7 @@ class CUploadDiagram extends Component {
           this.newBpmnDiagram();
     }
 
+    // read xml file here
     newBpmnDiagram = () => {
         this.openBpmnDiagram(paymentBpmn);
     };
@@ -118,9 +119,11 @@ class CUploadDiagram extends Component {
                         }}
                 >
                 
-                <Alert style={{marginLeft: "-15px", borderRadius: "10px", marginRight: "225px", color: "black"}} size="sm" variant="info">
+                <Alert style={{marginLeft: "-15px", borderRadius: "10px", fontSize: "20px", marginTop: "30px", marginBottom: "30px", marginRight: "225px", color: "black"}} size="sm" variant="info">
                     Create and Save Your Model Below 
                 </Alert>
+
+                <hr className="style-two" />
 
                 </div>
                         <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
@@ -163,8 +166,8 @@ class CUploadDiagram extends Component {
                                 <Card className="bg-gray-dark" 
                                       style={{border: "2px solid #008B8B", 
                                             // marginTop: "10px", 
-                                            width: "118%",
-                                            marginLeft: "-85px", 
+                                            width: "110%",
+                                            marginLeft: "-60px", 
                                             height: "100%"}}>
                                                 
                                     <div id="bpmncontainer">
@@ -173,10 +176,11 @@ class CUploadDiagram extends Component {
                                     </div>
                                     
                                 </Card>
-                                <Button 
+                                <Button
+                                    className="link-button" 
                                     onClick={this.saveModelHandler} 
                                     variant="primary"  //type="submit"
-                                    style={{marginLeft: "-45px", width: "150px",border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
+                                    style={{marginLeft: "-55px", width: "150px",border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
                                 >
                                   Save
                                 </Button>

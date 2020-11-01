@@ -5,7 +5,7 @@ import Aux from '../../../hoc/Auxiliary';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { emptyBpmn } from '../../../asset/empty.bpmn';
+import { emptyBpmn } from '../../../assets/empty.bpmn';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
@@ -15,8 +15,6 @@ import './ICreateDiagram.css'
 import {Alert, Card, Button} from 'react-bootstrap';
 
 import axios from 'axios';
-
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 class ICreateDiagram extends Component {
     modeler = null;
@@ -99,7 +97,7 @@ class ICreateDiagram extends Component {
                             marginRight: "120px"}}
                 >
                 
-                <Alert style={{marginLeft: "-15px", borderRadius: "10px", marginRight: "225px", color: "black"}} size="sm" variant="info">
+                <Alert style={{marginLeft: "-15px", borderRadius: "10px", fontSize: "20px",  marginTop: "30px", marginBottom: "30px", marginRight: "225px", color: "black"}} size="sm" variant="info">
                     Create and Save Your Model Below 
                 </Alert>
 
@@ -107,7 +105,7 @@ class ICreateDiagram extends Component {
                 </div>
                 
                 <Card className="bg-gray-dark" 
-                      style={{border: "2px solid #008B8B", width: "112%", marginLeft: "-50px", height: "100%"}}
+                      style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}
                 >
                     <div id="bpmncontainer">
                         <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
@@ -118,7 +116,7 @@ class ICreateDiagram extends Component {
                 <Button onClick={this.saveModelHandler} 
                     variant="primary" type="submit" 
                     className="link-button"
-                    style={{marginLeft: "-45px", width: "150px", border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
+                    style={{marginLeft: "-55px", width: "150px", border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
                 >
                     Save Your Model
                 </Button>

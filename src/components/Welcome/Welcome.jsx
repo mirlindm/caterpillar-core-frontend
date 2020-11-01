@@ -11,7 +11,7 @@ function  Welcome(props) {
     const [readMore, setReadMore]=useState(false);
 
     const extraContent=<div>
-        <p style={{marginTop: "-20px"}}>
+        <p style={{marginTop: "-15px"}}>
             More specifically, Caterpillar accepts as input a process model specified in BPMN
             and generates a set of smart contracts that captures the underlying behavior. The smart contracts, written in Ethereum's Solidity language, 
             can then be compiled and deployed to the public or any other private Ethereum network using standard tools. 
@@ -33,7 +33,8 @@ function  Welcome(props) {
                     </h1>
                     <br/>
                     <p onClick={()=>{setReadMore(!readMore)}}>Caterpillar is a Business Process Management System (BPMS) prototype
-                    that runs on top of Ethereum and that relies on the translation of process models into smart contracts. <Button className="read-more-btn" style={{borderTop: "none", borderRight: 'none', borderLeft: 'none'}} variant="outline-info" size="sm"> {linkName} </Button> </p>
+                    that runs on top of Ethereum and that relies on the translation of process models into smart contracts. 
+                    <Button className="read-more-btn" style={{borderTop: "none", borderRight: 'none', borderLeft: 'none'}} variant="outline-info" size="sm"> {linkName} </Button> </p>
                     {readMore && extraContent}
                     <p>
                         {/* <Button href={"/registry"} variant="outline-info">Get Started</Button> {' '} */}

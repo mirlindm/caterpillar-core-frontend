@@ -1,21 +1,15 @@
 import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
-// import BpmnModelerComponent from './bpmn.modeler.component.jsx';
 
 import './BpmnModelling.css';
-
 
 import CCreateDiagram from './Compilation/CCreateDiagram';
 import CUploadDiagram from './Compilation/CUploadDiagram';
 import ICreateDiagram from './Interpretation/ICreateDiagram';
 import IUploadDiagram from './Interpretation/IUploadDiagram';
-import './BpmnModelling.css';
-
 
 import {Dropdown, Alert, Table} from 'react-bootstrap'; 
-
 
 class BpmnModelling extends Component {
 

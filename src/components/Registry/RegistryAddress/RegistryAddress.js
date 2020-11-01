@@ -4,8 +4,8 @@ import React, {Component} from 'react';
 import BpmnModelling from '../../bpmn/BpmnModelling';
 
 import {Card, Form, Button, Col, Table} from 'react-bootstrap'; 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
+// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 import './RegistryAddress.css';
 import axios from 'axios';
 
@@ -116,7 +116,7 @@ class RegistryAddress extends Component {
 
                         <p style={{textAlign:"center", marginTop: "20px", color: "#008B8B"}}> Registry found: </p>
 
-                        <Table  style={{marginLeft: "0px"}} bordered hover striped variant="dark">
+                        <Table bordered hover striped variant="dark">
                         {
                                 this.state.registriesByAddress.length === 0 ?
                                     <thead>
@@ -149,7 +149,7 @@ class RegistryAddress extends Component {
                                 }
                     
                         </Table>
-                        {this.state.address === '' ?
+                        {/* {this.state.address === '' ?
                         null
                         :
                         <Card.Footer style={{"textAlign": "right"}}>
@@ -160,7 +160,7 @@ class RegistryAddress extends Component {
                                 <BpmnModelling registryAddressAddress={this.state.registriesByAddress.address} />
                             </div>  
                         </Card.Footer>  
-                        }
+                        } */}
                     </Card> 
                             
                 </div>
