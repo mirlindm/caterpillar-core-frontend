@@ -66,7 +66,7 @@ export default class Login extends Component {
                         {/* <SuccessLogin showSuccessMessage={this.state.showSuccessMessage} /> */}
                         
                         <div className="form-group">
-                            <label className="text-white">Username</label>
+                            <label className="text-white"> Username </label>
                             <input type="text" 
                                     name="username" 
                                     className="form-control" 
@@ -79,7 +79,7 @@ export default class Login extends Component {
                         </div>
 
                         <div className="form-group">
-                            <label className="text-white">Password</label>
+                            <label className="text-white"> Password </label>
                             <input type="password" 
                                    name="password" 
                                    className="form-control" 
@@ -94,16 +94,17 @@ export default class Login extends Component {
                                 <label className="custom-control-label text-white" htmlFor="customCheck1">Remember me</label>
                             </div>
                         </div> */}
-                  
-                        <button type="submit" 
-                            style={{border: "1px solid #008B8B"}} 
-                            className="btn btn-dark btn-lg btn-block" 
-                            onClick={this.loginClicked}>
-                                Login
-                        </button>
+                        <div style={{marginTop: "20px"}}>
+                            <button type="submit" 
+                                style={{border: "1px solid #008B8B"}} 
+                                className="btn btn-dark btn-lg btn-block" 
+                                onClick={this.loginClicked}>
+                                    Login
+                            </button>
+                        </div>
 
-                        <p className="forgot-password text-right">                
-                        </p>
+                        {/* <p className="forgot-password text-right">                
+                        </p> */}
                     </form>
                     
                 </div>

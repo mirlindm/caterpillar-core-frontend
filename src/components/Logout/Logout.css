@@ -22,3 +22,21 @@
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
+
+
+
+.heading-two:hover {
+    color: 008B8B;
+    
+    margin-left: 250px;
+    margin-right: 250px;
+    cursor: pointer;
+}
+
+.div-it:hover {
+    color: 008B8B;
+    background-color: #272B30;
+    margin-left: 250px;
+    margin-right: 250px;
+    cursor: pointer;
+}

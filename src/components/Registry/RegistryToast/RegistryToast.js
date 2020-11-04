@@ -13,11 +13,11 @@ export default class RegistryToast extends Component {
 
         return(
             <div style={this.props.children.show ? toastCss : null} >
-                <Toast className={"border border-success bg-success text-white"} show={this.props.children.show}>
-                    <Toast.Header className={"bg-success text-white"} closeButton={false}>
+                <Toast className={"border border-info bg-info text-white"} style={{fontSize: "15px"}} show={this.props.children.show}>
+                    <Toast.Header className={"bg-info text-white"} closeButton={false}>
                         <strong className="mr-auto">Success</strong>
                     </Toast.Header>
-                    <Toast.Body>
+                    <Toast.Body style={{fontSize: "15px"}}>
                         {this.props.children.message}
                     </Toast.Body>
                 </Toast>

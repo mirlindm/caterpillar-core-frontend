@@ -16,6 +16,7 @@ import './CUploadDiagram.css';
 import {Form, Alert, Button, Card} from 'react-bootstrap';
 
 import axios from 'axios';
+// var parser = require('xml2json');
 
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
@@ -27,6 +28,7 @@ class CUploadDiagram extends Component {
 
         this.state = {
             uploadedDiagramName: undefined,
+            id: [],
          
         }
     }
@@ -71,7 +73,6 @@ class CUploadDiagram extends Component {
             console.log(warnings);
     
             var canvas = this.modeler.get("canvas");
-    
             canvas.zoom("fit-viewport");
     
           } catch (err) {
@@ -80,23 +81,25 @@ class CUploadDiagram extends Component {
       };
 
       // *************
-
+    
     saveModelHandler = (event) => {
         event.preventDefault();
         
         // post request to save/deploy the model
         // implement a method to run the request from the backend for POST Model - Compilation Engine
         axios.post("http://localhost:3000/models",{
-            bpmn: "process model uploaded by the user",
-            name: "name provided by the user",
+            bpmn: paymentBpmn,
+            name: 'InsureIT Payment',
             //below line: registryAddress comes from the props of BpmnModelling that are defined in RegistryCreate Component.
-            registryAddress: this.props.registryCreateId || this.props.registryAddressAddress || this.props.registryIdAddress
+           // registryAddress: this.props.registryCreateId || this.props.registryAddressAddress || this.props.registryIdAddress
+           registryAddress: '0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2'
             })
             .then(response => {
                 if(response.data != null) {
+                    this.setState({id: response.data})
                     console.log(response)
                 } else {
-                    this.setState({show: false});
+                    this.setState({show: false});   
                 }
             })
             .catch(e => console.log(e.toString()));
@@ -123,7 +126,7 @@ class CUploadDiagram extends Component {
                     Create and Save Your Model Below 
                 </Alert>
 
-                <hr className="style-two" />
+                <hr className="style-line" />
 
                 </div>
                         <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
@@ -180,16 +183,49 @@ class CUploadDiagram extends Component {
                                     className="link-button" 
                                     onClick={this.saveModelHandler} 
                                     variant="primary"  //type="submit"
-                                    style={{marginLeft: "-55px", width: "150px",border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
+                                    style={{
+                                            marginLeft: "350px",
+                                            marginRight: "350px", 
+                                            width: "410px",
+                                            border: "1px solid #008B8B", 
+                                            marginTop: "10px", 
+                                            padding: "5px", 
+                                            lineHeight: "35px",
+                                            fontSize: "17px", 
+                                            fontWeight: "normal",
+                                        }} 
                                 >
-                                  Save
+                                  Save Your Model
                                 </Button>
                             </Aux>
                             }
                         </Form>
 
                         {/* create some space between the button/form and the surrounding border */}
+                        {/* Display the reponse from running the POST Request on the Uploaded Model with Compilation Engine */}
                         <div style={{marginTop: "10px"}}> </div>
+                        <hr className="style-line" />
+                        {/* {this.state.id !== [] ?  */}
+                            {/* // <p style={{marginLeft: "-15px", borderRadius: "10px", fontSize: "20px", marginTop: "30px", marginBottom: "30px", marginRight: "225px", color: "black"}}>
+                            // {this.state.id.bundleID}
+                            // </p> */}
+                            <span style={{"display": this.state.id !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "350px",
+                                        marginLeft: "350px",
+                                        textAlign: "center",
+                                    }}
+                            > 
+                            Bundle ID: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.id.bundleID} </span>
+                            </Alert> 
+                            </span>
+                            
+                        
                 
                 
                 {/* create some space from the footer */}

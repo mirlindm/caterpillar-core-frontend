@@ -27,6 +27,10 @@ class IUploadDiagram extends Component {
 
         this.state = {
             uploadedDiagramName: undefined,
+            contractAddress: [],
+            gasCost: [],
+            smartContractName: [],
+            transactionHash: [],
          
         }
     }
@@ -84,13 +88,19 @@ class IUploadDiagram extends Component {
         // post request to save/deploy the model
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
 
-        axios.post("http://localhost:3000/interpreter/models",{
-            bpmn: "process model created by the user",
-            name: "name provided by the user",
-            registryAddress: "address of the runtime registry created or provided by the user"
+        axios.post("http://localhost:3000/interpreter/",{
+            bpmn: paymentBpmn,
+            name: 'InsureIT Payment',
+            registryAddress: '0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2'
             })
             .then(response => {
                 if(response.data != null) {
+                    this.setState({
+                        contractAddress: response.data.contractAddress,
+                        gasCost: response.data.gasCost,
+                        smartContractName: response.data.smartContractName,
+                        transactionHash: response.data.transactionHash                    
+                    })
                     console.log(response);            
                 } else {
                     this.setState({show: false});
@@ -120,7 +130,7 @@ class IUploadDiagram extends Component {
                     Create and Save Your Model Below 
                 </Alert>
 
-                <hr className="style-two" />
+                <hr className="style-line" />
                 
                 </div>
                         <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
@@ -148,12 +158,14 @@ class IUploadDiagram extends Component {
 
                             { this.state.uploadedDiagramName === undefined ?
 
-                                <Alert variant="info" 
+                                <Alert variant="warning" 
                                 style={{color: "black",
                                         marginTop: "10px",                                          
                                         fontSize: "17px", 
                                         fontWeight: "normal",
-                                        borderRadius: "10px"
+                                        borderRadius: "10px",
+                                        marginRight: "200px",
+                                        marginLeft: "200px",
                                     }}
                                 > 
                                 *Please upload a valid diagram 
@@ -178,16 +190,97 @@ class IUploadDiagram extends Component {
                                     className="link-button"
                                     onClick={this.saveModelHandler} 
                                     variant="primary" //type="submit" 
-                                    style={{marginLeft: "-55px", width: "150px",border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}}
+                                    style={{
+                                            marginLeft: "350px",
+                                            marginRight: "350px", 
+                                            width: "410px",
+                                            border: "1px solid #008B8B", 
+                                            marginTop: "10px", 
+                                            padding: "5px", 
+                                            lineHeight: "35px",
+                                            fontSize: "17px", 
+                                            fontWeight: "normal",
+                                        }}
                                 >
-                                Save
+                                Save Your Model
                                 </Button>
                             </Aux>                   
                             }
                         </Form>
 
                         {/* create some space between the button/form and the surrounding border */}
-                        <div style={{marginTop: "10px"}}> </div>
+                         {/* Display the reponse from running the POST Request on the Uploaded Model with Interpretation Engine */}
+                        <div style={{marginTop: "20px"}}> </div>
+                        <hr className="style-line"/>
+
+                        {/* 1 */}
+                        <span style={{"display": this.state.contractAddress !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "200px",
+                                        marginLeft: "200px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Contract Address: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.contractAddress} </span>
+                            </Alert> 
+                            </span>
+
+                        {/* 2 */}
+                        <span style={{"display": this.state.gasCost !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "200px",
+                                        marginLeft: "200px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Gas Cost: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.gasCost} </span>
+                            </Alert> 
+                            </span>
+
+                        {/* 3 */}
+                        <span style={{"display": this.state.smartContractName !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "200px",
+                                        marginLeft: "200px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Smart Contract Name: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.smartContractName} </span>
+                            </Alert> 
+                            </span>
+
+                        {/* 4 */}
+                        <span style={{"display": this.state.transactionHash !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "200px",
+                                        marginLeft: "200px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Transaction Hash: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.transactionHash} </span>
+                            </Alert> 
+                            </span>
+
                 
 
                  {/* create some space from the footer */}

@@ -75,7 +75,7 @@ class RegistryCreate extends Component {
                                             {
                                                 this.state.registry.length === 0 ? 
                                                 //remove the onClick from the first paragraph - errorMessage. BPMN Modelling should appear only after the registry has been created. 
-                                                <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
+                                                <p  style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
                                                     <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
@@ -88,7 +88,7 @@ class RegistryCreate extends Component {
 
                                     </Form.Group>
                                 </Form.Row>                            
-                            </Card.Body>
+                            </Card.Body>    
                             
                         
                             <Card.Footer style={{"textAlign": "right"}}>  

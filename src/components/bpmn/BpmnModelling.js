@@ -42,7 +42,7 @@ class BpmnModelling extends Component {
         return (
             <Aux>
                 {/* I CAN CONFIGURE HERE THE ENGINE */} 
-                    {/* Ask  user if they want to upload a model or create a new one */}
+                    {/* Prompt user if they want to upload a model or create a new one */}
 
                 <div  className="Content"> 
                     <p style={{fontFamily: "Trocchi sans-serif", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>
