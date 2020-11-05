@@ -103,7 +103,8 @@ class IUploadDiagram extends Component {
                     })
                     console.log(response);            
                 } else {
-                    this.setState({show: false});
+                    console.log("Received Incorrect Response");  
+                    // this.setState({show: false});
                 }
             })
             .catch(e => console.log(e.toString()));
@@ -129,10 +130,8 @@ class IUploadDiagram extends Component {
                 <Alert style={{marginLeft: "-15px", borderRadius: "10px", fontSize: "20px", marginTop: "30px", marginBottom: "30px", marginRight: "225px", color: "black"}} size="sm" variant="info">
                     Create and Save Your Model Below 
                 </Alert>
-
-                <hr className="style-line" />
-                
                 </div>
+                <hr className="style-seven" />
                         <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
                             <Form.Group >
                                 <Form.File 
@@ -142,7 +141,10 @@ class IUploadDiagram extends Component {
                                         lineHeight: "15px",
                                         color: "white",                                            
                                         display: "inline-block",                                            
-                                        cursor: "pointer" ,
+                                        cursor: "pointer",
+                                        marginRight: "350px",
+                                        marginLeft: "350px",
+                                        width: "410px",
                                     }} 
                                     id="exampleFormControlFile1"
                                     name="uploadedDiagramName"
@@ -152,8 +154,17 @@ class IUploadDiagram extends Component {
                                     
                             </Form.Group>
 
-                            <Button className="link-button" variant="primary" type="submit" style={{marginBottom: "10px"}}>
-                                View Model
+                            <Button className="link-button" variant="primary" type="submit" 
+                                    style={{
+                                        marginBottom: "20px",
+                                        width: "410px",  
+                                            marginLeft: "350px", 
+                                            marginRight: "350px", 
+                                            lineHeight: "35px",
+                                            fontSize: "17px", 
+                                            fontWeight: "normal",
+                                        }}>
+                                View Your Model
                             </Button>
 
                             { this.state.uploadedDiagramName === undefined ?
@@ -164,8 +175,9 @@ class IUploadDiagram extends Component {
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
-                                        marginRight: "200px",
-                                        marginLeft: "200px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
+                                        marginBottom: "20px",
                                     }}
                                 > 
                                 *Please upload a valid diagram 
@@ -195,7 +207,8 @@ class IUploadDiagram extends Component {
                                             marginRight: "350px", 
                                             width: "410px",
                                             border: "1px solid #008B8B", 
-                                            marginTop: "10px", 
+                                            marginTop: "20px", 
+                                            marginBottom: "8px",
                                             padding: "5px", 
                                             lineHeight: "35px",
                                             fontSize: "17px", 
@@ -210,23 +223,23 @@ class IUploadDiagram extends Component {
 
                         {/* create some space between the button/form and the surrounding border */}
                          {/* Display the reponse from running the POST Request on the Uploaded Model with Interpretation Engine */}
-                        <div style={{marginTop: "20px"}}> </div>
-                        <hr className="style-line"/>
+                        <div style={{marginTop: "0px"}}> </div>
+                        <hr className="style-seven"/>
 
                         {/* 1 */}
                         <span style={{"display": this.state.contractAddress !== [] ? "block" : "none" }}>
                             <Alert variant="success" 
                                 style={{color: "black",
-                                        marginTop: "10px",                                          
+                                        marginTop: "-25px",                                          
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
-                                        marginRight: "200px",
-                                        marginLeft: "200px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
                                         textAlign: "left",
                                     }}
                             > 
-                            Contract Address: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.contractAddress} </span>
+                            Contract Address: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.contractAddress} </span>
                             </Alert> 
                             </span>
 
@@ -238,12 +251,12 @@ class IUploadDiagram extends Component {
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
-                                        marginRight: "200px",
-                                        marginLeft: "200px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
                                         textAlign: "left",
                                     }}
                             > 
-                            Gas Cost: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.gasCost} </span>
+                            Gas Cost: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.gasCost} </span>
                             </Alert> 
                             </span>
 
@@ -255,12 +268,12 @@ class IUploadDiagram extends Component {
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
-                                        marginRight: "200px",
-                                        marginLeft: "200px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
                                         textAlign: "left",
                                     }}
                             > 
-                            Smart Contract Name: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.smartContractName} </span>
+                            Smart Contract Name: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.smartContractName} </span>
                             </Alert> 
                             </span>
 
@@ -272,12 +285,12 @@ class IUploadDiagram extends Component {
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
-                                        marginRight: "200px",
-                                        marginLeft: "200px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
                                         textAlign: "left",
                                     }}
                             > 
-                            Transaction Hash: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.transactionHash} </span>
+                            Transaction Hash: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.transactionHash} </span>
                             </Alert> 
                             </span>
 

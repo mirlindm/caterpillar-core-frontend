@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
 
 import {Link} from 'react-router-dom';
+import {Modal, Button} from 'react-bootstrap';
 
 import './About.css'
 
 class About extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {            
+            show: false,         
+        }
+    }
+
+    handleClose = () => this.setState({show: false});
+    handleShow = () => this.setState({show: true});
+
+
     render () {
 
         const getUser = sessionStorage.getItem('authenticatedUser').toString();
@@ -12,9 +25,9 @@ class About extends Component {
         return (
             <div className="text-white">
                 <div className="par"> 
-                <h2 style={{fontFamily: "Trocchi", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
+                <h2 style={{fontFamily: "Lora, sans-serif", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
                 
-                <p>
+                <p style={{fontFamily: "Open, sans-serif"}} onClick={this.handleShow}>
                 Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and
                 that relies on the translation of process models into smart contracts. 
                 More specifically, Caterpillar accepts as input a process model specified in BPMN and generates 
@@ -33,6 +46,40 @@ class About extends Component {
                 You can find more information on how to run Caterpillar Rest Api Application by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
                 <br />
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Welcome to Caterpillar</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body> 
+                        <p style={{textAlign: "justify"}} onClick={this.handleClose}>
+                        Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and
+                        that relies on the translation of process models into smart contracts. 
+                        More specifically, Caterpillar accepts as input a process model specified in BPMN and generates 
+                        a set of smart contracts that captures the underlying behavior. 
+                        The smart contracts, written in Ethereum's Solidity language, can then be compiled and deployed to the public 
+                        or any other private Ethereum network using standard tools. 
+                        Moreover, Caterpillar exhibits a REST API that can be used to interact with running instances
+                        of the deployed process models.
+                        <br/><br/>
+                        Caterpillar also provides a set of modelling tools and an execution panel (in releases v1.0, 2.0 and 2.1) 
+                        which interact with the underlying execution engine via the aforementioned REST API. 
+                        The latter can also be used by third party software to interact in a programmatic way via Caterpillar 
+                        with the instances of business process running on the blockchain.</p>
+
+                        <a style={{color: "#008B8B"}} href="https://github.com/orlenyslp/Caterpillar" target="_blank" rel="noopener noreferrer">
+                            Caterpillar
+                        </a> 
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={this.handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
                 {/* hardcoded value below: /welcome/:mirlind */}
                 <Link to={`/welcome/${getUser}`} className="link-button">Back Home</Link> 
                 </p>

@@ -5,7 +5,7 @@ import Aux from "../../../hoc/Auxiliary";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-font/dist/css/bpmn-embedded.css";
-import { emptyBpmn } from "../../../assets/empty.bpmn";
+import { paymentBpmn } from "../../../assets/empty.bpmn";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
@@ -21,6 +21,15 @@ import axios from 'axios';
 
 class CCreateDiagram extends Component {
       modeler = null;
+
+      constructor(props) {
+        super(props);
+
+        this.state = {            
+            id: [],
+         
+        }
+    }
 
       // ************* copying below the part for BPMN Plugin into componentDidMount
       
@@ -43,7 +52,7 @@ class CCreateDiagram extends Component {
       };
 
       newBpmnDiagram = () => {
-        this.openBpmnDiagram(emptyBpmn);
+        this.openBpmnDiagram(paymentBpmn);
       };
 
       openBpmnDiagram = async (xml) => {
@@ -70,16 +79,17 @@ class CCreateDiagram extends Component {
          // implement a method to run the request from the backend for POST Model - Compilation Engine
     
         axios.post("http://localhost:3000/models",{
-          bpmn: "process model created by the user",
-          name: "name provided by the user",
-          registryAddress: "address of the runtime registry created or provided by the user"
+          bpmn: paymentBpmn,
+          name: "InsureIT Payment",
+          registryAddress: "0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2"
           })
           .then(response => {
               if(response.data != null) {
+                  this.setState({id: response.data})
                   console.log(response)
-                  this.setState({show: true, registry: response.data});
+                  // this.setState({show: true, registry: response.data});
               } else {
-                  this.setState({show: false});
+                console.log("Received Incorrect Response");
               }
             })
             .catch(e => console.log(e.toString()));
@@ -110,6 +120,8 @@ class CCreateDiagram extends Component {
           <div style={{ marginTop: "10px" }}> </div>
         </div>
 
+        <hr className="style-seven" style={{marginBottom: "0px"}} />
+
         <Card
           className="bg-gray-dark"
           style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}
@@ -137,12 +149,41 @@ class CCreateDiagram extends Component {
           variant="primary"
           type="submit"
           className="link-button"
-          style={{marginLeft: "-55px", width: "150px", border: "1px solid #008B8B", marginTop: "10px", padding: "5px" }}
+          style={{
+                  marginLeft: "350px",
+                  marginRight: "350px", 
+                  width: "410px",
+                  border: "1px solid #008B8B", 
+                  marginTop: "20px",
+                  marginBottom: "8px", 
+                  padding: "5px", 
+                  lineHeight: "35px",
+                  fontSize: "17px", 
+                  fontWeight: "normal",
+                }}
         >
           Save Your Model
         </Button>
 
-        
+        <hr className="style-seven" style={{marginTop: "15px"}} />
+
+          <span style={{"display": this.state.id !== [] ? "block" : "none" }}>
+            <Alert variant="success" 
+                   style={{color: "black",
+                           marginTop: "-25px",                                          
+                           fontSize: "17px", 
+                           fontWeight: "normal",
+                           borderRadius: "10px",
+                           marginRight: "350px",
+                           marginLeft: "350px",
+                           textAlign: "center",
+                          }}
+            > 
+              Bundle ID: <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.id.bundleID} </span>
+            </Alert> 
+          </span>
+
+          
 
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
       </Aux>

@@ -5,10 +5,11 @@ import Aux from '../../../hoc/Auxiliary';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { emptyBpmn } from '../../../assets/empty.bpmn';
+import { paymentBpmn } from '../../../assets/empty.bpmn';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
+import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
 import './ICreateDiagram.css'
 
@@ -18,6 +19,17 @@ import axios from 'axios';
 
 class ICreateDiagram extends Component {
     modeler = null;
+
+    constructor(props) {
+        super(props);
+
+        this.state = {            
+            contractAddress: [],
+            gasCost: [],
+            smartContractName: [],
+            transactionHash: [],         
+        }
+    }
 
     // ************* copying below the part for BPMN Plugin into componentDidMount
 
@@ -42,7 +54,7 @@ class ICreateDiagram extends Component {
     }
 
     newBpmnDiagram = () => {
-        this.openBpmnDiagram(emptyBpmn);
+        this.openBpmnDiagram(paymentBpmn);
     }
 
     openBpmnDiagram = async (xml) => {
@@ -68,16 +80,23 @@ class ICreateDiagram extends Component {
         // post request to save/deploy the model
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
 
-        axios.post("http://localhost:3000/interpreter/models",{
-            bpmn: "process model created by the user",
-            name: "name provided by the user",
-            registryAddress: "address of the runtime registry created or provided by the user"
+        axios.post("http://localhost:3000/interpreter/",{
+            bpmn: paymentBpmn,
+            name: 'InsureIT Payment',
+            registryAddress: '0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2'
             })
             .then(response => {
                 if(response.data != null) {
+                    this.setState({
+                        contractAddress: response.data.contractAddress,
+                        gasCost: response.data.gasCost,
+                        smartContractName: response.data.smartContractName,
+                        transactionHash: response.data.transactionHash                    
+                    })
                     console.log(response);            
                 } else {
-                    this.setState({show: false});
+                    console.log("Received Incorrect Response");  
+                    // this.setState({show: false});
                 }
             })
             .catch(e => console.log(e.toString()));
@@ -103,6 +122,8 @@ class ICreateDiagram extends Component {
 
                         <div style={{marginTop: "10px"}}> </div>
                 </div>
+
+                <hr className="style-seven" style={{marginBottom: "0px"}} />
                 
                 <Card className="bg-gray-dark" 
                       style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}
@@ -116,10 +137,93 @@ class ICreateDiagram extends Component {
                 <Button onClick={this.saveModelHandler} 
                     variant="primary" type="submit" 
                     className="link-button"
-                    style={{marginLeft: "-55px", width: "150px", border: "1px solid #008B8B", marginTop: "10px", padding: "5px"}} 
+                    style={{
+                            marginLeft: "350px",
+                            marginRight: "350px", 
+                            width: "410px",
+                            border: "1px solid #008B8B", 
+                            marginTop: "20px",
+                            marginBottom: "8px", 
+                            padding: "5px", 
+                            lineHeight: "35px",
+                            fontSize: "17px", 
+                            fontWeight: "normal",
+                        }} 
                 >
                     Save Your Model
                 </Button>
+
+                <hr className="style-seven" style={{marginTop: "15px"}} />
+
+                {/* 1 */}
+                <span style={{"display": this.state.contractAddress !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "-25px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Contract Address: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.contractAddress} </span>
+                            </Alert> 
+                            </span>
+
+                        {/* 2 */}
+                        <span style={{"display": this.state.gasCost !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Gas Cost: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.gasCost} </span>
+                            </Alert> 
+                            </span>
+
+                        {/* 3 */}
+                        <span style={{"display": this.state.smartContractName !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Smart Contract Name: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.smartContractName} </span>
+                            </Alert> 
+                            </span>
+
+                        {/* 4 */}
+                        <span style={{"display": this.state.transactionHash !== [] ? "block" : "none" }}>
+                            <Alert variant="success" 
+                                style={{color: "black",
+                                        marginTop: "10px",                                          
+                                        fontSize: "17px", 
+                                        fontWeight: "normal",
+                                        borderRadius: "10px",
+                                        marginRight: "120px",
+                                        marginLeft: "120px",
+                                        textAlign: "left",
+                                    }}
+                            > 
+                            Transaction Hash: <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.transactionHash} </span>
+                            </Alert> 
+                            </span>
+
+                
 
                 <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
             </Aux>

@@ -99,7 +99,7 @@ class CUploadDiagram extends Component {
                     this.setState({id: response.data})
                     console.log(response)
                 } else {
-                    this.setState({show: false});   
+                    console.log("Received Incorrect Response");  
                 }
             })
             .catch(e => console.log(e.toString()));
@@ -126,9 +126,9 @@ class CUploadDiagram extends Component {
                     Create and Save Your Model Below 
                 </Alert>
 
-                <hr className="style-line" />
-
                 </div>
+                <hr className="style-seven" />
+                    
                         <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
                             <Form.Group>
                                 <Form.File 
@@ -138,7 +138,10 @@ class CUploadDiagram extends Component {
                                             lineHeight: "15px",
                                             color: "white",                                            
                                             display: "inline-block",                                            
-                                            cursor: "pointer" ,
+                                            cursor: "pointer",
+                                            marginRight: "350px",
+                                            marginLeft: "350px",
+                                            width: "410px",
                                         }} 
                                     id="exampleFormControlFile1" 
                                     name="uploadedDiagramName"
@@ -148,17 +151,30 @@ class CUploadDiagram extends Component {
                                     
                             </Form.Group>
 
-                            <Button className="link-button" variant="primary" type="submit" style={{marginBottom: "10px"}}>
-                                View Model
+                            <Button className="link-button" variant="primary" type="submit" 
+                                    style={{
+                                            marginBottom: "20px", 
+                                            width: "410px",  
+                                            marginLeft: "350px", 
+                                            marginRight: "350px", 
+                                            lineHeight: "35px",
+                                            fontSize: "17px", 
+                                            fontWeight: "normal",                                        
+                                        }}>
+                                View Your Model
                             </Button>
+                    
 
                             { this.state.uploadedDiagramName === undefined ?
-                            <Alert variant="info" 
+                            <Alert variant="warning" 
                                 style={{color: "black",
                                         marginTop: "10px",                                          
                                         fontSize: "17px", 
                                         fontWeight: "normal",
-                                        borderRadius: "10px"
+                                        borderRadius: "10px",
+                                        marginLeft: "120px",
+                                        marginRight: "120px",
+                                        marginBottom: "20px",
                                     }}
                             > 
                             *Please upload a valid diagram 
@@ -188,7 +204,8 @@ class CUploadDiagram extends Component {
                                             marginRight: "350px", 
                                             width: "410px",
                                             border: "1px solid #008B8B", 
-                                            marginTop: "10px", 
+                                            marginTop: "20px",
+                                            marginBottom: "8px", 
                                             padding: "5px", 
                                             lineHeight: "35px",
                                             fontSize: "17px", 
@@ -203,8 +220,8 @@ class CUploadDiagram extends Component {
 
                         {/* create some space between the button/form and the surrounding border */}
                         {/* Display the reponse from running the POST Request on the Uploaded Model with Compilation Engine */}
-                        <div style={{marginTop: "10px"}}> </div>
-                        <hr className="style-line" />
+                        <div style={{marginTop: "0px"}}> </div>
+                        <hr className="style-seven" />
                         {/* {this.state.id !== [] ?  */}
                             {/* // <p style={{marginLeft: "-15px", borderRadius: "10px", fontSize: "20px", marginTop: "30px", marginBottom: "30px", marginRight: "225px", color: "black"}}>
                             // {this.state.id.bundleID}
@@ -212,7 +229,7 @@ class CUploadDiagram extends Component {
                             <span style={{"display": this.state.id !== [] ? "block" : "none" }}>
                             <Alert variant="success" 
                                 style={{color: "black",
-                                        marginTop: "10px",                                          
+                                        marginTop: "-25px",                                          
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
