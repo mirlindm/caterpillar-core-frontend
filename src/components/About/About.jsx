@@ -25,9 +25,9 @@ class About extends Component {
         return (
             <div className="text-white">
                 <div className="par"> 
-                <h2 style={{fontFamily: "Lora, sans-serif", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
+                <h2 onClick={this.handleShow} style={{fontFamily: "Open Sans, sans-serif", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
                 
-                <p style={{fontFamily: "Open, sans-serif"}} onClick={this.handleShow}>
+                <p style={{fontFamily: "Open Sans, sans-serif"}} onClick={this.handleShow}>
                 Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and
                 that relies on the translation of process models into smart contracts. 
                 More specifically, Caterpillar accepts as input a process model specified in BPMN and generates 
@@ -46,6 +46,15 @@ class About extends Component {
                 You can find more information on how to run Caterpillar Rest Api Application by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
                 <br />
+                
+
+                {/* hardcoded value below: /welcome/:mirlind */}
+                <Link to={`/welcome/${getUser}`} className="link-button">Back Home</Link> 
+                </p>
+
+
+                </div>
+
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Welcome to Caterpillar</Modal.Title>
@@ -64,7 +73,11 @@ class About extends Component {
                         Caterpillar also provides a set of modelling tools and an execution panel (in releases v1.0, 2.0 and 2.1) 
                         which interact with the underlying execution engine via the aforementioned REST API. 
                         The latter can also be used by third party software to interact in a programmatic way via Caterpillar 
-                        with the instances of business process running on the blockchain.</p>
+                        with the instances of business process running on the blockchain.
+                        <br/>
+                        Caterpillar’s code distribution in this repository contains three different folders in v1.0 and two in v2.0, v2.1 and v3.0. The folder caterpillar_core includes the implementation of the core components, execution_panel consists of the code of a BPMN visualizer that serves to keep track of the execution state of process instances and to lets users check in process data
+                        The services_manager folder contains the implementation for an external service which is used only in v1.0 for demonstration purposes.
+                        </p>
 
                         <a style={{color: "#008B8B"}} href="https://github.com/orlenyslp/Caterpillar" target="_blank" rel="noopener noreferrer">
                             Caterpillar
@@ -74,18 +87,11 @@ class About extends Component {
                         <Button variant="secondary" onClick={this.handleClose}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
-                            Save Changes
+                        <Button variant="primary" href="https://github.com/orlenyslp/Caterpillar">
+                            GitHub
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
-                {/* hardcoded value below: /welcome/:mirlind */}
-                <Link to={`/welcome/${getUser}`} className="link-button">Back Home</Link> 
-                </p>
-
-
-                </div>
                 <div style={{marginTop: "60px"}}></div>
             </div>
         );

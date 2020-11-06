@@ -166,15 +166,16 @@ class CUploadDiagram extends Component {
                     
 
                             { this.state.uploadedDiagramName === undefined ?
-                            <Alert variant="warning" 
+                            <Alert variant="danger" 
                                 style={{color: "black",
                                         marginTop: "10px",                                          
                                         fontSize: "17px", 
                                         fontWeight: "normal",
                                         borderRadius: "10px",
-                                        marginLeft: "120px",
-                                        marginRight: "120px",
+                                        marginRight: "350px",
+                                        marginLeft: "350px",
                                         marginBottom: "20px",
+                                        textAlign: "center",
                                     }}
                             > 
                             *Please upload a valid diagram 
