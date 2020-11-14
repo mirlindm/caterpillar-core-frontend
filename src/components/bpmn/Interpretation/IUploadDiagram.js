@@ -84,30 +84,36 @@ class IUploadDiagram extends Component {
 
     saveModelHandler = (event) => {
         event.preventDefault();
+
+        this.modeler.saveXML((err, xml) => {
+            if (!err) {
+              console.log(xml);
+            }
+         });
         
         // post request to save/deploy the model
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
 
-        axios.post("http://localhost:3000/interpreter/",{
-            bpmn: paymentBpmn,
-            name: 'InsureIT Payment',
-            registryAddress: '0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2'
-            })
-            .then(response => {
-                if(response.data != null) {
-                    this.setState({
-                        contractAddress: response.data.contractAddress,
-                        gasCost: response.data.gasCost,
-                        smartContractName: response.data.smartContractName,
-                        transactionHash: response.data.transactionHash                    
-                    })
-                    console.log(response);            
-                } else {
-                    console.log("Received Incorrect Response");  
-                    // this.setState({show: false});
-                }
-            })
-            .catch(e => console.log(e.toString()));
+        // axios.post("http://localhost:3000/interpreter/",{
+        //     bpmn: xml,
+        //     name: 'InsureIT Payment',
+        //     registryAddress: '0x3043Ef1e4a0653e3a2C2BcDA6dcc5c4B0C6e97F2'
+        //     })
+        //     .then(response => {
+        //         if(response.data != null) {
+        //             this.setState({
+        //                 contractAddress: response.data.contractAddress,
+        //                 gasCost: response.data.gasCost,
+        //                 smartContractName: response.data.smartContractName,
+        //                 transactionHash: response.data.transactionHash                    
+        //             })
+        //             console.log(response);            
+        //         } else {
+        //             console.log("Received Incorrect Response");  
+                    
+        //         }
+        //     })
+        //     .catch(e => console.log(e.toString()));
     }
 
     render = () => {
@@ -146,6 +152,7 @@ class IUploadDiagram extends Component {
                                         marginLeft: "350px",
                                         width: "410px",
                                     }} 
+                                    multiple
                                     id="exampleFormControlFile1"
                                     name="uploadedDiagramName"
                                     onChange={this.uploadDiagramNameChangeHandler} 

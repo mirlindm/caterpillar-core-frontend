@@ -13,7 +13,7 @@ class Logout extends Component {
       }
 
     componentDidMount() {
-        this.id = setTimeout(() => this.setState({ redirect: true }), 10000)
+        this.id = setTimeout(() => this.setState({ redirect: true }), 5000)
       }
 
     componentWillUnmount() {

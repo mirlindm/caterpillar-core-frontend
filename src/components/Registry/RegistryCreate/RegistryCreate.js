@@ -3,10 +3,11 @@ import React, {Component} from 'react';
 // import {Route, Redirect} from 'react-router-dom';
 
 import RegistryToast from '../RegistryToast/RegistryToast'; 
-import BpmnModelling from '../../bpmn/BpmnModelling';
+import RegistryId from '../RegistryId/RegistryId';
+// import BpmnModelling from '../../bpmn/BpmnModelling';
 import './RegistryCreate.css';
 
-import {Card, Form, Button, Col} from 'react-bootstrap'; 
+import {Card, Alert, Form, Button, Col} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faPlus} from '@fortawesome/free-solid-svg-icons';
 
@@ -22,7 +23,8 @@ class RegistryCreate extends Component {
             registriesById: [],
             registriesByAddress: [],
             errorMessage: 'No registry found!',
-            goTo: null
+            goTo: null,
+            name: 'mirlind',
           
         }
         this.createRegistryHandler = this.createRegistryHandler.bind(this);
@@ -36,7 +38,7 @@ class RegistryCreate extends Component {
             .then(response => {
                 if(response.data != null) {
                     console.log(response)
-                    this.setState({show: true, registry: response.data});
+                    this.setState({show: true, registry: response.data.ID});
                     setTimeout(() => this.setState({show: false}), 3000)
                 } else {
                     this.setState({show: false});
@@ -49,7 +51,7 @@ class RegistryCreate extends Component {
     }
 
     goToModellerHandler = (event) => {
-        this.setState({goTo: 'modelling'})
+        this.setState({goTo: 'registryID'})
     }
 
     render() {
@@ -68,7 +70,7 @@ class RegistryCreate extends Component {
                             <p style={{ margin: 0, fontSize: "medium"}}>Create a new Runtime Registry</p>
                         </Card.Header>
                         
-                        <Form onSubmit={this.createRegistryHandler} id="registry">
+                        <Form onSubmit={this.createRegistryHandler} id="registryCreate">
                             <Card.Body>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >    
@@ -78,10 +80,8 @@ class RegistryCreate extends Component {
                                                 <p  style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
-                                                    <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry:  {this.state.registry.ID} </p>
-                                                    <div style={{"display" : "none"}}>
-                                                        <BpmnModelling registryCreateId={this.state.registry.ID} />
-                                                    </div>
+                                                    <p onClick={this.goToModellerHandler} style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry ID: <span style={{textDecoration: "underline", cursor: "pointer"}}> {this.state.registry} </span>   </p>
+
                                                 </div>                                                                                        
                                             }
                                            
@@ -95,25 +95,50 @@ class RegistryCreate extends Component {
                             
                                     <Button variant="info" type="submit">
                                         <FontAwesomeIcon icon={faPlus} /> Create New Registry
-                                    </Button> <br/> <br/> 
-                                    {/* { this.state.registry.length !== 0 ?
-                                    <Button variant="info" href={"/modeler"}>
-                                        <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                                    </Button>
-                                    : null
-                                    } */}
+                                    </Button> 
+
                             </Card.Footer>                                                        
                         </Form>
-                    </Card> <br/>
-                    
+                    </Card> 
+                                  
+                   
                 </div>
+
+                {/* Do we need to fetch registry based on the ID created in registryCreate? If yes, this part below should be deleted and RegistryId Component should be rendered only */}
                     {
-                                this.state.goTo === 'modelling' ?
+                                this.state.goTo === 'registryID' ?
                                 // <Route  render={() => (window.location = "https://www.example.com")} />
-                                <BpmnModelling/>
+                                
+                                // <BpmnModelling createRegistryProp={this.state.registry}/>
+                                <div> 
+                                    <Alert variant="warning" 
+                                        style={{color: "black",
+                                                    marginTop: "-30px",
+                                                    marginBottom: "30px",                                          
+                                                    fontSize: "17px", 
+                                                    fontWeight: "normal",
+                                                    borderRadius: "10px",
+                                                    marginRight: "150px",
+                                                    marginLeft: "150px",
+                                                    textAlign: "center",                                          
+                                            }}
+                                    > 
+                                    <strong> Please copy the newly created Registry's ID above and use it to fetch the registry's information </strong>
+                                    </Alert> 
+                                    <RegistryId />
+                                </div>
                                 : null
+                                
                     }                    
                 <div style={{marginTop: "70px"}}> </div>
+
+                <div style={{"display" : "none"}}>
+                    {/* pass the registry id prop to 4 components */}
+                    {/* <CCreateDiagram registry={this.state.name} /> */}
+                </div>
+
+                {/* Render the component below only if we need to fetch registry based on the ID created in RegistryCreate */}
+                
                 
             </div>
             

@@ -143,6 +143,7 @@ class CUploadDiagram extends Component {
                                             marginLeft: "350px",
                                             width: "410px",
                                         }} 
+                                    multiple
                                     id="exampleFormControlFile1" 
                                     name="uploadedDiagramName"
                                     onChange={this.uploadDiagramNameChangeHandler}

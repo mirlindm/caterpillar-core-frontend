@@ -50,7 +50,7 @@ class BpmnModelling extends Component {
                     </p>
                 
                     <Dropdown >
-                        <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                        <Dropdown.Toggle variant="outline-info" id="dropdown-model">
                             Configure Model
                         </Dropdown.Toggle>
 
@@ -61,7 +61,7 @@ class BpmnModelling extends Component {
                     </Dropdown>
 
                     <Dropdown style={{marginTop: "20px"}}>
-                        <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                        <Dropdown.Toggle variant="outline-info" id="dropdown-engine">
                             Configure Engine
                         </Dropdown.Toggle>
 
@@ -77,7 +77,7 @@ class BpmnModelling extends Component {
                 {
                     this.state.showPromptModel === undefined && this.showPromptEngine === undefined ?
                     <div style={{textAlign: "center", margin: "0 200px"}}>
-                        <Alert variant="info">
+                        <Alert variant="danger">
                             <Alert.Heading style={{fontSize: "large"}}>Please, select above how do you wish to proceed!</Alert.Heading>
                         </Alert>
                         <div style={{marginTop: "40px",  paddingTop: "10px"}}></div>
@@ -86,7 +86,7 @@ class BpmnModelling extends Component {
                     :
                     this.state.showPromptModel !== undefined  && this.state.showPromptEngine === undefined ?
                     <div style={{textAlign: "center", margin: "0 200px"}}>
-                    <Alert variant="info">
+                    <Alert variant="danger">
                         <Alert.Heading style={{fontSize: "large"}}>Please, select the engine to proceed with!</Alert.Heading>
                     </Alert>
                     </div>
@@ -122,7 +122,7 @@ class BpmnModelling extends Component {
                         <p  style={{textAlign:"center", fontSize: "20px", backgroundColor: "#008B8B", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div> 
                         <div style={{marginTop: "50px"}}> </div>
-                        <CUploadDiagram registryCreateId={this.props.registryCreateId} registryIdAddress={this.props.registryIdAddress} registryAddressAddress={this.props.registryAddressAddress} />
+                        <CUploadDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
                     </div>                                        
                     : 
                     this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
@@ -149,7 +149,7 @@ class BpmnModelling extends Component {
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
                         <div style={{marginTop: "50px"}}> </div>
-                        <IUploadDiagram/>
+                        <IUploadDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
                     </div>                                        
                     :
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
@@ -175,7 +175,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p  style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <CCreateDiagram/>
+                        <CCreateDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
                     </div>                                        
                     :
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
@@ -201,7 +201,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <ICreateDiagram/>
+                        <ICreateDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
                     </div>                                        
                     :
                     null

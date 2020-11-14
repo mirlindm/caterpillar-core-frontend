@@ -55,7 +55,8 @@ class About extends Component {
 
                 </div>
 
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal show={this.state.show} onHide={this.handleClose} size="lg"
+                       aria-labelledby="contained-modal-title-vcenter"centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Welcome to Caterpillar</Modal.Title>
                     </Modal.Header>
@@ -74,20 +75,16 @@ class About extends Component {
                         which interact with the underlying execution engine via the aforementioned REST API. 
                         The latter can also be used by third party software to interact in a programmatic way via Caterpillar 
                         with the instances of business process running on the blockchain.
-                        <br/>
+                        <br/><br/>
                         Caterpillar’s code distribution in this repository contains three different folders in v1.0 and two in v2.0, v2.1 and v3.0. The folder caterpillar_core includes the implementation of the core components, execution_panel consists of the code of a BPMN visualizer that serves to keep track of the execution state of process instances and to lets users check in process data
                         The services_manager folder contains the implementation for an external service which is used only in v1.0 for demonstration purposes.
                         </p>
-
-                        <a style={{color: "#008B8B"}} href="https://github.com/orlenyslp/Caterpillar" target="_blank" rel="noopener noreferrer">
-                            Caterpillar
-                        </a> 
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>
                             Close
                         </Button>
-                        <Button variant="primary" href="https://github.com/orlenyslp/Caterpillar">
+                        <Button variant="primary" href="https://github.com/orlenyslp/Caterpillar" target="_blank">
                             GitHub
                         </Button>
                     </Modal.Footer>

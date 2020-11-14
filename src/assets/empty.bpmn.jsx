@@ -1,22 +1,48 @@
-export const emptyBpmn = `<?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
-	<bpmn2:collaboration id="Collaboration_0czsqyr">
-		<bpmn2:participant id="Participant_0cyhvx8" processRef="Process_1" />
-	</bpmn2:collaboration>
-	<bpmn2:process id="Process_1" isExecutable="false">
-		<bpmn2:startEvent id="StartEvent_1" />
-	</bpmn2:process>
-	<bpmndi:BPMNDiagram id="BPMNDiagram_1">
-		<bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0czsqyr">
-			<bpmndi:BPMNShape id="Participant_0cyhvx8_di" bpmnElement="Participant_0cyhvx8">
-				<dc:Bounds x="130" y="220" width="600" height="250" />
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-				<dc:Bounds x="412" y="240" width="36" height="36" />
-			</bpmndi:BPMNShape>
-		</bpmndi:BPMNPlane>
-	</bpmndi:BPMNDiagram>
-</bpmn2:definitions>`;
+export const basic_example = `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0ncawtr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0">
+  <bpmn:process id="Process_1yn2e1y" name="basic_example" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="e1">
+      <bpmn:outgoing>Flow_1y3v0pn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1y3v0pn" sourceRef="StartEvent_1" targetRef="Activity_0fto51j" />
+    <bpmn:userTask id="Activity_0fto51j" name="A">
+      <bpmn:incoming>Flow_1y3v0pn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0snq7p2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1hro3k1" name="e2">
+      <bpmn:incoming>Flow_0snq7p2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0snq7p2" sourceRef="Activity_0fto51j" targetRef="Event_1hro3k1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1yn2e1y">
+      <bpmndi:BPMNEdge id="Flow_1y3v0pn_di" bpmnElement="Flow_1y3v0pn">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0snq7p2_di" bpmnElement="Flow_0snq7p2">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="432" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="191" y="142" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cphl9j_di" bpmnElement="Activity_0fto51j">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hro3k1_di" bpmnElement="Event_1hro3k1">
+        <dc:Bounds x="432" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="444" y="142" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
+`;
 
 
 export const paymentBpmn = `<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="14.7.1" expressionLanguage="http://www.w3.org/TR/XPath" id="sid-fbca55fc-24da-429a-8405-6152632db3bd" targetNamespace="http://www.signavio.com" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
