@@ -293,8 +293,8 @@ class CCreateDiagram extends Component {
                   marginRight: "350px", 
                   width: "410px",
                   border: "1px solid #008B8B", 
-                  marginTop: "-30px",
-                  marginBottom: "8px", 
+                  marginTop: "-35px",
+                  marginBottom: "5px", 
                   padding: "5px", 
                   lineHeight: "35px",
                   fontSize: "17px", 
@@ -321,7 +321,7 @@ class CCreateDiagram extends Component {
             </Alert> 
           </span>
 
-          <hr className="style-seven" style={{marginTop: "15px"}} />
+          <hr className="style-seven" style={{marginTop: "-5px"}} />
 
           {/* Post Request 2 "http://localhost:3000/models/compile"
             name:
@@ -430,7 +430,7 @@ class CCreateDiagram extends Component {
                             </Alert>                                                    
                     }  
 
-            <hr className="style-seven" style={{marginTop: "15px"}} />
+            <hr className="style-seven" style={{marginTop: "-15px"}} />
 
 
           {/* GET Request 1 '/models'*/}
@@ -649,17 +649,11 @@ class CCreateDiagram extends Component {
                             > 
                              {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
-                            </Alert> 
-                                                   
+                            </Alert>                                                    
                     } 
                         
           <hr className="style-seven" style={{marginTop: "-20px"}} />
-
-
-            
-
-          
-
+              
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
       </Aux>
     );
