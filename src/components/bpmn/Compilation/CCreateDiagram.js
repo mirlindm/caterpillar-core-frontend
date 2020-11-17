@@ -232,19 +232,7 @@ class CCreateDiagram extends Component {
   render = () => {
     return (
       <Aux>
-        <div
-          className="container text-white"
-          style={{
-            // borderBottom: "1px solid #008B8B",
-            // width: "350px",
-            // borderRadius: "10px",
-            marginBottom: "20px",
-            marginTop: "20px",
-            textAlign: "center",
-            marginLeft: "120px",
-            marginRight: "120px"
-          }}
-        >
+        <div className="container text-white" style={{marginBottom: "20px", marginTop: "20px", textAlign: "center", marginLeft: "120px", marginRight: "120px",}}>
           
            <Alert style={{marginLeft: "-15px", fontSize: "20px", marginTop: "30px", marginBottom: "30px", borderRadius: "10px", marginRight: "225px", color: "black"}} size="sm" variant="info">
              Create and Save Your Model Below 
@@ -252,176 +240,69 @@ class CCreateDiagram extends Component {
 
         {/* <div> Hello props: {this.props.registryAddressProp} or {this.props.registryIdProp} </div> */}
         
-
-          <div style={{ marginTop: "10px" }}> </div>
+        <div style={{ marginTop: "10px" }}> </div>
         </div>
 
         <hr className="style-seven" style={{marginBottom: "0px"}} />
 
-        <Card
-          className="bg-gray-dark"
-          style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}
-        >
-          <div id="bpmncontainer">
-            <div
-              id="propview"
-              style={{
-                width: "25%",
-                height: "98vh",
-                float: "right",
-                maxHeight: "98vh",
-                overflowX: "auto"
-              }}
-            ></div>
-            <div
-              id="bpmnview"
-              style={{ width: "75%", height: "98vh", float: "left" }}
-            ></div>
-          </div>          
-        </Card>
+            <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+              <div id="bpmncontainer">
+                <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+                <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+              </div>          
+            </Card>
 
-        {/* Post Request 1 'http://localhost:3000/models'*/}
-        <hr className="style-seven" style={{marginTop: "30px"}} /> 
+          <hr className="style-seven" style={{marginTop: "30px"}} /> 
 
-        <Button
-          onClick={this.deployProcessModels}
-          variant="primary"
-          type="submit"
-          className="link-button"
-          style={{
-                  marginLeft: "350px",
-                  marginRight: "350px", 
-                  width: "410px",
-                  border: "1px solid #008B8B", 
-                  marginTop: "-35px",
-                  marginBottom: "5px", 
-                  padding: "5px", 
-                  lineHeight: "35px",
-                  fontSize: "17px", 
-                  fontWeight: "normal",
-                }}
-        >
-          Deploy Process Models /models - Post Request 1 
-        </Button>
-
+           {/* Post Request 1 'http://localhost:3000/models'*/}
+          <Button onClick={this.deployProcessModels}
+            variant="primary" type="submit"
+            className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-35px", marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
+          > Deploy Process Models /models - Post Request 1 
+          </Button>
 
           <span style={{"display": this.state.id !== [] ? "block" : "none" }}>
-            <Alert variant="light" 
-                   style={{color: "black",
-                          //  marginTop: "25px",                                          
-                           fontSize: "17px", 
-                           fontWeight: "normal",
-                           borderRadius: "10px",
-                           marginRight: "350px",
-                           marginLeft: "350px",
-                           textAlign: "center",
-                          }}
-            > 
-            <strong> Bundle ID: </strong> <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.id.bundleID} </span>
+            <Alert variant="light" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
+              <strong> Bundle ID: </strong> <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.id.bundleID} </span>
             </Alert> 
           </span>
 
           <hr className="style-seven" style={{marginTop: "-5px"}} />
 
           {/* Post Request 2 "http://localhost:3000/models/compile"
-            name:
+            name: compileProcessModels
           */}
-
-            <Button
-                    onClick={this.compileProcessModels}
-                    variant="primary"
-                    type="submit"
-                    className="link-button"
-                    style={{
-                            marginLeft: "350px",
-                            marginRight: "350px", 
-                            width: "410px",
-                            border: "1px solid #008B8B", 
-                            marginTop: "-30px",
-                            marginBottom: "8px", 
-                            padding: "5px", 
-                            lineHeight: "35px",
-                            fontSize: "17px", 
-                            fontWeight: "normal",
-                          }}
-                  >
-                    Compile Process Models /models/compile - Post Request 2 
+                  <Button onClick={this.compileProcessModels}
+                    variant="primary" type="submit"
+                    className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-30px", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
+                  > Compile Process Models /models/compile - Post Request 2 
                   </Button>
 
                   {
                         this.state.compileProcessModelsSuccessMessage !== [] ?
-                            <Aux>
+                        <Aux>
 
                             {/* contractName */}
-                            <Alert variant="light" 
-                              style={{color: "black",
-                                      // marginTop: "20px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
-                          <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsContractName} </span>                            
+                          <Alert variant="light" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                            <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsContractName} </span>                            
                           </Alert> <br/>
 
                           {/* solidityCode */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-30px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
-                          <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsSolidityCode} </span>
+                          <Alert variant="light" style={{color: "black", marginTop: "-30px",fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                            <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsSolidityCode} </span>
                           </Alert> <br/>
 
                           {/* codeDependencies  */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-30px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
-                          <strong> Code Dependencies: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCodeDependencies} </span>
+                          <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                            <strong> Code Dependencies: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCodeDependencies} </span>
                           </Alert> <br/>
 
                           {/* compilationMetadata  */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-30px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center", 
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      display: "block",
-                                      WebkitLineClamp: "2",
-                                      WebkitBoxOrient: "vertical",
-                                      overflowWrap: "break-word",
-                                      wordWrap: "break-word",
-                                      hyphens: "auto",                                    
-                                  }}
-                          > 
-                          <strong> Compilation Metadata: </strong> <br/>  <hr/>
-                          <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataContractName} </span>  <hr/> 
-                          <strong> ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataABI} </span> <hr/> 
-                          <strong> Byte Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataByteCode}  </span>  <hr/> 
-                                                  
+                          <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",  overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
+                            <strong> Compilation Metadata: </strong> <br/>  <hr/>
+                            <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataContractName} </span>  <hr/> 
+                            <strong> ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataABI} </span> <hr/> 
+                            <strong> Byte Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataByteCode}  </span>  <hr/>                       
                           </Alert> <br/>                          
                       </Aux>  
                             :
@@ -430,60 +311,22 @@ class CCreateDiagram extends Component {
                             </Alert>                                                    
                     }  
 
-            <hr className="style-seven" style={{marginTop: "-15px"}} />
+                  <hr className="style-seven" style={{marginTop: "-15px"}} />
 
-
-          {/* GET Request 1 '/models'*/}
-          <Button
-              onClick={this.queryProcessModels}
-              variant="primary"
-              type="submit"
-              className="link-button"
-              style={{
-                      marginLeft: "350px",
-                      marginRight: "350px", 
-                      width: "410px",
-                      border: "1px solid #008B8B", 
-                      marginTop: "-30px",
-                      marginBottom: "8px", 
-                      padding: "5px", 
-                      lineHeight: "35px",
-                      fontSize: "17px", 
-                      fontWeight: "normal",
-                    }}
-            >  
-            Query Process Models /models - Get Request 1
-            </Button>
+                  {/* GET Request 1 '/models'*/}
+                  <Button onClick={this.queryProcessModels}
+                          variant="primary" type="submit"
+                          className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-30px", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
+                  > Query Process Models /models - Get Request 1
+                    </Button>
 
                     {
                         this.state.getProcessModelsSuccessMessage !== null ?
-                            <Alert variant="light" 
-                                style={{color: "black",
-                                        // marginTop: "20px",                                          
-                                        fontSize: "17px", 
-                                        fontWeight: "normal",
-                                        borderRadius: "10px",
-                                        marginRight: "50px",
-                                        marginLeft: "50px",
-                                        textAlign: "center",                                     
-                                    }}
-                            > 
+                            <Alert variant="light" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                             <strong> ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessModelsSuccessMessage} </span>
-                            {/* <strong> {this.state.getInterpreterModelHandlerSuccessMessage} </strong>  */}
                             </Alert> 
                             :
-                            <Alert variant="warning" 
-                                style={{color: "black",
-                                        // marginTop: "10px",                                          
-                                        fontSize: "17px", 
-                                        fontWeight: "normal",
-                                        borderRadius: "10px",
-                                        marginRight: "50px",
-                                        marginLeft: "50px",
-                                        textAlign: "center",                                     
-                                    }}
-                            > 
-                             {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
+                            <Alert variant="warning" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}>                              
                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessModelsErrorMessage} </span> 
                             </Alert>                                                    
                     }  
@@ -491,164 +334,52 @@ class CCreateDiagram extends Component {
                     <hr className="style-seven" style={{marginTop: "15px", marginBottom: "-20px"}} />
                     {/* GET Request 2 '/models/mHash'*/}
 
-                    <input required type="text"
-                            placeholder="Enter the mHash" 
-                            name="mHash" value={this.state.mHash}
-                            onChange={this.mHashChangeHandler}
-                            style={{
-                                // marginLeft: "350px",
-                                // marginRight: "350px", 
-                                width: "410px",
-                                border: "1px solid #008B8B", 
-                                marginTop: "0px",
-                                marginBottom: "20px", 
-                                padding: "5px", 
-                                lineHeight: "35px",
-                                fontSize: "17px", 
-                                fontWeight: "normal",
-                                marginLeft: "50px",
-                                }}  
+                    <input required type="text" placeholder="Enter the mHash" 
+                    name="mHash" value={this.state.mHash}
+                    onChange={this.mHashChangeHandler} style={{width: "410px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "20px",  padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginLeft: "50px", }}
                     /> {'      '}
 
-                    <Button
-                        onClick={this.retrieveModelMetadata}
-                        variant="primary"
-                        type="submit"
-                        className="link-button"
-                        style={{
-                                // marginLeft: "350px",
-                                // marginRight: "350px", 
-                                width: "600px",
-                                border: "1px solid #008B8B", 
-                                marginTop: "0px",
-                                marginBottom: "8px", 
-                                padding: "5px", 
-                                lineHeight: "37px",
-                                fontSize: "17px", 
-                                fontWeight: "normal",
-                              }}
-                      >  
+                    <Button onClick={this.retrieveModelMetadata} variant="primary"
+                        type="submit" className="link-button" style={{width: "600px",border: "1px solid #008B8B", marginTop: "0px", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}>  
                       Retrieve Model Metadata /models/:mHash  - Get Request 2
                       </Button>
 
                     {
                         this.state.retrieveModelMetadataSuccessMessage !== null ?
                           <Aux>
-
                            {/* contractName */}
-                           <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-5px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
+                           <Alert variant="light" style={{color: "black", marginTop: "-5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                           <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataContractName} </span>                            
                           </Alert> <br/>
 
                           {/* repoID */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-25px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
+                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                           <strong> Repo ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataRepoID} </span>
                           </Alert> <br/>
 
                           {/* rootModelID  */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-25px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
+                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                           <strong> Root Model ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataRootModelID} </span>
                           </Alert> <br/>
 
                           {/* rootModelName  */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-25px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
+                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                           <strong> Root Model Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataRootModelName} </span>                          
                           </Alert> <br/>
 
                           {/* bpmnModel */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-25px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",                                     
-                                  }}
-                          > 
+                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                           <strong> BPMN Model: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataBpmnModel} </span>                            
                           </Alert> <br/>
 
                           {/* worklistABI  */}
-                          <Alert variant="light" 
-                              style={{color: "black",
-                                      marginTop: "-25px",                                          
-                                      fontSize: "17px", 
-                                      fontWeight: "normal",
-                                      borderRadius: "10px",
-                                      marginRight: "50px",
-                                      marginLeft: "50px",
-                                      textAlign: "center",
-                                      
-                                      
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      display: "block",
-                                      WebkitLineClamp: "2",
-                                      WebkitBoxOrient: "vertical",
-                                      overflowWrap: "break-word",
-                                      wordWrap: "break-word",
-                                      hyphens: "auto",
-                                  }}
-                          > 
-                          <strong> Worklist ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataWorklistABI} </span>                          
+                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
+                            <strong> Worklist ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataWorklistABI} </span>                          
                           </Alert> <br/>
                       </Aux>
                           :
-                            <Alert variant="warning" 
-                                style={{color: "black",
-                                        marginTop: "25px",                                          
-                                        fontSize: "17px", 
-                                        fontWeight: "normal",
-                                        borderRadius: "10px",
-                                        marginRight: "50px",
-                                        marginLeft: "50px",
-                                        textAlign: "center",                                     
-                                    }}
-                            > 
-                             {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
-                             <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
+                            <Alert variant="warning"  style={{color: "black", marginTop: "25px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}>                              
+                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
                             </Alert>                                                    
                     } 
                         
