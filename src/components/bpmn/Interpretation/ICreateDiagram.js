@@ -100,14 +100,13 @@ class ICreateDiagram extends Component {
             [event.target.name]: event.target.value
         });
     }
-    // ************* Requests ****************
+    // ************* Http Requests ****************
 
+    //POST1: post request to save/deploy the model
     saveModelHandler = (event) => {
         event.preventDefault();
 
-        //POST1: post request to save/deploy the model
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
-
         this.modeler.saveXML((err, xml) => {
 
             let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
@@ -147,10 +146,9 @@ class ICreateDiagram extends Component {
         });                   
     }
 
+    //POST2:  http://localhost:3000/interpreter/
     interpreterRequestHandler= (event) => {
         event.preventDefault();
-
-        //POST2:  http://localhost:3000/interpreter/
 
         this.modeler.saveXML((err, xml) => {
 
@@ -261,11 +259,10 @@ class ICreateDiagram extends Component {
                         <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
                     </div>
                 </Card>
-
-                 {/* Running POST Requests for  http://localhost:3000/interpreter/  */}
-
+                
                  <hr className="style-seven" style={{marginTop: "30px"}} />   
 
+                {/* Running POST 1 Requests for  http://localhost:3000/interpreter/ */}
                  <Button onClick={this.interpreterRequestHandler} 
                     variant="primary" type="submit" 
                     className="link-button" style={{ marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginBottom: "5px",  padding: "5px",  lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginTop: "-40px", }}
@@ -280,153 +277,153 @@ class ICreateDiagram extends Component {
                         </Alert> 
                 </span>
 
-                    {/* 2 */}
-                    <span style={{"display": this.state.gasCost !== [] ? "block" : "none" }}>
-                        <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "120px", marginLeft: "120px", textAlign: "center", }}> 
-                            <strong> Gas Cost: </strong> <br/>  <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.gasCost} </span>
-                        </Alert> 
-                    </span>
+                {/* 2 */}
+                <span style={{"display": this.state.gasCost !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "120px", marginLeft: "120px", textAlign: "center", }}> 
+                        <strong> Gas Cost: </strong> <br/>  <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.gasCost} </span>
+                    </Alert> 
+                </span>
 
-                    {/* 3 */}
-                    <span style={{"display": this.state.smartContractName !== [] ? "block" : "none" }}>
-                        <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "120px", marginLeft: "120px", textAlign: "center", }}> 
-                            <strong> Smart Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.smartContractName} </span>
-                        </Alert> 
-                    </span>
+                {/* 3 */}
+                <span style={{"display": this.state.smartContractName !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "120px", marginLeft: "120px", textAlign: "center", }}> 
+                        <strong> Smart Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.smartContractName} </span>
+                    </Alert> 
+                </span>
 
-                    {/* 4 */}
-                    <span style={{"display": this.state.transactionHash !== [] ? "block" : "none" }}>
-                        <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "120px", marginLeft: "120px", textAlign: "center",}}> 
-                            <strong> Transaction Hash: </strong> <br/>  <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.transactionHash} </span>
-                        </Alert> 
-                    </span>
+                {/* 4 */}
+                <span style={{"display": this.state.transactionHash !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "120px", marginLeft: "120px", textAlign: "center",}}> 
+                        <strong> Transaction Hash: </strong> <br/>  <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.transactionHash} </span>
+                    </Alert> 
+                </span>
 
                 <hr className="style-seven" style={{marginTop: "0px"}} />
 
-                {/* Running POST Requests for  http://localhost:3000/interpreter/models  */}
+                {/* Running POST 2 Requests for  http://localhost:3000/interpreter/models  */}
 
                 <Button onClick={this.saveModelHandler} variant="primary" type="submit" 
                     className="link-button" style={{ marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-35px", marginBottom: "-5px",  padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", }}
                 > Parse And Deploy Process Model /interpreter/models - Post Request 2 
                 </Button>
      
-                    {/* Transaction Hashes */}
-                    {/* 1 */}
-                    <span style={{"display": this.state.iFactoryTHashes !== [] ? "block" : "none" }}>
-                        <Alert variant="light"  style={{color: "black", marginTop: "10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
-                            <strong> iFactoryTHashes: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.iFactoryTHashes} </span>
-                        </Alert> 
-                    </span>
+                {/* Transaction Hashes */}
+                {/* 1 */}
+                <span style={{"display": this.state.iFactoryTHashes !== [] ? "block" : "none" }}>
+                    <Alert variant="light"  style={{color: "black", marginTop: "10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
+                        <strong> iFactoryTHashes: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.iFactoryTHashes} </span>
+                    </Alert> 
+                </span>
 
-                        {/* 2 */}
-                        <span style={{"display": this.state.iFlowTHashes !== [] ? "block" : "none" }}>
-                            <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
-                                <strong> iFlowTHashes: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.iFlowTHashes} </span>
-                            </Alert> 
-                        </span>
+                {/* 2 */}
+                <span style={{"display": this.state.iFlowTHashes !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
+                        <strong> iFlowTHashes: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.iFlowTHashes} </span>
+                    </Alert> 
+                </span>
 
-                            {/* 3 */}
-                            <span style={{"display": this.state.interpreterTHash !== [] ? "block" : "none" }}>
-                                <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
-                                    <strong> interpreterTHash: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.interpreterTHash} </span>
-                                </Alert> 
-                            </span>
+                {/* 3 */}
+                <span style={{"display": this.state.interpreterTHash !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
+                        <strong> interpreterTHash: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.interpreterTHash} </span>
+                    </Alert> 
+                </span>
 
-                        {/* 4 */}
-                        <span style={{"display": this.state.BPMNINterpreter !== [] ? "block" : "none" }}>
-                            <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
-                                <strong> BPMNINterpreter: </strong> <br/><span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.BPMNINterpreter} </span>
-                            </Alert> 
-                        </span>
+                {/* 4 */}
+                <span style={{"display": this.state.BPMNINterpreter !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
+                        <strong> BPMNINterpreter: </strong> <br/><span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.BPMNINterpreter} </span>
+                    </Alert> 
+                </span>
 
-                                {/* 5 */}
-                                <span style={{"display": this.state.IData !== [] ? "block" : "none" }}>
-                                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
-                                        <strong> IDATA: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.IData} </span>
-                                    </Alert> 
-                                </span>
+                {/* 5 */}
+                <span style={{"display": this.state.IData !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
+                        <strong> IDATA: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.IData} </span>
+                    </Alert> 
+                </span>
 
-                                {/* 6 */}
-                                <span style={{"display": this.state.IFactry !== [] ? "block" : "none" }}>
-                                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
-                                        <strong> IFactory: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.IFactry} </span>
-                                    </Alert> 
-                                </span>
+                {/* 6 */}
+                <span style={{"display": this.state.IFactry !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
+                        <strong> IFactory: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.IFactry} </span>
+                    </Alert> 
+                </span>
 
-                            {/* 7 */}
-                            <span style={{"display": this.state.IFlow !== [] ? "block" : "none" }}>
-                                <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
-                                    <strong> IFlow: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.IFlow} </span>
-                                </Alert> 
-                            </span>
+                {/* 7 */}
+                <span style={{"display": this.state.IFlow !== [] ? "block" : "none" }}>
+                    <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto", }}> 
+                        <strong> IFlow: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.IFlow} </span>
+                    </Alert> 
+                </span>
 
-                        <hr className="style-seven" style={{marginTop: "0px"}} />
+                <hr className="style-seven" style={{marginTop: "0px"}} />
 
-                    {/* Running GET Request 1 for  http://localhost:3000/interpreter/models  */}
+                {/* Running GET Request 1 for  http://localhost:3000/interpreter/models  */}
 
-                    <Button onClick={this.getInterpreterModelHandler} 
-                        variant="primary" type="submit" 
-                        className="link-button" style={{ marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-35px", marginBottom: "0px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", }}>
-                        Get Parsed Model List /interpreter/models - Get Request 1
-                    </Button> 
+                <Button onClick={this.getInterpreterModelHandler} 
+                    variant="primary" type="submit" 
+                    className="link-button" style={{ marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-35px", marginBottom: "0px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", }}>
+                    Get Parsed Model List /interpreter/models - Get Request 1
+                </Button> 
 
-                    {
-                        this.state.getInterpreterModelHandlerSuccessMessage !== [] ?
-                            <Alert variant="light" style={{color: "black", marginTop: "5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", }}> 
-                            <strong> Model ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelHandlerSuccessMessage} </span>
+                {
+                    this.state.getInterpreterModelHandlerSuccessMessage !== [] ?
+                        <Alert variant="light" style={{color: "black", marginTop: "5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", }}> 
+                             <strong> Model ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelHandlerSuccessMessage} </span>
                             {/* <strong> {this.state.getInterpreterModelHandlerSuccessMessage} </strong>  */}
-                            </Alert> 
-                            :
-                            <Alert variant="warning"  style={{color: "black", marginTop: "5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                        </Alert> 
+                    :
+                        <Alert variant="warning"  style={{color: "black", marginTop: "5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                              {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelHandlerErrorMessage} </span> 
-                            </Alert>                                                    
-                    }  
+                        </Alert>                                                    
+                }  
                         
-                    <hr className="style-seven" style={{marginBottom: "-15px"}} />
+                <hr className="style-seven" style={{marginBottom: "-15px"}} />
 
-                    {/* Running GET Request 2 for  http://localhost:3000/interpreter/models/MHash 
-                            -> getProcessMetadata
-                    */}
-                    <input required type="text" placeholder="Enter the mHash" 
-                            name="mHash" value={this.state.mHash} onChange={this.mHashChangeHandler}
-                            style={{ width: "410px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "20px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginLeft: "50px",}} />
-                                {'      '}
-                    <Button onClick={this.getInterpreterModelMHashHandler} variant="primary" type="submit" 
-                        className="link-button"
-                        style={{ width: "600px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "8px", padding: "5px", lineHeight: "37px",fontSize: "17px", fontWeight: "normal", }}>
-                        Get Process Model Metadata /interpreter/models/:MHash - Get Request 2
-                    </Button>
-                    {
-                        this.state.getInterpreterModelMHashHandlerSuccessMessage !== [] ?
-                        <Aux>                           
-                            {/* processID */}
-                            <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                {/* Running GET Request 2 for  http://localhost:3000/interpreter/models/MHash 
+                        -> getProcessMetadata
+                */}
+                <input required type="text" placeholder="Enter the mHash" 
+                    name="mHash" value={this.state.mHash} onChange={this.mHashChangeHandler}
+                    style={{ width: "410px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "20px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginLeft: "50px",}} />
+                {'      '}
+                <Button onClick={this.getInterpreterModelMHashHandler} variant="primary" type="submit" 
+                    className="link-button"
+                    style={{ width: "600px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "8px", padding: "5px", lineHeight: "37px",fontSize: "17px", fontWeight: "normal", }}>
+                    Get Process Model Metadata /interpreter/models/:MHash - Get Request 2
+                </Button>
+                {
+                    this.state.getInterpreterModelMHashHandlerSuccessMessage !== [] ?
+                    <Aux>                           
+                        {/* processID */}
+                        <Alert variant="light" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                             <strong> Process ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelMHashHandlerProcessID} </span>
-                            </Alert> <br/>
+                        </Alert> <br/>
 
-                            {/* prpcessName  */}
-                            <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                        {/* prpcessName  */}
+                        <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                             <strong> Process Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelMHashHandlerProcessName} </span>
-                            </Alert> <br/>
+                        </Alert> <br/>
 
-                            {/* id  */}
-                            <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                        {/* id  */}
+                        <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                             <strong> Model ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelMHashHandlerID} </span>
                             {/* <strong> {this.state.getInterpreterModelHandlerSuccessMessage} </strong>  */}
-                            </Alert> <br/>
+                        </Alert> <br/>
 
-                             {/* bpmnModel */}
-                             <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                        {/* bpmnModel */}
+                        <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
                             <strong> BPMN Model: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelMHashHandlerBpmnModel} </span>                            
-                            </Alert> <br/>
-                        </Aux>
-                            :
-                            <Alert variant="warning" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}} > 
-                             {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
+                        </Alert> <br/>
+                    </Aux>
+                        :
+                        <Alert variant="warning" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}} > 
+                            {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelMHashHandlerErrorMessage} </span> 
-                            </Alert>                                                    
-                    }  
+                        </Alert>                                                    
+                }  
                 <hr className="style-seven" style={{marginTop: "-20px"}} />
 
                 <div style={{marginTop: "0px", paddingTop: "10px"}}></div>

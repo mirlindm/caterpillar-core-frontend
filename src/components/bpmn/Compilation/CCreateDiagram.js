@@ -254,7 +254,7 @@ class CCreateDiagram extends Component {
 
           <hr className="style-seven" style={{marginTop: "30px"}} /> 
 
-           {/* Post Request 1 'http://localhost:3000/models'*/}
+          {/* Post Request 1 'http://localhost:3000/models'*/}
           <Button onClick={this.deployProcessModels}
             variant="primary" type="submit"
             className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-35px", marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
@@ -316,7 +316,7 @@ class CCreateDiagram extends Component {
                   {/* GET Request 1 '/models'*/}
                   <Button onClick={this.queryProcessModels}
                           variant="primary" type="submit"
-                          className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-30px", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
+                          className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-40px", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
                   > Query Process Models /models - Get Request 1
                     </Button>
 
@@ -331,20 +331,21 @@ class CCreateDiagram extends Component {
                             </Alert>                                                    
                     }  
 
-                    <hr className="style-seven" style={{marginTop: "15px", marginBottom: "-20px"}} />
-                    {/* GET Request 2 '/models/mHash'*/}
+                  <hr className="style-seven" style={{marginTop: "15px", marginBottom: "-20px"}} />
+                  
+                  {/* GET Request 2 '/models/mHash'*/}
 
-                    <input required type="text" placeholder="Enter the mHash" 
+                  <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash}
                     onChange={this.mHashChangeHandler} style={{width: "410px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "20px",  padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginLeft: "50px", }}
-                    /> {'      '}
+                  /> {'      '}
 
-                    <Button onClick={this.retrieveModelMetadata} variant="primary"
+                  <Button onClick={this.retrieveModelMetadata} variant="primary"
                         type="submit" className="link-button" style={{width: "600px",border: "1px solid #008B8B", marginTop: "0px", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}>  
                       Retrieve Model Metadata /models/:mHash  - Get Request 2
-                      </Button>
+                  </Button>
 
-                    {
+                  {
                         this.state.retrieveModelMetadataSuccessMessage !== null ?
                           <Aux>
                            {/* contractName */}
