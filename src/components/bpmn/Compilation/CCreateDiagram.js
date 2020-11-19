@@ -17,10 +17,12 @@ import {Alert, Card, Button } from "react-bootstrap";
 
 import axios from 'axios';
 
+//const fs = require('fs');
+
 // import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 class CCreateDiagram extends Component {
-      modeler = null;
+      modeler = new BpmnModeler();
 
       constructor(props) {
         super(props);
@@ -72,9 +74,19 @@ class CCreateDiagram extends Component {
             camunda: camundaModdleDescriptor
           }
         });
-
-        this.newBpmnDiagram();        
+        this.createDiagram();   
+        //this.newBpmnDiagram();        
       };
+
+      createDiagram = async () => {
+        try {
+          const result = await this.modeler.createDiagram();
+          const { warnings } = result;
+          console.log(warnings);
+        } catch (err) {
+          console.log(err.message, err.warnings);
+        }
+      }
 
       newBpmnDiagram = () => {
         this.openBpmnDiagram(basic_example);

@@ -18,7 +18,8 @@ import {Alert, Card, Button} from 'react-bootstrap';
 import axios from 'axios';
 
 class ICreateDiagram extends Component {
-    modeler = null;
+    //modeler = null;
+    modeler = new BpmnModeler();
 
     constructor(props) {
         super(props);
@@ -72,8 +73,19 @@ class ICreateDiagram extends Component {
                 camunda: camundaModdleDescriptor
             }
         });
-        this.newBpmnDiagram();  
+        this.createDiagram();      
+        //this.newBpmnDiagram();  
     }
+
+    createDiagram = async () => {
+        try {
+          const result = await this.modeler.createDiagram();
+          const { warnings } = result;
+          console.log(warnings);
+        } catch (err) {
+          console.log(err.message, err.warnings);
+        }
+      }
 
     newBpmnDiagram = () => {
         this.openBpmnDiagram(basic_example);
