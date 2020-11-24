@@ -17,9 +17,8 @@ import {Alert, Card, Button } from "react-bootstrap";
 
 import axios from 'axios';
 
-//const fs = require('fs');
 
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
+
 
 class CCreateDiagram extends Component {
       modeler = new BpmnModeler();
@@ -275,7 +274,7 @@ class CCreateDiagram extends Component {
 
           <span style={{"display": this.state.id !== [] ? "block" : "none" }}>
             <Alert variant="light" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
-              <strong> Bundle ID: </strong> <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.id.bundleID} </span>
+              <strong> Bundle ID of Deployed Model: </strong> <span style={{color: "#008B8B", fontWeight: "bolder"}}> {this.state.id.bundleID} </span>
             </Alert> 
           </span>
 
@@ -300,12 +299,12 @@ class CCreateDiagram extends Component {
                           </Alert> <br/>
 
                           {/* solidityCode */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-30px",fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                          <Alert variant="light" style={{color: "black", marginTop: "-30px",fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",  overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
                             <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsSolidityCode} </span>
                           </Alert> <br/>
 
                           {/* codeDependencies  */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                          <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
                             <strong> Code Dependencies: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCodeDependencies} </span>
                           </Alert> <br/>
 

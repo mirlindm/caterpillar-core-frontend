@@ -5,7 +5,7 @@ import Aux from '../../../hoc/Auxiliary';
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { basic_example } from "../../../assets/empty.bpmn";
+//import { basic_example } from "../../../assets/empty.bpmn";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
@@ -16,9 +16,6 @@ import './CUploadDiagram.css';
 import {Form, Alert, Button, Card} from 'react-bootstrap';
 
 import axios from 'axios';
-// var parser = require('xml2json');
-
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 class CUploadDiagram extends Component {
     modeler = null;
@@ -53,55 +50,49 @@ class CUploadDiagram extends Component {
             
 
             mHash: '',
+            selectedFile: [],
         }
     }
 
-    // ************* copying below the part for BPMN Plugin into a handler
-    
-    uploadDiagramNameChangeHandler = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+    // ************* copying below the part for BPMN Plugin into a handler    
+    onFileChange = event => {      
+      // Update the state
+      this.setState({[event.target.name]: undefined});
+      this.setState({selectedFile: []});
+      console.log(event.target.files[0]);
+      this.setState({[event.target.name]: event.target.value});
+      this.setState({selectedFile: event.target.files[0]});      
+    }; 
 
-    uploadDiagramHandler = (event) => {
-        event.preventDefault();
-    
-        this.modeler = new BpmnModeler({
-            container: "#bpmnview",
-            keyboard: {
-              bindTo: window
-            },
-            propertiesPanel: {
-              parent: "#propview"
-            },
-            additionalModules: [propertiesPanelModule, propertiesProviderModule],
-            moddleExtensions: {
-              camunda: camundaModdleDescriptor
-            }
-          });
-      
-          this.newBpmnDiagram();
-    }
-
-    // read xml file here
-    newBpmnDiagram = () => {
-        this.openBpmnDiagram(basic_example);
-    };
-    
-    openBpmnDiagram = async (xml) => {
-          try {
-            const result = await this.modeler.importXML(xml);
-            const { warnings } = result;
-            console.log(warnings);
-    
-            var canvas = this.modeler.get("canvas");
-            canvas.zoom("fit-viewport");
-    
-          } catch (err) {
-            console.log(err.message, err.warnings);
+    openFile = (event) => {
+      event.preventDefault();      
+      //console.log(this.state.selectedFile); 
+      //console.log(this.state.selectedFile.name);             
+      this.modeler = new BpmnModeler({
+          container: "#bpmnview",
+          keyboard: {
+            bindTo: window
+          },
+          propertiesPanel: {
+            parent: "#propview"
+          },
+          additionalModules: [propertiesPanelModule, propertiesProviderModule],
+          moddleExtensions: {
+            camunda: camundaModdleDescriptor
           }
-      };
+        });
+        
+        const reader = new FileReader();        
+        reader.onloadend = (e) => {
+          const content = reader.result
+          this.modeler.importXML(
+            content,
+            (error, definitions) => {console.log(error);}
+          );
+          //console.log(content)
+        }        
+        reader.readAsText(this.state.selectedFile);        
+    }
 
     // change the mHash value using the input so later use it as a parameter to Get Request 2
     mHashChangeHandler = (event) => {
@@ -125,7 +116,7 @@ class CUploadDiagram extends Component {
               console.log(xml);
               axios.post("http://localhost:3000/models",{
                 bpmn: xml,
-                //name: xml.name,          
+                name: this.state.selectedFile.name,          
                 registryAddress: registryAddress,
                 })
                 .then(response => {
@@ -154,7 +145,8 @@ class CUploadDiagram extends Component {
             axios.post("http://localhost:3000/models/compile", 
             {
               bpmn: xml,
-              //name: xml.name,          
+              //name: xml.name,
+              name: this.state.selectedFile.name,         
               registryAddress: registryAddress,
             },
             {
@@ -198,7 +190,7 @@ class CUploadDiagram extends Component {
           }
         })
           .then(response => {
-            this.setState({getProcessModelsSuccessMessage: response.data})
+            this.setState({getProcessModelsSuccessMessage: response.data[response.data.length-1]})
           console.log(response);          
           })
           .catch(e => {
@@ -247,13 +239,15 @@ class CUploadDiagram extends Component {
                 </Alert>
                 </div>
 
-                <hr className="style-seven" style={{marginBottom: "-15px"}}/>                    
-                <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
+                <hr className="style-seven" style={{marginBottom: "-15px"}}/>   
+
+                <Form onSubmit={this.openFile} variant="outline-info" >
                     <Form.Group>
                         <Form.File 
                             style={{ fontSize: "17px", fontWeight: "normal", lineHeight: "15px", color: "white", display: "inline-block", cursor: "pointer", marginRight: "350px", marginLeft: "350px", width: "410px",}} 
-                            multiple id="exampleFormControlFile1" 
-                            name="uploadedDiagramName" onChange={this.uploadDiagramNameChangeHandler}
+                            id="exampleFormControlFile1" 
+                            name="uploadedDiagramName" accept=".bpmn" 
+                            type="file" onChange={this.onFileChange}
                             label="Please upload .bpmnn files"
                             variant="outline-info" 
                         />    
@@ -264,14 +258,15 @@ class CUploadDiagram extends Component {
                         View Your Model
                     </Button>
                     
-                { 
+                 
+                    {                     
                     this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" 
                             style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", marginBottom: "20px", textAlign: "center",}}> 
                         *Please upload a valid diagram 
                         </Alert>                        
                     :
-                        // where the BPMN Model will be rendered if there is an uploaded diagram already!
+                        // where the BPMN Model will be rendered if there is an uploaded diagram already! 
                         <Aux>
                             <Card className="bg-gray-dark" style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}>                                              
                                 <div id="bpmncontainer">
@@ -317,7 +312,7 @@ class CUploadDiagram extends Component {
                         </Alert> <br/>
 
                         {/* solidityCode */}
-                        <Alert variant="light" style={{color: "black", marginTop: "-30px",fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
+                        <Alert variant="light" style={{color: "black", marginTop: "-30px",fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",   overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
                             <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsSolidityCode} </span>
                         </Alert> <br/>
 

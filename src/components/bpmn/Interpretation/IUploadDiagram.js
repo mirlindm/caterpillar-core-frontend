@@ -5,7 +5,7 @@ import Aux from '../../../hoc/Auxiliary';
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import { basic_example } from "../../../assets/empty.bpmn";
+//import { basic_example } from "../../../assets/empty.bpmn";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
@@ -16,8 +16,6 @@ import './IUploadDiagram.css';
 import {Form, Alert, Button, Card} from 'react-bootstrap';
 
 import axios from 'axios';
-
-// import BpmnModelerTest from '../Modeler/BpmnModeler';
 
 class IUploadDiagram extends Component {
     modeler = null;
@@ -50,21 +48,26 @@ class IUploadDiagram extends Component {
             getInterpreterModelMHashHandlerProcessName: [],
             getInterpreterModelMHashHandlerID: [],
 
-            mHash: '',         
+            mHash: '', 
+            selectedFile: [],        
         }
     }
     
      // ************* copying below the part for BPMN Plugin into a handler
-    
-    uploadDiagramNameChangeHandler  = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+     onFileChange = event => {      
+        // Update the state
+        this.setState({[event.target.name]: undefined});
+        this.setState({selectedFile: []});
+        console.log(event.target.files[0]);
+        this.setState({[event.target.name]: event.target.value});
+        this.setState({selectedFile: event.target.files[0]});      
+    }; 
 
-    uploadDiagramHandler = (event) => {
-        event.preventDefault();
-    
+
+    openFile = (event) => {
+        event.preventDefault();      
+        //console.log(this.state.selectedFile); 
+        //console.log(this.state.selectedFile.name);             
         this.modeler = new BpmnModeler({
             container: "#bpmnview",
             keyboard: {
@@ -78,27 +81,64 @@ class IUploadDiagram extends Component {
               camunda: camundaModdleDescriptor
             }
           });
-      
-          this.newBpmnDiagram();
+          
+          const reader = new FileReader();        
+          reader.onloadend = (e) => {
+            const content = reader.result
+            this.modeler.importXML(
+              content,
+              (error, definitions) => {console.log(error);}
+            );
+            //console.log(content)
+          }        
+          reader.readAsText(this.state.selectedFile);        
     }
+  
 
-    newBpmnDiagram = () => {
-        this.openBpmnDiagram(basic_example);
-    };
-    
-    openBpmnDiagram = async (xml) => {
-          try {
-            const result = await this.modeler.importXML(xml);
-            const { warnings } = result;
-            console.log(warnings);
 
-            var canvas = this.modeler.get("canvas");
-            canvas.zoom("fit-viewport");
+    // uploadDiagramNameChangeHandler  = (event) => {
+    //     this.setState({
+    //         [event.target.name]: event.target.value
+    //     });
+    // }
+
+    // uploadDiagramHandler = (event) => {
+    //     event.preventDefault();
     
-          } catch (err) {
-            console.log(err.message, err.warnings);
-          }
-      };
+    //     this.modeler = new BpmnModeler({
+    //         container: "#bpmnview",
+    //         keyboard: {
+    //           bindTo: window
+    //         },
+    //         propertiesPanel: {
+    //           parent: "#propview"
+    //         },
+    //         additionalModules: [propertiesPanelModule, propertiesProviderModule],
+    //         moddleExtensions: {
+    //           camunda: camundaModdleDescriptor
+    //         }
+    //       });
+      
+    //       this.newBpmnDiagram();
+    // }
+
+    // newBpmnDiagram = () => {
+    //     this.openBpmnDiagram(basic_example);
+    // };
+    
+    // openBpmnDiagram = async (xml) => {
+    //       try {
+    //         const result = await this.modeler.importXML(xml);
+    //         const { warnings } = result;
+    //         console.log(warnings);
+
+    //         var canvas = this.modeler.get("canvas");
+    //         canvas.zoom("fit-viewport");
+    
+    //       } catch (err) {
+    //         console.log(err.message, err.warnings);
+    //       }
+    //   };
 
       
     // change the mHash value using the input so later use it as a parameter to Get Request 2
@@ -125,6 +165,7 @@ class IUploadDiagram extends Component {
               axios.post("http://localhost:3000/interpreter/models",{
                 bpmn: xml, // modeler.xml
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
+                name: this.state.selectedFile.name,    
                 registryAddress: registryAddress
                 })
                 .then(response => {
@@ -161,7 +202,8 @@ class IUploadDiagram extends Component {
             if (!err) {
               console.log(xml);
               axios.post("http://localhost:3000/interpreter",{
-                bpmn: xml, // modeler.xml
+                bpmn: xml,
+                name: this.state.selectedFile.name,     
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
                 registryAddress: registryAddress,
                 })
@@ -196,7 +238,7 @@ class IUploadDiagram extends Component {
                 }                          
             })
             .then(response => {
-                this.setState({getInterpreterModelHandlerSuccessMessage: response.data})
+                this.setState({getInterpreterModelHandlerSuccessMessage: response.data[response.data.length-1]})
             console.log(response.data);          
             })
             .catch(e => {
@@ -244,11 +286,11 @@ class IUploadDiagram extends Component {
                 </div>
 
                 <hr className="style-seven" style={{marginBottom: "-15px"}} />
-                <Form onSubmit={this.uploadDiagramHandler} variant="outline-info" >
+                <Form onSubmit={this.openFile} variant="outline-info" >
                     <Form.Group >
                         <Form.File style={{ fontSize: "17px", fontWeight: "normal", lineHeight: "15px", color: "white", display: "inline-block", cursor: "pointer", marginRight: "350px", marginLeft: "350px", width: "410px",}} 
                             multiple id="exampleFormControlFile1" name="uploadedDiagramName" 
-                            onChange={this.uploadDiagramNameChangeHandler} label="Please upload .bpmnn files" 
+                            onChange={this.onFileChange} label="Please upload .bpmnn files" 
                             variant="outline-info" 
                         />                                    
                     </Form.Group>
