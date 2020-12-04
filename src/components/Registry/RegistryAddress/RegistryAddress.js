@@ -3,12 +3,11 @@ import React, {Component} from 'react';
 
 import BpmnModelling from '../../bpmn/BpmnModelling';
 
-import {Card, Alert, Form, Button, Col, Modal,} from 'react-bootstrap'; 
-// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-// import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
+import {Card, Alert, Form, Button, Col, Accordion,} from 'react-bootstrap'; 
 import './RegistryAddress.css';
 import axios from 'axios';
-import Aux from '../../../hoc/Auxiliary';
+
+
 
 class RegistryAddress extends Component {
     constructor(props) {
@@ -85,7 +84,7 @@ class RegistryAddress extends Component {
 
             //* 1st: Fetch Registries from the Blockchain Address 
             <div>
-                <div className="Content"  style={{marginBottom: "70px"}}>
+                <div className="Content"  style={{marginBottom: "20px"}}>
                     <Card className={"border border-dark bg-dark text-white"}>
                         <Card.Header>
                             <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registry by its Blockchain Address</p>
@@ -124,8 +123,7 @@ class RegistryAddress extends Component {
 
                         {/* <p style={{textAlign:"center", marginTop: "20px", color: "#008B8B"}}> Registry found: </p> */}
                         <Alert onClick={this.goToModellerHandler} 
-                             style={{color: "black",
-                                            marginTop: "10px",                                          
+                             style={{color: "black",                                                                                    
                                             fontSize: "17px", 
                                             fontWeight: "normal",
                                             borderRadius: "10px",
@@ -133,7 +131,7 @@ class RegistryAddress extends Component {
                                             marginLeft: "250px",
                                             textAlign: "center"}}
                              size="sm" variant="light">
-                                <strong> Registry Found:  </strong> 
+                                <strong> Registry Found Below:  </strong> 
                             </Alert>
 
 
@@ -141,8 +139,7 @@ class RegistryAddress extends Component {
                              this.state.registriesByAddress.length === 0 ?
 
                              <Alert onClick={this.goToModellerHandler} 
-                             style={{color: "black",
-                                            marginTop: "10px",                                          
+                             style={{color: "black",                                                                                     
                                             fontSize: "17px", 
                                             fontWeight: "normal",
                                             borderRadius: "10px",
@@ -152,256 +149,80 @@ class RegistryAddress extends Component {
                              size="sm" variant="danger">
                                 <strong> No registry found!  </strong> 
                             </Alert> :
-                            <Aux>
-
-
-                            {/* 1 */}
-                            <Button className="contractName-button" style={{marginleft: "350px"}} variant="primary" onClick={() => this.setState({showContractName: true})}>
-                            Contract Name
-                            </Button>{' '}
-                            <Modal show={this.state.showContractName}
-                                onHide={() => this.setState({showContractName: false})}
-                                size="sm" aria-labelledby="example-custom-modal-styling-title"
-                            >
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        Contract Name:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold" }}> {this.state.registriesByAddress.contractName}</span>
-                                </Modal.Body>
-                            </Modal>                                
-
-                            {/* 2 */}
-                            <Button variant="primary" onClick={() => this.setState({showAbi: true})}>
-                            ABI
-                            </Button>{' '}
-                            <Modal show={this.state.showAbi}
-                                onHide={() => this.setState({showAbi: false})}
-                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title"
-                            >
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="abi-title" bsPrefix="abi-modal-title">
-                                        ABI:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                <span style={{color: "#008B8B", 
-                                            fontWeight: "bolder",                                             
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            display: "block",
-                                            WebkitLineClamp: "2",
-                                            WebkitBoxOrient: "vertical",
-                                            overflowWrap: "break-word",
-                                            wordWrap: "break-word",
-                                            hyphens: "auto",                                              
-                                            }}>
-                                             {this.state.registriesByAddress.abi} </span>
-                                </Modal.Body>
-                            </Modal>
-                        
-                         {/* 3 */}
-                        <Button variant="primary" onClick={() => this.setState({showByteCode: true})}>
-                            Byte Code
-                        </Button>{' '}
-                        <Modal show={this.state.showByteCode}
-                                onHide={() => this.setState({showByteCode: false})}
-                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title"
-                        >
-                            <Modal.Header closeButton>
-                                    <Modal.Title id="abi-title" bsPrefix="abi-modal-title">
-                                        Byte Code
-                                    </Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body> 
-                                <span style={{color: "#008B8B", 
-                                            fontWeight: "bolder",                                             
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            display: "block",
-                                            WebkitLineClamp: "2",
-                                            WebkitBoxOrient: "vertical",
-                                            overflowWrap: "break-word",
-                                            wordWrap: "break-word",
-                                            hyphens: "auto",  
-                                            }}>   {this.state.registriesByAddress.bytecode}   </span>
-                            </Modal.Body>
-                        </Modal>  
-                         
-
-                        {/* 4 */}
-                        <Button variant="primary" onClick={() => this.setState({showSolidityCode: true})}>
-                            Solidity Code
-                        </Button>{' '}
-                        <Modal show={this.state.showSolidityCode}
-                                onHide={() => this.setState({showSolidityCode: false})}
-                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title"
-                        >
-                            <Modal.Header closeButton>
-                                    <Modal.Title id="abi-title" bsPrefix="abi-modal-title">
-                                        Solidity Code
-                                    </Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body> 
-                                <span style={{color: "#008B8B", 
-                                            fontWeight: "bolder",                                             
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            display: "block",
-                                            WebkitLineClamp: "2",
-                                            WebkitBoxOrient: "vertical",
-                                            overflowWrap: "break-word",
-                                            wordWrap: "break-word",
-                                            hyphens: "auto",                                        
-                                            whiteSpace: "pre",}}> <pre>{this.state.registriesByAddress.solidityCode} </pre></span>
-                            </Modal.Body>
-                        </Modal> 
- 
-
-                            {/* 1 */}
-                            {/* <Alert variant="light" 
-                                style={{color: "black",
-                                            marginTop: "10px",                                          
-                                            fontSize: "17px", 
-                                            fontWeight: "normal",
-                                            borderRadius: "10px",
-                                            marginRight: "250px",
-                                            marginLeft: "250px",
-                                            textAlign: "center",
-
-
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            display: "block",
-                                            WebkitLineClamp: "2",
-                                            WebkitBoxOrient: "vertical",
-                                            overflowWrap: "break-word",
-                                            wordWrap: "break-word",
-                                            hyphens: "auto",
-                                    }}
-                            > 
-                            <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.registriesByAddress.contractName} </span>
-                            </Alert>  */}
-
-                            {/* 2 */}
-                             {/* <Alert variant="light" 
-                             style={{color: "black",
-                                         marginTop: "10px",                                          
-                                         fontSize: "17px", 
-                                         fontWeight: "normal",
-                                         borderRadius: "10px",
-                                         marginRight: "50px",
-                                         marginLeft: "50px",
-                                         textAlign: "center",
-
-
-                                         overflow: "hidden",
-                                         textOverflow: "ellipsis",
-                                         display: "block",
-                                         WebkitLineClamp: "2",
-                                         WebkitBoxOrient: "vertical",
-                                         overflowWrap: "break-word",
-                                         wordWrap: "break-word",
-                                         hyphens: "auto",
-                                 }}
-                         > 
-                         <strong> ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}>  {this.state.registriesByAddress.abi} </span>
-                         </Alert>  */}
-
-                          {/* 3 */}
-                          {/* <Alert variant="light" 
-                             style={{color: "black",
-                                         marginTop: "10px",                                          
-                                         fontSize: "17px", 
-                                         fontWeight: "normal",
-                                         borderRadius: "10px",
-                                         marginRight: "50px",
-                                         marginLeft: "50px",
-                                         textAlign: "center",
-
-
-                                         overflow: "hidden",
-                                         textOverflow: "ellipsis",
-                                         display: "block",
-                                         WebkitLineClamp: "2",
-                                         WebkitBoxOrient: "vertical",
-                                         overflowWrap: "break-word",
-                                         wordWrap: "break-word",
-                                         hyphens: "auto",
-                                 }}
-                         > 
-                         <strong> Byte Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}>  {this.state.registriesByAddress.bytecode} </span>
-                         </Alert>  */}
-
-                          {/* 4 */}
-                          {/* <Alert variant="light" 
-                             style={{color: "black",
-                                         marginTop: "10px",                                          
-                                         fontSize: "17px", 
-                                         fontWeight: "normal",
-                                         borderRadius: "10px",
-                                         marginRight: "50px",
-                                         marginLeft: "50px",
-                                         textAlign: "center",
-
-
-                                         overflow: "hidden",
-                                         textOverflow: "ellipsis",
-                                         display: "block",
-                                         WebkitLineClamp: "2",
-                                         WebkitBoxOrient: "vertical",
-                                         overflowWrap: "break-word",
-                                         wordWrap: "break-word",
-                                         hyphens: "auto",
-                                 }}
-                         > 
-                         <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}>  {this.state.registriesByAddress.solidityCode} </span>
-                         </Alert>  */}
-
-                        {/* 4 */}
-                        <Alert variant="light" 
-                             style={{color: "black",
-                                         marginTop: "10px",                                          
-                                         fontSize: "17px", 
-                                         fontWeight: "normal",
-                                         borderRadius: "10px",
-                                         marginRight: "50px",
-                                         marginLeft: "50px",
-                                         textAlign: "center",
-                                         marginBottom: "50px",
-
-
-                                         overflow: "hidden",
-                                         textOverflow: "ellipsis",
-                                         display: "block",
-                                         WebkitLineClamp: "2",
-                                         WebkitBoxOrient: "vertical",
-                                         overflowWrap: "break-word",
-                                         wordWrap: "break-word",
-                                         hyphens: "auto",
-                                 }}
-                         > 
-                         <strong> Address: </strong> <br/> <span onClick={this.goToModellerHandler} style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", cursor: "pointer"}}>  {this.state.registriesByAddress.address} </span>
-                         </Alert> 
-                            
-                         </Aux>
+                            <Accordion>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                       1. Contract Name
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                    <Card.Body> 
+                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "20px", }}> <pre> {this.state.registriesByAddress.contractName} </pre> </span>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                       2. ABI
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                    <Card.Body> 
+                                        <span style={{color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
+                                            <pre> {this.state.registriesByAddress.abi}  </pre>    
+                                        </span>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>             
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                       3. Byte Code
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="2">
+                                    <Card.Body> 
+                                        <span style={{color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
+                                            <pre> {this.state.registriesByAddress.bytecode}  </pre> 
+                                        </span>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                                       4. Solidity Code
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="3">
+                                    <Card.Body> 
+                                        <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
+                                            <pre>{this.state.registriesByAddress.solidityCode}</pre>
+                                        </span>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                                       5. Registry Address (Click to continue to BPMN)
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="4">
+                                    <Card.Body>                                     
+                                        <span onClick={this.goToModellerHandler} style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", cursor: "pointer", fontSize: "20px",}}>  
+                                            <pre> {this.state.registriesByAddress.address}  </pre>    
+                                        </span>                                        
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        </Accordion>                                                                                                        
                         }
-
-                        {/* {this.state.address === '' ?
-                        null
-                        :
-                        <Card.Footer style={{"textAlign": "right"}}>
-                            <Button variant="info" href={"/modeler"} >
-                                <FontAwesomeIcon icon={faArrowAltCircleRight} /> Step 2 - Modeler
-                            </Button> 
-                            <div style={{"display" : "none"}}>
-                                <BpmnModelling registryAddressAddress={this.state.registriesByAddress.address} />
-                            </div>  
-                        </Card.Footer>  
-                        } */}
-                    
+                
+                {/* create some space */}
+                <div style={{marginTop: "20px"}}> </div>        
 
                 {/* Once we have an address of the registry, the goTo state will have the value of 'modelling' and the BpmnModelling Component will be rendered */}     
               
@@ -411,8 +232,8 @@ class RegistryAddress extends Component {
                     <BpmnModelling registryAddressProp={this.state.registriesByAddress.address}/>
                     : null
                 }                    
-                <div style={{marginTop: "60px"}}> </div>
 
+                <div style={{marginTop: "60px"}}> </div>
             </div>
         );
     }
