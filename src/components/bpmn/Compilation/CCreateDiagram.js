@@ -13,7 +13,7 @@ import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
 import './CCreateDiagram.css';
 
-import {Alert, Card, Button, Modal, Accordion } from "react-bootstrap";
+import {Alert, Card, Button, Accordion } from "react-bootstrap";
 
 import axios from 'axios';
 
@@ -30,7 +30,7 @@ class CCreateDiagram extends Component {
             id: [],
 
 
-            getProcessModelsSuccessMessage: null,
+            getProcessModelsSuccessMessage: [],
             getProcessModelsErrorMessage: null,
 
             retrieveModelMetadataSuccessMessage: [],
@@ -292,292 +292,197 @@ class CCreateDiagram extends Component {
           {/* Post Request 1 'http://localhost:3000/models'*/}
           <Button onClick={this.deployProcessModels}
             variant="primary" type="submit"
-            className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-35px", marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
+            style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
           > Deploy Process Models /models - Post Request 1 
           </Button>
 
           {/* 1 */}          
-          <Accordion>
+          <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
               <Card>
                 <Card.Header>
-                  <Accordion.Toggle as={Button} onClick={this.deployProcessModels} variant="link" eventKey="0">
-                    Bundle ID of Deployed Model
+                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                    1. Bundle ID of Deployed Model
                   </Accordion.Toggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.id.bundleID} </span>  </Card.Body>
+                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.id.bundleID !== null ? this.state.id.bundleID : "Something went wrong" } </span>  </Card.Body>
                 </Accordion.Collapse>
               </Card>            
             </Accordion>
-
-          <hr className="style-seven" style={{marginTop: "-5px"}} />
+    
 
           {/* Post Request 2 "http://localhost:3000/models/compile"
             name: compileProcessModels
           */}
                   <Button onClick={this.compileProcessModels}
                     variant="primary" type="submit"
-                    className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-30px", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
+                    style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
                   > Compile Process Models /models/compile - Post Request 2 
                   </Button>
 
                   {
-                        this.state.compileProcessModelsSuccessMessage !== [] ?
-                        <Aux>
-                                   <Accordion>
+                        this.state.compileProcessModelsSuccessMessage !== [] ?                   
+                                   <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                                     <Card>
                                       <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                          Contract Name of Deployed Model
+                                          1. Contract Name of Deployed Model
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="0">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsContractName} </pre>  </span>  </Card.Body>
+                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", }}> <pre> {this.state.compileProcessModelsContractName !== [] ? this.state.compileProcessModelsContractName : "Something went wrong!"} </pre>  </span>  </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
                                     <Card>
                                       <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                          Solidity Code of Deployed Model
+                                          2. Solidity Code of Deployed Model
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="1">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsSolidityCode} </pre>  </span> </Card.Body>
+                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", }}> <pre> {this.state.compileProcessModelsSolidityCode === [] ? "Something went wrong!" : this.state.compileProcessModelsSolidityCode } </pre>  </span> </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
                                     <Card>
                                       <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                          Code Dependencies of Deployed Model
+                                          3. Code Dependencies of Deployed Model
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="2">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCodeDependencies} </pre>  </span> </Card.Body>
+                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies} </pre>  </span> </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
 
-                                     <Card>
+                                    <Card>
                                       <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                          Metadata of Deployed Model
+                                          4. Compilation Metadata of Deployed Model
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="3">
-                                        <Card.Body>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                          Contract Name of Deployed Model
-                                        </Accordion.Toggle>                                          
-                                        <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCompilationMetadataContractName} </pre>  </span>    
+                                        <Card.Body> Contract Name: <span style={{color: "#008B8B", fontWeight: "bold", }}>  <pre> {this.state.compileProcessModelsCompilationMetadataContractName} </pre> </span>
+                                          ABI: <span style={{color: "#008B8B", fontWeight: "bold", }}> <br/> <pre> {this.state.compileProcessModelsCompilationMetadataABI} </pre>  </span> 
+                                          Byte Code: <span style={{color: "#008B8B", fontWeight: "bold", }}>  <br/> <pre> {this.state.compileProcessModelsCompilationMetadataByteCode} </pre>  </span> 
                                         </Card.Body>
                                       </Accordion.Collapse>
-
-                                      <Accordion.Collapse eventKey="5">
-                                        <Card.Body>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                          ABI of Deployed Model
-                                        </Accordion.Toggle>                                          
-                                        <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCompilationMetadataABI} </pre>  </span>  
-                                        </Card.Body>
-                                      </Accordion.Collapse>
-
-                                      <Accordion.Collapse eventKey="6">
-                                        <Card.Body>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                          Byte Code of Deployed Model
-                                        </Accordion.Toggle>                                          
-                                        <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCompilationMetadataByteCode} </pre>  </span>
-                                        </Card.Body>
-                                      </Accordion.Collapse>
-                                    </Card>                
-                                  </Accordion>
-
-                            {/* contractName */}
-                            <Button className="contractName-button"  style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "5px", marginBottom: "15px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}} 
-                              variant="secondary" onClick={() => this.setState({showContractName: true})}>
-                              Contract Name
-                             </Button>{' '}
-                            <Modal show={this.state.showContractName}
-                                onHide={() => this.setState({showContractName: false})}
-                                size="md" aria-labelledby="example-custom-modal-styling-title">
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        Contract Name of Deployed Model:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.compileProcessModelsContractName} </span>
-                                </Modal.Body>
-                            </Modal>
-                            
-                          {/* <Alert variant="light" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                            <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsContractName} </span>                            
-                          </Alert> <br/> */}
-
-                          {/* solidityCode */}
-                          <Button className="contractName-button"  style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "5px", marginBottom: "15px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}} 
-                              variant="secondary" onClick={() => this.setState({showSolidityCode: true})}>
-                              Solidity Code
-                             </Button>{' '}
-                            <Modal show={this.state.showSolidityCode}
-                                onHide={() => this.setState({showSolidityCode: false})}
-                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title">
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        Solidity Code of Deployed Model:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsSolidityCode} </pre>  </span>
-                                </Modal.Body>
-                            </Modal>
-                          {/* <Alert variant="light" style={{color: "black", marginTop: "-30px",fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",  overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
-                            <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsSolidityCode} </span>
-                          </Alert> <br/> */}
-
-                          {/* codeDependencies  */}
-                          <Button className="contractName-button"  style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "5px", marginBottom: "15px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}} 
-                              variant="secondary" onClick={() => this.setState({showCodeDependencies: true})}>
-                              Code Dependencies
-                             </Button>{' '}
-                            <Modal show={this.state.showCodeDependencies}
-                                onHide={() => this.setState({showCodeDependencies: false})}
-                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title">
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        Code Dependencies of Deployed Model:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCodeDependencies} </pre>  </span>
-                                </Modal.Body>
-                            </Modal>
-
-                          {/* <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
-                            <strong> Code Dependencies: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCodeDependencies} </span>
-                          </Alert> <br/> */}
-
-                          {/* compilationMetadata  */}
-                          <Button className="contractName-button"  style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "5px", marginBottom: "15px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}} 
-                              variant="secondary" onClick={() => this.setState({showContractNameMetadata: true})}>
-                              Compilation Metadata
-                             </Button>{' '}
-                            <Modal show={this.state.showContractNameMetadata}
-                                onHide={() => this.setState({showContractNameMetadata: false})}
-                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title">
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        Contract Name Metadata of Deployed Model:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCompilationMetadataContractName} </pre>  </span>
-                                </Modal.Body>
-                                <hr/>
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        ABI of Deployed Model:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCompilationMetadataABI} </pre>  </span>
-                                </Modal.Body>
-                                <hr/>
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="example-custom-modal-styling-title">
-                                        Byte Code of Deployed Model:
-                                    </Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.compileProcessModelsCompilationMetadataByteCode} </pre>  </span>
-                                </Modal.Body>
-                            </Modal>
-                          {/* <Alert variant="light" style={{color: "black", marginTop: "-30px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",  overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
-                            <strong> Compilation Metadata: </strong> <br/>  <hr/>
-                            <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataContractName} </span>  <hr/> 
-                            <strong> ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataABI} </span> <hr/> 
-                            <strong> Byte Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsCompilationMetadataByteCode}  </span>  <hr/>                       
-                          </Alert> <br/>                           */}
-                      </Aux>  
+                                    </Card>                                                
+                                  </Accordion>                            
                             :
                             <Alert variant="warning" style={{color: "black", marginTop: "20px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center"}}>                              
                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsErrorMessage} </span> 
                             </Alert>                                                    
                     }  
-
-                  <hr className="style-seven" style={{marginTop: "-15px"}} />
-
+                  
                   {/* GET Request 1 '/models'*/}
+                  {/* 1 */} 
                   <Button onClick={this.queryProcessModels}
                           variant="primary" type="submit"
-                          className="link-button" style={{marginLeft: "350px", marginRight: "350px", width: "410px", border: "1px solid #008B8B", marginTop: "-40px", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
+                          className="link-button" style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
                   > Query Process Models /models - Get Request 1
-                    </Button>
-
-                    {
-                        this.state.getProcessModelsSuccessMessage !== null ?
-                            <Alert variant="light" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                            <strong> ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessModelsSuccessMessage} </span>
-                            </Alert> 
-                            :
-                            <Alert variant="warning" style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}>                              
-                             <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessModelsErrorMessage} </span> 
-                            </Alert>                                                    
-                    }  
-
-                  <hr className="style-seven" style={{marginTop: "15px", marginBottom: "-20px"}} />
-                  
+                  </Button>
+                                                 
+                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Query Process Models /models - Get Request 1
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getProcessModelsSuccessMessage} </span>  </Card.Body>
+                        </Accordion.Collapse>
+                      </Card>            
+                  </Accordion>
+                                  
                   {/* GET Request 2 '/models/mHash'*/}
-
                   <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash}
-                    onChange={this.mHashChangeHandler} style={{width: "410px", border: "1px solid #008B8B", marginTop: "0px", marginBottom: "20px",  padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginLeft: "50px", }}
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> {'      '}
 
                   <Button onClick={this.retrieveModelMetadata} variant="primary"
-                        type="submit" className="link-button" style={{width: "600px",border: "1px solid #008B8B", marginTop: "0px", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}>  
+                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}>  
                       Retrieve Model Metadata /models/:mHash  - Get Request 2
                   </Button>
 
                   {
                         this.state.retrieveModelMetadataSuccessMessage !== null ?
                           <Aux>
-                           {/* contractName */}
-                           <Alert variant="light" style={{color: "black", marginTop: "-5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                          <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataContractName} </span>                            
-                          </Alert> <br/>
+                           <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    1. Contract Name
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataContractName}</span></Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
 
-                          {/* repoID */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                          <strong> Repo ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataRepoID} </span>
-                          </Alert> <br/>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    2. Repo ID
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataRepoID}</span></Card.Body>
+                                </Accordion.Collapse>
+                              </Card> 
 
-                          {/* rootModelID  */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                          <strong> Root Model ID: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataRootModelID} </span>
-                          </Alert> <br/>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                    3. Root Model ID
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="2">
+                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataRootModelID}</span></Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
 
-                          {/* rootModelName  */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                          <strong> Root Model Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataRootModelName} </span>                          
-                          </Alert> <br/>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                                    4. Root Model Name
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="3">
+                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataRootModelName}</span></Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
 
-                          {/* bpmnModel */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}> 
-                          <strong> BPMN Model: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataBpmnModel} </span>                            
-                          </Alert> <br/>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                                    5. BPMN Model
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="4">
+                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center"}}> <pre> {this.state.retrieveModelMetadataBpmnModel} </pre> </span></Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
 
-                          {/* worklistABI  */}
-                          <Alert variant="light" style={{color: "black", marginTop: "-25px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> 
-                            <strong> Worklist ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.retrieveModelMetadataWorklistABI} </span>                          
-                          </Alert> <br/>
+                               <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                                    5. Worklist ABI
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="5">
+                                  <Card.Body>  <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre>{this.state.retrieveModelMetadataWorklistABI}</pre></span> </Card.Body>
+                                </Accordion.Collapse>
+                              </Card>                        
+                            </Accordion>  
+                          
                       </Aux>
                           :
                             <Alert variant="warning"  style={{color: "black", marginTop: "25px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}>                              
                               <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
                             </Alert>                                                    
-                    } 
-                        
-          <hr className="style-seven" style={{marginTop: "-20px"}} />
+                    }                             
               
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
       </Aux>

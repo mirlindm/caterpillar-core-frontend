@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 
-
 import BpmnModelling from '../../bpmn/BpmnModelling';
 import './RegistryId.css';
 
-import {Card, Alert, Form, Button, Col, Modal, Accordion} from 'react-bootstrap'; 
-// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-// import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
+import {Card, Alert, Form, Button, Col, Accordion} from 'react-bootstrap'; 
+
 
 import axios from 'axios';
 import Aux from '../../../hoc/Auxiliary';
@@ -65,7 +63,7 @@ class RegistryId extends Component {
 
 
     render() {
-        
+
         return (
             //Fetch registry by ID
             <div>
