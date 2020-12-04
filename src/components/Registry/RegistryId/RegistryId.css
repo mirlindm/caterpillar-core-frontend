@@ -9,3 +9,20 @@
     color: white;
     font-weight: bold;
 }
+
+.modal-90w {
+    max-width: 95% !important;
+}
+
+.contractName-button {
+    margin-left: 350px;
+}
+
+.abi-modal-title {
+    text-align: center;
+}
+
+pre {
+    color: #008B8B;
+    font-weight: bolder;                                                                                                                         
+}

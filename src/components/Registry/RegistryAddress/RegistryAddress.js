@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import BpmnModelling from '../../bpmn/BpmnModelling';
 
-import {Card, Alert, Form, Button, Col} from 'react-bootstrap'; 
+import {Card, Alert, Form, Button, Col, Modal,} from 'react-bootstrap'; 
 // import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 // import {faArrowAltCircleRight} from '@fortawesome/free-solid-svg-icons';
 import './RegistryAddress.css';
@@ -17,7 +17,13 @@ class RegistryAddress extends Component {
         this.state = {
             registriesByAddress: [],
             address: '',
-            goto: null
+            goto: null,
+
+            showContractName: false,
+            showAbi: false,
+            showByteCode: false,
+            showSolidityCode: false,
+            showAddress: false,            
         }
 
     }
@@ -147,8 +153,115 @@ class RegistryAddress extends Component {
                                 <strong> No registry found!  </strong> 
                             </Alert> :
                             <Aux>
+
+
                             {/* 1 */}
-                            <Alert variant="light" 
+                            <Button className="contractName-button" style={{marginleft: "350px"}} variant="primary" onClick={() => this.setState({showContractName: true})}>
+                            Contract Name
+                            </Button>{' '}
+                            <Modal show={this.state.showContractName}
+                                onHide={() => this.setState({showContractName: false})}
+                                size="sm" aria-labelledby="example-custom-modal-styling-title"
+                            >
+                                <Modal.Header closeButton>
+                                    <Modal.Title id="example-custom-modal-styling-title">
+                                        Contract Name:
+                                    </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <span style={{color: "#008B8B", fontWeight: "bold" }}> {this.state.registriesByAddress.contractName}</span>
+                                </Modal.Body>
+                            </Modal>                                
+
+                            {/* 2 */}
+                            <Button variant="primary" onClick={() => this.setState({showAbi: true})}>
+                            ABI
+                            </Button>{' '}
+                            <Modal show={this.state.showAbi}
+                                onHide={() => this.setState({showAbi: false})}
+                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title"
+                            >
+                                <Modal.Header closeButton>
+                                    <Modal.Title id="abi-title" bsPrefix="abi-modal-title">
+                                        ABI:
+                                    </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                <span style={{color: "#008B8B", 
+                                            fontWeight: "bolder",                                             
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            display: "block",
+                                            WebkitLineClamp: "2",
+                                            WebkitBoxOrient: "vertical",
+                                            overflowWrap: "break-word",
+                                            wordWrap: "break-word",
+                                            hyphens: "auto",                                              
+                                            }}>
+                                             {this.state.registriesByAddress.abi} </span>
+                                </Modal.Body>
+                            </Modal>
+                        
+                         {/* 3 */}
+                        <Button variant="primary" onClick={() => this.setState({showByteCode: true})}>
+                            Byte Code
+                        </Button>{' '}
+                        <Modal show={this.state.showByteCode}
+                                onHide={() => this.setState({showByteCode: false})}
+                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title"
+                        >
+                            <Modal.Header closeButton>
+                                    <Modal.Title id="abi-title" bsPrefix="abi-modal-title">
+                                        Byte Code
+                                    </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body> 
+                                <span style={{color: "#008B8B", 
+                                            fontWeight: "bolder",                                             
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            display: "block",
+                                            WebkitLineClamp: "2",
+                                            WebkitBoxOrient: "vertical",
+                                            overflowWrap: "break-word",
+                                            wordWrap: "break-word",
+                                            hyphens: "auto",  
+                                            }}>   {this.state.registriesByAddress.bytecode}   </span>
+                            </Modal.Body>
+                        </Modal>  
+                         
+
+                        {/* 4 */}
+                        <Button variant="primary" onClick={() => this.setState({showSolidityCode: true})}>
+                            Solidity Code
+                        </Button>{' '}
+                        <Modal show={this.state.showSolidityCode}
+                                onHide={() => this.setState({showSolidityCode: false})}
+                                dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title"
+                        >
+                            <Modal.Header closeButton>
+                                    <Modal.Title id="abi-title" bsPrefix="abi-modal-title">
+                                        Solidity Code
+                                    </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body> 
+                                <span style={{color: "#008B8B", 
+                                            fontWeight: "bolder",                                             
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            display: "block",
+                                            WebkitLineClamp: "2",
+                                            WebkitBoxOrient: "vertical",
+                                            overflowWrap: "break-word",
+                                            wordWrap: "break-word",
+                                            hyphens: "auto",                                        
+                                            whiteSpace: "pre",}}> <pre>{this.state.registriesByAddress.solidityCode} </pre></span>
+                            </Modal.Body>
+                        </Modal> 
+ 
+
+                            {/* 1 */}
+                            {/* <Alert variant="light" 
                                 style={{color: "black",
                                             marginTop: "10px",                                          
                                             fontSize: "17px", 
@@ -170,10 +283,10 @@ class RegistryAddress extends Component {
                                     }}
                             > 
                             <strong> Contract Name: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.registriesByAddress.contractName} </span>
-                            </Alert> 
+                            </Alert>  */}
 
                             {/* 2 */}
-                             <Alert variant="light" 
+                             {/* <Alert variant="light" 
                              style={{color: "black",
                                          marginTop: "10px",                                          
                                          fontSize: "17px", 
@@ -195,10 +308,10 @@ class RegistryAddress extends Component {
                                  }}
                          > 
                          <strong> ABI: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}>  {this.state.registriesByAddress.abi} </span>
-                         </Alert> 
+                         </Alert>  */}
 
                           {/* 3 */}
-                          <Alert variant="light" 
+                          {/* <Alert variant="light" 
                              style={{color: "black",
                                          marginTop: "10px",                                          
                                          fontSize: "17px", 
@@ -220,10 +333,10 @@ class RegistryAddress extends Component {
                                  }}
                          > 
                          <strong> Byte Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}>  {this.state.registriesByAddress.bytecode} </span>
-                         </Alert> 
+                         </Alert>  */}
 
                           {/* 4 */}
-                          <Alert variant="light" 
+                          {/* <Alert variant="light" 
                              style={{color: "black",
                                          marginTop: "10px",                                          
                                          fontSize: "17px", 
@@ -245,7 +358,7 @@ class RegistryAddress extends Component {
                                  }}
                          > 
                          <strong> Solidity Code: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}>  {this.state.registriesByAddress.solidityCode} </span>
-                         </Alert> 
+                         </Alert>  */}
 
                         {/* 4 */}
                         <Alert variant="light" 
