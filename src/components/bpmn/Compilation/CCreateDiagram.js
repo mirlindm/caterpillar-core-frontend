@@ -41,6 +41,7 @@ class CCreateDiagram extends Component {
             retrieveModelMetadataRootModelName: [],
             retrieveModelMetadataWorklistABI: [],
             retrieveModelMetadataContractName: [],
+            retrieveModelMetadataElementInfo: [],
         
             compileProcessModelsSuccessMessage: [],
             compileProcessModelsErrorMessage: null,
@@ -253,7 +254,8 @@ class CCreateDiagram extends Component {
                 retrieveModelMetadataRootModelID: response.data.rootModelID,
                 retrieveModelMetadataRootModelName: response.data.rootModelName,
                 retrieveModelMetadataWorklistABI: response.data.worklistABI,
-                retrieveModelMetadataContractName: response.data.contractInfo.contractName
+                retrieveModelMetadataContractName: response.data.contractInfo,
+                retrieveModelMetadataElementInfo: response.data.indexToElementMap.filter(element => element !== null),
               
               })
               console.log(response);          
@@ -295,8 +297,7 @@ class CCreateDiagram extends Component {
             style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
           > Deploy Process Models /models - Post Request 1 
           </Button>
-
-          {/* 1 */}          
+            
           <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
               <Card>
                 <Card.Header>
@@ -308,7 +309,7 @@ class CCreateDiagram extends Component {
                   <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.id.bundleID !== null ? this.state.id.bundleID : "Something went wrong" } </span>  </Card.Body>
                 </Accordion.Collapse>
               </Card>            
-            </Accordion>
+            </Accordion> <br/> <br/>
     
 
           {/* Post Request 2 "http://localhost:3000/models/compile"
@@ -321,7 +322,8 @@ class CCreateDiagram extends Component {
                   </Button>
 
                   {
-                        this.state.compileProcessModelsSuccessMessage !== [] ?                   
+                        this.state.compileProcessModelsSuccessMessage !== [] ? 
+                        <Aux>
                                    <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                                     <Card>
                                       <Card.Header>
@@ -350,7 +352,12 @@ class CCreateDiagram extends Component {
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="2">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies} </pre>  </span> </Card.Body>
+                                        <Card.Body style={{textAlign: "center"}}> 
+                                          Solidity Code 1: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[0]} </pre>  </span> <hr/>
+                                          Solidity Code 2: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[1]} </pre>  </span> <hr/>
+                                          Solidity Code 3: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[2]} </pre>  </span> <hr/>
+                                          Solidity Code 4: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[3]} </pre>  </span>                                         
+                                        </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
 
@@ -367,8 +374,9 @@ class CCreateDiagram extends Component {
                                         </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>                                                
-                                  </Accordion>                            
-                            :
+                                  </Accordion> <br/> <br/>  
+                      </Aux>                                            
+                    :
                             <Alert variant="warning" style={{color: "black", marginTop: "20px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center"}}>                              
                              <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsErrorMessage} </span> 
                             </Alert>                                                    
@@ -393,7 +401,7 @@ class CCreateDiagram extends Component {
                           <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getProcessModelsSuccessMessage} </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
-                  </Accordion>
+                  </Accordion> <br/> <br/> 
                                   
                   {/* GET Request 2 '/models/mHash'*/}
                   <input required type="text" placeholder="Enter the mHash" 
@@ -409,15 +417,20 @@ class CCreateDiagram extends Component {
                   {
                         this.state.retrieveModelMetadataSuccessMessage !== null ?
                           <Aux>
-                           <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                           <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                    1. Contract Name
+                                    1. Smart Contract Information
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
-                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataContractName}</span></Card.Body>
+                                  <Card.Body style={{textAlign: "center"}}>  
+                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}><pre> {this.state.retrieveModelMetadataContractName.contractName} </pre></span> <hr/>
+                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}><pre> {this.state.retrieveModelMetadataContractName.solidityCode} </pre>  </span> <hr/>
+                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}><pre> {this.state.retrieveModelMetadataContractName.bytecode} </pre></span> <hr/>
+                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
+                                    </Card.Body>
                                 </Accordion.Collapse>
                               </Card>
 
@@ -468,14 +481,35 @@ class CCreateDiagram extends Component {
                                <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                    5. Worklist ABI
+                                    6. Worklist ABI
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="5">
                                   <Card.Body>  <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre>{this.state.retrieveModelMetadataWorklistABI}</pre></span> </Card.Body>
                                 </Accordion.Collapse>
-                              </Card>                        
-                            </Accordion>  
+                              </Card>
+
+                               <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                                    7. Process Model Elements Information
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="6">
+                                  <Card.Body>  
+                                  {/* <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre>{this.state.retrieveModelMetadataElementInfo}</pre></span> */}
+
+                                  {this.state.retrieveModelMetadataElementInfo.map( (element, i)  => {
+                                    return (
+                                   <p key={i}> Element {i}: <br/> <span key={i} style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre>   name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}. </pre> <hr/> </span> </p>
+                                    );
+                                  })                                    
+                                  }
+                                    
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                              </Card>                         
+                            </Accordion> <br/> <br/> 
                           
                       </Aux>
                           :

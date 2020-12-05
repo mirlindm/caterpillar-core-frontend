@@ -59,27 +59,7 @@ class RegistryAddress extends Component {
         this.setState({goTo: 'modelling'})
     } 
 
-    render() {
-
-        // const fontSettings = {
-        //     fontSize: "10px",
-        //     fontFamily: "verdana",
-        //     margin: "0",
-        //     overflow: "hidden",
-        //     textOverflow: "ellipsis",
-        //     display: "block",
-        //     WebkitLineClamp: "2",
-        //     WebkitBoxOrient: "vertical",
-        //     overflowWrap: "break-word",
-        //     wordWrap: "break-word",
-        //     hyphens: "auto",
-        //     textAlign: "center",
-        //     maxWidth: "120ch",
-        //     lineHeight: "1.5em",
-        //     position: "relative"
-        //   };
-
-
+    render() {      
         return (
 
             //* 1st: Fetch Registries from the Blockchain Address 
@@ -130,8 +110,8 @@ class RegistryAddress extends Component {
                                             marginRight: "250px",
                                             marginLeft: "250px",
                                             textAlign: "center"}}
-                             size="sm" variant="light">
-                                <strong> Registry Found Below:  </strong> 
+                             size="sm" variant="warning">
+                                <strong> View Registry Details Below:  </strong> 
                             </Alert>
 
 

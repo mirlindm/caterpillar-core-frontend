@@ -112,8 +112,8 @@ class RegistryId extends Component {
                                             marginRight: "250px",
                                             marginLeft: "250px",
                                             textAlign: "center"}}
-                             size="sm" variant="light">
-                                <strong> Registry Found Below:  </strong> 
+                             size="sm" variant="warning">
+                                <strong> View Registry Details Below:  </strong> 
                             </Alert>
 
 
