@@ -56,29 +56,27 @@ class CCreateDiagram extends Component {
             mHash: '',
 
 
-            //modal - post1
-            showBundleID: false,
+            // //modal - post1
+            // showBundleID: false,
 
-            //modal - post2
-            showContractName: false,
-            showSolidityCode: false,
-            showCodeDependencies: false,
-            showContractNameMetadata: false,            
-            showAbiMetadata: false,
-            showByteCodeMetadata: false,
+            // //modal - post2
+            // showContractName: false,
+            // showSolidityCode: false,
+            // showCodeDependencies: false,
+            // showContractNameMetadata: false,            
+            // showAbiMetadata: false,
+            // showByteCodeMetadata: false,
             
-            //modal - get1
-            showModelIDList: false,
+            // //modal - get1
+            // showModelIDList: false,
           
-            //modal - get2
-            showModelContractName: false, 
-            showModelRepoID: false, 
-            showModelModelID: false, 
-            showModelRootModelName: false, 
-            showModelBPMN: false, 
-            showModelWorklistABI: false
-
-         
+            // //modal - get2
+            // showModelContractName: false, 
+            // showModelRepoID: false, 
+            // showModelModelID: false, 
+            // showModelRootModelName: false, 
+            // showModelBPMN: false, 
+            // showModelWorklistABI: false         
         }
     }
 
@@ -140,12 +138,12 @@ class CCreateDiagram extends Component {
 
       // ************* Http Requests ********************
 
+      // post request to save/deploy the model
+      // implement a method to run the request from the backend for POST Model - Compilation Engine
+      // Post Request 1
       deployProcessModels = (event) => {
         event.preventDefault();
 
-         // post request to save/deploy the model
-         // implement a method to run the request from the backend for POST Model - Compilation Engine
-        // Post Request 1
         this.modeler.saveXML((err, xml) => {
 
           let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp 
@@ -410,8 +408,8 @@ class CCreateDiagram extends Component {
                   /> {'      '}
 
                   <Button onClick={this.retrieveModelMetadata} variant="primary"
-                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}>  
-                      Retrieve Model Metadata /models/:mHash  - Get Request 2
+                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Retrieve Model Metadata /models/:mHash  - Get Request 2
                   </Button>
 
                   {
@@ -517,7 +515,7 @@ class CCreateDiagram extends Component {
                               <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
                             </Alert>                                                    
                     }                             
-              
+        {/* create some space from the footer */} 
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
       </Aux>
     );
