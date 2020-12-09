@@ -24,12 +24,14 @@ class CUploadDiagram extends Component {
 
         this.state = {
             uploadedDiagramName: undefined,
-            id: [],  
+            id: [],
+            showIDAccordion: false,  
             
             getProcessModelsSuccessMessage: [],
             getProcessModelsErrorMessage: null,
 
             retrieveModelMetadataSuccessMessage: [],
+            showRetrieveModelMetadataAccordion: false,
             retrieveModelMetadataErrorMessage: [],
             retrieveModelMetadataBpmnModel: [],
             retrieveModelMetadataRepoID: [],
@@ -40,6 +42,7 @@ class CUploadDiagram extends Component {
             retrieveModelMetadataElementInfo: [],
         
             compileProcessModelsSuccessMessage: [],
+            showCompileProcessModelsAccordion: false,
             compileProcessModelsErrorMessage: null,
             compileProcessModelsContractName: [],
             compileProcessModelsSolidityCode: [],
@@ -107,7 +110,8 @@ class CUploadDiagram extends Component {
     // implement a method to run the request from the backend for POST Model - Compilation Engine  
     // Post Request 1
     deployProcessModels = (event) => {
-        event.preventDefault();        
+        event.preventDefault();
+        this.setState({showIDAccordion: true});        
               
         this.modeler.saveXML((err, xml) => {
 
@@ -122,7 +126,7 @@ class CUploadDiagram extends Component {
                 })
                 .then(response => {
                     if(response.data != null) {
-                        this.setState({id: response.data})
+                        this.setState({id: response.data, showIDAccordion: true})
                         console.log(response)
                         // this.setState({show: true, registry: response.data});
                     } else {
@@ -137,6 +141,7 @@ class CUploadDiagram extends Component {
     // Post 2 - "http://localhost:3000/models/compile"
     compileProcessModels = (event) => {
         event.preventDefault();
+        this.setState({showCompileProcessModelsAccordion: true});
               
         this.modeler.saveXML((err, xml) => {
           let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
@@ -159,6 +164,7 @@ class CUploadDiagram extends Component {
                   if(response.data != null) {
                       this.setState({
                         compileProcessModelsSuccessMessage: response.data.contractName,
+                        showCompileProcessModelsAccordion: true,
                         compileProcessModelsContractName: response.data.contractName,
                         compileProcessModelsSolidityCode: response.data.solidityCode,
                         compileProcessModelsCodeDependencies: response.data.codeDependencies,
@@ -183,11 +189,13 @@ class CUploadDiagram extends Component {
     // GET 1 /models   
     queryProcessModels = (event) => {
       let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+      this.setState({showGetProcessModelsAccordion: true});
+
       console.log("hereeeeeeeeeeeee" + registryAddress);
         axios.get('http://localhost:3000/models', {
           headers: {
             'registryAddress': registryAddress,
-            "accept": "application/json"
+            'Accept': 'application/json'
           }
         })
           .then(response => {
@@ -204,6 +212,7 @@ class CUploadDiagram extends Component {
     // GET 2 /models/:mHash or processId as a parameter 
     retrieveModelMetadata = (event) => { 
       let mHash = this.state.mHash;
+      this.setState({showRetrieveModelMetadataAccordion: true});
       
       axios.get(`http://localhost:3000/models/`+mHash,
       {
@@ -270,9 +279,7 @@ class CUploadDiagram extends Component {
           console.log(e)
         });          
       }
-
       
-
       // Get Request 4: queryProcessState
       queryProcessStateHandler = async () => {
         //pAddress is same as mHash
@@ -366,18 +373,24 @@ class CUploadDiagram extends Component {
                         </Aux>
                 }
                 </Form>
-                                                                               
-                    <hr className="style-seven" />
+
+                {this.state.uploadedDiagramName === undefined ?
+                        <Alert variant="danger" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}>  >
+                        *You need to upload a diagram to deploy it. 
+                        </Alert>                        
+                    :
+                    <Aux>
 
                     {/* Post Request 1 'http://localhost:3000/models'*/}
+                    <br/> <hr/>
                     <Button className="link-button"  onClick={this.deployProcessModels} variant="primary"  //type="submit"
                             style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
-                            >
-                       Deploy Process Models /models - Post Request 1 
+                            > Deploy Process Model
                     </Button>
 
-                       
-                      <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      { this.state.showIDAccordion ? 
+                      <> <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -385,25 +398,26 @@ class CUploadDiagram extends Component {
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="0">
-                              <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.id.bundleID !== null ? this.state.id.bundleID : "Something went wrong" } </pre> </span>  </Card.Body>
+                              <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.id.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.id.bundleID} </pre> </span>  </Card.Body>
                             </Accordion.Collapse>
                           </Card>            
-                        </Accordion> <br/> <br/>            
+                        </Accordion> </> : <br/>
+                      }               
 
                     {/* Post Request 2 "http://localhost:3000/models/compile"
                         name: compileProcessModels
                     */}
+                    <br/> <hr/>
                   <Button onClick={this.compileProcessModels}
                     variant="primary" type="submit"
                     className="link-button" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
-                    > Compile Process Models /models/compile - Post Request 2 
+                    > Compile Process Model
                   </Button>
 
                 {
-                    this.state.compileProcessModelsSuccessMessage !== [] ?
-                    
+                    this.state.showCompileProcessModelsAccordion ?
                     <Aux>
-                        <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                        <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                           <Card>
                             <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -411,7 +425,7 @@ class CUploadDiagram extends Component {
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
-                                <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.compileProcessModelsContractName !== [] ? this.state.compileProcessModelsContractName : "Something went wrong!"} </pre>  </span> </Card.Body>
+                                <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.compileProcessModelsContractName.length === 0 ?  <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.compileProcessModelsContractName} </pre>  </span> </Card.Body>
                               </Accordion.Collapse>
                           </Card>
                           <Card>
@@ -454,24 +468,23 @@ class CUploadDiagram extends Component {
                                   </Card.Body>
                                 </Accordion.Collapse>
                               </Card>                                                
-                            </Accordion> <br/> <br/>                       
+                            </Accordion>                     
                     </Aux>  
-                        :
-                        <Alert variant="warning" style={{color: "black", marginTop: "20px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center"}}>                              
-                            <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.compileProcessModelsErrorMessage} </span> 
-                        </Alert>                                                    
+                        : <br/>                                                                           
                 }  
 
                 {/* <hr className="style-seven" style={{marginTop: "-15px"}} /> */}
 
                 {/* GET Request 1 '/models'*/}
+                <br/> <hr/>
                 <Button onClick={this.queryProcessModels}
                         variant="primary" type="submit"
                         className="link-button" style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
-                > Query Process Models /models - Get Request 1
+                > Query Process Models
                 </Button>
-
-                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                { this.state.showGetProcessModelsAccordion ?
+                  <> 
+                <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                       <Card>
                         <Card.Header>
                           <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -479,12 +492,13 @@ class CUploadDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  {this.state.getProcessModelsSuccessMessage} </span>  </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage} </pre> </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
-                  </Accordion> <br/> <br/>                  
+                  </Accordion> </> : <br/> }             
 
                 {/* GET Request 2 '/models/mHash'*/}
+                <br/> <hr/>
                 <input required type="text" placeholder="Enter the mHash" 
                 name="mHash" value={this.state.mHash}
                 onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
@@ -492,13 +506,13 @@ class CUploadDiagram extends Component {
 
                 <Button onClick={this.retrieveModelMetadata} variant="primary"
                     type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                > Retrieve Model Metadata /models/:mHash  - Get Request 2
+                > Retrieve Model Metadata
                 </Button>
 
                 {
-                    this.state.retrieveModelMetadataSuccessMessage !== null ?
+                    this.state.showRetrieveModelMetadataAccordion ?
                     <Aux>
- <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -507,10 +521,10 @@ class CUploadDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                   <Card.Body style={{textAlign: "center"}}>  
-                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.contractName} </pre> </span> <hr/>
-                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.solidityCode} </pre> </span> <hr/>
-                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.bytecode} </pre> </span> <hr/>
-                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
+                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.retrieveModelMetadataContractName.contractName} </pre> </span> <hr/>
+                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.retrieveModelMetadataContractName.solidityCode} </pre> </span> <hr/>
+                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.retrieveModelMetadataContractName.bytecode} </pre> </span> <hr/>
+                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
                                     </Card.Body>
                                 </Accordion.Collapse>
                               </Card>
@@ -588,23 +602,15 @@ class CUploadDiagram extends Component {
                                     );
                                   })                                    
                                   }
-                                    
                                     </Card.Body>
                                 </Accordion.Collapse>
                               </Card>                         
-                            </Accordion> <br/> <br/>                          
-                    </Aux>
-                        :
-                        <Alert variant="warning"  style={{color: "black", marginTop: "25px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}>                              
-                            <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
-                        </Alert>                                                    
-                } 
+                            </Accordion>                          
+                    </Aux> : <br/> } 
 
-
-                
                   {/* New Requests
                     Post Request 3: Create New Process Instance
-                  */}
+                  */} <br/> <hr/>
                   <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash}
                     onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
@@ -612,44 +618,47 @@ class CUploadDiagram extends Component {
 
                   <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                        > Create New Process Instance /models/:mHash/processes  - POST Request 3
+                        > Create New Process Instance
                   </Button>
 
                   <p> Render Response for POST 3</p> <br/> <br/>
 
                   {/* New Requests
                     Get Request 3: Query Process Instances
-                  */}
+                  */} <br/> <hr/>
                   <Button onClick={this.queryProcessInstancesHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                        > Query Process Instances /models/:mHash/processes  - GET Request 3
+                        > Query Process Instances
                   </Button>
 
                   <p> Render Response for GET 3</p> <br/> <br/>
 
                   {/* New Requests
                     Get Request 4: Query Process State
-                  */}
+                  */} <br/> <hr/>
                   <Button onClick={this.queryProcessStateHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                        > Query Process State /processes/:pAddress - GET Request 4
+                        > Query Process State
                   </Button>
 
                   <p> Render Response for GET 4</p> <br/> <br/>
 
                   {/* New Requests
                     PUT Request 1: Execute Work Item
-                  */}
+                  */} <br/> <hr/>
                   <Button onClick={this.executeWorkItemHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                        > Execute Work Item - PUT Request 1
+                        > Execute Work Item
                   </Button>
 
                   <p> Render Response for PUT 1</p> <br/> <br/>                                    
                                                                     
                 {/* create some space from the footer */}
                 <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
-            </Aux>
+            
+                </Aux> }
+            
+            </Aux>            
         )
     }
 }
