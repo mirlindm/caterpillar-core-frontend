@@ -22,6 +22,7 @@ import axios from 'axios';
 
 class CCreateDiagram extends Component {
       modeler = new BpmnModeler();
+      modeler2 = new BpmnModeler();
 
       constructor(props) {
         super(props);
@@ -109,7 +110,7 @@ class CCreateDiagram extends Component {
           console.log(err.message, err.warnings);
         }
       }
-
+       
       newBpmnDiagram = () => {
         this.openBpmnDiagram(basic_example);
       };
@@ -234,7 +235,6 @@ class CCreateDiagram extends Component {
             } );
       }
 
-
       // GET 2 /models/:mHash or processId as a parameter 
       retrieveModelMetadata = (event) => { 
         let mHash = this.state.mHash;
@@ -262,7 +262,145 @@ class CCreateDiagram extends Component {
               this.setState({retrieveModelMetadataErrorMessage: e.toString()})
               console.log(e.toString())
             });
+           
+            console.log(this.state.retrieveModelMetadataBpmnModel)            
+            //this.openBpmnDiagramBasedOnmHash();
       }
+
+      // newBpmnDiagramResponse = () => {
+      //   this.openBpmnDiagram(this.state.retrieveModelMetadataBpmnModel);
+      // };
+
+      // openBpmnDiagramBasedOnmHash = async (xml) => {
+      //   try {
+      //     const result = await this.modeler.importXML(xml);
+      //     const { warnings } = result;
+      //     console.log(warnings);
+
+      //     var canvas = this.modeler.get("canvas");
+
+      //     canvas.zoom("fit-viewport");
+
+      //   } catch (err) {
+      //     console.log(err.message, err.warnings);
+      //   }
+        //try {
+          // const xmlStr = this.state.retrieveModelMetadataBpmnModel;
+          // const parser = new DOMParser();
+          // const dom = parser.parseFromString(xmlStr, "application/xml");
+        //   const result = await this.modeler2.open(this.state.retrieveModelMetadataBpmnModel);
+        //   const { warnings } = result;
+        //   console.log(warnings);
+        // } catch (err) {
+        //   console.log(err.message, err.warnings);
+        // }
+      //}
+
+    
+      // openBpmnDiagram = async (xml) => {
+      //     try {
+      //       const result = await this.modeler.importXML(xml);
+      //       const { warnings } = result;
+      //       console.log(warnings);
+
+      //       var canvas = this.modeler.get("canvas");
+
+      //       canvas.zoom("fit-viewport");
+
+      //     } catch (err) {
+      //       console.log(err.message, err.warnings);
+      //     }
+      // };            
+
+      // Post Request 3: createNewProcessInstance
+      createNewProcessInstanceHandler = async () => {
+        let mHash = this.state.mHash;
+        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        console.log(registryAddress);
+        await axios.post(`http://localhost:3000/models/${mHash}/processes`,
+        {                    
+          registryAddress: registryAddress,
+        },
+        {
+          headers: {
+              'Accept': 'application/json'
+          }
+        }).then(response =>  {                                                   
+              console.log(response);          
+            })
+            .catch(e => {              
+              console.log(e)
+            });
+      }
+
+      // Get Request 3: queryProcessInstancesHandler
+      queryProcessInstancesHandler = async () => {
+        let mHash = this.state.mHash;
+        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        console.log("GET3" + registryAddress);
+        
+       await axios.get(`http://localhost:3000/models/${mHash}/processes`,
+        {
+          headers: {
+            'registryAddress': registryAddress,
+              'accept': 'application/json'
+          }
+        }).then(response => {              
+          console.log(response);          
+        })
+        .catch(e => {              
+          console.log(e)
+        });
+      // let {data} = responseGet3.data;
+      // console.log(data)
+      // let {error} = responseGet3.error;           
+      }
+
+      
+
+      // Get Request 4: queryProcessState
+      queryProcessStateHandler = async () => {
+        //pAddress is same as mHash
+        let pAddress = this.state.mHash; 
+        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        console.log("GET3" + registryAddress);
+        
+       await axios.get(`http://localhost:3000/processes/${pAddress}`,
+        {
+          headers: {
+            'registryAddress': registryAddress,
+              'accept': 'application/json'
+          }
+        }).then(response => {              
+          console.log(response);          
+        })
+        .catch(e => {              
+          console.log(e)
+        });       
+      }
+
+      //Put Request 1
+      executeWorkItemHandler = async () => {
+         //wlAddress is same as mHash
+         let wlAddress = this.state.mHash; 
+         let wiIndex = null;
+         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+         console.log("GET3" + registryAddress);
+         
+        await axios.put(`http://localhost:3000/worklists/${wlAddress}/workitems/${wiIndex}`, {
+          'registryAddress': registryAddress,
+        },
+         {
+           headers: {            
+               'accept': 'application/json'
+           }
+         }).then(response => {              
+           console.log(response);          
+         })
+         .catch(e => {              
+           console.log(e)
+         });       
+      } 
 
   render = () => {
     return (
@@ -286,6 +424,8 @@ class CCreateDiagram extends Component {
                 <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
               </div>          
             </Card>
+          <hr/>
+        
 
           <hr className="style-seven" style={{marginTop: "30px"}} /> 
 
@@ -296,7 +436,7 @@ class CCreateDiagram extends Component {
           > Deploy Process Models /models - Post Request 1 
           </Button>
             
-          <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+          <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
               <Card>
                 <Card.Header>
                   <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -304,7 +444,7 @@ class CCreateDiagram extends Component {
                   </Accordion.Toggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.id.bundleID !== null ? this.state.id.bundleID : "Something went wrong" } </span>  </Card.Body>
+                  <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.id.bundleID !== null ? this.state.id.bundleID : "Something went wrong" } </pre> </span>  </Card.Body>
                 </Accordion.Collapse>
               </Card>            
             </Accordion> <br/> <br/>
@@ -322,7 +462,7 @@ class CCreateDiagram extends Component {
                   {
                         this.state.compileProcessModelsSuccessMessage !== [] ? 
                         <Aux>
-                                   <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                                   <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                                     <Card>
                                       <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -330,7 +470,7 @@ class CCreateDiagram extends Component {
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="0">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", }}> <pre> {this.state.compileProcessModelsContractName !== [] ? this.state.compileProcessModelsContractName : "Something went wrong!"} </pre>  </span>  </Card.Body>
+                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.compileProcessModelsContractName !== [] ? this.state.compileProcessModelsContractName : "Something went wrong!"} </pre>  </span> </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
                                     <Card>
@@ -340,7 +480,7 @@ class CCreateDiagram extends Component {
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="1">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", }}> <pre> {this.state.compileProcessModelsSolidityCode === [] ? "Something went wrong!" : this.state.compileProcessModelsSolidityCode } </pre>  </span> </Card.Body>
+                                        <Card.Body style={{textAlign: "center"}}> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.compileProcessModelsSolidityCode === [] ? "Something went wrong!" : this.state.compileProcessModelsSolidityCode } </pre> </span> </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
                                     <Card>
@@ -351,10 +491,10 @@ class CCreateDiagram extends Component {
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="2">
                                         <Card.Body style={{textAlign: "center"}}> 
-                                          Solidity Code 1: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[0]} </pre>  </span> <hr/>
-                                          Solidity Code 2: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[1]} </pre>  </span> <hr/>
-                                          Solidity Code 3: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[2]} </pre>  </span> <hr/>
-                                          Solidity Code 4: <span style={{color: "#008B8B", fontWeight: "bold",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[3]} </pre>  </span>                                         
+                                          Solidity Code 1: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[0]} </pre> </span> <hr/>
+                                          Solidity Code 2: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[1]} </pre> </span> <hr/>
+                                          Solidity Code 3: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[2]} </pre> </span> <hr/>
+                                          Solidity Code 4: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[3]} </pre> </span>                                         
                                         </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>
@@ -366,9 +506,10 @@ class CCreateDiagram extends Component {
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="3">
-                                        <Card.Body> Contract Name: <span style={{color: "#008B8B", fontWeight: "bold", }}>  <pre> {this.state.compileProcessModelsCompilationMetadataContractName} </pre> </span>
-                                          ABI: <span style={{color: "#008B8B", fontWeight: "bold", }}> <br/> <pre> {this.state.compileProcessModelsCompilationMetadataABI} </pre>  </span> 
-                                          Byte Code: <span style={{color: "#008B8B", fontWeight: "bold", }}>  <br/> <pre> {this.state.compileProcessModelsCompilationMetadataByteCode} </pre>  </span> 
+                                        <Card.Body> 
+                                          Contract Name: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <pre> {this.state.compileProcessModelsCompilationMetadataContractName} </pre> </span> <hr/>
+                                          ABI: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <br/> <pre>  {this.state.compileProcessModelsCompilationMetadataABI} </pre> </span> <hr/>
+                                          Byte Code: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <br/> <pre> {this.state.compileProcessModelsCompilationMetadataByteCode} </pre> </span> <hr/>
                                         </Card.Body>
                                       </Accordion.Collapse>
                                     </Card>                                                
@@ -388,7 +529,7 @@ class CCreateDiagram extends Component {
                   > Query Process Models /models - Get Request 1
                   </Button>
                                                  
-                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                  <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                       <Card>
                         <Card.Header>
                           <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -396,7 +537,7 @@ class CCreateDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getProcessModelsSuccessMessage} </span>  </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  {this.state.getProcessModelsSuccessMessage} </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion> <br/> <br/> 
@@ -424,10 +565,10 @@ class CCreateDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                   <Card.Body style={{textAlign: "center"}}>  
-                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}><pre> {this.state.retrieveModelMetadataContractName.contractName} </pre></span> <hr/>
-                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}><pre> {this.state.retrieveModelMetadataContractName.solidityCode} </pre>  </span> <hr/>
-                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}><pre> {this.state.retrieveModelMetadataContractName.bytecode} </pre></span> <hr/>
-                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
+                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.contractName} </pre> </span> <hr/>
+                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.solidityCode} </pre> </span> <hr/>
+                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.bytecode} </pre> </span> <hr/>
+                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
                                     </Card.Body>
                                 </Accordion.Collapse>
                               </Card>
@@ -439,7 +580,7 @@ class CCreateDiagram extends Component {
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="1">
-                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataRepoID}</span></Card.Body>
+                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataRepoID} </pre> </span></Card.Body>
                                 </Accordion.Collapse>
                               </Card> 
 
@@ -450,7 +591,7 @@ class CCreateDiagram extends Component {
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="2">
-                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataRootModelID}</span></Card.Body>
+                                  <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataRootModelID} </pre> </span></Card.Body>
                                 </Accordion.Collapse>
                               </Card>
 
@@ -461,7 +602,7 @@ class CCreateDiagram extends Component {
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="3">
-                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>{this.state.retrieveModelMetadataRootModelName}</span></Card.Body>
+                                  <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataRootModelName} </pre> </span></Card.Body>
                                 </Accordion.Collapse>
                               </Card>
 
@@ -472,7 +613,9 @@ class CCreateDiagram extends Component {
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="4">
-                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center"}}> <pre> {this.state.retrieveModelMetadataBpmnModel} </pre> </span></Card.Body>
+                                  <Card.Body>
+                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px",}}> <pre> {this.state.retrieveModelMetadataBpmnModel} </pre> </span>  
+                                  </Card.Body>
                                 </Accordion.Collapse>
                               </Card>
 
@@ -483,7 +626,7 @@ class CCreateDiagram extends Component {
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="5">
-                                  <Card.Body>  <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre>{this.state.retrieveModelMetadataWorklistABI}</pre></span> </Card.Body>
+                                  <Card.Body> <span style={{textAlign: "center", fontSize: "17px", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre> {this.state.retrieveModelMetadataWorklistABI} </pre> </span> </Card.Body> 
                                 </Accordion.Collapse>
                               </Card>
 
@@ -499,7 +642,7 @@ class CCreateDiagram extends Component {
 
                                   {this.state.retrieveModelMetadataElementInfo.map( (element, i)  => {
                                     return (
-                                   <p key={i}> Element {i}: <br/> <span key={i} style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre>   name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}. </pre> <hr/> </span> </p>
+                                      <div key={i}> <p key={i}> Element {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}> [name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}] </span> </p> <hr/> </div>
                                     );
                                   })                                    
                                   }
@@ -507,17 +650,77 @@ class CCreateDiagram extends Component {
                                     </Card.Body>
                                 </Accordion.Collapse>
                               </Card>                         
-                            </Accordion> <br/> <br/> 
+                            </Accordion> <br/> <br/>                                  
                           
                       </Aux>
                           :
                             <Alert variant="warning"  style={{color: "black", marginTop: "25px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}}>                              
                               <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getProcessStateErrorMessage} </span> 
                             </Alert>                                                    
-                    }                             
+                    }
+
+
+                  {/* New Requests
+                    Post Request 3: Create New Process Instance
+                  */}
+                  <input required type="text" placeholder="Enter the mHash" 
+                    name="mHash" value={this.state.mHash}
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                  /> {'      '}
+
+                  <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
+                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Create New Process Instance /models/:mHash/processes  - POST Request 3
+                  </Button>
+
+                  <p> Render Response for POST 3</p> <br/> <br/>
+
+                  {/* New Requests
+                    Get Request 3: Query Process Instances
+                  */}
+                  <Button onClick={this.queryProcessInstancesHandler} variant="primary"
+                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Query Process Instances /models/:mHash/processes  - GET Request 3
+                  </Button>
+
+                  <p> Render Response for GET 3</p> <br/> <br/>
+
+                  {/* New Requests
+                    Get Request 4: Query Process State
+                  */}
+                  <Button onClick={this.queryProcessStateHandler} variant="primary"
+                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Query Process State /processes/:pAddress - GET Request 4
+                  </Button>
+
+                  <p> Render Response for GET 4</p> <br/> <br/>
+
+                  {/* New Requests
+                    PUT Request 1: Execute Work Item
+                  */}
+                  <Button onClick={this.executeWorkItemHandler} variant="primary"
+                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Execute Work Item - PUT Request 1
+                  </Button>
+
+                  <p> Render Response for PUT 1</p> <br/> <br/>
+
+
+
+
+
+                                                                                            
         {/* create some space from the footer */} 
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
+{/* 
+        <Card className="bg-gray-dark" style={{marginBottom: "20px", marginTop: "20px", textAlign: "center", marginLeft: "120px", marginRight: "120px",}}>
+                                    <div id="bpmncontainer">
+                                      <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+                                      <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+                                    </div>          
+        </Card>  */}
       </Aux>
+      
     );
   };
 }

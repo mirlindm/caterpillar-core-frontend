@@ -48,7 +48,7 @@ class Registry extends Component {
                 {/* Ask  user if they want to create a new registry or use an existing one */}
 
             <div  className="Content"> 
-                <p style={{fontFamily: "Trocchi sans-serif", color: "white", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>
+                <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
                     Do you want to create a new registry?
                 </p>
             
@@ -79,7 +79,7 @@ class Registry extends Component {
                 <Aux>
                     
                  {/* here we implement the second dropdown  */}
-                <div  className="Content"> <p style={{fontFamily: "Trocchi sans-serif", color: "white", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>How do you want to fetch the registry?</p>
+                <div  className="Content"> <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>How do you want to fetch the registry?</p>
             
                 <Dropdown>
                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic">

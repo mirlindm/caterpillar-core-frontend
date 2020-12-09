@@ -45,7 +45,7 @@ class BpmnModelling extends Component {
                     {/* Prompt user if they want to upload a model or create a new one */}
 
                 <div  className="Content"> 
-                    <p style={{fontFamily: "Trocchi sans-serif", fontSize: "25px", fontWeight: "normal", lineHeight: "48px" }}>
+                    <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
                         Upload your model or create a new one?
                     </p>
                 

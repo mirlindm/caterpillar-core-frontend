@@ -67,7 +67,7 @@ class RegistryCreate extends Component {
                 <div className="Content">
                     <Card className={"border border-dark bg-dark text-white"} >
                         <Card.Header>
-                            <p style={{ margin: 0, fontSize: "medium"}}>Create a new Runtime Registry</p>
+                            <p style={{color: "white", fontSize: "17px", fontWeight: "normal", margin: "0" }}>Create a new Runtime Registry</p>
                         </Card.Header>
                         
                         <Form onSubmit={this.createRegistryHandler} id="registryCreate">

@@ -70,7 +70,7 @@ class RegistryId extends Component {
                 <div className="Content"  style={{marginBottom: "20px"}}>
                     <Card className={"border border-dark bg-dark text-white"}>
                         <Card.Header>
-                            <p style={{ margin: 0, fontSize: "medium"}}>Fetch Registriy by its ID</p>
+                            <p style={{color: "white", fontSize: "17px", fontWeight: "normal", margin: "0"}}>Fetch Registriy by its ID</p>
                         </Card.Header>
 
                         
@@ -142,7 +142,7 @@ class RegistryId extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
                                         <Card.Body> 
-                                        <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "20px", }}> <pre> {this.state.registriesById.contractName} </pre> </span>
+                                        <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.registriesById.contractName} </pre> </span>
                                         </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
@@ -154,7 +154,7 @@ class RegistryId extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="1">
                                         <Card.Body> 
-                                            <span style={{color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
+                                            <span style={{color: "#008B8B", fontWeight: "bolder", fontSize: "17px", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
                                                 <pre> {this.state.registriesById.abi}  </pre>    
                                             </span>
                                         </Card.Body>
@@ -168,7 +168,7 @@ class RegistryId extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="2">
                                         <Card.Body> 
-                                            <span style={{color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
+                                            <span style={{color: "#008B8B", fontWeight: "bolder", fontSize: "17px", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
                                                 <pre> {this.state.registriesById.bytecode}  </pre> 
                                             </span>
                                         </Card.Body>
@@ -182,7 +182,7 @@ class RegistryId extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="3">
                                         <Card.Body> 
-                                        <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
+                                        <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", fontSize: "17px", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}>
                                                 <pre>{this.state.registriesById.solidityCode}</pre>
                                             </span>
                                         </Card.Body>
@@ -196,7 +196,7 @@ class RegistryId extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="4">
                                         <Card.Body>                                         
-                                            <span onClick={this.goToModellerHandler} style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", cursor: "pointer", fontSize: "20px",}}>  
+                                            <span onClick={this.goToModellerHandler} style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", cursor: "pointer", fontSize: "17px",}}>  
                                                 <pre> {this.state.registriesById.address}  </pre>    
                                             </span>                                    
                                         </Card.Body>
