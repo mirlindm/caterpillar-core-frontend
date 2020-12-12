@@ -17,7 +17,9 @@ import {Form, Alert, Button, Card, Accordion} from 'react-bootstrap';
 import axios from 'axios';
 
 class CUploadDiagram extends Component {
-    modeler = null;
+    //modeler = null;
+    modeler = new BpmnModeler();
+    modeler2 = new BpmnModeler();
 
     constructor(props) {
         super(props);
@@ -231,12 +233,56 @@ class CUploadDiagram extends Component {
               retrieveModelMetadataElementInfo: response.data.indexToElementMap.filter(element => element !== null),
             
             })
-            console.log(response);          
+            console.log(response);
+            console.log(this.state.retrieveModelMetadataBpmnModel);
+            this.modeler2 = new BpmnModeler({
+              container: "#bpmnview2",
+              keyboard: {
+                bindTo: window
+              },
+              propertiesPanel: {
+                parent: "#propview2"
+              },
+              additionalModules: [propertiesPanelModule, propertiesProviderModule],
+              moddleExtensions: {
+                camunda: camundaModdleDescriptor
+              }
+            });
+            this.openBpmnDiagramBasedOnmHash(this.state.retrieveModelMetadataBpmnModel);
+        
           })
           .catch(e => {
             this.setState({retrieveModelMetadataErrorMessage: e.toString()})
             console.log(e.toString())
           });
+    }
+
+    openBpmnDiagramBasedOnmHash = async (xml) => {        
+      try {
+        const result = await this.modeler2.importXML(xml);
+        const { warnings } = result;
+        console.log(warnings);
+
+        var canvas = this.modeler2.get("canvas");
+
+        canvas.zoom("fit-viewport");
+
+        //this.setState({retrieveModelMetadataBpmnModel: []});
+        this.modeler2 = null;
+
+      } catch (err) {
+        console.log(err.message, err.warnings);
+      }
+      // try {
+      //   const xmlStr = this.state.retrieveModelMetadataBpmnModel;
+      //   const parser = new DOMParser();
+      //   const dom = parser.parseFromString(xmlStr, "application/xml");
+      //   const result = await this.modeler2.open(this.state.retrieveModelMetadataBpmnModel);
+      //   const { warnings } = result;
+      //   console.log(warnings);
+      // } catch (err) {
+      //   console.log(err.message, err.warnings);
+      // }
     }
 
       // Post Request 3: createNewProcessInstance
@@ -255,8 +301,8 @@ class CUploadDiagram extends Component {
         }).then(response =>  {                                                   
               console.log(response);          
             })
-            .catch(e => {              
-              console.log(e)
+            .catch(error => {              
+              console.log(error)
             });
       }
 
@@ -275,8 +321,8 @@ class CUploadDiagram extends Component {
         }).then(response => {              
           console.log(response);          
         })
-        .catch(e => {              
-          console.log(e)
+        .catch(error => {              
+          console.log(error)
         });          
       }
       
@@ -296,8 +342,8 @@ class CUploadDiagram extends Component {
         }).then(response => {              
           console.log(response);          
         })
-        .catch(e => {              
-          console.log(e)
+        .catch(error => {              
+          console.log(error)
         });       
       }
 
@@ -319,8 +365,8 @@ class CUploadDiagram extends Component {
          }).then(response => {              
            console.log(response);          
          })
-         .catch(e => {              
-           console.log(e)
+         .catch(error => {              
+           console.log(error)
          });       
       } 
 
@@ -376,8 +422,8 @@ class CUploadDiagram extends Component {
 
                 {this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}>  >
-                        *You need to upload a diagram to deploy it. 
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
+                        *No Model Found to Deploy
                         </Alert>                        
                     :
                     <Aux>
@@ -492,7 +538,7 @@ class CUploadDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage} </pre> </span>  </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage.map((processModel, id) => <p key="id"> processModel,  </p>  )} </pre> </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion> </> : <br/> }             
@@ -574,6 +620,13 @@ class CUploadDiagram extends Component {
                                   </Card.Body>
                                 </Accordion.Collapse>
                               </Card>
+
+                              <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                                  <div id="bpmncontainer">
+                                    <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+                                    <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+                                  </div>          
+                                </Card>
 
                                <Card>
                                 <Card.Header>

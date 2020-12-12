@@ -102,7 +102,12 @@ class CCreateDiagram extends Component {
           }
         });
         this.createDiagram();   
-        //this.newBpmnDiagram();        
+        //this.newBpmnDiagram();
+        console.log("Component Did Mount!!!!")
+        
+        
+
+
       };
 
       createDiagram = async () => {
@@ -265,61 +270,65 @@ class CCreateDiagram extends Component {
                 retrieveModelMetadataElementInfo: response.data.indexToElementMap.filter(element => (element !== null && element !== undefined )),
               
               })
-              console.log(response);          
+              console.log(response);
+              console.log(this.state.retrieveModelMetadataBpmnModel);
+              this.modeler2 = new BpmnModeler({
+                container: "#bpmnview2",
+                keyboard: {
+                  bindTo: window
+                },
+                propertiesPanel: {
+                  parent: "#propview2"
+                },
+                additionalModules: [propertiesPanelModule, propertiesProviderModule],
+                moddleExtensions: {
+                  camunda: camundaModdleDescriptor
+                }
+              });
+              this.openBpmnDiagramBasedOnmHash(this.state.retrieveModelMetadataBpmnModel);
+
             })
             .catch(e => {
               this.setState({retrieveModelMetadataErrorMessage: e.toString()})
               console.log(e.toString())
             });
            
-            console.log(this.state.retrieveModelMetadataBpmnModel)            
-            //this.openBpmnDiagramBasedOnmHash();
+                      
+            //
       }
 
       // newBpmnDiagramResponse = () => {
       //   this.openBpmnDiagram(this.state.retrieveModelMetadataBpmnModel);
       // };
 
-      // openBpmnDiagramBasedOnmHash = async (xml) => {
-      //   try {
-      //     const result = await this.modeler.importXML(xml);
-      //     const { warnings } = result;
-      //     console.log(warnings);
+      openBpmnDiagramBasedOnmHash = async (xml) => {        
+        try {
+          const result = await this.modeler2.importXML(xml);
+          const { warnings } = result;
+          console.log(warnings);
 
-      //     var canvas = this.modeler.get("canvas");
+          var canvas = this.modeler2.get("canvas");
 
-      //     canvas.zoom("fit-viewport");
+          canvas.zoom("fit-viewport");
 
-      //   } catch (err) {
-      //     console.log(err.message, err.warnings);
-      //   }
-        //try {
-          // const xmlStr = this.state.retrieveModelMetadataBpmnModel;
-          // const parser = new DOMParser();
-          // const dom = parser.parseFromString(xmlStr, "application/xml");
+          //this.setState({retrieveModelMetadataBpmnModel: []});
+          this.modeler2 = null;
+
+        } catch (err) {
+          console.log(err.message, err.warnings);
+        }
+        // try {
+        //   const xmlStr = this.state.retrieveModelMetadataBpmnModel;
+        //   const parser = new DOMParser();
+        //   const dom = parser.parseFromString(xmlStr, "application/xml");
         //   const result = await this.modeler2.open(this.state.retrieveModelMetadataBpmnModel);
         //   const { warnings } = result;
         //   console.log(warnings);
         // } catch (err) {
         //   console.log(err.message, err.warnings);
         // }
-      //}
-
-    
-      // openBpmnDiagram = async (xml) => {
-      //     try {
-      //       const result = await this.modeler.importXML(xml);
-      //       const { warnings } = result;
-      //       console.log(warnings);
-
-      //       var canvas = this.modeler.get("canvas");
-
-      //       canvas.zoom("fit-viewport");
-
-      //     } catch (err) {
-      //       console.log(err.message, err.warnings);
-      //     }
-      // };            
+      }
+               
 
       // Post Request 3: createNewProcessInstance
       createNewProcessInstanceHandler = async () => {
@@ -337,8 +346,8 @@ class CCreateDiagram extends Component {
         }).then(response =>  {                                                   
               console.log(response);          
             })
-            .catch(e => {              
-              console.log(e)
+            .catch(error => {              
+              console.log(error)
             });
       }
 
@@ -357,8 +366,8 @@ class CCreateDiagram extends Component {
         }).then(response => {              
           console.log(response);          
         })
-        .catch(e => {              
-          console.log(e)
+        .catch(error => {              
+          console.log(error)
         });
       // let {data} = responseGet3.data;
       // console.log(data)
@@ -383,8 +392,8 @@ class CCreateDiagram extends Component {
         }).then(response => {              
           console.log(response);          
         })
-        .catch(e => {              
-          console.log(e)
+        .catch(error => {              
+          console.log(error)
         });       
       }
 
@@ -406,8 +415,8 @@ class CCreateDiagram extends Component {
          }).then(response => {              
            console.log(response);          
          })
-         .catch(e => {              
-           console.log(e)
+         .catch(error => {              
+           console.log(error)
          });       
       } 
 
@@ -426,7 +435,6 @@ class CCreateDiagram extends Component {
         </div>
 
         <hr className="style-seven" style={{marginBottom: "0px"}} />
-
             <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
               <div id="bpmncontainer">
                 <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
@@ -544,7 +552,7 @@ class CCreateDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage} </pre> </span> </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage.map((processModel, id) => <p key="id"> processModel,  </p>  )} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion> </> : <br/> }
@@ -622,11 +630,18 @@ class CCreateDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="4">
                                   <Card.Body>
-                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px",}}> <pre> {this.state.retrieveModelMetadataBpmnModel} </pre> </span>  
+                                    <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px",}}> <pre> {this.state.retrieveModelMetadataBpmnModel} </pre> </span>                                                                          
                                   </Card.Body>
                                 </Accordion.Collapse>
                               </Card>
-
+                              
+                                <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                                  <div id="bpmncontainer">
+                                    <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+                                    <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+                                  </div>          
+                                </Card>
+                              
                                <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="5">
