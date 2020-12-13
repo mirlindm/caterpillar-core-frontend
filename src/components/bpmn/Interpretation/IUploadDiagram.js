@@ -17,7 +17,9 @@ import {Form, Alert, Button, Card, Accordion} from 'react-bootstrap';
 import axios from 'axios';
 
 class IUploadDiagram extends Component {
-    modeler = null;
+    //modeler = null;
+    modeler = new BpmnModeler();
+    modeler2 = new BpmnModeler();
 
     constructor(props) {
         super(props);
@@ -37,7 +39,7 @@ class IUploadDiagram extends Component {
             iFlowTHashes: [],
             interpreterTHash: '',
 
-            getInterpreterModelHandlerSuccessMessage: null,
+            getInterpreterModelHandlerSuccessMessage: [],
             getInterpreterModelHandlerErrorMessage: null,
 
             getInterpreterModelMHashHandlerSuccessMessage: [],
@@ -46,9 +48,20 @@ class IUploadDiagram extends Component {
             getInterpreterModelMHashHandlerProcessID: [],
             getInterpreterModelMHashHandlerProcessName: [],
             getInterpreterModelMHashHandlerID: [],
+            getInterpreterModelMHashHandlerContractInfo: [],
+            getInterpreterModelMHashHandlerIData: [],
+            getInterpreterModelMHashHandlerIFactory: [],
+            getInterpreterModelMHashHandlerIFlow: [],
+            retrieveModelMetadataElementInfo: [],
+
 
             mHash: '', 
-            selectedFile: [],        
+            selectedFile: [],
+            
+            showInterpreterAccordion: false,
+            showInterpretProcessModelAccordion: false,
+            showGetProcessModelsAccordion: false,
+            showRetrieveModelMetadataAccordion: false,
         }
     }
     
@@ -153,6 +166,7 @@ class IUploadDiagram extends Component {
     //POST1: post request to save/deploy the model
     saveModelHandler = (event) => {
         event.preventDefault();
+        this.setState({showInterpretProcessModelAccordion: true});
 
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
         this.modeler.saveXML((err, xml) => {
@@ -178,6 +192,7 @@ class IUploadDiagram extends Component {
                         iFactoryTHashes: response.data.transactionHashes.iFactoryTHashes,
                         iFlowTHashes: response.data.transactionHashes.iFlowTHashes,
                         interpreterTHash: response.data.transactionHashes.interpreterTHash,
+                        showInterpretProcessModelAccordion: true,
                     })
                     console.log(response);            
                 } else {
@@ -193,6 +208,7 @@ class IUploadDiagram extends Component {
     //POST2:  http://localhost:3000/interpreter/
     interpreterRequestHandler= (event) => {
         event.preventDefault();
+        this.setState({showInterpreterAccordion: true});
 
         this.modeler.saveXML((err, xml) => {
 
@@ -212,7 +228,8 @@ class IUploadDiagram extends Component {
                         contractAddress: response.data.contractAddress,
                         gasCost: response.data.gasCost,
                         smartContractName: response.data.smartContractName,
-                        transactionHash: response.data.transactionHash,                                            
+                        transactionHash: response.data.transactionHash,
+                        showInterpreterAccordion: true,                                            
                     })
                     console.log(response);            
                 } else {
@@ -228,6 +245,7 @@ class IUploadDiagram extends Component {
     // GET1: /interpreter/models
     getInterpreterModelHandler = (event) => {
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        this.setState({showGetProcessModelsAccordion: true});
 
             axios.get('http://localhost:3000/interpreter/models',
             { 
@@ -237,7 +255,8 @@ class IUploadDiagram extends Component {
                 }                          
             })
             .then(response => {
-                this.setState({getInterpreterModelHandlerSuccessMessage: response.data[response.data.length-1]})
+                //this.setState({getInterpreterModelHandlerSuccessMessage: response.data[response.data.length-1]});
+                this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true})
             console.log(response.data);          
             })
             .catch(e => {
@@ -249,10 +268,10 @@ class IUploadDiagram extends Component {
     // GET2: /interpreter/models/:mHash
     //http://localhost:3000/interpreter/models/MHash
     //getProcessMetadata
-    getInterpreterModelMHashHandler = (event) => {
-
+    getInterpreterModelMHashHandler = (event) => {        
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
         let mHash = this.state.mHash;
+        this.setState({showRetrieveModelMetadataAccordion: true});
         
             axios.get(`http://localhost:3000/interpreter/models/`+mHash, 
             {
@@ -260,19 +279,58 @@ class IUploadDiagram extends Component {
                     'accept': 'application/json'
                 }
             }).then(response => {
-                this.setState({
+                this.setState({                    
                     getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
                     getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
                     getInterpreterModelMHashHandlerProcessID: response.data.processID,
                     getInterpreterModelMHashHandlerProcessName: response.data.prpcessName,
-                    getInterpreterModelMHashHandlerID: response.data._id,            
+                    getInterpreterModelMHashHandlerID: response.data._id,
+                    getInterpreterModelMHashHandlerContractInfo: response.data.contractInfo,
+                    getInterpreterModelMHashHandlerIData: response.data.iData,
+                    getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
+                    getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
+                    retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),            
                     })
-                console.log(response);          
+                console.log(response); 
+                console.log(this.state.getInterpreterModelMHashHandlerBpmnModel);
+                this.modeler2 = new BpmnModeler({
+                  container: "#bpmnview2",
+                  keyboard: {
+                    bindTo: window
+                  },
+                  propertiesPanel: {
+                    parent: "#propview2"
+                  },
+                  additionalModules: [propertiesPanelModule, propertiesProviderModule],
+                  moddleExtensions: {
+                    camunda: camundaModdleDescriptor
+                  }
+                });
+                this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
+
                 })
                 .catch(e => {
                     this.setState({getInterpreterModelMHashHandlerErrorMessage: e.toString()})
                     console.log(e.toString())
                 });
+    }
+
+    openBpmnDiagramBasedOnmHash = async (xml) => {        
+        try {
+          const result = await this.modeler2.importXML(xml);
+          const { warnings } = result;
+          console.log(warnings);
+  
+          var canvas = this.modeler2.get("canvas");
+  
+          canvas.zoom("fit-viewport");
+  
+          //this.setState({retrieveModelMetadataBpmnModel: []});
+          this.modeler2 = null;
+  
+        } catch (err) {
+          console.log(err.message, err.warnings);
+        }
     }
 
     render = () => {
@@ -293,12 +351,7 @@ class IUploadDiagram extends Component {
                             variant="outline-info" 
                         />                                    
                     </Form.Group>
-
-                    <Button className="link-button" variant="primary" type="submit" 
-                            style={{ marginBottom: "20px", width: "410px", marginLeft: "350px", marginRight: "350px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}>
-                        View Your Model
-                    </Button>
-
+                   
                     { this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", marginBottom: "20px", textAlign: "center",}}> 
                             *Please upload a valid diagram 
@@ -306,6 +359,11 @@ class IUploadDiagram extends Component {
                         :
                         // {/* where the BPMN Model will be rendered */}
                         <Aux>
+                            <Button className="link-button" variant="primary" type="submit" 
+                                style={{ marginBottom: "20px", width: "410px", marginLeft: "350px", marginRight: "350px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}>
+                                View Your Model
+                            </Button>
+
                             <Card className="bg-gray-dark" style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}>
                                 <div id="bpmncontainer">
                                     <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
@@ -316,16 +374,25 @@ class IUploadDiagram extends Component {
                     }
                 </Form>
                                                               
-                <hr className="style-seven" />
+                {/* <hr className="style-seven" /> */}
+                {this.state.uploadedDiagramName === undefined ?
+                <Alert variant="danger" size="sm"
+                style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
+                *No Model Found to Deploy
+                </Alert>                        
+                :
+                <Aux>
 
-                {/* Running POST Requests 1 for  http://localhost:3000/interpreter/ */}
+                {/* POST Requests 2 for  http://localhost:3000/interpreter/ */}
+                <br/> <hr/>
                 <Button onClick={this.interpreterRequestHandler} 
                     variant="primary" //type="submit" 
                     className="link-button" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
-                    > Create New Interpreter Instance /intepreter - Post Request 1
+                    > Create New Interpreter
                 </Button>
 
-                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                { this.state.showInterpreterAccordion ? 
+                <> <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                     <Card>
                         <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -333,7 +400,7 @@ class IUploadDiagram extends Component {
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.contractAddress} </span>  </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <pre> {this.state.contractAddress.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.contractAddress} </pre>  </span>  </Card.Body>
                         </Accordion.Collapse>
                     </Card>
 
@@ -344,7 +411,7 @@ class IUploadDiagram extends Component {
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.gasCost} </span>  </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.gasCost.length === 0 ?  <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.gasCost} </pre>  </span>  </Card.Body>
                         </Accordion.Collapse>
                     </Card>
 
@@ -355,7 +422,7 @@ class IUploadDiagram extends Component {
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="2">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.smartContractName} </span>  </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.smartContractName.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.smartContractName} </pre>  </span>  </Card.Body>
                         </Accordion.Collapse>
                     </Card>
 
@@ -366,19 +433,23 @@ class IUploadDiagram extends Component {
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="3">
-                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.transactionHash} </span>  </Card.Body>
+                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.transactionHash.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span>  : this.state.transactionHash} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                     </Card>                
-                </Accordion> <br/> <br/>  
+                </Accordion> </> : <br/> 
+                }
+                
                               
-                {/* Running POST Requests 2 for  http://localhost:3000/interpreter/models  */}
-
+                {/* POST Requests 1 for  http://localhost:3000/interpreter/models  */}
+                <br/> <hr/>
                 <Button onClick={this.saveModelHandler} variant="primary" type="submit" 
                     className="link-button" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
-                > Parse And Deploy Process Model /interpreter/models - Post Request 2 
+                > Deploy Process Model 
                 </Button>
 
-                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                { this.state.showInterpretProcessModelAccordion ? 
+                <Aux>
+                <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                     <Card>
                         <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -387,9 +458,9 @@ class IUploadDiagram extends Component {
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                         <Card.Body>  
-                        iFactoryTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.iFactoryTHashes}</span> <hr/>
-                        iFlowTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.iFlowTHashes}</span> <hr/>
-                        interpreterTHash: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> {this.state.interpreterTHash}</span> 
+                        iFactoryTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.iFactoryTHashes.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.iFactoryTHashes} </pre> </span> <hr/>
+                        iFlowTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.iFlowTHashes.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.iFlowTHashes} </pre> </span> <hr/>
+                        interpreterTHash: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.interpreterTHash.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.interpreterTHash} </pre> </span> 
                         </Card.Body>
                         </Accordion.Collapse>
                     </Card>
@@ -401,29 +472,29 @@ class IUploadDiagram extends Component {
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.BPMNINterpreter} </pre> </span> </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.BPMNINterpreter} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                     </Card>
 
                     <Card>
                         <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                            3. iDATA - Interpreter Data
+                            3. iDATA 
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="2">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.IData} </pre> </span> </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.IData} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                     </Card>
 
                     <Card>
                         <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                            4. iFactory - Interpreter Factory
+                            4. iFactory
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="3">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.IFactry} </pre> </span> </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.IFactry} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                     </Card>
 
@@ -434,63 +505,56 @@ class IUploadDiagram extends Component {
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="4">
-                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.IFlow} </pre> </span> </Card.Body>
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.IFlow} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                </Accordion> <br/> <br/>                                   
+                </Accordion> 
+                </Aux> : <br/>                                   
+                }
 
-                {/* Running GET Request 1 for  http://localhost:3000/interpreter/models  */}
-
+                {/* GET Request 1 for  http://localhost:3000/interpreter/models  */}
+                <br/> <hr/>
                 <Button onClick={this.getInterpreterModelHandler} 
                     variant="primary" type="submit" 
                     className="link-button" style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
-                    > Get Parsed Model List /interpreter/models - Get Request 1
+                    > Query Process Models
                 </Button> 
 
                 {
-                    this.state.getInterpreterModelHandlerSuccessMessage !== [] ?
-
+                    this.state.showGetProcessModelsAccordion ?
                     <Aux> 
                         <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                             <Card>
                                 <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                    1. Query Process Models /Fetch Models' IDs - Get Request 1
+                                    1. Process Models IDs
                                 </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
-                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getInterpreterModelHandlerSuccessMessage} </span>  </Card.Body>
+                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getInterpreterModelHandlerSuccessMessage} </span>  </Card.Body>
                                 </Accordion.Collapse>
                             </Card>            
-                        </Accordion> <br/> <br/>
-                    </Aux>                        
-                    :
-                        <Alert variant="warning"  style={{color: "black", marginTop: "5px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
-                             {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
-                             <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelHandlerErrorMessage} </span> 
-                        </Alert>                                                    
-                }  
-                        
-                
+                        </Accordion> </Aux> : <br/> }                                                           
 
-                {/* Running GET Request 2 for  http://localhost:3000/interpreter/models/MHash 
+                {/* GET Request 2 for  http://localhost:3000/interpreter/models/MHash 
                         -> getProcessMetadata
                 */}
+                <br/> <hr/>                
                 <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash} onChange={this.mHashChangeHandler}
                     style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                />
-                {'      '}
+                />{'      '}
+
                 <Button onClick={this.getInterpreterModelMHashHandler} variant="primary" type="submit" 
                     className="link-button"
                     style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                    > Get Process Model Metadata /interpreter/models/:MHash - Get Request 2
+                    > Retrieve Model Metadata
                 </Button>
-                {
-                    this.state.getInterpreterModelMHashHandlerSuccessMessage !== [] ?
-                    <Aux>
 
-                        <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                {
+                    this.state.showRetrieveModelMetadataAccordion ?
+                    <Aux>
+                        <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -527,24 +591,115 @@ class IUploadDiagram extends Component {
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                        4. BPMN Model
+                                        4. Contract Info
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="3">
+                                    <Card.Body>                                          
+                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.contractName} </pre> </span> <hr/>
+                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.abi} </pre> </span> <hr/>
+                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.bytecode} </pre> </span> <hr/>
+                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.solidityCode} </pre> </span> <hr/> 
+                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.address} </pre> </span>     
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                                        5. iData
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="4">
+                                <Card.Body>  
+                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.contractName} </pre> </span> <hr/>
+                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.abi} </pre> </span> <hr/>
+                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.bytecode} </pre> </span> <hr/>
+                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.solidityCode} </pre> </span> <hr/> 
+                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.address} </pre> </span> 
+                                </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                                        6. iFactory
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="5">
+                                    <Card.Body>                                          
+                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.contractName} </pre> </span> <hr/>
+                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.abi} </pre> </span> <hr/>
+                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.bytecode} </pre> </span> <hr/>
+                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.solidityCode} </pre> </span> <hr/> 
+                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.address} </pre> </span>   
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                                        7. iFlow
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="6">
+                                    <Card.Body>                                          
+                                        1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.contractName} </pre> </span> <hr/>
+                                        2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.abi} </pre> </span> <hr/>
+                                        3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.bytecode} </pre> </span> <hr/>
+                                        4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.solidityCode} </pre> </span> <hr/> 
+                                        5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.address} </pre> </span>                                          
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="7">
+                                        8. BPMN Model (XML and Process Model)
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="7">
                                     <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
                                 </Accordion.Collapse>
+                            </Card>
+                            <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                                  <div id="bpmncontainer">
+                                    <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+                                    <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+                                  </div>          
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="8">
+                                        9. Process Model Elements Information
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="8">
+                                    <Card.Body>
+                                    {
+                                        this.state.retrieveModelMetadataElementInfo.map( (element, i)  => {
+                                            return (
+                                                <div key={i}> <p key={i}> Task {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}>  {element.element} </span> </p> <hr/> </div>
+                                                );
+                                        })                                    
+                                    } 
+                                    </Card.Body>
+                                </Accordion.Collapse>
                             </Card>                  
-                        </Accordion> <br/> <br/>                                                   
-                    </Aux>
-                        :
-                        <Alert variant="warning" style={{color: "black", marginTop: "-10px", fontSize: "17px",  fontWeight: "normal", borderRadius: "10px", marginRight: "50px", marginLeft: "50px", textAlign: "center",}} > 
-                            {/* <strong> {this.state.getInterpreterModelHandlerErrorMessage} </strong>  */}
-                             <strong> Loading: </strong> <br/> <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center"}}> {this.state.getInterpreterModelMHashHandlerErrorMessage} </span> 
-                        </Alert>                                                    
-                }  
+                        </Accordion> </Aux>
+                        :  <br/>
+                }                                                   
+                    
+                       
 
                  {/* create some space from the footer */}
                 <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
+
+                </Aux> }
             </Aux>
         )
     }

@@ -193,7 +193,7 @@ class CUploadDiagram extends Component {
       let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
       this.setState({showGetProcessModelsAccordion: true});
 
-      console.log("hereeeeeeeeeeeee" + registryAddress);
+      //console.log("hereeeeeeeeeeeee" + registryAddress);
         axios.get('http://localhost:3000/models', {
           headers: {
             'registryAddress': registryAddress,
@@ -532,11 +532,11 @@ class CUploadDiagram extends Component {
                       <Card>
                         <Card.Header>
                           <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            1. Query Process Models /models - Get Request 1
+                            1. Process Models IDs
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage.map((processModel, id) => <p key="id"> processModel,  </p>  )} </pre> </span>  </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage} </pre> </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion> </> : <br/> }             
@@ -649,7 +649,7 @@ class CUploadDiagram extends Component {
 
                                   {this.state.retrieveModelMetadataElementInfo.map( (element, i)  => {
                                     return (
-                                      <div key={i}> <p key={i}> Element {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}> [name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}] </span> </p> <hr/> </div>
+                                      <div key={i}> <p key={i}> Task {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}> [name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}] </span> </p> <hr/> </div>
                                     );
                                   })                                    
                                   }
