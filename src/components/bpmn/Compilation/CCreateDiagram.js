@@ -17,9 +17,6 @@ import {Alert, Card, Button, Accordion } from "react-bootstrap";
 
 import axios from 'axios';
 
-
-
-
 class CCreateDiagram extends Component {
       modeler = new BpmnModeler();
       modeler2 = new BpmnModeler();
@@ -58,30 +55,7 @@ class CCreateDiagram extends Component {
             compileProcessModelsCompilationMetadataByteCode: [],
             
 
-            mHash: '',
-
-
-            // //modal - post1
-            // showBundleID: false,
-
-            // //modal - post2
-            // showContractName: false,
-            // showSolidityCode: false,
-            // showCodeDependencies: false,
-            // showContractNameMetadata: false,            
-            // showAbiMetadata: false,
-            // showByteCodeMetadata: false,
-            
-            // //modal - get1
-            // showModelIDList: false,
-          
-            // //modal - get2
-            // showModelContractName: false, 
-            // showModelRepoID: false, 
-            // showModelModelID: false, 
-            // showModelRootModelName: false, 
-            // showModelBPMN: false, 
-            // showModelWorklistABI: false         
+            mHash: '',        
         }
     }
 
@@ -103,11 +77,7 @@ class CCreateDiagram extends Component {
         });
         this.createDiagram();   
         //this.newBpmnDiagram();
-        console.log("Component Did Mount!!!!")
-        
-        
-
-
+        //console.log("Component Did Mount!!!!");                
       };
 
       createDiagram = async () => {
@@ -291,10 +261,7 @@ class CCreateDiagram extends Component {
             .catch(e => {
               this.setState({retrieveModelMetadataErrorMessage: e.toString()})
               console.log(e.toString())
-            });
-           
-                      
-            //
+            });                                         
       }
 
       // newBpmnDiagramResponse = () => {
@@ -552,7 +519,7 @@ class CCreateDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage.map((processModel, id) => <p key="id"> processModel,  </p>  )} </pre> </span> </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage} </pre> </span> </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion> </> : <br/> }

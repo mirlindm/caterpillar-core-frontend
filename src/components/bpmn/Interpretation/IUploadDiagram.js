@@ -268,7 +268,8 @@ class IUploadDiagram extends Component {
     // GET2: /interpreter/models/:mHash
     //http://localhost:3000/interpreter/models/MHash
     //getProcessMetadata
-    getInterpreterModelMHashHandler = (event) => {        
+    getInterpreterModelMHashHandler = (event) => { 
+               
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
         let mHash = this.state.mHash;
         this.setState({showRetrieveModelMetadataAccordion: true});
@@ -531,7 +532,7 @@ class IUploadDiagram extends Component {
                                 </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
-                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getInterpreterModelHandlerSuccessMessage} </span>  </Card.Body>
+                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getInterpreterModelHandlerSuccessMessage} </span>  </Card.Body>
                                 </Accordion.Collapse>
                             </Card>            
                         </Accordion> </Aux> : <br/> }                                                           
@@ -554,7 +555,7 @@ class IUploadDiagram extends Component {
                 {
                     this.state.showRetrieveModelMetadataAccordion ?
                     <Aux>
-                        <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                        <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -562,7 +563,7 @@ class IUploadDiagram extends Component {
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getInterpreterModelMHashHandlerProcessName} </span>  </Card.Body>
+                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerProcessName.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.getInterpreterModelMHashHandlerProcessName} </pre> </span>  </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
 
@@ -573,7 +574,7 @@ class IUploadDiagram extends Component {
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="1">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getInterpreterModelMHashHandlerID} </span>  </Card.Body>
+                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerID} </pre> </span> </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
 
@@ -584,7 +585,7 @@ class IUploadDiagram extends Component {
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="2">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}>  {this.state.getInterpreterModelMHashHandlerProcessID} </span>  </Card.Body>
+                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerProcessID} </pre> </span> </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
 
@@ -596,11 +597,11 @@ class IUploadDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="3">
                                     <Card.Body>                                          
-                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.contractName} </pre> </span> <hr/>
-                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.abi} </pre> </span> <hr/>
-                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.bytecode} </pre> </span> <hr/>
-                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.solidityCode} </pre> </span> <hr/> 
-                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.address} </pre> </span>     
+                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.contractName} </pre> </span> <hr/>
+                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold",fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.abi} </pre> </span> <hr/>
+                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.bytecode} </pre> </span> <hr/>
+                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.solidityCode} </pre> </span> <hr/> 
+                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.address} </pre> </span>     
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -613,11 +614,11 @@ class IUploadDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="4">
                                 <Card.Body>  
-                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.contractName} </pre> </span> <hr/>
-                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.abi} </pre> </span> <hr/>
-                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.bytecode} </pre> </span> <hr/>
-                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.solidityCode} </pre> </span> <hr/> 
-                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.address} </pre> </span> 
+                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.contractName} </pre> </span> <hr/>
+                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.abi} </pre> </span> <hr/>
+                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.bytecode} </pre> </span> <hr/>
+                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.solidityCode} </pre> </span> <hr/> 
+                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.address} </pre> </span> 
                                 </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -630,11 +631,11 @@ class IUploadDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="5">
                                     <Card.Body>                                          
-                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.contractName} </pre> </span> <hr/>
-                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.abi} </pre> </span> <hr/>
-                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.bytecode} </pre> </span> <hr/>
-                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.solidityCode} </pre> </span> <hr/> 
-                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.address} </pre> </span>   
+                                    1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.contractName} </pre> </span> <hr/>
+                                    2. ABI <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.abi} </pre> </span> <hr/>
+                                    3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.bytecode} </pre> </span> <hr/>
+                                    4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.solidityCode} </pre> </span> <hr/> 
+                                    5. Address <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.address} </pre> </span>   
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -647,11 +648,11 @@ class IUploadDiagram extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="6">
                                     <Card.Body>                                          
-                                        1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.contractName} </pre> </span> <hr/>
-                                        2. ABI <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.abi} </pre> </span> <hr/>
-                                        3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.bytecode} </pre> </span> <hr/>
-                                        4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.solidityCode} </pre> </span> <hr/> 
-                                        5. Address <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.address} </pre> </span>                                          
+                                        1. Contract Name <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.contractName} </pre> </span> <hr/>
+                                        2. ABI <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.abi} </pre> </span> <hr/>
+                                        3. Byte Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.bytecode} </pre> </span> <hr/>
+                                        4. Solidity Code <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.solidityCode} </pre> </span> <hr/> 
+                                        5. Address <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.address} </pre> </span>                                          
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -663,7 +664,7 @@ class IUploadDiagram extends Component {
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="7">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
+                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" ,fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
                             <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
@@ -693,9 +694,7 @@ class IUploadDiagram extends Component {
                         </Accordion> </Aux>
                         :  <br/>
                 }                                                   
-                    
-                       
-
+                                           
                  {/* create some space from the footer */}
                 <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
 
