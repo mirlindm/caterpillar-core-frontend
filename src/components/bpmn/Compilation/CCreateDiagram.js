@@ -625,7 +625,7 @@ class CCreateDiagram extends Component {
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                    5. BPMN Model
+                                    5. BPMN Model (XML and Process Model)
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="4">

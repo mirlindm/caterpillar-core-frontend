@@ -393,14 +393,8 @@ class CUploadDiagram extends Component {
                             label="Please upload .bpmnn files"
                             variant="outline-info" 
                         />    
-                    </Form.Group>
-
-                    <Button className="link-button" variant="primary" type="submit" 
-                            style={{ marginBottom: "20px", width: "410px", marginLeft: "350px", marginRight: "350px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}>
-                        View Your Model
-                    </Button>
-                    
-                 
+                    </Form.Group>                   
+                                                         
                     {                     
                     this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" 
@@ -410,6 +404,10 @@ class CUploadDiagram extends Component {
                     :
                         // where the BPMN Model will be rendered if there is an uploaded diagram already! 
                         <Aux>
+                           <Button className="link-button" variant="primary" type="submit" 
+                              style={{ marginBottom: "20px", width: "410px", marginLeft: "350px", marginRight: "350px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}>
+                              View Your Model
+                            </Button>
                             <Card className="bg-gray-dark" style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}>                                              
                                 <div id="bpmncontainer">
                                     <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
@@ -611,7 +609,7 @@ class CUploadDiagram extends Component {
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                    5. BPMN Model
+                                  5. BPMN Model (XML and Process Model)
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="4">
