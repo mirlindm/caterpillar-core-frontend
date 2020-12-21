@@ -52,6 +52,9 @@ class CUploadDiagram extends Component {
             compileProcessModelsCompilationMetadataContractName: [],
             compileProcessModelsCompilationMetadataABI: [],
             compileProcessModelsCompilationMetadataByteCode: [],
+
+            //Get3
+            queryProcessInstancesResponse: [],
             
 
             mHash: '',
@@ -259,6 +262,7 @@ class CUploadDiagram extends Component {
 
     openBpmnDiagramBasedOnmHash = async (xml) => {        
       try {
+        //this.modeler2 = new BpmnModeler();
         const result = await this.modeler2.importXML(xml);
         const { warnings } = result;
         console.log(warnings);
@@ -286,17 +290,21 @@ class CUploadDiagram extends Component {
     }
 
       // Post Request 3: createNewProcessInstance
-      createNewProcessInstanceHandler = async () => {
+      createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log(registryAddress);
-        await axios.post(`http://localhost:3000/models/${mHash}/processes`,
+        console.log("Here Post 3 with: " + registryAddress + " ,and with mHash: " + mHash);
+        
+        axios.post(`http://localhost:3000/models/${mHash}/processes`,
         {                    
           registryAddress: registryAddress,
+          accessCtrlAddr: "0x2262C79C3e6124CC5e0222F3c46D9253fAB84BE9",
+          rbPolicyAddr: "0x2262C79C3e6124CC5e0222F3c46D9253fAB84BE9",
+          taskRoleMapAddr: "0x2262C79C3e6124CC5e0222F3c46D9253fAB84BE9", 
         },
         {
           headers: {
-              'Accept': 'application/json'
+              'Accept': 'application/json',
           }
         }).then(response =>  {                                                   
               console.log(response);          
@@ -318,7 +326,8 @@ class CUploadDiagram extends Component {
             'registryAddress': registryAddress,
               'accept': 'application/json'
           }
-        }).then(response => {              
+        }).then(response => {   
+          this.setState({queryProcessInstancesResponse: response.data});           
           console.log(response);          
         })
         .catch(error => {              
@@ -536,7 +545,7 @@ class CUploadDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage} </pre> </span>  </Card.Body>
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getProcessModelsSuccessMessage.map((process, id) => <ul key={id}><li key={id}> {process} </li></ul>)} </pre> </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion> </> : <br/> }             
@@ -682,7 +691,20 @@ class CUploadDiagram extends Component {
                         > Query Process Instances
                   </Button>
 
-                  <p> Render Response for GET 3</p> <br/> <br/>
+                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Process Instances IDs
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.queryProcessInstancesResponse} </pre> </span>  </Card.Body>
+                          {/* .length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.queryProcessInstancesResponse} */}
+                        </Accordion.Collapse>
+                      </Card>            
+                  </Accordion>
+                  
 
                   {/* New Requests
                     Get Request 4: Query Process State
