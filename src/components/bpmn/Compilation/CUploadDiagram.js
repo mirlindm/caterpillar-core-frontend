@@ -12,7 +12,7 @@ import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
 import './CUploadDiagram.css';
 
-import {Form, Alert, Button, Card, Accordion} from 'react-bootstrap';
+import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -52,6 +52,19 @@ class CUploadDiagram extends Component {
             compileProcessModelsCompilationMetadataContractName: [],
             compileProcessModelsCompilationMetadataABI: [],
             compileProcessModelsCompilationMetadataByteCode: [],
+
+            //accessControl
+            createAccessControl: undefined,
+            accessControlAddress: '',
+            accessControlAddressMetadata: [],
+
+            //rbPolicy
+            createRBPolicy: undefined,
+            rbPolicyInput: '',
+            rbPolicyResponse: '',
+            rbPolicyAddressInput: '',
+            rbPolicyMetadata: [],
+
 
             //Get3
             queryProcessInstancesResponse: [],
@@ -289,16 +302,127 @@ class CUploadDiagram extends Component {
       // }
     }
 
-      // Post Request 3: createNewProcessInstance
+
+    //POST 3 - Dynamic Access Control
+    deployAccessControl = () => {
+
+      axios.post(`http://localhost:3000/access-control`)
+        .then(response =>  { 
+          this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
+          console.log(response);          
+        })
+        .catch(error => {              
+          console.log(error)
+        });
+    }
+
+    // saveAccessControlAddressHandler = () => {
+    //   this.setState({accessControlAddress: });                                                  
+    // }
+
+    // change the accessControlAddress value
+    accessControlAddressChangeHandler = (event) => {
+      this.setState({
+        [event.target.name]: event.target.value
+      });
+    }  
+
+    // Using Existing Access Control
+    useExistingAccessControl = () => {
+      this.setState({createAccessControl: false});
+    }
+
+     //GET 3 - Dynamic Access Control
+    findAccessControlMetadata =  () => {
+      let accessCtrlAddr = this.state.accessControlAddress;
+      let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+      console.log(accessCtrlAddr + ' and registry address: ' + registryAddress);
+      
+      axios.get('http://localhost:3000/access-control/' + accessCtrlAddr,      
+      {
+        headers: {          
+          'accept': 'application/json',
+          'registryAddress': registryAddress
+        }
+      })
+        .then(response => {
+          console.log(response);
+          this.setState({accessControlAddressMetadata: response.data})
+        }).catch(error => console.warn(error));
+    }
+
+    //onChangeTextArea
+    textAreaChangeHandler = (event) => {
+      this.setState({rbPolicyInput: event.target.value})
+    }
+
+    //onChangeInput
+    rbPolicyChangeHandler = (event) => {
+      this.setState({rbPolicyAddressInput: event.target.value})
+    }
+
+    createNewRBPolicyHandler = () => {
+      this.setState({createRBPolicy: true})
+    }
+
+    useExistingRBPolicyHandler = () => {
+      this.setState({createRBPolicy: false})
+    }
+
+    //Post 4: parseAndDeployRBPolicy
+    parseAndDeployRBPolicyHandler = () => {
+      let rbPolicy = this.state.rbPolicyInput;
+      let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+      if(rbPolicy === null) {
+        return null;
+      }
+      console.log(rbPolicy);
+      axios.post('http://localhost:3000/rb-policy', {policy: rbPolicy, registryAddress: registryAddress}, {
+        headers: {
+          'accept': 'application/json',
+          'registryAddress': registryAddress
+        }
+      })
+      .then(response =>  { 
+        this.setState({rbPolicyResponse: response.data});                                                  
+        console.log(response);          
+      })
+      .catch(error => {              
+        console.log(error)
+      });
+    }
+
+     //GET 4 - rbPolicy Metadata
+     findRBPolicyMetadataHandler =  () => {
+      let rbPolicyAddr = this.state.rbPolicyAddressInput;
+      let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+      console.log(rbPolicyAddr + ' and registry address: ' + registryAddress);
+      
+      axios.get('http://localhost:3000/rb-policy/' + rbPolicyAddr,      
+      {
+        headers: {          
+          'accept': 'application/json',
+          'registryAddress': registryAddress
+        }
+      })
+        .then(response => {
+          console.log(response);
+          this.setState({rbPolicyMetadata: response.data})
+        }).catch(error => console.warn(error));
+    }
+
+
+
+      // Post Request 5: createNewProcessInstance
       createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("Here Post 3 with: " + registryAddress + " ,and with mHash: " + mHash);
+        console.log("Here Post 3 with: " + registryAddress + " ,and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlAddress);
         
         axios.post(`http://localhost:3000/models/${mHash}/processes`,
         {                    
           registryAddress: registryAddress,
-          accessCtrlAddr: "0x2262C79C3e6124CC5e0222F3c46D9253fAB84BE9",
+          accessCtrlAddr: this.state.accessControlAddress,
           rbPolicyAddr: "0x2262C79C3e6124CC5e0222F3c46D9253fAB84BE9",
           taskRoleMapAddr: "0x2262C79C3e6124CC5e0222F3c46D9253fAB84BE9", 
         },
@@ -667,14 +791,315 @@ class CUploadDiagram extends Component {
                               </Card>                         
                             </Accordion>                          
                     </Aux> : <br/> } 
+                
+                {/* Access Control Configuration - POST 3 */}
+                <br/> <hr/>
+                <div  className="Content"> 
+                  <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
+                      Do you want to create new Access Control
+                  </p>
+              
+                  <Dropdown>
+                      <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                          Select from menu
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                          <Dropdown.Item href="#/yes" active onSelect={this.deployAccessControl}>Create a new one</Dropdown.Item>
+                          <Dropdown.Item href="#/no" onSelect={this.useExistingAccessControl}>Use existing one instead</Dropdown.Item>
+                      </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+                {this.state.createAccessControl === true ? <>
+                    <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Access Control Address
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddress} </pre> </span>  </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>            
+                    </Accordion> <br/>
+                    <Alert variant="warning" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please, provide the Access Control Address in the Input Field.
+                  </Alert>  
+                  {/* Access Control Configuration - GET 3 */}
+                  <Form.Control required type="text" placeholder="Enter the Access Control Address" 
+                    name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
+                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                  /> <br/>
+                    <Button variant="primary"
+                        type="submit" className="link-button" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Get Access Control Metadata
+                  </Button> <br/>
 
-                  {/* New Requests
-                    Post Request 3: Create New Process Instance
-                  */} <br/> <hr/>
-                  <input required type="text" placeholder="Enter the mHash" 
+                    </>
+                : this.state.createAccessControl === false ? <>
+                  <Alert variant="warning" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please, provide the Access Control Address in the Input Field.
+                  </Alert>  
+                  {/* Access Control Configuration - GET 3 */}
+                  <Form.Control required type="text" placeholder="Enter the Access Control Address" 
+                    name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
+                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                  /> <br/>
+                   <Button variant="primary"
+                        type="submit" className="link-button" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Get Access Control Metadata
+                  </Button> <br/>      
+                </>
+                : null
+                }
+
+                
+                <Accordion defaultActiveKey="0" style={{padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Access Control Contract Name
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.contractName} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+
+                        <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            2. Access Control Solidity Code
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="1">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.solidityCode} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card> 
+
+                        <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                            3. Access Control ABI
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="2">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.abi} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+
+                        <Card>
+                          <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                            4. Access Control Byte Code
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="3">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.bytecode} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>                          
+
+                        <Card>
+                          <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                            5. Access Control Address
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="4">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", textDecoration: "underline", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.address} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>                          
+                  </Accordion>
+
+                {/* Policy Binding Configuration - POST 4 */}
+                <br/> <hr/>
+                <div  className="Content"> 
+                  <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
+                      Do you want to create new Role Binding Policy
+                  </p>
+              
+                  <Dropdown>
+                      <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                          Select from menu
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                          <Dropdown.Item href="#/yes" active onSelect={this.createNewRBPolicyHandler}>Create a new one</Dropdown.Item>
+                          <Dropdown.Item href="#/no" onSelect={this.useExistingRBPolicyHandler}>Use existing one instead</Dropdown.Item>
+                      </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+                {this.state.createRBPolicy === true ? <>                                   
+                  <Form>
+                  <Form.Group controlId="exampleForm.ControlTextarea1">                    
+                    <Alert variant="warning" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please, provide the Role Binding Policy Address in the Input Field
+                  </Alert>  
+                    <Form.Control onChange={this.textAreaChangeHandler} as="textarea" rows={10} />
+                  </Form.Group>
+                  </Form>
+                  <Button variant="primary"
+                          type="submit" className="link-button" onClick={this.parseAndDeployRBPolicyHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                          > Deploy RB Policy
+                  </Button> <br/>
+                  {/* Render Response */}
+                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                  <Card>
+                    <Card.Header>
+                      <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. RB Policy Transaction Hash
+                      </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyResponse === '' ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyResponse} </pre> </span>  </Card.Body>                      
+                      </Accordion.Collapse>
+                    </Card>            
+                  </Accordion> <br/>
+                  <Alert variant="warning" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please, provide the Role Binding Policy Address in the Input Field
+                  </Alert>  
+                  {/* Policy Binding Configuration - GET 4 */}
+                  <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
+                    name="policyBindingAddress" onChange={this.rbPolicyChangeHandler} 
+                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                  /> <br/>
+                  <Button variant="primary"
+                          type="submit" className="link-button" onClick={this.findRBPolicyMetadataHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                          > Find Role Binding Policy Metadata
+                  </Button>
+                   <br/>                    
+                    </>
+                : this.state.createRBPolicy === false ? <>
+                  <Alert variant="warning" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please, provide the Role Binding Policy Address in the Input Field
+                  </Alert>  
+                  {/* Policy Binding Configuration - GET 4 */}
+                  <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
+                    name="policyBindingAddress" onChange={this.rbPolicyChangeHandler} 
+                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                  /> <br/>
+                  <Button variant="primary"
+                          type="submit" className="link-button" onClick={this.findRBPolicyMetadataHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                          > Find Role Binding Policy Metadata
+                  </Button><br/><br/> 
+                  </>
+                  : null
+                  }
+
+                   <Accordion defaultActiveKey="0" style={{padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Policy Binding Contract Name
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.contractInfo.contractName} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+
+                        <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            2. Policy Binding Solidity Code
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="1">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.contractInfo.solidityCode} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card> 
+
+                        <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                            3. Policy Binding Role Index Map
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="2">
+                            <Card.Body>  
+                            Customer:  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.roleIndexMap.Customer} </pre> </span> <br/> <hr/>
+                            Supplier:  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.roleIndexMap.Supplier} </pre> </span> <br/> <hr/>
+                            Candidate:  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.roleIndexMap.Candidate} </pre> </span> <br/> <hr/>
+                            Carrier:  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.roleIndexMap.Carrier} </pre> </span> <br/> <hr/>
+                            Invoicer:  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.roleIndexMap.Invoicer} </pre> </span> <br/> <hr/>
+                            Invoicee:  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.roleIndexMap.Invoicee} </pre> </span>
+                            </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+
+                        <Card>
+                          <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                            4. Policy Model
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="3">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.policyModel} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>                          
+
+                        <Card>
+                          <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                            5. Policy Binding ABI
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="4">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.contractInfo.abi} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+
+                         <Card>
+                          <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                            6. Policy Binding Bytecode
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="5">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.contractInfo.bytecode} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+
+                        <Card>
+                          <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                            7. Policy Binding Address
+                          </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="6">
+                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", textDecoration: "underline", }}>  <pre> {this.state.rbPolicyMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyMetadata.contractInfo.address} </pre> </span> </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>                                   
+                  </Accordion>
+
+                {/* <br/> <hr/> 
+                <Form>
+                  <Form.Group controlId="exampleForm.ControlTextarea1">                    
+                    <Alert variant="warning" size="sm"
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please Enter Your Role Binding Policy Below
+                  </Alert>  
+                    <Form.Control onChange={this.textAreaChangeHandler} as="textarea" rows={10} />
+                  </Form.Group>
+                </Form>
+                <Button variant="primary"
+                        type="submit" className="link-button" onClick={this.parseAndDeployRBPolicy} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        > Deploy RB Policy
+                </Button> <br/>  */}
+
+                
+                           
+                {/* New Requests
+                    Post Request 5: Create New Process Instance
+                */} <br/> <hr/>
+                <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash}
                     onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> {'      '}
+                /> {'      '}
 
                   <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
