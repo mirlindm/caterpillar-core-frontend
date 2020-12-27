@@ -15,6 +15,7 @@ import Registry from './components/Registry/Registry.jsx';
 import BpmnModelling from './components/bpmn/BpmnModelling';
 import Error from './components/Error/Error.jsx';
 
+
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute.jsx';
 
 
@@ -41,7 +42,7 @@ class App extends Component {
                       <Route path="/login" exact component={Login} />
                       <AuthenticatedRoute path="/welcome/:username" exact component={Welcome} />
                       <AuthenticatedRoute path="/registry" exact component={Registry} />
-                      <AuthenticatedRoute path="/modeler" exact component={BpmnModelling} />
+                      <AuthenticatedRoute path="/modeler" exact component={BpmnModelling} />                    
                       <Route path="/logout" exact component={Logout} />
                       <AuthenticatedRoute path="/about" exact component={About} />
 
