@@ -178,7 +178,7 @@ class TaskRoleMap extends Component {
                         Please, provide the Task-Role Map Address in the Input Field
                   </Alert>  
                   {/* Policy Binding Configuration - GET 4 */}
-                  <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
+                  <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
                     name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
                     style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>

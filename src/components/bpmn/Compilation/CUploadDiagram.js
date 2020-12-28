@@ -67,6 +67,9 @@ class CUploadDiagram extends Component {
 
             //Get3
             queryProcessInstancesResponse: [],
+
+            //GET4
+            queryProcessStateResponse: [],
             
 
             mHash: '',
@@ -311,7 +314,7 @@ class CUploadDiagram extends Component {
       rbPolicyCallbackFunction = (childData) => {
         console.log("CHILD DATA 2: " + childData);
         this.setState({rbPolicyState: childData})
-        console.log("CHILD DATA 2: " + this.state.rbPolicyState);
+        
       }
 
       // Receiving Props from taskRoleMap Child Component
@@ -369,19 +372,21 @@ class CUploadDiagram extends Component {
       }
       
       // Get Request 4: queryProcessState
-      queryProcessStateHandler = async () => {
+      queryProcessStateHandler = () => {
         //pAddress is same as mHash
-        let pAddress = this.state.mHash; 
+        let pAddress = this.state.mHash;         
+        //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3" + registryAddress);
+        console.log("GET3" + registryAddress + " and the pAddress: " + pAddress);
         
-       await axios.get(`http://localhost:3000/processes/${pAddress}`,
+      axios.get('http://localhost:3000/processes/'+pAddress,
         {
           headers: {
             'registryAddress': registryAddress,
-              'accept': 'application/json'
+            'accept': 'application/json'
           }
-        }).then(response => {              
+        }).then(response => {
+          this.setState({queryProcessStateResponse: response.data});              
           console.log(response);          
         })
         .catch(error => {              
@@ -390,14 +395,14 @@ class CUploadDiagram extends Component {
       }
 
       //Put Request 1
-      executeWorkItemHandler = async () => {
+      executeWorkItemHandler =  () => {
          //wlAddress is same as mHash
          let wlAddress = this.state.mHash; 
          let wiIndex = null;
          let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
          console.log("GET3" + registryAddress);
          
-        await axios.put(`http://localhost:3000/worklists/${wlAddress}/workitems/${wiIndex}`, {
+        axios.put(`http://localhost:3000/worklists/${wlAddress}/workitems/${wiIndex}`, {
           'registryAddress': registryAddress,
         },
          {
@@ -763,12 +768,106 @@ class CUploadDiagram extends Component {
                   {/* New Requests
                     Get Request 4: Query Process State
                   */} <br/> <hr/>
+                   <input required type="text" placeholder="Enter the Process Instance Address" 
+                    name="mHash"
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                /> {'      '}
+
                   <Button onClick={this.queryProcessStateHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Query Process State
                   </Button>
 
-                  <p> Render Response for GET 4</p> <br/> <br/>
+                  {this.state.queryProcessStateResponse.map((state, id) => (
+                    
+                    
+                    <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                          1. Process State - Element ID
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.elementId} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                          2. Process State - Element Name
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="1">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.elementName} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>
+
+                     <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                          3. Process State - Input
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="2">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.input[0]} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                          4. Process State - Bundle ID
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="3">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.bundleId} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card> 
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                          5. Process State - Process Address
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="4">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.processAddress} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card> 
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                          6. Process State - pCases
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="5">
+                        <Card.Body>  
+                          <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.pCases[0]} </pre> </span>  
+                        </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card> 
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                          7. Process State - Hrefs
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="6">
+                        <Card.Body>  
+                          <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.hrefs[0]} </pre> </span>  
+                        </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>                 
+                </Accordion>
+                                                      
+                  ))}
+
+                 
+                  <br/> <br/>
 
                   {/* New Requests
                     PUT Request 1: Execute Work Item
