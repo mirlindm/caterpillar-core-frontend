@@ -383,7 +383,7 @@ class CUploadDiagram extends Component {
         {
           headers: {
             'registryAddress': registryAddress,
-            'accept': 'application/json'
+            'accept': 'application/json',
           }
         }).then(response => {
           this.setState({queryProcessStateResponse: response.data});              
@@ -397,17 +397,20 @@ class CUploadDiagram extends Component {
       //Put Request 1
       executeWorkItemHandler =  () => {
          //wlAddress is same as mHash
-         let wlAddress = this.state.mHash; 
-         let wiIndex = null;
+         let wlAddress = '0xA70E385Ca9b2202726CA8D719255Ca228298b7AF'; 
+         //let wiIndex = this.state.queryProcessInstancesResponse[this.state.queryProcessStateResponse.length-1];
+         let wiIndex = '5';
+         //let worklist = this.state.queryProcessStateResponse.map(state => state.hrefs[0]);
          let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-         console.log("GET3" + registryAddress);
+         console.log("PUT1: 1. RegistryAddress" + registryAddress + ", wlAddress: " + wlAddress + ", wiIndex: " + wiIndex);
          
-        axios.put(`http://localhost:3000/worklists/${wlAddress}/workitems/${wiIndex}`, {
-          'registryAddress': registryAddress,
-        },
+        axios.put('http://localhost:3000/worklists/0xA17bC4f9f8F376339bA44cF0d7912906723c1A40/workitems/3', {
+          "registryAddress": registryAddress,
+          "inputParameters": "[true]",
+        },  
          {
            headers: {            
-               'accept': 'application/json'
+               'accept': 'application/json',
            }
          }).then(response => {              
            console.log(response);          
@@ -446,7 +449,7 @@ class CUploadDiagram extends Component {
                     this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" 
                             style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", marginBottom: "20px", textAlign: "center",}}> 
-                        *Please upload a valid diagram 
+                        *Please Upload a Valid Diagram 
                         </Alert>                        
                     :
                         // where the BPMN Model will be rendered if there is an uploaded diagram already! 
@@ -714,9 +717,9 @@ class CUploadDiagram extends Component {
                 {/* New Requests
                     Post Request 5: Create New Process Instance
                 */} <br/>
-                    <p> {this.state.accessControlState} </p>  
+                    {/* <p> {this.state.accessControlState} </p>  
                     <p> {this.state.rbPolicyState} </p>  
-                    <p> {this.state.taskRoleMapState} </p>  
+                    <p> {this.state.taskRoleMapState} </p>   */}
                  <hr/>
                 <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash}
@@ -739,9 +742,7 @@ class CUploadDiagram extends Component {
                           <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.processInstanceResponse.transactionHash} </pre> </span>  </Card.Body>                          
                         </Accordion.Collapse>
                       </Card>            
-                  </Accordion>
-
-                  <br/> <br/>
+                  </Accordion>                  
 
                   {/* New Requests
                     Get Request 3: Query Process Instances
@@ -759,7 +760,7 @@ class CUploadDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.queryProcessInstancesResponse.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </pre> </span>  </Card.Body>                          
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.queryProcessInstancesResponse.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </pre> </span>  </Card.Body>
                         </Accordion.Collapse>
                       </Card>            
                   </Accordion>
@@ -772,7 +773,6 @@ class CUploadDiagram extends Component {
                     name="mHash"
                     onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                 /> {'      '}
-
                   <Button onClick={this.queryProcessStateHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Query Process State
@@ -781,7 +781,7 @@ class CUploadDiagram extends Component {
                   {this.state.queryProcessStateResponse.map((state, id) => (
                     
                     
-                    <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                    <Accordion key={id} defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                     <Card>
                       <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -862,16 +862,17 @@ class CUploadDiagram extends Component {
                         </Card.Body>                          
                       </Accordion.Collapse>
                     </Card>                 
-                </Accordion>
-                                                      
+                </Accordion>                                                      
                   ))}
-
-                 
-                  <br/> <br/>
+                                   
 
                   {/* New Requests
                     PUT Request 1: Execute Work Item
                   */} <br/> <hr/>
+                  <input required type="text" placeholder="Enter the Process Model Address" 
+                    name="mHash"
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                /> {'      '}
                   <Button onClick={this.executeWorkItemHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Execute Work Item

@@ -355,7 +355,7 @@ class IUploadDiagram extends Component {
                    
                     { this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" style={{color: "black", marginTop: "-10px", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", marginBottom: "20px", textAlign: "center",}}> 
-                            *Please upload a valid diagram 
+                            *Please Upload a Valid Diagram 
                         </Alert>                       
                         :
                         // {/* where the BPMN Model will be rendered */}

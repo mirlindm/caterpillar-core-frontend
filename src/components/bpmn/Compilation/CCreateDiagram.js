@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 import Aux from "../../../hoc/Auxiliary";
+import AccessControl from '../../Policies/AccessControl';
+import RoleBindingPolicy from '../../Policies/RoleBindingPolicy';
+import TaskRoleMap from '../../Policies/TaskRoleMap';
 
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import "bpmn-js/dist/assets/diagram-js.css";
@@ -53,8 +56,21 @@ class CCreateDiagram extends Component {
             compileProcessModelsCompilationMetadataContractName: [],
             compileProcessModelsCompilationMetadataABI: [],
             compileProcessModelsCompilationMetadataByteCode: [],
-            
 
+            //childStates
+            accessControlState: '',
+            rbPolicyState: '',
+            taskRoleMapState: '',
+
+            //ProcessInstance
+            processInstanceResponse: [],
+
+            //Get3
+            queryProcessInstancesResponse: [],
+
+            //GET4
+            queryProcessStateResponse: [],
+            
             mHash: '',        
         }
     }
@@ -297,66 +313,89 @@ class CCreateDiagram extends Component {
       }
                
 
+      // Receiving Props from AccessControl Child Component
+      accessControlCallbackFunction = (childData) => {
+        this.setState({accessControlState: childData})
+        console.log("CHILD DATA 1: " + this.state.accessControlState)
+      }
+
+      // Receiving Props from rbPolicy Child Component
+      rbPolicyCallbackFunction = (childData) => {
+        console.log("CHILD DATA 2: " + childData);
+        this.setState({rbPolicyState: childData})
+        
+      }
+
+      // Receiving Props from taskRoleMap Child Component
+      taskRoleMapCallbackFunction = (childData) => {
+        this.setState({taskRoleMapState: childData});
+        console.log("CHILD DATA 3: " + this.state.taskRoleMapState);
+      }
+
+    
       // Post Request 3: createNewProcessInstance
-      createNewProcessInstanceHandler = async () => {
+      createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log(registryAddress);
-        await axios.post(`http://localhost:3000/models/${mHash}/processes`,
+        console.log("Here Post 3 with: " + registryAddress + " ,and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
+        
+        axios.post(`http://localhost:3000/models/${mHash}/processes`,
         {                    
           registryAddress: registryAddress,
+          accessCtrlAddr: this.state.accessControlState,
+          rbPolicyAddr: this.state.rbPolicyState,
+          taskRoleMapAddr: this.state.taskRoleMapState, 
         },
         {
           headers: {
-              'Accept': 'application/json'
+              'Accept': 'application/json',
           }
-        }).then(response =>  {                                                   
-              console.log(response);          
-            })
-            .catch(error => {              
-              console.log(error)
-            });
+        }).then(response =>  {
+          this.setState({processInstanceResponse: response.data})                                                                           
+          console.log(response);          
+        })
+        .catch(error => {              
+            console.log(error)
+        });
       }
 
       // Get Request 3: queryProcessInstancesHandler
-      queryProcessInstancesHandler = async () => {
+      queryProcessInstancesHandler = () => {
         let mHash = this.state.mHash;
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
         console.log("GET3" + registryAddress);
         
-       await axios.get(`http://localhost:3000/models/${mHash}/processes`,
+      axios.get(`http://localhost:3000/models/${mHash}/processes`,
         {
           headers: {
             'registryAddress': registryAddress,
               'accept': 'application/json'
           }
-        }).then(response => {              
+        }).then(response => {   
+          this.setState({queryProcessInstancesResponse: response.data});           
           console.log(response);          
         })
         .catch(error => {              
           console.log(error)
-        });
-      // let {data} = responseGet3.data;
-      // console.log(data)
-      // let {error} = responseGet3.error;           
+        });          
       }
-
       
-
       // Get Request 4: queryProcessState
-      queryProcessStateHandler = async () => {
+      queryProcessStateHandler = () => {
         //pAddress is same as mHash
-        let pAddress = this.state.mHash; 
+        let pAddress = this.state.mHash;         
+        //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3" + registryAddress);
+        console.log("GET3" + registryAddress + " and the pAddress: " + pAddress);
         
-       await axios.get(`http://localhost:3000/processes/${pAddress}`,
+      axios.get('http://localhost:3000/processes/'+pAddress,
         {
           headers: {
             'registryAddress': registryAddress,
-              'accept': 'application/json'
+            'accept': 'application/json',
           }
-        }).then(response => {              
+        }).then(response => {
+          this.setState({queryProcessStateResponse: response.data});              
           console.log(response);          
         })
         .catch(error => {              
@@ -365,19 +404,22 @@ class CCreateDiagram extends Component {
       }
 
       //Put Request 1
-      executeWorkItemHandler = async () => {
+      executeWorkItemHandler =  () => {
          //wlAddress is same as mHash
-         let wlAddress = this.state.mHash; 
-         let wiIndex = null;
+         let wlAddress = '0xA70E385Ca9b2202726CA8D719255Ca228298b7AF'; 
+         //let wiIndex = this.state.queryProcessInstancesResponse[this.state.queryProcessStateResponse.length-1];
+         let wiIndex = '5';
+         let worklist = this.state.queryProcessStateResponse.map(state => state.hrefs[0]);
          let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-         console.log("GET3" + registryAddress);
+         console.log("PUT1: 1. RegistryAddress" + registryAddress + ", wlAddress: " + wlAddress + ", wiIndex: " + wiIndex);
          
-        await axios.put(`http://localhost:3000/worklists/${wlAddress}/workitems/${wiIndex}`, {
-          'registryAddress': registryAddress,
-        },
+        axios.put('http://localhost:3000'+ worklist, {
+          "registryAddress": registryAddress,
+          //"inputParameters": "[true]",
+        },  
          {
            headers: {            
-               'accept': 'application/json'
+               'accept': 'application/json',
            }
          }).then(response => {              
            console.log(response);          
@@ -386,6 +428,7 @@ class CCreateDiagram extends Component {
            console.log(error)
          });       
       } 
+ 
 
   render = () => {
     return (
@@ -644,22 +687,37 @@ class CCreateDiagram extends Component {
                       </Aux>
                           : <br/>}
 
-
-                  {/* New Requests
-                    Post Request 3: Create New Process Instance
-                  */} <br/> <hr/>
-                  <input required type="text" placeholder="Enter the mHash" 
+                <AccessControl parentCallback={this.accessControlCallbackFunction} registryAddressProp={this.state.registryAddress}/>             
+                <RoleBindingPolicy parentCallback={this.rbPolicyCallbackFunction} registryAddressProp={this.state.registryAddress}/>
+                <TaskRoleMap parentCallback={this.taskRoleMapCallbackFunction} registryAddressProp={this.state.registryAddress}/>                                                                            
+ 
+                {/* New Requests
+                    Post Request 5: Create New Process Instance
+                */} <br/>                    
+                 <hr/>
+                <input required type="text" placeholder="Enter the mHash" 
                     name="mHash" value={this.state.mHash}
                     onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> {'      '}
+                /> {'      '}
 
                   <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Create New Process Instance
                   </Button>
 
-                  <p> Render Response for POST 3</p> <br/> <br/>
-
+                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Process Instance Transaction Hash
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.processInstanceResponse.transactionHash} </pre> </span>  </Card.Body>                          
+                        </Accordion.Collapse>
+                      </Card>            
+                  </Accordion>
+                  
                   {/* New Requests
                     Get Request 3: Query Process Instances
                   */} <br/> <hr/>
@@ -668,37 +726,135 @@ class CCreateDiagram extends Component {
                         > Query Process Instances
                   </Button>
 
-                  <p> Render Response for GET 3</p> <br/> <br/>
+                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                      <Card>
+                        <Card.Header>
+                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            1. Process Instances IDs
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                          <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.queryProcessInstancesResponse.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </pre> </span>  </Card.Body>
+                        </Accordion.Collapse>
+                      </Card>            
+                  </Accordion>
+                  
 
                   {/* New Requests
                     Get Request 4: Query Process State
                   */} <br/> <hr/>
+                   <input required type="text" placeholder="Enter the Process Instance Address" 
+                    name="mHash"
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                /> {'      '}
                   <Button onClick={this.queryProcessStateHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Query Process State
                   </Button>
 
-                  <p> Render Response for GET 4</p> <br/> <br/>
+                  {this.state.queryProcessStateResponse.map((state, id) => (
+                    
+                    
+                    <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                          1. Process State - Element ID
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.elementId} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                          2. Process State - Element Name
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="1">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.elementName} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>
+
+                     <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                          3. Process State - Input
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="2">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.input[0]} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                          4. Process State - Bundle ID
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="3">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.bundleId} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card> 
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                          5. Process State - Process Address
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="4">
+                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.processAddress} </pre> </span>  </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card> 
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                          6. Process State - pCases
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="5">
+                        <Card.Body>  
+                          <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.pCases[0]} </pre> </span>  
+                        </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card> 
+
+                    <Card>
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                          7. Process State - Hrefs
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="6">
+                        <Card.Body>  
+                          <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.hrefs[0]} </pre> </span>  
+                        </Card.Body>                          
+                      </Accordion.Collapse>
+                    </Card>                 
+                </Accordion>))}                 
+                  
 
                   {/* New Requests
                     PUT Request 1: Execute Work Item
                   */} <br/> <hr/>
+                  <input required type="text" placeholder="Enter the Process Model Address" 
+                    name="mHash"
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                /> {'      '}
                   <Button onClick={this.executeWorkItemHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Execute Work Item
                   </Button>
-
-                  <p> Render Response for PUT 1</p> <br/> <br/>
+                  <p> Render Response for PUT 1</p> <br/> <br/>                                                      
                                                                                             
         {/* create some space from the footer */} 
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
-{/* 
-        <Card className="bg-gray-dark" style={{marginBottom: "20px", marginTop: "20px", textAlign: "center", marginLeft: "120px", marginRight: "120px",}}>
-                                    <div id="bpmncontainer">
-                                      <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
-                                      <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
-                                    </div>          
-        </Card>  */}
+
       </Aux>
       
     );
