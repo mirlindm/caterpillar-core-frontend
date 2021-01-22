@@ -8,6 +8,7 @@ import {Card, Alert, Form, Button, Col, Accordion} from 'react-bootstrap';
 
 import axios from 'axios';
 import Aux from '../../../hoc/Auxiliary';
+import {connect} from 'react-redux';
 
 
 class RegistryId extends Component {
@@ -35,21 +36,44 @@ class RegistryId extends Component {
         });
     }
 
-    // Get Request to fetch the registries based on the id on the database
-    getRegistriesByIdHandler = (e) =>  {             
-        const URL = 'http://localhost:3000/registries/'
+    getRegistryAddress = (dispatch) => {
+        const URL = 'http://localhost:3000/registries/';
         const id = this.state.id;
-
+        // const URL_END = '/address';
+        // const address = this.state.address;
+    
+        dispatch({type: 'LOADING' })
+    
         axios.get(URL+id)
         .then(response => response.data             
         ).then((data) => {
-            console.log(data) 
-            this.setState({registriesById: data})  
+            console.log(data);
+            this.setState({registriesById: data});      
+            dispatch({type: 'LOADED', payload: data.address});
         })
         .catch(err => {
-            if(err)
-            this.setState({errorMessage: err.toString()})
+            dispatch({type: 'ERROR', payload: err});
+            console.log(err.toString());        
         })
+    }
+
+    // Get Request to fetch the registries based on the id on the database
+    getRegistriesByIdHandler = (e) =>  {             
+        //const URL = 'http://localhost:3000/registries/'
+        //const id = this.state.id;
+        console.log("REDUCER from RegistryID!!!!!!!!!!!!!!!!!");
+        this.props.dispatch(this.getRegistryAddress);
+
+        // axios.get(URL+id)
+        // .then(response => response.data             
+        // ).then((data) => {
+        //     console.log(data) 
+        //     this.setState({registriesById: data});
+        // })
+        // .catch(err => {
+        //     if(err)
+        //     this.setState({errorMessage: err.toString()})
+        // })
      
     }
 
@@ -224,4 +248,9 @@ class RegistryId extends Component {
     }
 }
 
-export default RegistryId;
+//export default RegistryId;
+export default connect((store) => {
+    return {
+      registryAddress: store.registryAddress
+    }
+  })(RegistryId);

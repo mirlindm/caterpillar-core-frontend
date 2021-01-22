@@ -5,7 +5,9 @@ import BpmnModelling from '../../bpmn/BpmnModelling';
 
 import {Card, Alert, Form, Button, Col, Accordion,} from 'react-bootstrap'; 
 import './RegistryAddress.css';
+//import getRegistryAddress from '../../Actions/registryAddressAction';
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 
 
@@ -27,21 +29,44 @@ class RegistryAddress extends Component {
 
     }
 
-    getRegistriesByAddressHandler = (event) => {
+    getRegistryAddress = (dispatch) => {
         const URL = 'http://localhost:3000/registries/';
         const URL_END = '/address';
         const address = this.state.address;
-
+    
+        dispatch({type: 'LOADING' })
+    
         axios.get(URL+address+URL_END)
         .then(response => response.data             
         ).then((data) => {
-            console.log(data) 
-            this.setState({registriesByAddress: data})  
+            console.log(data);
+            this.setState({registriesByAddress: data});         
+            dispatch({type: 'LOADED', payload: data.address});
         })
-        .catch(e => {
-            console.log(e.toString());
+        .catch(err => {
+            dispatch({type: 'ERROR', payload: err});
+            console.log(err.toString());        
+        })
+    }
+
+    getRegistriesByAddressHandler = (event) => {
+        // const URL = 'http://localhost:3000/registries/';
+        // const URL_END = '/address';
+        // const address = this.state.address;
+
+        console.log("REDUCER from RegistryAddress!!!!!!!!!!!!!!!!!");
+        this.props.dispatch(this.getRegistryAddress);
+
+        // axios.get(URL+address+URL_END)
+        // .then(response => response.data             
+        // ).then((data) => {
+        //     console.log(data) 
+        //     this.setState({registriesByAddress: data})  
+        // })      
+        // .catch(e => {
+        //     console.log(e.toString());
             
-        })
+        // })
      
     }
 
@@ -219,4 +244,9 @@ class RegistryAddress extends Component {
     }
 }
 
-export default RegistryAddress;
+//export default RegistryAddress;
+export default connect((store) => {
+    return {
+      registryAddress: store.registryAddress
+    }
+  })(RegistryAddress);

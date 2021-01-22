@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 
+import AccessControl from './AccessControl';
+import RoleBindingPolicy from './RoleBindingPolicy';
+import TaskRoleMap from './TaskRoleMap';
+import {connect} from 'react-redux';
+
 import Aux from '../../hoc/Auxiliary';
 
 import {Form, Alert, Button, Accordion, Card, Col, Row, Breadcrumb } from 'react-bootstrap';
@@ -11,10 +16,27 @@ class AccessAllocation extends Component {
         super(props);
 
         this.state = {
-            //state
-            inputProcessCase: '',
+
+          registryAddress: '0x03aeDb94A0F6ba86B8B6cf766774C58687325591',
+
+          //parameters
+          
+            pCase: '',
+            roleName: '',
+            nomineeRole: '',
+            nomineeAddress: '',
+            nominatorRole: '',
+            nominatorAddress: '',
+            releaserAddress: '',
+            endorserRole: '',
+            endorserAddress: '',
+            onNomination: false,
+            onRelease: false,
+            accept: false,
+            reject: false,
+
             policyAddressesResponse: [],
-            roleStateResponse: [],
+            roleStateResponse: {},
             caseCreatorResponse: [],
             nominateResponse: [],
             releaseResponse: [],
@@ -24,6 +46,9 @@ class AccessAllocation extends Component {
             breadCrumbNominate: false,
             breadCrumbRelease: false,
             breadCrumbVote: false,
+            breadCrumbAccessControl: false,
+            breadCrumbRoleBindingPolicy: false,
+            breadCrumbTaskRoleMap: false,
 
         }
     }
@@ -33,6 +58,18 @@ class AccessAllocation extends Component {
         this.setState({
           [event.target.name]: event.target.value
         });
+    }
+
+    onChangeRadioValueHandler = (event) => {
+      console.log("1: " + event.target.name + " is initially " + event.target.value);
+      console.log("Registry Address from Redux Store: " + this.props.registryAddress  );
+      
+      this.setState({
+        [event.target.name]: !event.target.value
+      });
+
+      console.log("2: " + event.target.name + " is later " + !event.target.value);
+               
     }
     
     // Toggling the breadcrumb elements
@@ -48,15 +85,31 @@ class AccessAllocation extends Component {
         this.setState({breadCrumbVote: !this.state.breadCrumbVote})
     }  
 
+    changeBreadCrumbAccessControlHandler = () => {
+      this.setState({breadCrumbAccessControl: !this.state.breadCrumbAccessControl})
+    }
+
+    changeBreadCrumbRoleBindingPolicyHandler = () => {
+      this.setState({breadCrumbRoleBindingPolicy: !this.state.breadCrumbRoleBindingPolicy})
+    }
+    
+    changeBreadCrumbTaskRoleMapHandler = () => {
+      this.setState({breadCrumbTaskRoleMap: !this.state.breadCrumbTaskRoleMap})
+    }
+
      // /rb-opertation/:pCase => findPolicyAddresses
      findPolicyAddresses =  () => {    
         //process instance/case address - get it from the props or something
-        let pCase = '';        
+        //let pCaseTest = '0x9891474BB610B112EA6b4c197827eDCF538A3845';  
+        let pCase = this.state.pCase;
+        console.log(pCase);
+        //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';
+        console.log("on nomination value is: "+ this.state.onNomination)
         axios.get('http://localhost:3000/rb-opertation/' + pCase,      
         {
           headers: {          
             'accept': 'application/json',
-            //'registryAddress': registryAddress
+            'registryAddress': this.state.registryAddress
           }
         })
           .then(response => {
@@ -69,13 +122,13 @@ class AccessAllocation extends Component {
       // /rb-opertation/:pCase/state => findRoleState
       findRoleState =  () => {        
         //process instance/case address - get it from the props or something
-        let pCase = '';
-        let registryAddress;        
+        let pCase = this.state.pCase;  
+        //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';  
         axios.get('http://localhost:3000/rb-opertation/' + pCase + '/state',      
         {
           headers: {          
             'accept': 'application/json',
-            'registryAddress': registryAddress
+            'registryAddress': this.state.registryAddress
           }
         })
           .then(response => {
@@ -88,15 +141,14 @@ class AccessAllocation extends Component {
       // /rb-opertation/:pCase/nominate-creator
       nominateCaseCreator =  () => {        
         //process instance/case address - get it from the props or something
-        let pCase = '';
-        let registryAddress;        
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate-creator',      
-        {
-          headers: {          
-            'accept': 'application/json',
-            'registryAddress': registryAddress
-          }
-        })
+        let pCase = this.state.pCase;  
+        //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591'; 
+        let requestBody = {
+          registryAddress: this.state.registryAddress,
+          rNominee: this.state.nomineeRole,
+          nominee: this.state.nomineeAddress,
+        }       
+        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate-creator', requestBody)
           .then(response => {
             console.log(response);
             this.setState({caseCreatorResponse: response.data});
@@ -107,15 +159,16 @@ class AccessAllocation extends Component {
       // /rb-opertation/:pCase/nominate
       nominate =  () => {        
         //process instance/case address - get it from the props or something
-        let pCase = '';
-        let registryAddress;        
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate',      
-        {
-          headers: {          
-            'accept': 'application/json',
-            'registryAddress': registryAddress
-          }
-        })
+        let pCase = this.state.pCase;  
+        //let registryAddress = '0x7F97f7fd1C7a352bf30B18aE1855c22b4657DCe5';
+        let requestBody = {
+          rNominator: this.state.nominatorRole,
+          rNominee: this.state.nomineeRole,
+          nominator: this.state.nominatorAddress,
+          nominee: this.state.nomineeAddress,
+          registryAddress: this.state.registryAddress
+        }
+        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate',  requestBody)
           .then(response => {
             console.log(response);
             this.setState({nominateResponse: response.data});
@@ -126,15 +179,16 @@ class AccessAllocation extends Component {
       // /rb-opertation/:pCase/release
       release =  () => {        
         //process instance/case address - get it from the props or something
-        let pCase = '';
-        let registryAddress;        
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/release',      
-        {
-          headers: {          
-            'accept': 'application/json',
-            'registryAddress': registryAddress
-          }
-        })
+        let pCase = this.state.pCase;
+        //let registryAddress = '0x7F97f7fd1C7a352bf30B18aE1855c22b4657DCe5'; 
+        let releaserAddress = this.state.nominatorAddress;
+        let requestBody = {
+          rNominator: this.state.nominatorRole,
+          rNominee: this.state.nomineeRole,
+          nominator: releaserAddress,          
+          registryAddress: this.state.registryAddress
+        }       
+        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/release', requestBody)
           .then(response => {
             console.log(response);
             this.setState({releaseResponse: response.data});
@@ -145,15 +199,24 @@ class AccessAllocation extends Component {
       // /rb-opertation/:pCase/vote
       vote =  () => {        
         //process instance/case address - get it from the props or something
-        let pCase = '';
-        let registryAddress;        
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/vote',      
-        {
-          headers: {          
-            'accept': 'application/json',
-            'registryAddress': registryAddress
-          }
-        })
+        let pCase = this.state.pCase;
+        //let registryAddress = '0x7F97f7fd1C7a352bf30B18aE1855c22b4657DCe5';
+        // let isOnNomination = this.state.onNomination;
+        // let isOnRelease = this.state.onRelease;
+        // let isAccept = this.state.accept;
+        // let isReject = this.state.reject;
+        // let endorserRole = this.state.endorserRole;
+        // let endorserAddress = this.state.endorserAddress;         
+        let requestBody = {
+          rNominator: this.state.nominatorRole,
+          rNominee: this.state.nomineeRole,
+          rEndorser: this.state.endorserRole,
+          endorser: this.state.endorserAddress,
+          toEndorseOp: 'nominate',
+          isAccepted: true,          
+          registryAddress: this.state.registryAddress
+        }  
+        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/vote', requestBody)
           .then(response => {
             console.log(response);
             this.setState({voteResponse: response.data});
@@ -164,21 +227,90 @@ class AccessAllocation extends Component {
     render() {
         return(
             <Aux>
+                
+                  <Alert variant="warning" size="sm" style={{textAlign: "center", width: "400px", marginLeft: "355px"}} > 
+                    Please Configure the Policies below!
+                  </Alert>
+                  
+                  <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
+                    <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
+                    <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
+                    <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
+                  </Breadcrumb>                                     
+                                                
+                {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
+                {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
+                {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
+
+                <hr/>
+
+                <Alert variant="warning" size="sm" style={{ textAlign: "center", width: "400px", marginLeft: "355px"}} > 
+                    Please Configure the remaining operations: Nomination, Release, Vote
+                </Alert>
+
+
                <Card border="primary">
                 <Alert variant="primary" size="sm"> 
                     Query Policy Address
                 </Alert>  
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}}>
-                      <Col>
-                        <Form.Control required placeholder="Role Name" />
+                      <Col>                        
+                        <Form.Label> Process Case </Form.Label>
+                        <Form.Control required  name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>                      
-                      <Col>
-                      <Button variant="primary" >Find Policy Address</Button>
+                      <Col>                  
+                      <Button style={{marginTop: "29px"}} onClick={this.findPolicyAddresses} className="link-button" variant="primary" >Find Policy Address</Button>
                       </Col>
+                    </Row>
+                    <Row>
+                      <Col> <br/>
+                         <Accordion>
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                1. Access Control
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="0">
+                              <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.policyAddressesResponse.accessControl} </pre> </span> 
+                              </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                2. Binding Policy
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="1">
+                              <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.policyAddressesResponse.bindingPolicy} </pre> </span> 
+                              </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                3. Role Task Map
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="2">
+                              <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.policyAddressesResponse.roleTaskMap} </pre> </span> 
+                              </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+                        </Accordion>
+                      </Col>  
                     </Row>                    
                   </Card.Body>
                 </Card>
+
+               
                 {/* <Alert variant="warning" size="sm"
                     style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
                     Please, provide the Process Instance/Case in the Input Field
@@ -196,40 +328,108 @@ class AccessAllocation extends Component {
                 <hr/>
 
                 <Card border="primary">
-                <Alert variant="primary" size="sm"> 
-                    Query the State of the Role
-                </Alert>  
+                  <Alert variant="primary" size="sm"> 
+                      Query the State of the Role
+                  </Alert>  
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Control required placeholder="Role Name" />
+                        <Form.Label> Role Name </Form.Label>
+                        <Form.Control required placeholder="Enter Role Name" />
                       </Col>
                       <Col>
-                        <Form.Control required placeholder="Process Case" />
+                      <Form.Label> Process Case </Form.Label>
+                        <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>
                       <Col>
-                      <Button variant="primary" >Find Role State</Button>
+                      <Button style={{marginTop: "29px"}} onClick={this.findRoleState} variant="primary" >Find Role State</Button>
                       </Col>
+                    </Row>
+                    <Row>
+                      <Col> <br/>
+                        <Accordion>
+                            <Card>
+                              <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                  State
+                                </Accordion.Toggle>
+                              </Card.Header>
+                              <Accordion.Collapse eventKey="0">
+                                <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.roleStateResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.roleStateResponse.state} </pre> </span>
+                                </Card.Body>                      
+                              </Accordion.Collapse>
+                            </Card>
+                          </Accordion>
+                      </Col>                      
                     </Row>                    
                   </Card.Body>
                 </Card>
 
                 <hr/>
 
-                <Card border="warning">
-                <Alert variant="warning" size="sm"> 
-                    Configure common parameters of nominate, release and vote
-                </Alert>  
+                <Card border="primary">
+                  <Alert variant="primary" size="sm"> 
+                    Nominate Case Creator
+                  </Alert>  
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Control required placeholder="Nominator Role" />
+                        <Form.Label> Process Case </Form.Label>
+                        <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>
                       <Col>
-                        <Form.Control required placeholder="Nominee Role" />
+                        <Form.Label> Nominee Role </Form.Label>
+                        <Form.Control required name="nomineeRole" value={this.state.nomineeRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Role" />
                       </Col>
                       <Col>
-                        <Form.Control required placeholder="Process Case" />
+                        <Form.Label> Nominee Address </Form.Label>
+                        <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
+                      </Col>
+                      <Col>
+                        <Button style={{marginTop: "29px"}} onClick={this.nominateCaseCreator} variant="primary">Nominate Case Creator</Button>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col> <br/>
+                        <Accordion>
+                            <Card>
+                              <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                  Transaction Hash
+                                </Accordion.Toggle>
+                              </Card.Header>
+                              <Accordion.Collapse eventKey="0">
+                                <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.caseCreatorResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.caseCreatorResponse.transactionHash} </pre> </span>
+                                </Card.Body>                      
+                              </Accordion.Collapse>
+                            </Card>
+                          </Accordion>
+                      </Col>                      
+                    </Row>   
+                  </Card.Body>
+                </Card>
+
+                <hr/>
+
+                <Card border="warning">
+                  <Alert variant="warning" size="sm"> 
+                      Configure common parameters of nominate, release and vote operations
+                  </Alert>  
+                  <Card.Body>
+                    <Row style={{display: "flex", justifyContent: "space-around"}} >
+                      <Col>
+                        <Form.Label> Nominator Role </Form.Label>
+                        <Form.Control required name="nominatorRole" value={this.state.nominatorRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Role" />
+                      </Col>
+                      <Col>
+                        <Form.Label> Nominee Role  </Form.Label>
+                        <Form.Control required name="nomineeRole" value={this.state.nomineeRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Role" />
+                      </Col>
+                      <Col>
+                        <Form.Label> Process Case  </Form.Label>
+                        <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Process the Case" />
                       </Col>
                     </Row>                    
                   </Card.Body>
@@ -243,7 +443,7 @@ class AccessAllocation extends Component {
                   <Breadcrumb.Item onClick={this.changeBreadCrumbVoteHandler}>Vote</Breadcrumb.Item>
                 </Breadcrumb>                   
 
-              {this.state.breadCrumbNominate ? 
+              { this.state.breadCrumbNominate ? 
                 <Card border="success">
                   <Alert variant="success" size="sm"> 
                     Nomination
@@ -251,18 +451,38 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Control required placeholder="Nominator Address" />
+                        <Form.Label> Nominator Address </Form.Label>
+                        <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Address" />
                       </Col>
                       <Col>
-                        <Form.Control required placeholder="Nominee Address" />
+                        <Form.Label> Nominee Address </Form.Label>
+                        <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
                       </Col>
                       <Col>
-                        <Button variant="success">Nominate</Button>
+                        <Button style={{marginTop: "29px"}} onClick={this.nominate} variant="success">Nominate</Button>
                       </Col>
-                    </Row>                    
+                    </Row>
+                    <Row>
+                      <Col> <br/>
+                        <Accordion>
+                            <Card>
+                              <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                  Nomination Transaction Hash
+                                </Accordion.Toggle>
+                              </Card.Header>
+                              <Accordion.Collapse eventKey="0">
+                                <Card.Body>  
+                                  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.nominateResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.nominateResponse.transactionHash} </pre> </span>
+                                </Card.Body>                      
+                              </Accordion.Collapse>
+                            </Card>
+                          </Accordion>
+                      </Col>                      
+                    </Row>                       
                   </Card.Body>
                 </Card> 
-              : null}              
+              : null }              
 
               { this.state.breadCrumbRelease ? 
                 <Card border="danger">
@@ -272,15 +492,16 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Control required placeholder="Releaser Address" />
+                        <Form.Label> Releaser/Nominator Address  </Form.Label>
+                        <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Releaser Address" />
                       </Col>                      
                       <Col>
-                        <Button variant="danger">Release</Button>
+                        <Button style={{marginTop: "29px"}} onClick={this.release} variant="danger">Release</Button>
                       </Col>
                     </Row>                    
                   </Card.Body>
                 </Card>
-              : null}
+              : null }
                                                     
               { this.state.breadCrumbVote ?
               <Aux>
@@ -291,12 +512,36 @@ class AccessAllocation extends Component {
                   <Card.Body>
                   <Row>  
                       <Col>
-                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="radio" id="radio1" label="On-nomination" />                        
-                        <Form.Check style={{display: "inline"}} type="radio" id="radio2" label="On-release" />
+                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.onNomination} id="radio1" name="onNomination" onChange={(event) => { this.onChangeRadioValueHandler({
+                          target: {
+                            name: event.target.name,
+                            value: event.target.defaultChecked,
+                          },
+                        })                          
+                        }} label="On-nomination" />                        
+                        <Form.Check style={{display: "inline"}} type="checkbox" defaultChecked={this.state.onRelease} id="radio2" name="onRelease" onChange={(event) => { this.onChangeRadioValueHandler({
+                          target: {
+                            name: event.target.name,
+                            value: event.target.defaultChecked,
+                          },
+                        })                          
+                        }} label="On-release" />
                       </Col>                                            
                       <Col>
-                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="radio" id="radio3" label="Accept" />                    
-                        <Form.Check style={{display: "inline",}} type="radio" id="radio4" label="Reject" />                                                                   
+                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.accept}  id="radio3" name="accept" onChange={(event) => { this.onChangeRadioValueHandler({
+                          target: {
+                            name: event.target.name,
+                            value: event.target.defaultChecked,
+                          },
+                        })                          
+                        }}  label="Accept" />                    
+                        <Form.Check style={{display: "inline",}} type="checkbox" defaultChecked={this.state.reject} id="radio4" name="reject" onChange={(event) => { this.onChangeRadioValueHandler({
+                          target: {
+                            name: event.target.name,
+                            value: event.target.defaultChecked,
+                          },
+                        })                          
+                        }} label="Reject" />                                                                   
                       </Col>
                     </Row> <br/>                                                                       
                   </Card.Body>
@@ -305,19 +550,21 @@ class AccessAllocation extends Component {
                 <Card.Body>
                   <Row style={{display: "flex", justifyContent: "space-around"}} >
                     <Col>
-                      <Form.Control required placeholder="Endorser Role" />
+                      <Form.Label> Endorser Role </Form.Label>
+                      <Form.Control required name="endorserRole" value={this.state.endorserRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Role" />
                     </Col>
                     <Col>
-                      <Form.Control required placeholder="Endorser Address" />
+                      <Form.Label> Endorser Address </Form.Label>
+                      <Form.Control required name="endorserAddress" value={this.state.endorserAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Address" />
                     </Col> 
                     <Col>
-                      <Button variant="success">Vote</Button>  
+                      <Button style={{marginTop: "29px"}} onClick={this.vote} variant="success">Vote</Button>  
                     </Col>
                   </Row>
                 </Card.Body>
                 </Card>
               </Aux> 
-              : null}
+              : null }
 
                 {/* <Alert variant="warning" size="sm"> 
                     Query the State of the Role
@@ -344,4 +591,9 @@ class AccessAllocation extends Component {
     }
 }
 
-export default AccessAllocation;
+//export default AccessAllocation;
+export default connect((store) => {
+  return {
+    registryAddress: store.registryAddress
+  }
+})(AccessAllocation);
