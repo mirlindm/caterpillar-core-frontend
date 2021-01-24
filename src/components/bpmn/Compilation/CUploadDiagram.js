@@ -18,6 +18,7 @@ import './CUploadDiagram.css';
 import {Form, Alert, Button, Card, Accordion} from 'react-bootstrap';
 
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 class CUploadDiagram extends Component {
     //modeler = null;
@@ -327,15 +328,16 @@ class CUploadDiagram extends Component {
       // Post Request 3: createNewProcessInstance
       createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("Here Post 3 with: " + registryAddress + " ,and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        
+        console.log("Here Post 3 with: " + this.props.registryAddress + " ,and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
         
         axios.post(`http://localhost:3000/models/${mHash}/processes`,
         {                    
-          registryAddress: registryAddress,
-          accessCtrlAddr: this.state.accessControlState,
-          rbPolicyAddr: this.state.rbPolicyState,
-          taskRoleMapAddr: this.state.taskRoleMapState, 
+          registryAddress: this.props.registryAddress,
+          accessCtrlAddr: this.props.accessControlAddress,
+          rbPolicyAddr: this.props.roleBindingAddress,
+          taskRoleMapAddr: this.props.taskRoleMapAddress, 
         },
         {
           headers: {
@@ -350,8 +352,7 @@ class CUploadDiagram extends Component {
         });
       }
 
-      // Get Request 3: queryProcessInstancesHandler
-      queryProcessInstancesHandler = () => {
+      processInstanceAddress = (dispatch) => {
         let mHash = this.state.mHash;
         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
         console.log("GET3" + registryAddress);
@@ -363,12 +364,36 @@ class CUploadDiagram extends Component {
               'accept': 'application/json'
           }
         }).then(response => {   
-          this.setState({queryProcessInstancesResponse: response.data});           
+          this.setState({queryProcessInstancesResponse: response.data});
+          dispatch({type: 'PROCESS_CASE', payload: response.data});           
           console.log(response);          
         })
         .catch(error => {              
           console.log(error)
-        });          
+        });   
+      }
+
+      // Get Request 3: queryProcessInstancesHandler
+      queryProcessInstancesHandler = () => {
+        console.log("Process Case Address on Redux!!!!" );
+        this.props.dispatch(this.processInstanceAddress);
+      //   let mHash = this.state.mHash;
+      //   let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+      //   console.log("GET3" + registryAddress);
+        
+      // axios.get(`http://localhost:3000/models/${mHash}/processes`,
+      //   {
+      //     headers: {
+      //       'registryAddress': registryAddress,
+      //         'accept': 'application/json'
+      //     }
+      //   }).then(response => {   
+      //     this.setState({queryProcessInstancesResponse: response.data});           
+      //     console.log(response);          
+      //   })
+      //   .catch(error => {              
+      //     console.log(error)
+      //   });          
       }
       
       // Get Request 4: queryProcessState
@@ -890,4 +915,12 @@ class CUploadDiagram extends Component {
     }
 }
 
-export default CUploadDiagram;
+//export default CUploadDiagram;
+export default connect((store) => {
+  return {
+    registryAddress: store.registryAddress,
+    accessControlAddress: store.accessControlAddress,
+    roleBindingAddress: store.roleBindingAddress,
+    taskRoleMapAddress: store.taskRoleMapAddress,
+  }
+})(CUploadDiagram);

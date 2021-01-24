@@ -14,7 +14,11 @@ import thunk from 'redux-thunk';
 const initialState = {
 	loading: false,
 	loaded: false,
-	registryAddress: '',
+  registryAddress: '',
+  accessControlAddress: '',
+  roleBindingAddress: '',
+  taskRoleMapAddress: '',
+  processCaseAddress: [],
 	error: null,
 };
 

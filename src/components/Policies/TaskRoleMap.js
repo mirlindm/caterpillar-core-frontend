@@ -5,6 +5,7 @@ import Aux from '../../hoc/Auxiliary';
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 class TaskRoleMap extends Component {
     constructor(props) {
@@ -43,16 +44,20 @@ class TaskRoleMap extends Component {
       // POST 5 - Task Role Map
       parseAndDeployTaskRoleMapHandler = () => {
         let trMap = this.state.taskRoleMapInput;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        console.log("Registry Address from Redux Store: " + this.props.registryAddress);
+
         if(trMap === null) {
           return null;
         }
+
         console.log(trMap);
         axios.post('http://localhost:3000/task-role-map', 
           {
             roleTaskPairs: trMap, 
             contractName: 'RoleTaskMap',
-            registryAddress: registryAddress}, 
+            registryAddress: this.props.registryAddress
+          }, 
           {
             headers: {
               'accept': 'application/json',            
@@ -66,24 +71,48 @@ class TaskRoleMap extends Component {
           console.log(error)
         });
       }
-      // GET 5 - Task Role Map
-      findRoleTaskMapMetadata = () => {
+
+      taskRoleMapAddressReduxStoreHandler = (dispatch) => {
         let trMapAddress = this.state.trMapAddressInput;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        console.log(trMapAddress + ' and registry address: ' + registryAddress);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
         
         axios.get('http://localhost:3000/task-role-map/' + trMapAddress,      
         {
           headers: {          
             'accept': 'application/json',
-            'registryAddress': registryAddress
+            'registryAddress': this.props.registryAddress
           }
         })
           .then(response => {
             console.log(response);
             this.setState({trMapMetadata: response.data});
-            this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);
+            dispatch({type: 'TASK_ROLE_MAP', payload: response.data.contractInfo.address});
+            this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);            
           }).catch(error => console.warn(error));
+
+      }
+
+      // GET 5 - Task Role Map
+      findRoleTaskMapMetadata = () => {
+        console.log("Task Role Map Address on Redux!!!!" );
+        this.props.dispatch(this.taskRoleMapAddressReduxStoreHandler);
+        // let trMapAddress = this.state.trMapAddressInput;
+        // let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        // console.log(trMapAddress + ' and registry address: ' + registryAddress);
+        
+        // axios.get('http://localhost:3000/task-role-map/' + trMapAddress,      
+        // {
+        //   headers: {          
+        //     'accept': 'application/json',
+        //     'registryAddress': registryAddress
+        //   }
+        // })
+        //   .then(response => {
+        //     console.log(response);
+        //     this.setState({trMapMetadata: response.data});
+        //     this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);
+        //   }).catch(error => console.warn(error));
       }
 
       sendData = () => {
@@ -275,4 +304,9 @@ class TaskRoleMap extends Component {
 
 }
 
-export default TaskRoleMap;
+//export default TaskRoleMap;
+export default connect((store) => {
+  return {
+    registryAddress: store.registryAddress
+  }
+})(TaskRoleMap);

@@ -17,7 +17,7 @@ class AccessAllocation extends Component {
 
         this.state = {
 
-          registryAddress: '0x03aeDb94A0F6ba86B8B6cf766774C58687325591',
+          registryAddress: '0xD23D9cd0e3dC9461fD3AB7D8a1f7a2D8102EFB4F',
 
           //parameters
           
@@ -62,7 +62,8 @@ class AccessAllocation extends Component {
 
     onChangeRadioValueHandler = (event) => {
       console.log("1: " + event.target.name + " is initially " + event.target.value);
-      console.log("Registry Address from Redux Store: " + this.props.registryAddress  );
+      console.log("Registry Address from Redux Store: " + this.props.registryAddress);
+      console.log("Access Control Address from Redux Store: " + this.props.accessControlAddress);
       
       this.setState({
         [event.target.name]: !event.target.value
@@ -103,13 +104,14 @@ class AccessAllocation extends Component {
         //let pCaseTest = '0x9891474BB610B112EA6b4c197827eDCF538A3845';  
         let pCase = this.state.pCase;
         console.log(pCase);
+        console.log(this.props.registryAddress);
         //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';
         console.log("on nomination value is: "+ this.state.onNomination)
         axios.get('http://localhost:3000/rb-opertation/' + pCase,      
         {
           headers: {          
             'accept': 'application/json',
-            'registryAddress': this.state.registryAddress
+            'registryAddress': this.props.registryAddress
           }
         })
           .then(response => {
@@ -128,7 +130,7 @@ class AccessAllocation extends Component {
         {
           headers: {          
             'accept': 'application/json',
-            'registryAddress': this.state.registryAddress
+            'registryAddress': this.props.registryAddress
           }
         })
           .then(response => {
@@ -144,7 +146,7 @@ class AccessAllocation extends Component {
         let pCase = this.state.pCase;  
         //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591'; 
         let requestBody = {
-          registryAddress: this.state.registryAddress,
+          registryAddress: this.props.registryAddress,
           rNominee: this.state.nomineeRole,
           nominee: this.state.nomineeAddress,
         }       
@@ -166,7 +168,7 @@ class AccessAllocation extends Component {
           rNominee: this.state.nomineeRole,
           nominator: this.state.nominatorAddress,
           nominee: this.state.nomineeAddress,
-          registryAddress: this.state.registryAddress
+          registryAddress: this.props.registryAddress,
         }
         axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate',  requestBody)
           .then(response => {
@@ -186,7 +188,7 @@ class AccessAllocation extends Component {
           rNominator: this.state.nominatorRole,
           rNominee: this.state.nomineeRole,
           nominator: releaserAddress,          
-          registryAddress: this.state.registryAddress
+          registryAddress: this.props.registryAddress,
         }       
         axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/release', requestBody)
           .then(response => {
@@ -214,7 +216,7 @@ class AccessAllocation extends Component {
           endorser: this.state.endorserAddress,
           toEndorseOp: 'nominate',
           isAccepted: true,          
-          registryAddress: this.state.registryAddress
+          registryAddress: this.props.registryAddress,
         }  
         axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/vote', requestBody)
           .then(response => {
@@ -246,6 +248,10 @@ class AccessAllocation extends Component {
 
                 <Alert variant="warning" size="sm" style={{ textAlign: "center", width: "400px", marginLeft: "355px"}} > 
                     Please Configure the remaining operations: Nomination, Release, Vote
+                </Alert>
+
+                <Alert variant="light" style={{ textAlign: "center",}} > 
+                    Select one of the Process Cases Available: <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </span> 
                 </Alert>
 
 
@@ -594,6 +600,8 @@ class AccessAllocation extends Component {
 //export default AccessAllocation;
 export default connect((store) => {
   return {
-    registryAddress: store.registryAddress
+    registryAddress: store.registryAddress,
+    accessControlAddress: store.accessControlAddress,
+    processCaseAddress: store.processCaseAddress,
   }
 })(AccessAllocation);

@@ -5,6 +5,7 @@ import Aux from '../../hoc/Auxiliary';
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 class RoleBindingPolicy extends Component {
     constructor(props) {
@@ -41,15 +42,16 @@ class RoleBindingPolicy extends Component {
       //Post 4: parseAndDeployRBPolicy
       parseAndDeployRBPolicyHandler = () => {
         let rbPolicy = this.state.rbPolicyInput;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        console.log("Registry Address: " + this.props.registryAddress);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
         if(rbPolicy === null) {
           return null;
         }
         console.log(rbPolicy);
-        axios.post('http://localhost:3000/rb-policy', {policy: rbPolicy, registryAddress: registryAddress}, {
+        axios.post('http://localhost:3000/rb-policy', {policy: rbPolicy, registryAddress: this.props.registryAddress}, {
           headers: {
             'accept': 'application/json',
-            'registryAddress': registryAddress
+            'registryAddress': this.props.registryAddress
           }
         })
         .then(response =>  { 
@@ -60,25 +62,47 @@ class RoleBindingPolicy extends Component {
           console.log(error)
         });
       }
-  
-       //GET 4 - rbPolicy Metadata
-       findRBPolicyMetadataHandler = () => {
+
+      roleBindingPolicyAddressReduxStoreHandler = (dispatch) => {
         let rbPolicyAddr = this.state.rbPolicyAddressInput;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        console.log(rbPolicyAddr + ' and registry address: ' + registryAddress);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
         
         axios.get('http://localhost:3000/rb-policy/' + rbPolicyAddr,      
         {
           headers: {          
             'accept': 'application/json',
-            'registryAddress': registryAddress
+            'registryAddress': this.props.registryAddress
           }
         })
           .then(response => {
             console.log(response);
             this.setState({rbPolicyMetadata: response.data});
+            dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
             this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
           }).catch(error => console.warn(error));
+      }
+  
+       //GET 4 - rbPolicy Metadata
+       findRBPolicyMetadataHandler = () => {
+        console.log("Role Binding Policy Address on Redux!!!!" );
+        this.props.dispatch(this.roleBindingPolicyAddressReduxStoreHandler);
+        // let rbPolicyAddr = this.state.rbPolicyAddressInput;
+        // let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        // console.log(rbPolicyAddr + ' and registry address: ' + registryAddress);
+        
+        // axios.get('http://localhost:3000/rb-policy/' + rbPolicyAddr,      
+        // {
+        //   headers: {          
+        //     'accept': 'application/json',
+        //     'registryAddress': registryAddress
+        //   }
+        // })
+        //   .then(response => {
+        //     console.log(response);
+        //     this.setState({rbPolicyMetadata: response.data});
+        //     this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
+        //   }).catch(error => console.warn(error));
       }
 
       sendData = () => {
@@ -255,4 +279,9 @@ class RoleBindingPolicy extends Component {
     }
 }
 
-export default RoleBindingPolicy;
+// export default RoleBindingPolicy;
+export default connect((store) => {
+  return {
+    registryAddress: store.registryAddress
+  }
+})(RoleBindingPolicy);
