@@ -130,7 +130,8 @@ class AccessAllocation extends Component {
         {
           headers: {          
             'accept': 'application/json',
-            'registryAddress': this.props.registryAddress
+            'registryAddress': this.props.registryAddress,
+            'role': this.state.roleName,
           }
         })
           .then(response => {
@@ -251,7 +252,7 @@ class AccessAllocation extends Component {
                 </Alert>
 
                 <Alert variant="light" style={{ textAlign: "center",}} > 
-                    Select one of the Process Cases Available: <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </span> 
+                    Select one of the Process Cases Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </span> 
                 </Alert>
 
 
@@ -341,14 +342,14 @@ class AccessAllocation extends Component {
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
                         <Form.Label> Role Name </Form.Label>
-                        <Form.Control required placeholder="Enter Role Name" />
+                        <Form.Control required name="roleName" value={this.state.roleName} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Role Name" />
                       </Col>
                       <Col>
                       <Form.Label> Process Case </Form.Label>
                         <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>
                       <Col>
-                      <Button style={{marginTop: "29px"}} onClick={this.findRoleState} variant="primary" >Find Role State</Button>
+                      <Button style={{marginTop: "29px"}} onClick={this.findRoleState} variant="primary">Find Role State</Button>
                       </Col>
                     </Row>
                     <Row>

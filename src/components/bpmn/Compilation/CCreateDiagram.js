@@ -721,6 +721,10 @@ class CCreateDiagram extends Component {
                   {/* New Requests
                     Get Request 3: Query Process Instances
                   */} <br/> <hr/>
+                  <input required type="text" placeholder="Enter the Process Model mHash" 
+                    name="mHash" value={this.state.mHash}
+                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                /> {'      '}
                   <Button onClick={this.queryProcessInstancesHandler} variant="primary"
                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Query Process Instances
