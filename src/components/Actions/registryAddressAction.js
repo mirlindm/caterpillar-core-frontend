@@ -12,7 +12,7 @@ const getRegistryAddress = (dispatch) => {
     .then(response => response.data             
     ).then((data) => {
         console.log(data)         
-        dispatch({type: 'LOADED', payload: data.address});
+        dispatch({type: 'REGISTRY_ADDRESS', payload: data.address});
     })
     .catch(err => {
         dispatch({type: 'ERROR', payload: err});

@@ -4,7 +4,7 @@ const reducer = (state = {}, action) => {
 			state = {...state, loading: true};
 			break;
 		}			
-		case 'LOADED': {
+		case 'REGISTRY_ADDRESS': {
 			state = {...state, loaded: true, loading: false, registryAddress: action.payload};
 			break;
 		}

@@ -41,7 +41,7 @@ class RegistryAddress extends Component {
         ).then((data) => {
             console.log(data);
             this.setState({registriesByAddress: data});         
-            dispatch({type: 'LOADED', payload: data.address});
+            dispatch({type: 'REGISTRY_ADDRESS', payload: data.address});
         })
         .catch(err => {
             dispatch({type: 'ERROR', payload: err});

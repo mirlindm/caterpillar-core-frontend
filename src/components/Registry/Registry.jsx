@@ -21,8 +21,6 @@ class Registry extends Component {
             showPrompt: undefined,
             getRegistryPrompt: ''
         }
-
-
     }
 
 
