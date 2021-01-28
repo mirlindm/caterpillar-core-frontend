@@ -16,6 +16,7 @@ import './ICreateDiagram.css'
 import {Alert, Card, Button, Accordion} from 'react-bootstrap';
 
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 class ICreateDiagram extends Component {
     //modeler = null;
@@ -133,14 +134,15 @@ class ICreateDiagram extends Component {
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
         this.modeler.saveXML((err, xml) => {
 
-            let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
 
             if (!err) {
               console.log(xml);
               axios.post("http://localhost:3000/interpreter/models",{
                 bpmn: xml, // modeler.xml
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                registryAddress: registryAddress
+                registryAddress: this.props.registryAddress
                 })
                 .then(response => {
                 if(response.data != null) {
@@ -173,14 +175,15 @@ class ICreateDiagram extends Component {
 
         this.modeler.saveXML((err, xml) => {
 
-            let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
             if (!err) {
               console.log(xml);
               axios.post("http://localhost:3000/interpreter",{
                 bpmn: xml, // modeler.xml
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                registryAddress: registryAddress,
+                registryAddress: this.props.registryAddress,
                 })
                 .then(response => {
                 if(response.data != null) {
@@ -204,13 +207,14 @@ class ICreateDiagram extends Component {
 
     // GET1: /interpreter/models
     getInterpreterModelHandler = (event) => {
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+
         this.setState({showGetProcessModelsAccordion: true});
 
             axios.get('http://localhost:3000/interpreter/models',
             { 
                 headers: {
-                'registryAddress': registryAddress,
+                'registryAddress': this.props.registryAddress,
                 'accept': 'application/json',        
                 }                          
             })
@@ -643,4 +647,12 @@ class ICreateDiagram extends Component {
     }
 }
 
-export default ICreateDiagram;
+//export default ICreateDiagram;
+export default connect((store) => {
+    return {
+      registryAddress: store.registryAddress,
+      accessControlAddress: store.accessControlAddress,
+      roleBindingAddress: store.roleBindingAddress,
+      taskRoleMapAddress: store.taskRoleMapAddress,
+    }
+  })(ICreateDiagram);

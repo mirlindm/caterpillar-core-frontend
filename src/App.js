@@ -12,7 +12,7 @@ import Footer from './components/Footer/Footer.jsx';
 import Login from './components/Login/Login.jsx';
 import Logout from './components/Logout/Logout.jsx';
 import Registry from './components/Registry/Registry.jsx';
-import Reg from './components/Registry/RegistryComponent.js';
+import RuntimeRegistry from './components/Registry/RuntimeRegistry.js';
 import BpmnModelling from './components/bpmn/BpmnModelling';
 import Error from './components/Error/Error.jsx';
 import AccessAllocation from './components/Policies/AccessAllocation';
@@ -47,7 +47,7 @@ class App extends Component {
                       <AuthenticatedRoute path="/registry" exact component={Registry} />
                       <AuthenticatedRoute path="/modeler" exact component={BpmnModelling} />                    
                       <AuthenticatedRoute path="/access" exact component={AccessAllocation} />                    
-                      <AuthenticatedRoute path="/reg" exact component={Reg} />                    
+                      <AuthenticatedRoute path="/runtimeRegistry" exact component={RuntimeRegistry} />                    
                       <Route path="/logout" exact component={Logout} />
                       <AuthenticatedRoute path="/about" exact component={About} />
 

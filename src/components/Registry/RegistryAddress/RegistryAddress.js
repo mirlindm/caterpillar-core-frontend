@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 //import Aux from '../../../hoc/Auxiliary';
 
-import BpmnModelling from '../../bpmn/BpmnModelling';
+//import BpmnModelling from '../../bpmn/BpmnModelling';
 
 import {Card, Alert, Form, Button, Col, Accordion,} from 'react-bootstrap'; 
 import './RegistryAddress.css';
@@ -231,12 +231,12 @@ class RegistryAddress extends Component {
 
                 {/* Once we have an address of the registry, the goTo state will have the value of 'modelling' and the BpmnModelling Component will be rendered */}     
               
-                {
+                {/* {
                     this.state.goTo === 'modelling' ?
                     // <Route  render={() => (window.location = "https://www.example.com")} />
                     <BpmnModelling registryAddressProp={this.state.registriesByAddress.address}/>
                     : null
-                }                    
+                }                     */}
 
                 <div style={{marginTop: "60px"}}> </div>
             </div>

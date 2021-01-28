@@ -122,7 +122,7 @@ class BpmnModelling extends Component {
                         <p  style={{textAlign:"center", fontSize: "20px", backgroundColor: "#008B8B", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div> 
                         <div style={{marginTop: "50px"}}> </div>
-                        <CUploadDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
+                        <CUploadDiagram />
                     </div>                                        
                     : 
                     this.state.showPromptModel === 'Upload Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
@@ -149,7 +149,7 @@ class BpmnModelling extends Component {
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
                         <div style={{marginTop: "50px"}}> </div>
-                        <IUploadDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
+                        <IUploadDiagram />
                     </div>                                        
                     :
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Compilation Engine' ?
@@ -175,13 +175,13 @@ class BpmnModelling extends Component {
                         </Table>
                         <p  style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <CCreateDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
+                        <CCreateDiagram />
                     </div>                                        
                     :
                     this.state.showPromptModel === 'Create Model'  && this.state.showPromptEngine === 'Interpretation Engine' ?
                     /* Create new model with interpretation engine */
                     <div>
-                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "0px 120px", padding: "0 10px", border: "1px solid #008B8B", borderRadius: "10px"}}>
+                        <div style={{textAlign: "center", color: "white", backgroundColor: "#008B8B", margin: "0px 120px", padding: "0 10px", border: "1px solid #008B8B", marginBottom: "20px", borderRadius: "10px"}}>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#000000", marginTop: "20px"}}> Your current configurations are: </p>
                         <Table bordered hover striped variant="dark">
                             <tbody>
@@ -201,7 +201,7 @@ class BpmnModelling extends Component {
                         </Table>
                         <p style={{textAlign:"center", fontSize: "20px", color: "#ffffff", marginTop: "20px"}}> You can still change them above! </p>
                         </div>
-                        <ICreateDiagram registryAddressProp={this.props.registryAddressProp} registryIdProp={this.props.registryIdProp} />
+                        <ICreateDiagram />
                     </div>                                        
                     :
                     null

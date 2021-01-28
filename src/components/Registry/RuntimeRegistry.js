@@ -11,7 +11,7 @@ import './Registry.css'
 import axios from 'axios';
 import {connect} from 'react-redux';
 
-class Reg extends Component {
+class RuntimeRegistry extends Component {
     constructor(props) {
         super(props);
 
@@ -25,20 +25,26 @@ class Reg extends Component {
         }
     }
 
+    // map user input value to state
     registryChangeHandler = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
+    // reset input value
     resetRegistryInput = () =>  {
         this.setState({idOrAddress: ''})
     }
 
+    // post request to create a new runtime registry
     createRegistryHandler = (event) =>  {
         event.preventDefault();
 
-        axios.post("http://localhost:3000/registries")
+        //axios.post("http://localhost:3000/registries")
+        axios.post('http://' + window.location.hostname + ':3000/registries', {
+            "accept" : "application/json"
+        })
             .then(response => {
                 if(response.data != null) {
                     console.log(response)
@@ -55,7 +61,7 @@ class Reg extends Component {
         //this.setState({registry: []})
     }
 
-    // Get Request to fetch the registries based on the id or address from the database
+    // Get request to fetch the registries based on the id or address from the database
     getRegistriesByIdHandler = (e) =>  {  
         if(this.state.idOrAddress.length <= 25) {           
         console.log("REDUCER from RegistryID!!!!!!!!!!!!!!!!!");
@@ -66,9 +72,9 @@ class Reg extends Component {
         }
     }
     
-
+    // Get request to fetch registry's data based on its ID and dispatch registry's address to redux store
     getRegistryAddressByID = (dispatch) => {
-        const URL = 'http://localhost:3000/registries/';
+        const URL = 'http://' + window.location.hostname + ':3000/registries/';        
         const id = this.state.idOrAddress;
       
         dispatch({type: 'LOADING' })
@@ -78,7 +84,7 @@ class Reg extends Component {
         ).then((data) => {
             console.log(data);
             this.setState({show2: true, registryData: data});      
-            setTimeout(() => this.setState({show2: false}), 3000)
+            setTimeout(() => this.setState({show2: false}), 1000)
             dispatch({type: 'REGISTRY_ADDRESS', payload: data.address});
         })
         .catch(err => {
@@ -87,8 +93,9 @@ class Reg extends Component {
         })
     }
 
-    getRegistryAddressByAddress = (dispatch) => {
-        const URL = 'http://localhost:3000/registries/';
+    // Get request to fetch registry's data based on its address and dispatch registry's address to redux store
+    getRegistryAddressByAddress = (dispatch) => {        
+        const URL = 'http://' + window.location.hostname + ':3000/registries/';
         const URL_END = '/address';
         const address = this.state.idOrAddress;
     
@@ -99,7 +106,7 @@ class Reg extends Component {
         ).then((data) => {
             console.log(data);
             this.setState({show2: true, registryData: data});   
-            setTimeout(() => this.setState({show2: false}), 3000)      
+            setTimeout(() => this.setState({show2: false}), 1000)      
             dispatch({type: 'REGISTRY_ADDRESS', payload: data.address});
         })
         .catch(err => {
@@ -108,6 +115,7 @@ class Reg extends Component {
         })
     }
 
+    // takes user to Modeler component on click
     goToModellerHandler = () => {
         this.props.history.push(`/modeler`);   
     }
@@ -134,8 +142,7 @@ class Reg extends Component {
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
-                                                this.state.registry.length === 0 ? 
-                                                //remove the onClick from the first paragraph - errorMessage. BPMN Modelling should appear only after the registry has been created. 
+                                                this.state.registry.length === 0 ?                                             
                                                 <p  style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
@@ -169,7 +176,7 @@ class Reg extends Component {
                             <Card.Body>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >
-                                        {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
+                                        
                                         <Form.Control required autoComplete="off"
                                             type="text"
                                             name="idOrAddress"
@@ -301,4 +308,4 @@ export default connect((store) => {
     return {
       
     }
-  })(Reg);
+  })(RuntimeRegistry);

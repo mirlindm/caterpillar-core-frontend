@@ -19,6 +19,7 @@ import './CCreateDiagram.css';
 import {Alert, Card, Button, Accordion } from "react-bootstrap";
 
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 class CCreateDiagram extends Component {
       modeler = new BpmnModeler();
@@ -143,14 +144,15 @@ class CCreateDiagram extends Component {
 
         this.modeler.saveXML((err, xml) => {
 
-          let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp 
+          //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp 
+          console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
           if (!err) {
             console.log(xml);
             axios.post("http://localhost:3000/models",{
               bpmn: xml,
               //name: xml.name,          
-              registryAddress: registryAddress,
+              registryAddress: this.props.registryAddress,
               })
               .then(response => {
                   if(response.data != null) {
@@ -173,15 +175,16 @@ class CCreateDiagram extends Component {
 
                 
           this.modeler.saveXML((err, xml) => {
-            let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-            
+            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+
             if (!err) {
               console.log(xml);
               axios.post("http://localhost:3000/models/compile", 
               {
                 bpmn: xml,
                 //name: xml.name,          
-                registryAddress: registryAddress,
+                registryAddress: this.props.registryAddress,
               },
               {
                   headers: {
@@ -216,11 +219,15 @@ class CCreateDiagram extends Component {
 
       // GET 1 /models   
       queryProcessModels = (event) => {
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+
         this.setState({showGetProcessModelsAccordion: true});
+
           axios.get('http://localhost:3000/models', {
             headers: {
-              'registryAddress': registryAddress,
+              'registryAddress': this.props.registryAddress,
               'Accept': 'application/json',
             }
           })
@@ -238,6 +245,8 @@ class CCreateDiagram extends Component {
       retrieveModelMetadata = (event) => { 
         let mHash = this.state.mHash;
         this.setState({showRetrieveModelMetadataAccordion: true});
+        
+        //console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         
         axios.get(`http://localhost:3000/models/`+mHash,
         {
@@ -336,12 +345,14 @@ class CCreateDiagram extends Component {
       // Post Request 3: createNewProcessInstance
       createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("Here Post 3 with: " + registryAddress + " ,and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+
+        console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
         
         axios.post(`http://localhost:3000/models/${mHash}/processes`,
         {                    
-          registryAddress: registryAddress,
+          registryAddress: this.props.registryAddress,
           accessCtrlAddr: this.state.accessControlState,
           rbPolicyAddr: this.state.rbPolicyState,
           taskRoleMapAddr: this.state.taskRoleMapState, 
@@ -362,13 +373,14 @@ class CCreateDiagram extends Component {
       // Get Request 3: queryProcessInstancesHandler
       queryProcessInstancesHandler = () => {
         let mHash = this.state.mHash;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3" + registryAddress);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         
       axios.get(`http://localhost:3000/models/${mHash}/processes`,
         {
           headers: {
-            'registryAddress': registryAddress,
+            'registryAddress': this.props.registryAddress,
               'accept': 'application/json'
           }
         }).then(response => {   
@@ -385,13 +397,14 @@ class CCreateDiagram extends Component {
         //pAddress is same as mHash
         let pAddress = this.state.mHash;         
         //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3" + registryAddress + " and the pAddress: " + pAddress);
-        
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        //console.log("GET3" + registryAddress + " and the pAddress: " + pAddress);
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+
       axios.get('http://localhost:3000/processes/'+pAddress,
         {
           headers: {
-            'registryAddress': registryAddress,
+            'registryAddress': this.props.registryAddress,
             'accept': 'application/json',
           }
         }).then(response => {
@@ -865,4 +878,12 @@ class CCreateDiagram extends Component {
   };
 }
 
-export default CCreateDiagram;
+//export default CCreateDiagram;
+export default connect((store) => {
+  return {
+    registryAddress: store.registryAddress,
+    accessControlAddress: store.accessControlAddress,
+    roleBindingAddress: store.roleBindingAddress,
+    taskRoleMapAddress: store.taskRoleMapAddress,
+  }
+})(CCreateDiagram);

@@ -23,13 +23,13 @@ import {connect} from 'react-redux';
 class CUploadDiagram extends Component {
     //modeler = null;
     modeler = new BpmnModeler();
-    modeler2 = new BpmnModeler();
+    modeler2 = new BpmnModeler();    
 
     constructor(props) {
         super(props);
 
         this.state = {
-            registryAddress: this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp,
+            //registryAddress: this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp,
             uploadedDiagramName: undefined,
             id: [],
             showIDAccordion: false,  
@@ -132,18 +132,20 @@ class CUploadDiagram extends Component {
     // Post Request 1
     deployProcessModels = (event) => {
         event.preventDefault();
-        this.setState({showIDAccordion: true});        
+        this.setState({showIDAccordion: true}); 
+        
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
               
         this.modeler.saveXML((err, xml) => {
 
-            let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp 
+            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp 
   
             if (!err) {
               console.log(xml);
               axios.post("http://localhost:3000/models",{
                 bpmn: xml,
                 name: this.state.selectedFile.name,          
-                registryAddress: registryAddress,
+                registryAddress: this.props.registryAddress,
                 })
                 .then(response => {
                     if(response.data != null) {
@@ -163,9 +165,10 @@ class CUploadDiagram extends Component {
     compileProcessModels = (event) => {
         event.preventDefault();
         this.setState({showCompileProcessModelsAccordion: true});
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
               
         this.modeler.saveXML((err, xml) => {
-          let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+          //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
           
           if (!err) {
             console.log(xml);
@@ -174,7 +177,7 @@ class CUploadDiagram extends Component {
               bpmn: xml,
               //name: xml.name,
               name: this.state.selectedFile.name,         
-              registryAddress: registryAddress,
+              registryAddress: this.props.registryAddress,
             },
             {
                 headers: {
@@ -209,13 +212,14 @@ class CUploadDiagram extends Component {
 
     // GET 1 /models   
     queryProcessModels = (event) => {
-      let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+      //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
       this.setState({showGetProcessModelsAccordion: true});
+      console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
       //console.log("hereeeeeeeeeeeee" + registryAddress);
         axios.get('http://localhost:3000/models', {
           headers: {
-            'registryAddress': registryAddress,
+            'registryAddress': this.props.registryAddress,
             'Accept': 'application/json'
           }
         })
@@ -234,6 +238,7 @@ class CUploadDiagram extends Component {
     retrieveModelMetadata = (event) => { 
       let mHash = this.state.mHash;
       this.setState({showRetrieveModelMetadataAccordion: true});
+      console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
       
       axios.get(`http://localhost:3000/models/`+mHash,
       {
@@ -328,9 +333,10 @@ class CUploadDiagram extends Component {
       // Post Request 3: createNewProcessInstance
       createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
         
-        console.log("Here Post 3 with: " + this.props.registryAddress + " ,and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
+        console.log("Here Post 3, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
         
         axios.post(`http://localhost:3000/models/${mHash}/processes`,
         {                    
@@ -354,13 +360,13 @@ class CUploadDiagram extends Component {
 
       processInstanceAddress = (dispatch) => {
         let mHash = this.state.mHash;
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3" + registryAddress);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)      
         
       axios.get(`http://localhost:3000/models/${mHash}/processes`,
         {
           headers: {
-            'registryAddress': registryAddress,
+            'registryAddress': this.props.registryAddress,
               'accept': 'application/json'
           }
         }).then(response => {   
@@ -401,13 +407,14 @@ class CUploadDiagram extends Component {
         //pAddress is same as mHash
         let pAddress = this.state.mHash;         
         //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3" + registryAddress + " and the pAddress: " + pAddress);
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        console.log("GET3 and the pAddress: " + pAddress);
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         
       axios.get('http://localhost:3000/processes/'+pAddress,
         {
           headers: {
-            'registryAddress': registryAddress,
+            'registryAddress': this.props.registryAddress,
             'accept': 'application/json',
           }
         }).then(response => {

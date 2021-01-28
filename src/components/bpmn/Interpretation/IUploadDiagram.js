@@ -15,6 +15,7 @@ import './IUploadDiagram.css';
 import {Form, Alert, Button, Card, Accordion} from 'react-bootstrap';
 
 import axios from 'axios';
+import {connect} from 'react-redux';
 
 class IUploadDiagram extends Component {
     //modeler = null;
@@ -171,7 +172,8 @@ class IUploadDiagram extends Component {
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
         this.modeler.saveXML((err, xml) => {
 
-            let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
             if (!err) {
               console.log(xml);
@@ -179,7 +181,7 @@ class IUploadDiagram extends Component {
                 bpmn: xml, // modeler.xml
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
                 name: this.state.selectedFile.name,    
-                registryAddress: registryAddress
+                registryAddress: this.props.registryAddress
                 })
                 .then(response => {
                 if(response.data != null) {
@@ -212,7 +214,8 @@ class IUploadDiagram extends Component {
 
         this.modeler.saveXML((err, xml) => {
 
-            let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
             if (!err) {
               console.log(xml);
@@ -220,7 +223,7 @@ class IUploadDiagram extends Component {
                 bpmn: xml,
                 name: this.state.selectedFile.name,     
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                registryAddress: registryAddress,
+                registryAddress: this.props.registryAddress,
                 })
                 .then(response => {
                 if(response.data != null) {
@@ -244,13 +247,15 @@ class IUploadDiagram extends Component {
 
     // GET1: /interpreter/models
     getInterpreterModelHandler = (event) => {
-        let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+
         this.setState({showGetProcessModelsAccordion: true});
 
             axios.get('http://localhost:3000/interpreter/models',
             { 
                 headers: {
-                'registryAddress': registryAddress,
+                'registryAddress': this.props.registryAddress,
                 'accept': 'application/json',        
                 }                          
             })
@@ -704,4 +709,12 @@ class IUploadDiagram extends Component {
     }
 }
 
-export default IUploadDiagram;
+//export default IUploadDiagram;
+export default connect((store) => {
+    return {
+      registryAddress: store.registryAddress,
+      accessControlAddress: store.accessControlAddress,
+      roleBindingAddress: store.roleBindingAddress,
+      taskRoleMapAddress: store.taskRoleMapAddress,
+    }
+  })(IUploadDiagram);

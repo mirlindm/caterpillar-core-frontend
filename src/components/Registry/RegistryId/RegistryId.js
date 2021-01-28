@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import BpmnModelling from '../../bpmn/BpmnModelling';
+//import BpmnModelling from '../../bpmn/BpmnModelling';
 import './RegistryId.css';
 
 import {Card, Alert, Form, Button, Col, Accordion} from 'react-bootstrap'; 
@@ -235,12 +235,12 @@ class RegistryId extends Component {
 
                 {/* Once we have an ID of the registry, the goTo state will have the value of 'modelling' and the BpmnModelling Component will be rendered */}
 
-                {
+                {/* {
                     this.state.goTo === 'modelling' ?
                     // <Route  render={() => (window.location = "https://www.example.com")} />
                     <BpmnModelling registryIdProp={this.state.registriesById.address} />
                     : null
-                }
+                } */}
 
                 <div style={{marginTop: "60px"}}> </div>
             </div>
