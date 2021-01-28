@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {NavDropdown} from 'react-bootstrap';
 
-import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
+//import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
 
 
 class NavigationBar extends Component {
     render() {
-        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        //const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                {isUserLoggedIn && <Link to={`/welcome/${sessionStorage.getItem('authenticatedUser').toString()}`} className="navbar-brand">Caterpillar</Link>}
-                {!isUserLoggedIn && <Link to={"/login"} className="navbar-brand">Caterpillar</Link>}
-                    <ul className="navbar-nav">
-                        {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null}
-                        {isUserLoggedIn && <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>}
-                        {/* {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>} */}                   
-                        {isUserLoggedIn && <li><Link to={"/access"} className="nav-link">Access</Link></li>}                                                
-                        {isUserLoggedIn && <li><Link to={"/about"} className="nav-link">About</Link></li>}                        
-                    </ul>
+                    <Link to={`/welcome`} className="navbar-brand">Caterpillar</Link>                    
+                        <ul className="navbar-nav">
+                        {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
+                            <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>
+                            <li><Link to={"/access"} className="nav-link">Access</Link></li>                                               
+                            <NavDropdown title="Modeler" id="collasible-nav-dropdown">
+                                <NavDropdown.Item><Link to={"/createModel"}>Create Model</Link></NavDropdown.Item>
+                                <NavDropdown.Item><Link to={"/uploadModel"}>Upload Model</Link></NavDropdown.Item>                                                 
+                            </NavDropdown>
+                            {/* {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>} */}                   
+                            <li><Link to={"/about"} className="nav-link">About</Link></li>                        
+                        </ul>
                     <ul className="navbar-nav navbar-collapse justify-content-end">
-                        {!isUserLoggedIn && <li><Link to={"/login"} className="nav-link">Login</Link></li>}
-                        {isUserLoggedIn && <li><a href={"/logout"} className="nav-link" onClick={AuthenticationService.logout}>Logout</a></li>}
+                        {/* <li><Link to={"/login"} className="nav-link">Login</Link></li> */}
+                        {/* <li><a href={"/logout"} className="nav-link" onClick={AuthenticationService.logout}>Logout</a></li> */}
                     </ul>
                 </nav>
             </header>

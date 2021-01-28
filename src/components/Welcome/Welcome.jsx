@@ -19,7 +19,7 @@ function  Welcome(props) {
         </p>
     </div>
 
-    const getUser = sessionStorage.getItem('authenticatedUser').toString();
+    //const getUser = sessionStorage.getItem('authenticatedUser').toString();
 
     // {props.match.params.username} - was originally used (also in the in28mins video) to get the name of the current user
 
@@ -29,7 +29,7 @@ function  Welcome(props) {
             <div>
                 <Jumbotron className="bg-dark text-white" style={{border: "1px solid #008B8B", borderRadius: "10px", background: "linear-gradient(to right, #343a40, #3A6073)"}}>
                     <h1 className="text-white" style={{  fontFamily: "Trocchi",  color: "#008B8B", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
-                        Hello <span style={{borderBottom: "1px solid #008B8B"}}>{getUser}</span>, Welcome to Caterpillar
+                        <span style={{borderBottom: "1px solid #008B8B"}}>  Welcome to Caterpillar</span>
                     </h1>
                     <br/>
                     <p onClick={()=>{setReadMore(!readMore)}} style={{ fontFamily: "Open Sans"}}>Caterpillar is a Business Process Management System (BPMS) prototype
@@ -38,7 +38,7 @@ function  Welcome(props) {
                     {readMore && extraContent}
                     <p>
                         {/* <Button href={"/registry"} variant="outline-info">Get Started</Button> {' '} */}
-                        <Link to={'/registry'} className="link-button">Get Started</Link> {' '} 
+                        <Link to={'/runtimeRegistry'} className="link-button">Get Started</Link> {' '} 
                     
                         {/* <Button href={"/about"} variant="outline-info">Learn More About Caterpillar</Button> */}
                         <Link to={'/about'} className="link-button">Learn More About Caterpillar</Link>

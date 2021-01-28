@@ -20,7 +20,7 @@ class About extends Component {
 
     render () {
 
-        const getUser = sessionStorage.getItem('authenticatedUser').toString();
+        //const getUser = sessionStorage.getItem('authenticatedUser').toString();
 
         return (
             <div className="text-white">
@@ -49,7 +49,7 @@ class About extends Component {
                 
 
                 {/* hardcoded value below: /welcome/:mirlind */}
-                <Link to={`/welcome/${getUser}`} className="link-button">Back Home</Link> 
+                <Link to={`/welcome`} className="link-button">Back Home</Link> 
                 </p>
 
 

@@ -457,8 +457,8 @@ class CCreateDiagram extends Component {
         <div style={{ marginTop: "10px" }}> </div>
         </div>
 
-        <hr className="style-seven" style={{marginBottom: "0px"}} />
-            <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+        
+            <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , }}>
               <div id="bpmncontainer">
                 <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
                 <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
