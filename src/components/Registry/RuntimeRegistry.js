@@ -7,6 +7,7 @@ import {Card, Alert, Form, Button, Col, Accordion} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faPlus} from '@fortawesome/free-solid-svg-icons';
 import './Registry.css'
+import {RUNTIME_REGISTRY_URL} from '../../Constants';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -42,7 +43,7 @@ class RuntimeRegistry extends Component {
         event.preventDefault();
 
         //axios.post("http://localhost:3000/registries")
-        axios.post('http://' + window.location.hostname + ':3000/registries', {
+        axios.post(RUNTIME_REGISTRY_URL, {
             "accept" : "application/json"
         })
             .then(response => {
@@ -74,12 +75,12 @@ class RuntimeRegistry extends Component {
     
     // Get request to fetch registry's data based on its ID and dispatch registry's address to redux store
     getRegistryAddressByID = (dispatch) => {
-        const URL = 'http://' + window.location.hostname + ':3000/registries/';        
+        //const URL = 'http://' + window.location.hostname + ':3000/registries/';        
         const id = this.state.idOrAddress;
       
         dispatch({type: 'LOADING' })
     
-        axios.get(URL+id)
+        axios.get(RUNTIME_REGISTRY_URL+'/'+id)
         .then(response => response.data             
         ).then((data) => {
             console.log(data);
@@ -95,13 +96,13 @@ class RuntimeRegistry extends Component {
 
     // Get request to fetch registry's data based on its address and dispatch registry's address to redux store
     getRegistryAddressByAddress = (dispatch) => {        
-        const URL = 'http://' + window.location.hostname + ':3000/registries/';
+        //const URL = 'http://' + window.location.hostname + ':3000/registries/';
         const URL_END = '/address';
         const address = this.state.idOrAddress;
     
         dispatch({type: 'LOADING' })
     
-        axios.get(URL+address+URL_END)
+        axios.get(RUNTIME_REGISTRY_URL+'/'+address+URL_END)
         .then(response => response.data             
         ).then((data) => {
             console.log(data);
