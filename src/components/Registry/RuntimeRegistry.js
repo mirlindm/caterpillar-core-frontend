@@ -41,25 +41,34 @@ class RuntimeRegistry extends Component {
     // post request to create a new runtime registry
     createRegistryHandler = (event) =>  {
         event.preventDefault();
-
-        //axios.post("http://localhost:3000/registries")
+        
         axios.post(RUNTIME_REGISTRY_URL, {
             "accept" : "application/json"
         })
             .then(response => {
-                if(response.data != null) {
-                    console.log(response)
+                console.log(response);
+                if(response.status === 201) {                    
                     this.setState({show1: true, registry: response.data});
                     setTimeout(() => this.setState({show1: false}), 3000)
+                    return response.data.ID;
                 } else {
                     this.setState({show1: false});
                 }
-        }).catch(e => { 
-            console.log(e);
-            this.setState({errorMessage: e.toString()})
-        });
-
-        //this.setState({registry: []})
+            }).catch(error => { 
+                let errorMessage;
+                if (error.response) {
+                    errorMessage = "Some unknown error occurred!";
+                    this.setState({errorMessage: errorMessage})
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    this.setState({errorMessage: errorMessage})
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    this.setState({errorMessage: errorMessage})
+                    console.log('Error', error.message);
+                }          
+        });        
     }
 
     // Get request to fetch the registries based on the id or address from the database
@@ -76,22 +85,42 @@ class RuntimeRegistry extends Component {
     // Get request to fetch registry's data based on its ID and dispatch registry's address to redux store
     getRegistryAddressByID = (dispatch) => {
         //const URL = 'http://' + window.location.hostname + ':3000/registries/';        
-        const id = this.state.idOrAddress;
+        
+        if(this.state.idOrAddress === ''){
+            //NotificationManager.error("Please insert data to load registry",'ERROR')
+        } else {
+            const id = this.state.idOrAddress;
       
-        dispatch({type: 'LOADING' })
-    
-        axios.get(RUNTIME_REGISTRY_URL+'/'+id)
-        .then(response => response.data             
-        ).then((data) => {
-            console.log(data);
-            this.setState({show2: true, registryData: data});      
-            setTimeout(() => this.setState({show2: false}), 1000)
-            dispatch({type: 'REGISTRY_ADDRESS', payload: data.address});
-        })
-        .catch(err => {
-            dispatch({type: 'ERROR', payload: err});
-            console.log(err.toString());        
-        })
+            dispatch({type: 'LOADING' })
+        
+            axios.get(RUNTIME_REGISTRY_URL+'/'+id)
+            .then(response => {                      
+                console.log(response);
+                if(response.status === 200) {
+                    this.setState({show2: true, registryData: response.data});      
+                    setTimeout(() => this.setState({show2: false}), 1000)
+                    dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
+                } else {
+                    console.log('ERROR', response);
+                }               
+            })                       
+            .catch(error => {
+                console.log(error);
+                let errorMessage;
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                    dispatch({type: 'ERROR', payload: errorMessage});
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    dispatch({type: 'ERROR', payload: errorMessage});
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    dispatch({type: 'ERROR', payload: errorMessage});
+                    console.log('Error', error.message);
+                }                                     
+            })
+        }
     }
 
     // Get request to fetch registry's data based on its address and dispatch registry's address to redux store

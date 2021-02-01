@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 import Aux from "../../../hoc/Auxiliary";
-import AccessControl from '../../Policies/AccessControl';
-import RoleBindingPolicy from '../../Policies/RoleBindingPolicy';
-import TaskRoleMap from '../../Policies/TaskRoleMap';
+// import AccessControl from '../../Policies/AccessControl';
+// import RoleBindingPolicy from '../../Policies/RoleBindingPolicy';
+// import TaskRoleMap from '../../Policies/TaskRoleMap';
 
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import "bpmn-js/dist/assets/diagram-js.css";
@@ -59,9 +59,9 @@ class CCreateDiagram extends Component {
             compileProcessModelsCompilationMetadataByteCode: [],
 
             //childStates
-            accessControlState: '',
-            rbPolicyState: '',
-            taskRoleMapState: '',
+            // accessControlState: '',
+            // rbPolicyState: '',
+            // taskRoleMapState: '',
 
             //ProcessInstance
             processInstanceResponse: [],
@@ -323,23 +323,23 @@ class CCreateDiagram extends Component {
                
 
       // Receiving Props from AccessControl Child Component
-      accessControlCallbackFunction = (childData) => {
-        this.setState({accessControlState: childData})
-        console.log("CHILD DATA 1: " + this.state.accessControlState)
-      }
+      // accessControlCallbackFunction = (childData) => {
+      //   this.setState({accessControlState: childData})
+      //   console.log("CHILD DATA 1: " + this.state.accessControlState)
+      // }
 
       // Receiving Props from rbPolicy Child Component
-      rbPolicyCallbackFunction = (childData) => {
-        console.log("CHILD DATA 2: " + childData);
-        this.setState({rbPolicyState: childData})
+      // rbPolicyCallbackFunction = (childData) => {
+      //   console.log("CHILD DATA 2: " + childData);
+      //   this.setState({rbPolicyState: childData})
         
-      }
+      // }
 
       // Receiving Props from taskRoleMap Child Component
-      taskRoleMapCallbackFunction = (childData) => {
-        this.setState({taskRoleMapState: childData});
-        console.log("CHILD DATA 3: " + this.state.taskRoleMapState);
-      }
+      // taskRoleMapCallbackFunction = (childData) => {
+      //   this.setState({taskRoleMapState: childData});
+      //   console.log("CHILD DATA 3: " + this.state.taskRoleMapState);
+      // }
 
     
       // Post Request 3: createNewProcessInstance
@@ -700,9 +700,9 @@ class CCreateDiagram extends Component {
                       </Aux>
                           : <br/>}
 
-                <AccessControl parentCallback={this.accessControlCallbackFunction} registryAddressProp={this.state.registryAddress}/>             
+                {/* <AccessControl parentCallback={this.accessControlCallbackFunction} registryAddressProp={this.state.registryAddress}/>             
                 <RoleBindingPolicy parentCallback={this.rbPolicyCallbackFunction} registryAddressProp={this.state.registryAddress}/>
-                <TaskRoleMap parentCallback={this.taskRoleMapCallbackFunction} registryAddressProp={this.state.registryAddress}/>                                                                            
+                <TaskRoleMap parentCallback={this.taskRoleMapCallbackFunction} registryAddressProp={this.state.registryAddress}/>                                                                             */}
  
                 {/* New Requests
                     Post Request 5: Create New Process Instance

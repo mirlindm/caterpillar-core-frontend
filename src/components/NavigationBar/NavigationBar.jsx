@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {NavDropdown} from 'react-bootstrap';
+import './NavigationBar.css';
 
 //import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
 
@@ -10,8 +11,8 @@ class NavigationBar extends Component {
         //const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         return (
             <header>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <Link to={`/welcome`} className="navbar-brand">Caterpillar</Link>                    
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark stroke">
+                    <ul className="navbar-nav"><li><Link to={`/welcome`} className="navbar-brand">Caterpillar</Link></li></ul>                 
                         <ul className="navbar-nav">
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
                             <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>
