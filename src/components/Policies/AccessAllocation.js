@@ -6,6 +6,7 @@ import TaskRoleMap from './TaskRoleMap';
 import {connect} from 'react-redux';
 
 import Aux from '../../hoc/Auxiliary';
+import {POLICIES_URL} from '../../Constants';
 
 import {Form, Alert, Button, Accordion, Card, Col, Row, Breadcrumb } from 'react-bootstrap';
 
@@ -17,7 +18,7 @@ class AccessAllocation extends Component {
 
         this.state = {
 
-          registryAddress: '0xD23D9cd0e3dC9461fD3AB7D8a1f7a2D8102EFB4F',
+          //registryAddress: '0xD23D9cd0e3dC9461fD3AB7D8a1f7a2D8102EFB4F',
 
           //parameters
           
@@ -107,7 +108,7 @@ class AccessAllocation extends Component {
         console.log(this.props.registryAddress);
         //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';
         console.log("on nomination value is: "+ this.state.onNomination)
-        axios.get('http://localhost:3000/rb-opertation/' + pCase,      
+        axios.get(POLICIES_URL + pCase,      
         {
           headers: {          
             'accept': 'application/json',
@@ -126,7 +127,8 @@ class AccessAllocation extends Component {
         //process instance/case address - get it from the props or something
         let pCase = this.state.pCase;  
         //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';  
-        axios.get('http://localhost:3000/rb-opertation/' + pCase + '/state',      
+             
+        axios.get(POLICIES_URL + pCase + '/state',      
         {
           headers: {          
             'accept': 'application/json',
@@ -151,7 +153,8 @@ class AccessAllocation extends Component {
           rNominee: this.state.nomineeRole,
           nominee: this.state.nomineeAddress,
         }       
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate-creator', requestBody)
+      
+        axios.patch(POLICIES_URL + pCase + '/nominate-creator', requestBody)
           .then(response => {
             console.log(response);
             this.setState({caseCreatorResponse: response.data});
@@ -171,7 +174,8 @@ class AccessAllocation extends Component {
           nominee: this.state.nomineeAddress,
           registryAddress: this.props.registryAddress,
         }
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/nominate',  requestBody)
+
+        axios.patch(POLICIES_URL + pCase + '/nominate',  requestBody)
           .then(response => {
             console.log(response);
             this.setState({nominateResponse: response.data});
@@ -191,7 +195,7 @@ class AccessAllocation extends Component {
           nominator: releaserAddress,          
           registryAddress: this.props.registryAddress,
         }       
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/release', requestBody)
+        axios.patch(POLICIES_URL + pCase + '/release', requestBody)
           .then(response => {
             console.log(response);
             this.setState({releaseResponse: response.data});
@@ -218,8 +222,9 @@ class AccessAllocation extends Component {
           toEndorseOp: 'nominate',
           isAccepted: true,          
           registryAddress: this.props.registryAddress,
-        }  
-        axios.patch('http://localhost:3000/rb-opertation/' + pCase + '/vote', requestBody)
+        } 
+
+        axios.patch(POLICIES_URL + pCase + '/vote', requestBody)
           .then(response => {
             console.log(response);
             this.setState({voteResponse: response.data});

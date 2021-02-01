@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
+import {RB_POLICY_URL} from '../../Constants';
 
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
@@ -48,7 +49,7 @@ class RoleBindingPolicy extends Component {
           return null;
         }
         console.log(rbPolicy);
-        axios.post('http://localhost:3000/rb-policy', {policy: rbPolicy, registryAddress: this.props.registryAddress}, {
+        axios.post(RB_POLICY_URL, {policy: rbPolicy, registryAddress: this.props.registryAddress}, {
           headers: {
             'accept': 'application/json',
             'registryAddress': this.props.registryAddress
@@ -68,7 +69,7 @@ class RoleBindingPolicy extends Component {
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
         console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
         
-        axios.get('http://localhost:3000/rb-policy/' + rbPolicyAddr,      
+        axios.get(RB_POLICY_URL + '/' + rbPolicyAddr,      
         {
           headers: {          
             'accept': 'application/json',

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
+import {ACCESS_CONTROL_URL} from '../../Constants';
 
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
@@ -22,7 +23,7 @@ class AccessControl extends Component {
     //POST 3 - Dynamic Access Control
     deployAccessControl = () => {
 
-        axios.post(`http://localhost:3000/access-control`)
+        axios.post(ACCESS_CONTROL_URL)
           .then(response =>  { 
             this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
             console.log(response);          
@@ -53,7 +54,7 @@ class AccessControl extends Component {
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
         console.log(accessCtrlAddr + ' and registry address: ' + this.props.registryAddress);
         
-        axios.get('http://localhost:3000/access-control/' + accessCtrlAddr,      
+        axios.get(ACCESS_CONTROL_URL + '/' + accessCtrlAddr,      
         {
           headers: {          
             'accept': 'application/json',

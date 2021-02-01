@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
+import {TASK_ROLE_MAP_URL} from '../../Constants';
 
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
@@ -52,7 +53,7 @@ class TaskRoleMap extends Component {
         }
 
         console.log(trMap);
-        axios.post('http://localhost:3000/task-role-map', 
+        axios.post(TASK_ROLE_MAP_URL, 
           {
             roleTaskPairs: trMap, 
             contractName: 'RoleTaskMap',
@@ -77,7 +78,7 @@ class TaskRoleMap extends Component {
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
         console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
         
-        axios.get('http://localhost:3000/task-role-map/' + trMapAddress,      
+        axios.get(TASK_ROLE_MAP_URL + '/' + trMapAddress,      
         {
           headers: {          
             'accept': 'application/json',

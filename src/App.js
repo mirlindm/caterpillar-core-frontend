@@ -21,7 +21,7 @@ import AccessAllocation from './components/Policies/AccessAllocation';
 
 
 
-import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute.jsx';
+//import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute.jsx';
 
 
 class App extends Component {
