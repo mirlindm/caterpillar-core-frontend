@@ -162,13 +162,13 @@ class RuntimeRegistry extends Component {
                     <RegistryToast children={{show: this.state.show1, message: "Registry Created Successfully."}} />
                 </div>
 
-                <div className="Content">
+                <div className="ContentUnique">
                    
                     {/* Creating the Registry */}
                    
-                    <Card className={"border border-dark bg-dark text-white"} >
+                    <Card className={"border border-secondary"} >
                         <Card.Header>
-                            <p style={{color: "white", fontSize: "20px", textAlign: "center", fontWeight: "normal", margin: "0" }}>Create Runtime Registry</p>
+                            <p style={{color: "#757f9a", fontSize: "20px", textAlign: "center", fontWeight: "bold", margin: "0" }}>Create Runtime Registry</p>
                         </Card.Header>
                         
                         <Form onSubmit={this.createRegistryHandler} id="registryCreate">
@@ -177,10 +177,10 @@ class RuntimeRegistry extends Component {
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
                                                 this.state.registry.length === 0 ?                                             
-                                                <p  style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
+                                                <p  style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
-                                                    <p style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> New Registry ID: <span style={{textDecoration: "underline", cursor: "pointer"}}> {this.state.registry.ID} </span> </p>
+                                                    <p style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> New Registry ID: <span style={{textDecoration: "underline",}}> {this.state.registry.ID} </span> </p>
                                                 </div>                                                                                        
                                             }                                           
                                     </Form.Group>
@@ -188,8 +188,8 @@ class RuntimeRegistry extends Component {
                             </Card.Body>    
                             
                         
-                            <Card.Footer style={{"textAlign": "center"}}>                              
-                                <Button variant="info" type="submit">
+                            <Card.Footer style={{"textAlign": "center",}}>                              
+                                <Button style={{ backgroundColor: "#757f9a"}} type="submit">
                                     <FontAwesomeIcon icon={faPlus} /> Create New Registry
                                 </Button> 
                             </Card.Footer>                                                        

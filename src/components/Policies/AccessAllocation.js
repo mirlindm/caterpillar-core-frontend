@@ -215,14 +215,19 @@ class AccessAllocation extends Component {
         // let endorserRole = this.state.endorserRole;
         // let endorserAddress = this.state.endorserAddress;         
         let requestBody = {
-          rNominator: this.state.nominatorRole,
-          rNominee: this.state.nomineeRole,
-          rEndorser: this.state.endorserRole,
-          endorser: this.state.endorserAddress,
-          toEndorseOp: 'nominate',
-          isAccepted: true,          
+          nominatorRole: this.state.nominatorRole,
+          nomineeRole: this.state.nomineeRole,
+          endorserRole: this.state.endorserRole,
+          endorserAddress: this.state.endorserAddress,
+          onNomination: 'true',
+          isAccepted: 'true',          
           registryAddress: this.props.registryAddress,
         } 
+
+        console.log("Parameters of Vote: 1. nominaror Role: " + requestBody.nominatorRole + ", 2: nominee role:  " +
+        requestBody.nomineeRole + ", 3: endorser Role: " + requestBody.endorserRole + ", 4: endorser Address: " + requestBody.endorserAddress +
+        ", 5: onNomination Value " + requestBody.onNomination + ", 6: isAccepted Value: " + requestBody.isAccepted +
+        ", 7: registryAddress Value: " + requestBody.registryAddress )
 
         axios.patch(POLICIES_URL + pCase + '/vote', requestBody)
           .then(response => {
@@ -237,7 +242,7 @@ class AccessAllocation extends Component {
             <Aux>
                 
                   <Alert variant="warning" size="sm" style={{textAlign: "center", width: "400px", marginLeft: "355px"}} > 
-                    Please Configure the Policies below!
+                    Please Configure the Policies below:
                   </Alert>
                   
                   <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
@@ -272,7 +277,7 @@ class AccessAllocation extends Component {
                         <Form.Control required  name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>                      
                       <Col>                  
-                      <Button style={{marginTop: "29px"}} onClick={this.findPolicyAddresses} className="link-button" variant="primary" >Find Policy Address</Button>
+                      <Button style={{marginTop: "29px"}} onClick={this.findPolicyAddresses} className="link-button" variant="primary">Find Policy Address</Button>
                       </Col>
                     </Row>
                     <Row>
