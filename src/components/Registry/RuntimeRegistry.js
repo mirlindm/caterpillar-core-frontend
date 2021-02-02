@@ -150,6 +150,10 @@ class RuntimeRegistry extends Component {
         this.props.history.push(`/modeler`);   
     }
 
+    goToAccessPoliciesrHandler = () => {
+        this.props.history.push(`/access`);   
+    }
+
 
     render () {
         return (
@@ -312,7 +316,7 @@ class RuntimeRegistry extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="4">
                                         <Card.Body>                                         
-                                            <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", cursor: "pointer", fontSize: "17px",}}>  
+                                            <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", fontSize: "17px",}}>  
                                                 <pre> {this.state.registryData.address}  </pre>    
                                             </span>                                    
                                         </Card.Body>
@@ -323,6 +327,10 @@ class RuntimeRegistry extends Component {
                          <div style={{marginTop: "20px", textAlign: "center"}}> 
                             <Button variant="info" onClick={this.goToModellerHandler}>
                                 Proceed to Modeller Component
+                            </Button>
+                            {'  '}
+                            <Button variant="info" onClick={this.goToAccessPoliciesrHandler}>
+                                Proceed to Access Policies
                             </Button> 
                         </div>                                                        
                     </Aux>
