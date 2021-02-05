@@ -177,7 +177,7 @@ class RuntimeRegistry extends Component {
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
                                                 this.state.registry.length === 0 ?                                             
-                                                <p  style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
+                                                <p  style={{textAlign:"center", color: "#A52A2A", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
                                                     <p style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> New Registry ID: <span style={{textDecoration: "underline",}}> {this.state.registry.ID} </span> </p>
@@ -189,7 +189,7 @@ class RuntimeRegistry extends Component {
                             
                         
                             <Card.Footer style={{"textAlign": "center",}}>                              
-                                <Button style={{ backgroundColor: "#757f9a"}} type="submit">
+                                <Button  variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
                                     <FontAwesomeIcon icon={faPlus} /> Create New Registry
                                 </Button> 
                             </Card.Footer>                                                        
@@ -197,12 +197,12 @@ class RuntimeRegistry extends Component {
                     </Card>                                      
                 </div>
 
-                <div className="Content">
+                <div className="ContentUnique">
                     {/* Fetching the Registry */}
 
-                    <Card className={"border border-dark bg-dark text-white"}>
+                    <Card className={"border border-secondary"}>
                         <Card.Header>
-                            <p style={{color: "white", fontSize: "20px", textAlign: "center", fontWeight: "normal", margin: "0" }}>Fetch Registriy</p>
+                            <p  style={{color: "#757f9a", fontSize: "20px", textAlign: "center", fontWeight: "bold", margin: "0" }}>Fetch Registriy</p>
                         </Card.Header>
 
                         
@@ -216,18 +216,18 @@ class RuntimeRegistry extends Component {
                                             name="idOrAddress"
                                             value={this.state.idOrAddress}
                                             onChange={this.registryChangeHandler}
-                                            className={"bg-dark text-white"}
+                                            className={"bg-light"}
                                             placeholder="Enter Registry ID or Address" />
                                     </Form.Group>
                                 </Form.Row>
                             
                             </Card.Body>
                             <Card.Footer style={{"textAlign": "center"}}>
-                                <Button variant="info" type="submit">
+                                <Button variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
                                     Load Registry
                                 </Button> {' '}
 
-                                <Button variant="info" type="reset">
+                                <Button variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="reset">
                                     Reset
                                 </Button>
                             </Card.Footer>
@@ -238,17 +238,20 @@ class RuntimeRegistry extends Component {
                     this.state.registryData.length === 0 ?
 
                     <Alert  
-                        style={{color: "black",                                            
+                        style={{color: "#A52A2A",                                            
                             fontSize: "17px", 
                             fontWeight: "normal",
                             borderRadius: "10px",
                             marginRight: "250px",
                             marginLeft: "250px",
-                            textAlign: "center"}}
-                        size="sm" variant="danger">
+                            textAlign: "center",
+                            backgroundColor: "#d7dde8",
+                            border: "1px solid #d7dde8"}}
+                        size="sm">
                         <strong> No registry found!  </strong> 
                     </Alert> :
                     <Aux>
+
                         <div style={{"display" : this.state.show2 ? "block" : "none"}}>
                             <RegistryToast children={{show: this.state.show2, message: "Registry Fetched Successfully."}} />
                         </div>
