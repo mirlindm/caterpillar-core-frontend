@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
 import {ACCESS_CONTROL_URL} from '../../Constants';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
@@ -24,12 +26,26 @@ class AccessControl extends Component {
     deployAccessControl = () => {
 
         axios.post(ACCESS_CONTROL_URL)
-          .then(response =>  { 
+          .then(response =>  {
             this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
+            NotificationManager.success('Access Control Policy Created.', response.statusText);
             console.log(response);          
           })
-          .catch(error => {              
-            console.log(error)
+          .catch(error => {
+            console.log(error);
+            let errorMessage;
+
+            if (error.response) {
+                errorMessage = "The data entered is invalid or some unknown error occurred!";
+            } else if (error.request) {
+                errorMessage = "The request was made but no response was received";
+                console.log(error.request);
+            } else {
+                errorMessage = error.message;
+                console.log('Error', error.message);
+            }
+
+            NotificationManager.warning(errorMessage, 'OOPS...');                           
           });
       }
   
@@ -50,11 +66,15 @@ class AccessControl extends Component {
       }
   
       accessControlAddressReduxStoreHandler = (dispatch) => {
-        let accessCtrlAddr = this.state.accessControlAddress;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        let accessCtrlAddr = this.state.accessControlAddress;        
         console.log(accessCtrlAddr + ' and registry address: ' + this.props.registryAddress);
         
-        axios.get(ACCESS_CONTROL_URL + '/' + accessCtrlAddr,      
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR');
+        } else if(accessCtrlAddr === '') {
+          NotificationManager.error("Please provide the Address of the Access Control Policy.", 'ERROR');
+        } else {
+          axios.get(ACCESS_CONTROL_URL + '/' + accessCtrlAddr,      
         {
           headers: {          
             'accept': 'application/json',
@@ -63,13 +83,32 @@ class AccessControl extends Component {
         })
           .then(response => {
             console.log(response);
-            this.setState({accessControlAddressMetadata: response.data});
-            dispatch({type: 'ACCESS_CONTROL_ADDRESS', payload: response.data.address});
-            this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-          }).catch(error => {
-            dispatch({type: 'ERROR', payload: error});
-            console.warn(error);
+            if (response.status === 200) {
+              this.setState({accessControlAddressMetadata: response.data});
+              dispatch({type: 'ACCESS_CONTROL_ADDRESS', payload: response.data.address});
+              NotificationManager.success('Access Policy Data have been successfully fetched.', response.statusText);
+              //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
+            } else {
+              console.log('ERROR', response);
+            }}).catch(error => {
+              console.log(error);
+              let errorMessage;
+  
+              if (error.response) {
+                  errorMessage = "The data entered is invalid or some unknown error occurred!";
+                  dispatch({type: 'ERROR', payload: error.response});
+              } else if (error.request) {
+                  errorMessage = "The request was made but no response was received";
+                  dispatch({type: 'ERROR', payload: error.request});
+                  console.log(error.request);
+              } else {
+                  errorMessage = error.message;
+                  console.log('Error', error.message);
+                  dispatch({type: 'ERROR', payload: error.message});
+              }  
+              NotificationManager.warning(errorMessage, 'OOPS...');                         
           });
+        }        
       }
 
        //GET 3 - Dynamic Access Control
@@ -94,9 +133,9 @@ class AccessControl extends Component {
         //   }).catch(error => console.warn(error));
       }
       
-      sendData = () => {
-        this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-      }
+      // sendData = () => {
+      //   this.props.parentCallback(this.state.accessControlAddressMetadata.address);
+      // }
 
     render(){
         return(
@@ -219,7 +258,8 @@ class AccessControl extends Component {
                             <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", textDecoration: "underline", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.address} </pre> </span> </Card.Body>                      
                           </Accordion.Collapse>
                         </Card>                          
-                  </Accordion>
+                  </Accordion>                  
+                  <NotificationContainer/>
             </Aux>
         );
     }

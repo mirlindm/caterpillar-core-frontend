@@ -12,6 +12,9 @@ import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
 import './ICreateDiagram.css'
+import {INTERPRETATION_URL} from '../../../Constants';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import {Alert, Card, Button, Accordion} from 'react-bootstrap';
 
@@ -134,38 +137,54 @@ class ICreateDiagram extends Component {
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
         this.modeler.saveXML((err, xml) => {
 
-            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+        if(!this.props.registryAddress) {
+            NotificationManager.error("There is no Registry Specified", 'ERROR');
+        } else if(err) {
+            NotificationManager.error("There is an error with your BPM Model. Please provide a name for your Model", 'ERROR');
+        } else {
+            //console.log(xml);
 
-            if (!err) {
-              console.log(xml);
-              axios.post("http://localhost:3000/interpreter/models",{
-                bpmn: xml, // modeler.xml
-                //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                registryAddress: this.props.registryAddress
-                })
-                .then(response => {
-                if(response.data != null) {
-                    this.setState({                                             
-                        // new
-                        BPMNINterpreter: response.data.BPMNINterpreter,
-                        IData: response.data.IData,
-                        IFactry: response.data.IFactry,
-                        IFlow: response.data.IFlow,
-                        iFactoryTHashes: response.data.transactionHashes.iFactoryTHashes,
-                        iFlowTHashes: response.data.transactionHashes.iFlowTHashes,
-                        interpreterTHash: response.data.transactionHashes.interpreterTHash,
-                        showInterpretProcessModelAccordion: true,
-                    })
-                    console.log(response);            
-                } else {
-                    console.log("Received Incorrect Response");  
-                    // this.setState({show: false});
-                }
+            axios.post(INTERPRETATION_URL + '/models',{
+            bpmn: xml, // modeler.xml
+            //name: xml.name, //or hardcoded: 'InsureIT Payment',
+            registryAddress: this.props.registryAddress
             })
-            .catch(e => console.log(e.toString()));
-            }
-        });                   
+            .then(response => {
+                console.log(response);            
+                if (response.status === 201) {
+                this.setState({                                             
+                // new
+                BPMNINterpreter: response.data.BPMNINterpreter,
+                IData: response.data.IData,
+                IFactry: response.data.IFactry,
+                IFlow: response.data.IFlow,
+                iFactoryTHashes: response.data.transactionHashes.iFactoryTHashes,
+                iFlowTHashes: response.data.transactionHashes.iFlowTHashes,
+                interpreterTHash: response.data.transactionHashes.interpreterTHash,
+                showInterpretProcessModelAccordion: true,
+                })
+                NotificationManager.success('Your model has been successfully deployed. ', response.statusText);
+                
+            } else {
+                console.log('ERROR', response);                 
+            }})
+            .catch(error => {
+                console.log(error);
+                let errorMessage;
+    
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }    
+                NotificationManager.warning(errorMessage, 'OOPS...');  
+            });
+            }});                   
     }
 
     //POST2:  http://localhost:3000/interpreter/
@@ -174,19 +193,22 @@ class ICreateDiagram extends Component {
         this.setState({showInterpreterAccordion: true});
 
         this.modeler.saveXML((err, xml) => {
-
-            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp; 
-            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-            if (!err) {
-              console.log(xml);
-              axios.post("http://localhost:3000/interpreter",{
+        
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+        
+        if(!this.props.registryAddress) {
+            NotificationManager.error("There is no Registry Specified", 'ERROR');
+          } else { 
+            //console.log(xml);
+            axios.post(INTERPRETATION_URL, {
                 bpmn: xml, // modeler.xml
                 //name: xml.name, //or hardcoded: 'InsureIT Payment',
                 registryAddress: this.props.registryAddress,
                 })
-                .then(response => {
-                if(response.data != null) {
+            .then(response => {
+                console.log(response);
+
+                if (response.status === 201) {
                     this.setState({
                         contractAddress: response.data.contractAddress,
                         gasCost: response.data.gasCost,
@@ -194,24 +216,38 @@ class ICreateDiagram extends Component {
                         transactionHash: response.data.transactionHash,
                         showInterpreterAccordion: true,                                            
                     })
-                    console.log(response);            
+                    NotificationManager.success('New interpreter has been successfully created.', response.statusText);           
                 } else {
-                    console.log("Received Incorrect Response");  
-                    // this.setState({show: false});
+                      console.log('ERROR', response);
                 }
             })
-            .catch(e => console.log(e.toString()));
-            }
-        });                
+            .catch(error => {
+                console.log(error);
+                let errorMessage;
+
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }
+                NotificationManager.warning(errorMessage, 'OOPS...'); 
+            });            
+            }});                
     }
 
     // GET1: /interpreter/models
-    getInterpreterModelHandler = (event) => {
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+    getInterpreterModelHandler = (event) => {        
 
         this.setState({showGetProcessModelsAccordion: true});
 
-            axios.get('http://localhost:3000/interpreter/models',
+        if(!this.props.registryAddress) {
+            NotificationManager.error("There is no Registry Specified", 'ERROR');
+          } else {
+            axios.get(INTERPRETATION_URL +'/models',
             { 
                 headers: {
                 'registryAddress': this.props.registryAddress,
@@ -219,64 +255,105 @@ class ICreateDiagram extends Component {
                 }                          
             })
             .then(response => {
-                //this.setState({getInterpreterModelHandlerSuccessMessage: response.data})
-                this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true})
-            console.log(response.data);          
-            })
-            .catch(e => {
-                this.setState({getInterpreterModelHandlerErrorMessage: e.toString()})
-                console.log(e.toString())
+                console.log(response);
+                if (response.status === 200) {
+                    this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true});
+                    NotificationManager.success('Process Models have been successfully fetched.', response.statusText);
+                } else {
+                    console.log('ERROR', response);
+                }})
+            .catch(error => {               
+                console.log(error);
+                let errorMessage;
+
+                if (error.response) {
+                    this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                    console.log(error.request);
+                } else if (error.request) {
+                    this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }
+                NotificationManager.warning(errorMessage, 'OOPS...');                  
             });
+          }           
     }
 
-    // GET2: /interpreter/models/:mHash
+    
     //http://localhost:3000/interpreter/models/MHash    
     getInterpreterModelMHashHandler = (event) => {
-        
-    //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+            
     let mHash = this.state.mHash;
+
     this.setState({showRetrieveModelMetadataAccordion: true});
-      
-    axios.get(`http://localhost:3000/interpreter/models/`+mHash, 
-      {
-          headers: {
-              'accept': 'application/json'
-          }
-      }).then(response => {
-          this.setState({
-              getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
-              getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
-              getInterpreterModelMHashHandlerProcessID: response.data.processID,
-              getInterpreterModelMHashHandlerProcessName: response.data.prpcessName,
-              getInterpreterModelMHashHandlerID: response.data._id,
-              getInterpreterModelMHashHandlerContractInfo: response.data.contractInfo,
-              getInterpreterModelMHashHandlerIData: response.data.iData,
-              getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
-              getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
-              retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),               
-            })
-        console.log(response);
-        console.log(this.state.getInterpreterModelMHashHandlerBpmnModel);
-        this.modeler2 = new BpmnModeler({
-          container: "#bpmnview2",
-          keyboard: {
-            bindTo: window
-          },
-          propertiesPanel: {
-            parent: "#propview2"
-          },
-          additionalModules: [propertiesPanelModule, propertiesProviderModule],
-          moddleExtensions: {
-            camunda: camundaModdleDescriptor
-          }
-        });
-        this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
-        
-        })
-        .catch(e => {
-            this.setState({getInterpreterModelMHashHandlerErrorMessage: e.toString()})
-            console.log(e.toString())
-        });
+
+    if(mHash === '') {
+        NotificationManager.error("Please provide ID of the Process Model you want to fetch.", 'ERROR');
+      } else {
+        axios.get(INTERPRETATION_URL + '/models/' + mHash, 
+        {
+            headers: {
+                'accept': 'application/json'
+            }
+        }).then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                this.setState({
+                    getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
+                    getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
+                    getInterpreterModelMHashHandlerProcessID: response.data.processID,
+                    getInterpreterModelMHashHandlerProcessName: response.data.prpcessName,
+                    getInterpreterModelMHashHandlerID: response.data._id,
+                    getInterpreterModelMHashHandlerContractInfo: response.data.contractInfo,
+                    getInterpreterModelMHashHandlerIData: response.data.iData,
+                    getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
+                    getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
+                    retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),               
+                  })
+                  NotificationManager.success('Process Model metadata has been successfully fetched.', response.statusText);                                            
+                    this.modeler2 = new BpmnModeler({
+                        container: "#bpmnview2",
+                        keyboard: {
+                        bindTo: window
+                        },
+                        propertiesPanel: {
+                        parent: "#propview2"
+                        },
+                        additionalModules: [propertiesPanelModule, propertiesProviderModule],
+                        moddleExtensions: {
+                        camunda: camundaModdleDescriptor
+                        }
+                    });
+                this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
+            } else {
+                console.log('ERROR', response);
+            }})
+          .catch(error => {              
+              console.log(error);
+                let errorMessage;
+
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+                    console.log(error.response);
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+                    console.log('Error', error.message);
+                }
+
+                NotificationManager.warning(errorMessage, 'OOPS...');  
+          });
+      }         
     }
 
     openBpmnDiagramBasedOnmHash = async (xml) => {        
@@ -639,7 +716,7 @@ class ICreateDiagram extends Component {
                         </Accordion> </Aux>
                         :  <br/>
                 }               
-
+                <NotificationContainer/>
                 {/* create some space from the footer */}
                 <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
             </Aux>

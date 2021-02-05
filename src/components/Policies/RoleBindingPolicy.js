@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
 import {RB_POLICY_URL} from '../../Constants';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
@@ -43,33 +45,57 @@ class RoleBindingPolicy extends Component {
       //Post 4: parseAndDeployRBPolicy
       parseAndDeployRBPolicyHandler = () => {
         let rbPolicy = this.state.rbPolicyInput;
-        console.log("Registry Address: " + this.props.registryAddress);
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        if(rbPolicy === null) {
-          return null;
-        }
-        console.log(rbPolicy);
-        axios.post(RB_POLICY_URL, {policy: rbPolicy, registryAddress: this.props.registryAddress}, {
-          headers: {
-            'accept': 'application/json',
-            'registryAddress': this.props.registryAddress
-          }
-        })
-        .then(response =>  { 
-          this.setState({rbPolicyResponse: response.data});                                                  
-          console.log(response);          
-        })
-        .catch(error => {              
-          console.log(error)
-        });
+        console.log("Registry Address: " + this.props.registryAddress);                
+        //console.log(rbPolicy);
+        
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR');
+        } else if(rbPolicy === '') {
+          NotificationManager.error("Please provide valid Role Binding Policy.", 'ERROR');
+        } else {
+          axios.post(RB_POLICY_URL, {policy: rbPolicy, registryAddress: this.props.registryAddress}, {
+            headers: {
+              'accept': 'application/json',
+              'registryAddress': this.props.registryAddress
+            }
+          })
+          .then(response =>  { 
+            console.log(response);
+            if (response.status === 202) {
+              this.setState({rbPolicyResponse: response.data});  
+              NotificationManager.success('New Role Binding Policy has been successfuly deployed.', response.statusText);                                                
+            } else {
+              console.log('ERROR', response);
+            }})
+          .catch(error => {              
+            console.log(error);
+            let errorMessage;
+
+            if (error.response) {
+                errorMessage = "The data entered is invalid or some unknown error occurred!";
+            } else if (error.request) {
+                errorMessage = "The request was made but no response was received";
+                console.log(error.request);
+            } else {
+                errorMessage = error.message;
+                console.log('Error', error.message);
+            }
+            NotificationManager.warning(errorMessage, 'OOPS...');  
+          });
+        }        
       }
 
       roleBindingPolicyAddressReduxStoreHandler = (dispatch) => {
         let rbPolicyAddr = this.state.rbPolicyAddressInput;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
         
-        axios.get(RB_POLICY_URL + '/' + rbPolicyAddr,      
+        console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR');
+        }
+        else if(rbPolicyAddr === '') {
+          NotificationManager.error("Please provide the Address of the Role Binding Policy you want to fetch.", 'ERROR');
+        } else {
+          axios.get(RB_POLICY_URL + '/' + rbPolicyAddr,      
         {
           headers: {          
             'accept': 'application/json',
@@ -78,10 +104,30 @@ class RoleBindingPolicy extends Component {
         })
           .then(response => {
             console.log(response);
-            this.setState({rbPolicyMetadata: response.data});
-            dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
-            this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
-          }).catch(error => console.warn(error));
+            if (response.status === 200) {
+              this.setState({rbPolicyMetadata: response.data});
+              dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
+              NotificationManager.success('Role Binding Policy data has been successfully fetched.', response.statusText);
+              //this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
+            }else {
+              console.log('ERROR', response);
+            }}).catch(error => {
+              console.log(error);
+              let errorMessage;
+
+              if (error.response) {
+                  errorMessage = "The data entered is invalid or some unknown error occurred!";
+              } else if (error.request) {
+                  errorMessage = "The request was made but no response was received";
+                  console.log(error.request);
+              } else {
+                  errorMessage = error.message;
+                  console.log('Error', error.message);
+              }
+
+              NotificationManager.warning(errorMessage, 'OOPS...');  
+            });
+        }        
       }
   
        //GET 4 - rbPolicy Metadata
@@ -106,9 +152,9 @@ class RoleBindingPolicy extends Component {
         //   }).catch(error => console.warn(error));
       }
 
-      sendData = () => {
-        this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
-      }
+      // sendData = () => {
+      //   this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
+      // }
 
     render() {
         return(
@@ -275,6 +321,7 @@ class RoleBindingPolicy extends Component {
                           </Accordion.Collapse>
                         </Card>                                   
                   </Accordion>
+                  <NotificationContainer/>
             </Aux>
         );
     }

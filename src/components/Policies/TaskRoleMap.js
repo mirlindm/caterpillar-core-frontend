@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import Aux from '../../hoc/Auxiliary';
 import {TASK_ROLE_MAP_URL} from '../../Constants';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
@@ -45,40 +47,63 @@ class TaskRoleMap extends Component {
       // POST 5 - Task Role Map
       parseAndDeployTaskRoleMapHandler = () => {
         let trMap = this.state.taskRoleMapInput;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        
         console.log("Registry Address from Redux Store: " + this.props.registryAddress);
+        //console.log(trMap);
 
-        if(trMap === null) {
-          return null;
-        }
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
+        } else if(trMap === '') {
+          NotificationManager.error("Please provide valid Task-Role Map Policy.", 'ERROR');
+        } else {
+          axios.post(TASK_ROLE_MAP_URL, 
+            {
+              roleTaskPairs: trMap, 
+              contractName: 'RoleTaskMap',
+              registryAddress: this.props.registryAddress
+            }, 
+            {
+              headers: {
+                'accept': 'application/json',            
+              }
+          })
+          .then(response =>  { 
+            console.log(response);          
+            if (response.status === 202) {
+            this.setState({trMapResponse: response.data});                                                  
+            NotificationManager.success('New Task Role Map has been successfuly deployed.', response.statusText);                                                 
+          } else {
+            console.log('ERROR', response);
+          }})
+          .catch(error => {              
+            console.log(error);
+            let errorMessage;
 
-        console.log(trMap);
-        axios.post(TASK_ROLE_MAP_URL, 
-          {
-            roleTaskPairs: trMap, 
-            contractName: 'RoleTaskMap',
-            registryAddress: this.props.registryAddress
-          }, 
-          {
-            headers: {
-              'accept': 'application/json',            
+            if (error.response) {
+                errorMessage = "The data entered is invalid or some unknown error occurred!";
+            } else if (error.request) {
+                errorMessage = "The request was made but no response was received";
+                console.log(error.request);
+            } else {
+                errorMessage = error.message;
+                console.log('Error', error.message);
             }
-        })
-        .then(response =>  { 
-          this.setState({trMapResponse: response.data});                                                  
-          console.log(response);          
-        })
-        .catch(error => {              
-          console.log(error)
-        });
+            NotificationManager.warning(errorMessage, 'OOPS...');  
+          });
+        }       
       }
 
       taskRoleMapAddressReduxStoreHandler = (dispatch) => {
-        let trMapAddress = this.state.trMapAddressInput;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
+        let trMapAddress = this.state.trMapAddressInput;        
         console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
         
-        axios.get(TASK_ROLE_MAP_URL + '/' + trMapAddress,      
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
+        }
+        else if(trMapAddress === '') {
+          NotificationManager.error("Please provide the correct Address of the Task-Role Map Policy you want to fetch.", 'ERROR');
+        } else {
+          axios.get(TASK_ROLE_MAP_URL + '/' + trMapAddress,      
         {
           headers: {          
             'accept': 'application/json',
@@ -87,11 +112,29 @@ class TaskRoleMap extends Component {
         })
           .then(response => {
             console.log(response);
-            this.setState({trMapMetadata: response.data});
-            dispatch({type: 'TASK_ROLE_MAP', payload: response.data.contractInfo.address});
-            this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);            
-          }).catch(error => console.warn(error));
-
+            if (response.status === 200) {
+              this.setState({trMapMetadata: response.data});
+              dispatch({type: 'TASK_ROLE_MAP', payload: response.data.contractInfo.address});
+              NotificationManager.success('Task-Role Map data has been successfully fetched.', response.statusText);
+              //this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);   
+            }else {
+              console.log('ERROR', response);
+            }}).catch(error => {
+              console.log(error);
+              let errorMessage;
+              
+              if (error.response) {
+                  errorMessage = "The data entered is invalid or some unknown error occurred!";
+              } else if (error.request) {
+                  errorMessage = "The request was made but no response was received";
+                  console.log(error.request);
+              } else {
+                  errorMessage = error.message;
+                  console.log('Error', error.message);
+              }
+              NotificationManager.warning(errorMessage, 'OOPS...');  
+            });
+        }        
       }
 
       // GET 5 - Task Role Map
@@ -298,7 +341,8 @@ class TaskRoleMap extends Component {
                             </Card.Body>                      
                           </Accordion.Collapse>
                         </Card>                                                        
-                  </Accordion>                
+                  </Accordion> 
+                <NotificationContainer/>               
             </Aux>
         );
     }
