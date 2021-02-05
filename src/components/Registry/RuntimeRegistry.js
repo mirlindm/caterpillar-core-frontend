@@ -8,6 +8,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faPlus} from '@fortawesome/free-solid-svg-icons';
 import './Registry.css'
 import {RUNTIME_REGISTRY_URL} from '../../Constants';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -47,12 +49,14 @@ class RuntimeRegistry extends Component {
         })
             .then(response => {
                 console.log(response);
-                if(response.status === 201) {                    
-                    this.setState({show1: true, registry: response.data});
-                    setTimeout(() => this.setState({show1: false}), 3000)
+                if(response.status === 201) {       
+                    NotificationManager.success('New Runtime Registry ' + response.data + ' has been created.', response.statusText)             
+                    this.setState({ registry: response.data});
+                    //setTimeout(() => this.setState({show1: false}), 3000)
                     return response.data.ID;
                 } else {
-                    this.setState({show1: false});
+                    console.log(response);
+                    NotificationManager.warning("Please check the console for details", response.statusText)
                 }
             }).catch(error => { 
                 let errorMessage;
@@ -67,7 +71,8 @@ class RuntimeRegistry extends Component {
                     errorMessage = error.message;
                     this.setState({errorMessage: errorMessage})
                     console.log('Error', error.message);
-                }          
+                }
+                NotificationManager.warning(errorMessage, 'OOPS...');          
         });        
     }
 
@@ -87,7 +92,7 @@ class RuntimeRegistry extends Component {
         //const URL = 'http://' + window.location.hostname + ':3000/registries/';        
         
         if(this.state.idOrAddress === ''){
-            //NotificationManager.error("Please insert data to load registry",'ERROR')
+            NotificationManager.error("Please provide Registry ID or Address to load registry data",'ERROR')
         } else {
             const id = this.state.idOrAddress;
       
@@ -96,9 +101,10 @@ class RuntimeRegistry extends Component {
             axios.get(RUNTIME_REGISTRY_URL+'/'+id)
             .then(response => {                      
                 console.log(response);
-                if(response.status === 200) {
-                    this.setState({show2: true, registryData: response.data});      
-                    setTimeout(() => this.setState({show2: false}), 1000)
+                if(response.status === 200) {                    
+                    this.setState({ registryData: response.data});      
+                    NotificationManager.success('Registry has been loaded', response.statusText)
+                    //setTimeout(() => this.setState({show2: false}), 1000)
                     dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
                 } else {
                     console.log('ERROR', response);
@@ -118,7 +124,8 @@ class RuntimeRegistry extends Component {
                     errorMessage = error.message;
                     dispatch({type: 'ERROR', payload: errorMessage});
                     console.log('Error', error.message);
-                }                                     
+                }
+                NotificationManager.warning(errorMessage, 'OOPS...');                                      
             })
         }
     }
@@ -126,23 +133,44 @@ class RuntimeRegistry extends Component {
     // Get request to fetch registry's data based on its address and dispatch registry's address to redux store
     getRegistryAddressByAddress = (dispatch) => {        
         //const URL = 'http://' + window.location.hostname + ':3000/registries/';
-        const URL_END = '/address';
-        const address = this.state.idOrAddress;
-    
-        dispatch({type: 'LOADING' })
-    
-        axios.get(RUNTIME_REGISTRY_URL+'/'+address+URL_END)
-        .then(response => response.data             
-        ).then((data) => {
-            console.log(data);
-            this.setState({show2: true, registryData: data});   
-            setTimeout(() => this.setState({show2: false}), 1000)      
-            dispatch({type: 'REGISTRY_ADDRESS', payload: data.address});
-        })
-        .catch(err => {
-            dispatch({type: 'ERROR', payload: err});
-            console.log(err.toString());        
-        })
+        if(this.state.idOrAddress === ''){
+            NotificationManager.error("Please provide Registry ID or Address to load registry data", 'ERROR')
+        } else {
+            const URL_END = '/address';
+            const address = this.state.idOrAddress;
+        
+            dispatch({type: 'LOADING' })
+        
+            axios.get(RUNTIME_REGISTRY_URL+'/'+address+URL_END)
+            .then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    this.setState({registryData: response.data});   
+                    NotificationManager.success('Registry has been loaded', response.statusText)
+                    //setTimeout(() => this.setState({show2: false}), 1000)      
+                    dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
+                } else {
+                    console.log('ERROR', response);
+                }})
+            .catch(error => {
+                console.log(error);
+                let errorMessage;
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                    dispatch({type: 'ERROR', payload: error});
+                    console.log(error.toString());        
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    dispatch({type: 'ERROR', payload: error});
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    dispatch({type: 'ERROR', payload: error});
+                    console.log('Error', error.message);
+                }
+                NotificationManager.warning(errorMessage, 'OOPS...');                                                  
+            })
+        }        
     }
 
     // takes user to Modeler component on click
@@ -153,7 +181,6 @@ class RuntimeRegistry extends Component {
     goToAccessPoliciesrHandler = () => {
         this.props.history.push(`/access`);   
     }
-
 
     render () {
         return (
@@ -339,6 +366,7 @@ class RuntimeRegistry extends Component {
                     </Aux>
                     }               
            
+            <NotificationContainer/>
             <div style={{marginTop: "60px"}}> </div>
             </Aux>
         )
