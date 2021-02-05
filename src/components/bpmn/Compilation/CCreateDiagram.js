@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 
 import Aux from "../../../hoc/Auxiliary";
-// import AccessControl from '../../Policies/AccessControl';
-// import RoleBindingPolicy from '../../Policies/RoleBindingPolicy';
-// import TaskRoleMap from '../../Policies/TaskRoleMap';
 
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import "bpmn-js/dist/assets/diagram-js.css";
@@ -14,9 +11,13 @@ import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camu
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import {COMPILATION_URL, PROCESS_INSTANCE_QUERY_URL} from '../../../Constants';
+
 import './CCreateDiagram.css';
 
-import {Alert, Card, Button, Accordion, Row, Col } from "react-bootstrap";
+import { Alert, Card, Button, Accordion, Row, Col } from "react-bootstrap";
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -136,7 +137,6 @@ class CCreateDiagram extends Component {
       // ************* Http Requests ********************
 
       // post request to save/deploy the model
-      // implement a method to run the request from the backend for POST Model - Compilation Engine
       // Post Request 1
       deployProcessModels = (event) => {
         event.preventDefault();
@@ -144,55 +144,64 @@ class CCreateDiagram extends Component {
 
         this.modeler.saveXML((err, xml) => {
 
-          //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp 
           console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
           if (!err) {
             console.log(xml);
-            axios.post("http://localhost:3000/models",{
-              bpmn: xml,
-              //name: xml.name,          
+            axios.post(COMPILATION_URL,{
+              bpmn: xml,                       
               registryAddress: this.props.registryAddress,
               })
               .then(response => {
-                  if(response.data != null) {
-                      this.setState({id: response.data, showIDAccordion: true})
-                      console.log(response)
-                      // this.setState({show: true, registry: response.data});
+                console.log(response);
+                
+                if (response.status === 201) {
+                  this.setState({id: response.data, showIDAccordion: true});
+                  NotificationManager.success('Process Model has been successfully deployed', response.statusText);
+                } else {
+                    console.log('ERROR', response);
+                }})                
+              .catch(error =>  {
+                  console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The input is invalid or some unknown error occurred! Please make sure your input is correct!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
                   } else {
-                    console.log("Received Incorrect Response");
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
                   }
-                })
-                .catch(e => console.log(e.toString()));
-              }
-          });    
-        };
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');
+                });
+              }});    
+        }
 
         // Post 2 - "http://localhost:3000/models/compile"
         compileProcessModels = (event) => {
           event.preventDefault();
           this.setState({showCompileProcessModelsAccordion: true});
-
                 
           this.modeler.saveXML((err, xml) => {
-            //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+                        
             console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
             if (!err) {
               console.log(xml);
-              axios.post("http://localhost:3000/models/compile", 
+              axios.post(COMPILATION_URL + '/compile', 
               {
-                bpmn: xml,
-                //name: xml.name,          
+                bpmn: xml,                   
                 registryAddress: this.props.registryAddress,
-              },
-              {
+              },{
                   headers: {
                     "accept": "application/json"
-                  }
-                })
+                  }})
                 .then(response => {
-                    if(response.data != null) {
+                  console.log(response);
+                  if (response.status === 201) {
                         this.setState({
                           compileProcessModelsSuccessMessage: response.data.contractName,
                           showCompileProcessModelsAccordion: true,
@@ -203,14 +212,25 @@ class CCreateDiagram extends Component {
                           compileProcessModelsCompilationMetadataABI: response.data.compilationMetadata[0].abi,
                           compileProcessModelsCompilationMetadataByteCode: response.data.compilationMetadata[0].bytecode,
                         })
-                        console.log(response)                        
-                    } else {
-                      console.log("Received Incorrect Response");
-                    }
-                  })
-                  .catch(e => {
-                    this.setState({compileProcessModelsErrorMessage: e.toString()})
-                    console.log(e.toString())
+                        NotificationManager.success('Process Model has been successfully compiled', response.statusText);                        
+                      } else {
+                          console.log('ERROR', response);
+                        }})
+                  .catch(error => {
+                    console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The input is invalid or some unknown error occurred! Please make sure your input is correct!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
+                  } else {
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
+                  }
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');                    
                   });
                 }
             });    
@@ -219,53 +239,71 @@ class CCreateDiagram extends Component {
 
       // GET 1 /models   
       queryProcessModels = (event) => {
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-
+        
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
         this.setState({showGetProcessModelsAccordion: true});
 
-          axios.get('http://localhost:3000/models', {
-            headers: {
-              'registryAddress': this.props.registryAddress,
-              'Accept': 'application/json',
-            }
-          })
-            .then(response => {
-              this.setState({getProcessModelsSuccessMessage: response.data, showGetProcessModelsAccordion: true})
-            console.log(response);          
-            })
-            .catch(e => {
-              this.setState({getProcessModelsErrorMessage: e.toString()})
-              console.log(e.toString())
-            } );
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR')
+        } else {axios.get(COMPILATION_URL, {
+          headers: {
+            'registryAddress': this.props.registryAddress,
+            'Accept': 'application/json',
+          }})
+          .then(response => {
+            if (response.status === 200) {
+              this.setState({getProcessModelsSuccessMessage: response.data, showGetProcessModelsAccordion: true});
+              NotificationManager.success('Process Models have been fetched', response.statusText);
+            } else {
+              console.log('ERROR', response);
+            }})
+          .catch(error => {
+                console.log(error);
+                let errorMessage;
+
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }
+
+                NotificationManager.warning(errorMessage, 'OOPS...');
+          });
+        }
+          
       }
 
       // GET 2 /models/:mHash or processId as a parameter 
       retrieveModelMetadata = (event) => { 
         let mHash = this.state.mHash;
         this.setState({showRetrieveModelMetadataAccordion: true});
+                
         
-        //console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-        
-        axios.get(`http://localhost:3000/models/`+mHash,
-        {
-          headers: {
+        axios.get(COMPILATION_URL + '/' +mHash,
+          { headers: {
               'accept': 'application/json'
-          }
-        }).then(response => {
-              this.setState({
-                retrieveModelMetadataSuccessMessage: response.data,
-                retrieveModelMetadataBpmnModel: response.data.bpmnModel,
-                retrieveModelMetadataRepoID: response.data.repoId,
-                retrieveModelMetadataRootModelID: response.data.rootModelID,
-                retrieveModelMetadataRootModelName: response.data.rootModelName,
-                retrieveModelMetadataWorklistABI: response.data.worklistABI,
-                retrieveModelMetadataContractName: response.data.contractInfo,
-                retrieveModelMetadataElementInfo: response.data.indexToElementMap.filter(element => (element !== null && element !== undefined )),
-              
+          }})
+          .then(response => {
+            console.log(response);
+
+            if (response.status === 200) {
+            this.setState({
+              retrieveModelMetadataSuccessMessage: response.data,
+              retrieveModelMetadataBpmnModel: response.data.bpmnModel,
+              retrieveModelMetadataRepoID: response.data.repoId,
+              retrieveModelMetadataRootModelID: response.data.rootModelID,
+              retrieveModelMetadataRootModelName: response.data.rootModelName,
+              retrieveModelMetadataWorklistABI: response.data.worklistABI,
+              retrieveModelMetadataContractName: response.data.contractInfo,
+              retrieveModelMetadataElementInfo: response.data.indexToElementMap.filter(element => (element !== null && element !== undefined )),
               })
-              console.log(response);
+
+              NotificationManager.success(`Process Model Metadata for: ${response.data.repoId} has been fetched`, response.statusText);
               console.log(this.state.retrieveModelMetadataBpmnModel);
               this.modeler2 = new BpmnModeler({
                 container: "#bpmnview2",
@@ -280,18 +318,27 @@ class CCreateDiagram extends Component {
                   camunda: camundaModdleDescriptor
                 }
               });
-              this.openBpmnDiagramBasedOnmHash(this.state.retrieveModelMetadataBpmnModel);
+                this.openBpmnDiagramBasedOnmHash(this.state.retrieveModelMetadataBpmnModel);
+              } else {
+              console.log('ERROR', response);
+            }})
+            .catch(error => {
+              console.log(error);
+              let errorMessage;
 
-            })
-            .catch(e => {
-              this.setState({retrieveModelMetadataErrorMessage: e.toString()})
-              console.log(e.toString())
+              if (error.response) {
+                  errorMessage = "The data entered is invalid or some unknown error occurred!";
+              } else if (error.request) {
+                  errorMessage = "The request was made but no response was received";
+                  console.log(error.request);
+              } else {
+                  errorMessage = error.message;
+                  console.log('Error', error.message);
+              }
+
+              NotificationManager.warning(errorMessage, 'OOPS...');
             });                                         
-      }
-
-      // newBpmnDiagramResponse = () => {
-      //   this.openBpmnDiagram(this.state.retrieveModelMetadataBpmnModel);
-      // };
+        }
 
       openBpmnDiagramBasedOnmHash = async (xml) => {        
         try {
@@ -320,28 +367,7 @@ class CCreateDiagram extends Component {
         //   console.log(err.message, err.warnings);
         // }
       }
-               
-
-      // Receiving Props from AccessControl Child Component
-      // accessControlCallbackFunction = (childData) => {
-      //   this.setState({accessControlState: childData})
-      //   console.log("CHILD DATA 1: " + this.state.accessControlState)
-      // }
-
-      // Receiving Props from rbPolicy Child Component
-      // rbPolicyCallbackFunction = (childData) => {
-      //   console.log("CHILD DATA 2: " + childData);
-      //   this.setState({rbPolicyState: childData})
-        
-      // }
-
-      // Receiving Props from taskRoleMap Child Component
-      // taskRoleMapCallbackFunction = (childData) => {
-      //   this.setState({taskRoleMapState: childData});
-      //   console.log("CHILD DATA 3: " + this.state.taskRoleMapState);
-      // }
-
-    
+                   
       // Post Request 3: createNewProcessInstance
       createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
@@ -349,71 +375,140 @@ class CCreateDiagram extends Component {
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
         console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
-        
-        axios.post(`http://localhost:3000/models/${mHash}/processes`,
-        {                    
-          registryAddress: this.props.registryAddress,
-          accessCtrlAddr: this.state.accessControlState,
-          rbPolicyAddr: this.state.rbPolicyState,
-          taskRoleMapAddr: this.state.taskRoleMapState, 
-        },
-        {
-          headers: {
-              'Accept': 'application/json',
-          }
-        }).then(response =>  {
-          this.setState({processInstanceResponse: response.data})                                                                           
-          console.log(response);          
-        })
-        .catch(error => {              
-            console.log(error)
-        });
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR');
+        } else if(mHash === '') {
+          NotificationManager.error("Please provide ID of the Process Model you want to create an instance of.", 'ERROR');
+        } else {
+          axios.post(COMPILATION_URL + `/${mHash}/processes`,
+          {                    
+            registryAddress: this.props.registryAddress,
+            accessCtrlAddr: this.state.accessControlState,
+            rbPolicyAddr: this.state.rbPolicyState,
+            taskRoleMapAddr: this.state.taskRoleMapState, 
+          },
+          {
+            headers: {
+                'Accept': 'application/json',
+            }
+          }).then(response =>  {
+            console.log(response);
+            if (response.status === 201) {
+            this.setState({processInstanceResponse: response.data});
+            NotificationManager.success('Process Instance Has been Created', response.statusText);                                                                           
+            } else {
+              console.log('ERROR', response);
+            }})
+            .catch(error => {              
+              console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The data entered is invalid or some unknown error occurred!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
+                  } else {
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
+                  }
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');
+            });
+
+        }
+       
       }
 
       // Get Request 3: queryProcessInstancesHandler
       queryProcessInstancesHandler = () => {
         let mHash = this.state.mHash;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        
+                
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-        
-      axios.get(`http://localhost:3000/models/${mHash}/processes`,
-        {
-          headers: {
-            'registryAddress': this.props.registryAddress,
-              'accept': 'application/json'
-          }
-        }).then(response => {   
-          this.setState({queryProcessInstancesResponse: response.data});           
-          console.log(response);          
-        })
-        .catch(error => {              
-          console.log(error)
-        });          
+
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR');
+        }
+        else if(mHash === '') {
+          NotificationManager.error("Please provide ID of the Process Model you want to query instances of.", 'ERROR');
+        } else {
+          axios.get(COMPILATION_URL + `/${mHash}/processes`,
+          {
+            headers: {
+              'registryAddress': this.props.registryAddress,
+                'accept': 'application/json'
+            }
+          }).then(response => { 
+            console.log(response);
+            if (response.status === 200) {
+              this.setState({queryProcessInstancesResponse: response.data});           
+              NotificationManager.success('Registry has been loaded', response.statusText);
+            } else {
+              console.log('ERROR', response);
+            }})
+          .catch(error => {
+            console.log(error);
+            let errorMessage;
+
+            if (error.response) {
+                errorMessage = "The data entered is invalid or some unknown error occurred!";
+            } else if (error.request) {
+                errorMessage = "The request was made but no response was received";
+                console.log(error.request);
+            } else {
+                errorMessage = error.message;
+                console.log('Error', error.message);
+            }
+
+            NotificationManager.warning(errorMessage, 'OOPS...');  
+          });  
+        }              
       }
       
       // Get Request 4: queryProcessState
       queryProcessStateHandler = () => {
         //pAddress is same as mHash
         let pAddress = this.state.mHash;         
-        //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        //console.log("GET3" + registryAddress + " and the pAddress: " + pAddress);
+
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
-      axios.get('http://localhost:3000/processes/'+pAddress,
-        {
-          headers: {
-            'registryAddress': this.props.registryAddress,
-            'accept': 'application/json',
-          }
-        }).then(response => {
-          this.setState({queryProcessStateResponse: response.data});              
-          console.log(response);          
-        })
-        .catch(error => {              
-          console.log(error)
-        });       
+        if(!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified", 'ERROR');
+        }
+        else if(pAddress === '') {
+          NotificationManager.error("Please provide ID of the Process Model you want to query instance state of.", 'ERROR');
+        } else {
+          axios.get(PROCESS_INSTANCE_QUERY_URL + pAddress,
+          {
+            headers: {
+              'registryAddress': this.props.registryAddress,
+              'accept': 'application/json',
+            }
+          }).then(response => {
+            console.log(response);
+            if (response.status === 200) {
+              this.setState({queryProcessStateResponse: response.data});  
+              NotificationManager.success('Registry has been loaded', response.statusText);            
+            } else {
+              console.log('ERROR', response);
+            }})
+            .catch(error => {              
+              console.log(error);
+              let errorMessage;
+  
+              if (error.response) {
+                  errorMessage = "The data entered is invalid or some unknown error occurred!";
+              } else if (error.request) {
+                  errorMessage = "The request was made but no response was received";
+                  console.log(error.request);
+              } else {
+                  errorMessage = error.message;
+                  console.log('Error', error.message);
+              }
+  
+              NotificationManager.warning(errorMessage, 'OOPS...');
+            });       
+        }       
       }
 
       //Put Request 1
@@ -925,10 +1020,9 @@ class CCreateDiagram extends Component {
                   <p> Render Response for PUT 1</p> <br/> <br/>                                                      
                                                                                             
         {/* create some space from the footer */} 
+        <NotificationContainer/>
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
-
-      </Aux>
-      
+      </Aux>      
     );
   };
 }
