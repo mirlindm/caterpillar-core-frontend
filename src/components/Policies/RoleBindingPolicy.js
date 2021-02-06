@@ -49,9 +49,9 @@ class RoleBindingPolicy extends Component {
         //console.log(rbPolicy);
         
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
         } else if(rbPolicy === '') {
-          NotificationManager.error("Please provide valid Role Binding Policy.", 'ERROR');
+          NotificationManager.error("Please provide valid Role Binding Policy!", 'ERROR');
         } else {
           axios.post(RB_POLICY_URL, {policy: rbPolicy, registryAddress: this.props.registryAddress}, {
             headers: {
@@ -63,7 +63,7 @@ class RoleBindingPolicy extends Component {
             console.log(response);
             if (response.status === 202) {
               this.setState({rbPolicyResponse: response.data});  
-              NotificationManager.success('New Role Binding Policy has been successfuly deployed.', response.statusText);                                                
+              NotificationManager.success('New Role Binding Policy has been successfuly deployed!', response.statusText);                                                
             } else {
               console.log('ERROR', response);
             }})
@@ -74,7 +74,7 @@ class RoleBindingPolicy extends Component {
             if (error.response) {
                 errorMessage = "The data entered is invalid or some unknown error occurred!";
             } else if (error.request) {
-                errorMessage = "The request was made but no response was received";
+                errorMessage = "The request was made but no response was received!";
                 console.log(error.request);
             } else {
                 errorMessage = error.message;
@@ -90,10 +90,10 @@ class RoleBindingPolicy extends Component {
         console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
 
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
         }
         else if(rbPolicyAddr === '') {
-          NotificationManager.error("Please provide the correct Address of the Role Binding Policy you want to fetch.", 'ERROR');
+          NotificationManager.error("Please provide the correct Address of the Role Binding Policy you want to fetch!", 'ERROR');
         } else {
           axios.get(RB_POLICY_URL + '/' + rbPolicyAddr,      
         {
@@ -107,7 +107,7 @@ class RoleBindingPolicy extends Component {
             if (response.status === 200) {
               this.setState({rbPolicyMetadata: response.data});
               dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
-              NotificationManager.success('Role Binding Policy data has been successfully fetched.', response.statusText);
+              NotificationManager.success('Role Binding Policy data has been successfully fetched!', response.statusText);
               //this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
             } else {
               console.log('ERROR', response);
@@ -118,7 +118,7 @@ class RoleBindingPolicy extends Component {
               if (error.response) {
                   errorMessage = "The data entered is invalid or some unknown error occurred!";
               } else if (error.request) {
-                  errorMessage = "The request was made but no response was received";
+                  errorMessage = "The request was made but no response was received!";
                   console.log(error.request);
               } else {
                   errorMessage = error.message;

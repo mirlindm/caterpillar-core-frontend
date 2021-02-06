@@ -52,9 +52,9 @@ class TaskRoleMap extends Component {
         //console.log(trMap);
 
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
         } else if(trMap === '') {
-          NotificationManager.error("Please provide valid Task-Role Map Policy.", 'ERROR');
+          NotificationManager.error("Please provide valid Task-Role Map Policy!", 'ERROR');
         } else {
           axios.post(TASK_ROLE_MAP_URL, 
             {
@@ -71,7 +71,7 @@ class TaskRoleMap extends Component {
             console.log(response);          
             if (response.status === 202) {
             this.setState({trMapResponse: response.data});                                                  
-            NotificationManager.success('New Task Role Map has been successfuly deployed.', response.statusText);                                                 
+            NotificationManager.success('New Task Role Map has been successfuly deployed!', response.statusText);                                                 
           } else {
             console.log('ERROR', response);
           }})
@@ -82,7 +82,7 @@ class TaskRoleMap extends Component {
             if (error.response) {
                 errorMessage = "The data entered is invalid or some unknown error occurred!";
             } else if (error.request) {
-                errorMessage = "The request was made but no response was received";
+                errorMessage = "The request was made but no response was received!";
                 console.log(error.request);
             } else {
                 errorMessage = error.message;
@@ -98,10 +98,10 @@ class TaskRoleMap extends Component {
         console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
         
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
         }
         else if(trMapAddress === '') {
-          NotificationManager.error("Please provide the correct Address of the Task-Role Map Policy you want to fetch.", 'ERROR');
+          NotificationManager.error("Please provide the correct Address of the Task-Role Map Policy you want to fetch!", 'ERROR');
         } else {
           axios.get(TASK_ROLE_MAP_URL + '/' + trMapAddress,      
         {
@@ -115,7 +115,7 @@ class TaskRoleMap extends Component {
             if (response.status === 200) {
               this.setState({trMapMetadata: response.data});
               dispatch({type: 'TASK_ROLE_MAP', payload: response.data.contractInfo.address});
-              NotificationManager.success('Task-Role Map data has been successfully fetched.', response.statusText);
+              NotificationManager.success('Task-Role Map data has been successfully fetched!', response.statusText);
               //this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);   
             }else {
               console.log('ERROR', response);
@@ -126,7 +126,7 @@ class TaskRoleMap extends Component {
               if (error.response) {
                   errorMessage = "The data entered is invalid or some unknown error occurred!";
               } else if (error.request) {
-                  errorMessage = "The request was made but no response was received";
+                  errorMessage = "The request was made but no response was received!";
                   console.log(error.request);
               } else {
                   errorMessage = error.message;

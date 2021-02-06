@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 import {Modal, Button} from 'react-bootstrap';
 
 import './About.css'
@@ -14,6 +14,10 @@ class About extends Component {
         }
     }
 
+    goToWelcomeComponentHandler = () => {
+        this.props.history.push(`/welcome`);   
+    }
+
     handleClose = () => this.setState({show: false});
     handleShow = () => this.setState({show: true});
 
@@ -23,11 +27,11 @@ class About extends Component {
         //const getUser = sessionStorage.getItem('authenticatedUser').toString();
 
         return (
-            <div className="text-white">
-                <div className="par"> 
-                <h2 onClick={this.handleShow} style={{fontFamily: "Open Sans, sans-serif", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center" }}>Learn more about Caterpillar</h2>
-                
-                <p style={{fontFamily: "Open Sans, sans-serif"}} onClick={this.handleShow}>
+            <div>
+                <div className="ContentUnique"> 
+                <h2 onClick={this.handleShow} style={{fontFamily: "Open Sans, sans-serif", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center", borderBottom: "1px solid #d7dde8" }}>Learn more about Caterpillar</h2>
+                <br/>
+                <p style={{fontFamily: "Open Sans", color: "#000", fontSize: "16px", textAlign: "justify", fontWeight: "500"}} onClick={this.handleShow}>
                 Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and
                 that relies on the translation of process models into smart contracts. 
                 More specifically, Caterpillar accepts as input a process model specified in BPMN and generates 
@@ -46,10 +50,9 @@ class About extends Component {
                 You can find more information on how to run Caterpillar Rest Api Application by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
                 <br />
-                
-
-                {/* hardcoded value below: /welcome/:mirlind */}
-                <Link to={`/welcome`} className="link-button">Back Home</Link> 
+                                
+                <Button className="buttons-welcome" onClick={this.goToWelcomeComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Back Home</Button> {' '}                                             
+                {/* <Link to={`/welcome`} className="link-button">Back Home</Link>  */}
                 </p>
 
 

@@ -28,7 +28,7 @@ class AccessControl extends Component {
         axios.post(ACCESS_CONTROL_URL)
           .then(response =>  {
             this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
-            NotificationManager.success('Access Control Policy Created.', response.statusText);
+            NotificationManager.success('Access Control Policy Created!', response.statusText);
             console.log(response);          
           })
           .catch(error => {
@@ -38,7 +38,7 @@ class AccessControl extends Component {
             if (error.response) {
                 errorMessage = "The data entered is invalid or some unknown error occurred!";
             } else if (error.request) {
-                errorMessage = "The request was made but no response was received";
+                errorMessage = "The request was made but no response was received!";
                 console.log(error.request);
             } else {
                 errorMessage = error.message;
@@ -70,9 +70,9 @@ class AccessControl extends Component {
         console.log(accessCtrlAddr + ' and registry address: ' + this.props.registryAddress);
         
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Registry Specified!", 'ERROR');
         } else if(accessCtrlAddr === '') {
-          NotificationManager.error("Please provide the Address of the Access Control Policy.", 'ERROR');
+          NotificationManager.error("Please provide the Address of the Access Control Policy!", 'ERROR');
         } else {
           axios.get(ACCESS_CONTROL_URL + '/' + accessCtrlAddr,      
         {
@@ -86,7 +86,7 @@ class AccessControl extends Component {
             if (response.status === 200) {
               this.setState({accessControlAddressMetadata: response.data});
               dispatch({type: 'ACCESS_CONTROL_ADDRESS', payload: response.data.address});
-              NotificationManager.success('Access Policy Data have been successfully fetched.', response.statusText);
+              NotificationManager.success('Access Policy Data have been successfully fetched!', response.statusText);
               //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
             } else {
               console.log('ERROR', response);
@@ -98,7 +98,7 @@ class AccessControl extends Component {
                   errorMessage = "The data entered is invalid or some unknown error occurred!";
                   dispatch({type: 'ERROR', payload: error.response});
               } else if (error.request) {
-                  errorMessage = "The request was made but no response was received";
+                  errorMessage = "The request was made but no response was received!";
                   dispatch({type: 'ERROR', payload: error.request});
                   console.log(error.request);
               } else {
