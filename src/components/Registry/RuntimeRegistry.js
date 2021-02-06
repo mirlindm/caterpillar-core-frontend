@@ -50,10 +50,10 @@ class RuntimeRegistry extends Component {
             .then(response => {
                 console.log(response);
                 if(response.status === 201) {       
-                    NotificationManager.success('New Runtime Registry ' + response.data + ' has been created.', response.statusText)             
+                    NotificationManager.success('New Runtime Registry: ' + response.data.ID + ' has been created.', response.statusText)             
                     this.setState({ registry: response.data});
                     //setTimeout(() => this.setState({show1: false}), 3000)
-                    return response.data.ID;
+                    //return response.data.ID;
                 } else {
                     console.log(response);
                     NotificationManager.warning("Please check the console for details", response.statusText)
@@ -103,7 +103,7 @@ class RuntimeRegistry extends Component {
                 console.log(response);
                 if(response.status === 200) {                    
                     this.setState({ registryData: response.data});      
-                    NotificationManager.success('Registry has been loaded', response.statusText)
+                    NotificationManager.success('Registry has been loaded. Its address will be used for the next operations!', response.statusText)
                     //setTimeout(() => this.setState({show2: false}), 1000)
                     dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
                 } else {
@@ -146,7 +146,7 @@ class RuntimeRegistry extends Component {
                 console.log(response);
                 if (response.status === 200) {
                     this.setState({registryData: response.data});   
-                    NotificationManager.success('Registry has been loaded', response.statusText)
+                    NotificationManager.success('Registry has been loaded. Its address will be used for the next operations!', response.statusText)
                     //setTimeout(() => this.setState({show2: false}), 1000)      
                     dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
                 } else {

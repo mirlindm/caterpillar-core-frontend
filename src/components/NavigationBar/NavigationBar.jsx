@@ -15,12 +15,13 @@ class NavigationBar extends Component {
                     <ul className="navbar-nav"><li><Link to={`/welcome`} className="navbar-brand">Caterpillar</Link></li></ul>                 
                         <ul className="navbar-nav">
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
-                            <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>
-                            <li><Link to={"/access"} className="nav-link">Access</Link></li>                                               
+                            <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>                                                                          
                             <NavDropdown title="Modeler" id="collasible-nav-dropdown">
-                                <NavDropdown.Item><Link to={"/createModel"}>Create Model</Link></NavDropdown.Item>
-                                <NavDropdown.Item><Link to={"/uploadModel"}>Upload Model</Link></NavDropdown.Item>                                                 
+                                <NavDropdown.Item><Link to={"/compilation"}>Compilation Engine</Link></NavDropdown.Item>
+                                <NavDropdown.Item><Link to={"/interpretation"}>Interpretation Engine</Link></NavDropdown.Item>                                                 
                             </NavDropdown>
+                            <li><Link to={"/access"} className="nav-link">Access</Link></li> 
+                            <li><Link to={"/execute"} className="nav-link">Execution</Link></li> 
                             {/* {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>} */}                   
                             <li><Link to={"/about"} className="nav-link">About</Link></li>                        
                         </ul>

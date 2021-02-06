@@ -49,7 +49,7 @@ class RoleBindingPolicy extends Component {
         //console.log(rbPolicy);
         
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
         } else if(rbPolicy === '') {
           NotificationManager.error("Please provide valid Role Binding Policy.", 'ERROR');
         } else {
@@ -86,14 +86,14 @@ class RoleBindingPolicy extends Component {
       }
 
       roleBindingPolicyAddressReduxStoreHandler = (dispatch) => {
-        let rbPolicyAddr = this.state.rbPolicyAddressInput;
-        
+        let rbPolicyAddr = this.state.rbPolicyAddressInput;        
         console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
+
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Runtime Registry Specified", 'ERROR');
         }
         else if(rbPolicyAddr === '') {
-          NotificationManager.error("Please provide the Address of the Role Binding Policy you want to fetch.", 'ERROR');
+          NotificationManager.error("Please provide the correct Address of the Role Binding Policy you want to fetch.", 'ERROR');
         } else {
           axios.get(RB_POLICY_URL + '/' + rbPolicyAddr,      
         {
@@ -109,7 +109,7 @@ class RoleBindingPolicy extends Component {
               dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
               NotificationManager.success('Role Binding Policy data has been successfully fetched.', response.statusText);
               //this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
-            }else {
+            } else {
               console.log('ERROR', response);
             }}).catch(error => {
               console.log(error);
@@ -124,7 +124,6 @@ class RoleBindingPolicy extends Component {
                   errorMessage = error.message;
                   console.log('Error', error.message);
               }
-
               NotificationManager.warning(errorMessage, 'OOPS...');  
             });
         }        
@@ -133,28 +132,8 @@ class RoleBindingPolicy extends Component {
        //GET 4 - rbPolicy Metadata
        findRBPolicyMetadataHandler = () => {
         console.log("Role Binding Policy Address on Redux!!!!" );
-        this.props.dispatch(this.roleBindingPolicyAddressReduxStoreHandler);
-        // let rbPolicyAddr = this.state.rbPolicyAddressInput;
-        // let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        // console.log(rbPolicyAddr + ' and registry address: ' + registryAddress);
-        
-        // axios.get('http://localhost:3000/rb-policy/' + rbPolicyAddr,      
-        // {
-        //   headers: {          
-        //     'accept': 'application/json',
-        //     'registryAddress': registryAddress
-        //   }
-        // })
-        //   .then(response => {
-        //     console.log(response);
-        //     this.setState({rbPolicyMetadata: response.data});
-        //     this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
-        //   }).catch(error => console.warn(error));
+        this.props.dispatch(this.roleBindingPolicyAddressReduxStoreHandler);  
       }
-
-      // sendData = () => {
-      //   this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
-      // }
 
     render() {
         return(

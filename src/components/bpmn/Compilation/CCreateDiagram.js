@@ -544,7 +544,7 @@ class CCreateDiagram extends Component {
         <div className="container text-white" style={{marginBottom: "20px", textAlign: "center", marginLeft: "120px", marginRight: "120px",}}>
           
            <Alert 
-           style={{marginLeft: "-15px", 
+              style={{marginLeft: "-15px", 
                   fontSize: "20px",                   
                   marginBottom: "30px", 
                   borderRadius: "10px", 
@@ -552,24 +552,22 @@ class CCreateDiagram extends Component {
                   backgroundColor: "#d7dde8",
                   border: "1px solid #d7dde8",
                   color: "#A52A2A"}}            
-           size="sm" variant="info">
-             Create and Save Your Model Below 
+                  size="sm" variant="info">
+                  Create and Save Your Model Below 
             </Alert> 
-
-        {/* <div> Hello props: {this.props.registryAddressProp} or {this.props.registryIdProp} </div> */}
-        
+                
         <div style={{ marginTop: "10px" }}> </div>
         </div>
 
-        
-            <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , }}>
-              <div id="bpmncontainer">
-                <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
-                <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
-              </div>          
-            </Card>
-          <br/>
+          <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , }}>
+            <div id="bpmncontainer">
+              <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+              <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+            </div>          
+          </Card>
+          
           {/* New changes Start */}
+          <br/>
           <Card border="primary">
                 <Alert variant="primary" size="sm"> 
                     Deploy Process Model
@@ -604,10 +602,7 @@ class CCreateDiagram extends Component {
                   </Card.Body>
                 </Card>
           {/* New changes End */}
-                  
-         
-
-       
+                                  
           {/* New changes Start */}
           <br/>
           <Card border="primary">
