@@ -452,21 +452,12 @@ class CUploadDiagram extends Component {
     render = () => {
         return(
             <Aux>
-                {/* <BpmnModelerTest /> */}
-                    
-                <div className="container text-white" style={{marginBottom: "20px", marginTop: "-30px", textAlign: "center", marginLeft: "120px", marginRight: "120px"}}>
-                <Alert style={{marginLeft: "-15px", borderRadius: "10px", fontSize: "20px", marginTop: "30px", marginBottom: "30px", marginRight: "225px", color: "black"}} size="sm" variant="info">
-                    Create and Save Your Model Below 
-                </Alert>
-                </div>
-
-                <hr className="style-seven" style={{marginBottom: "-15px"}}/>   
-
+              <div style={{ marginTop: "10px" }}> </div>                                              
                 <Form onSubmit={this.openFile} variant="outline-info" >
                     <Form.Group>
                         <Form.File 
                             style={{ fontSize: "17px", fontWeight: "normal", lineHeight: "15px", color: "white", display: "inline-block", cursor: "pointer", marginRight: "350px", marginLeft: "350px", width: "410px",}} 
-                            id="exampleFormControlFile1" 
+                            id="exampleFormControlFile1"  multiple
                             name="uploadedDiagramName" accept=".bpmn" 
                             type="file" onChange={this.onFileChange}
                             label="Please upload .bpmnn files"

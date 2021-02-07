@@ -13,7 +13,8 @@ import Login from './components/Login/Login.jsx';
 import Logout from './components/Logout/Logout.jsx';
 import Registry from './components/Registry/Registry.jsx';
 import RuntimeRegistry from './components/Registry/RuntimeRegistry.js';
-import BpmnModelling from './components/bpmn/BpmnModelling';
+//import BpmnModelling from './components/bpmn/BpmnModelling';
+import CompilationEngine from './components/bpmn/CompilationEngine';
 import CCreateModel from './components/bpmn/Compilation/CCreateDiagram';
 //import CUploadModel from './components/bpmn/Compilation/CUploadDiagram';
 import ICreateModel from './components/bpmn/Interpretation/ICreateDiagram'
@@ -49,8 +50,8 @@ class App extends Component {
                       <Route path="/login" exact component={Login} />
                       <Route path="/welcome" exact component={Welcome} />
                       <Route path="/registry" exact component={Registry} />
-                      <Route path="/modeler" exact component={BpmnModelling} />                    
-                      <Route path="/compilation" exact component={CCreateModel} />                    
+                      <Route path="/compilation" exact component={CompilationEngine} />                    
+                      {/* <Route path="/compilation" exact component={CCreateModel} />                     */}
                       <Route path="/interpretation" exact component={ICreateModel} />                    
                       <Route path="/access" exact component={AccessAllocation} />                    
                       <Route path="/runtimeRegistry" exact component={RuntimeRegistry} />                    

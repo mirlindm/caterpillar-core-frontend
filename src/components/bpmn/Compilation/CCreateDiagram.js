@@ -541,25 +541,10 @@ class CCreateDiagram extends Component {
   render = () => {
     return (
       <Aux>
-        <div className="container text-white" style={{marginBottom: "20px", textAlign: "center", marginLeft: "120px", marginRight: "120px",}}>
-          
-           <Alert 
-              style={{marginLeft: "-15px", 
-                  fontSize: "20px",                   
-                  marginBottom: "30px", 
-                  borderRadius: "10px", 
-                  marginRight: "225px",  
-                  backgroundColor: "#d7dde8",
-                  border: "1px solid #d7dde8",
-                  color: "#A52A2A"}}            
-                  size="sm" variant="info">
-                  Create and Save Your Model Below 
-            </Alert> 
-                
-        <div style={{ marginTop: "10px" }}> </div>
-        </div>
+                                  
+        <div style={{ marginTop: "10px" }}> </div>        
 
-          <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , }}>
+          <Card className="bg-gray-dark" style={{ border: "2px solid #d7dde8", width: "110%", marginLeft: "-60px" , }}>
             <div id="bpmncontainer">
               <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
               <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>

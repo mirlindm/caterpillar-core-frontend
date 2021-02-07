@@ -16,6 +16,7 @@ class NavigationBar extends Component {
                         <ul className="navbar-nav">
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
                             <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>                                                                          
+                            {/* <li><Link to={"/modeler"} className="nav-link">BPMN</Link></li>                                                                           */}
                             <NavDropdown title="Modeler" id="collasible-nav-dropdown">
                                 <NavDropdown.Item><Link to={"/compilation"}>Compilation Engine</Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to={"/interpretation"}>Interpretation Engine</Link></NavDropdown.Item>                                                 
