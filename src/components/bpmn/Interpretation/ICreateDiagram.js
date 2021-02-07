@@ -15,6 +15,7 @@ import './ICreateDiagram.css'
 import {INTERPRETATION_URL} from '../../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ProcessInstanceOperations from '../ProcessInstanceOperations';
 
 import {Alert, Card, Button, Accordion, Col, Row} from 'react-bootstrap';
 
@@ -671,7 +672,7 @@ class ICreateDiagram extends Component {
                   </Card.Body>
             </Card>
             {/* New changes End */}
-                                                                                      
+                <ProcessInstanceOperations/>                                                   
                 <NotificationContainer/>
                 {/* create some space from the footer */}
                 <div style={{marginBottom: "60px"}}></div>

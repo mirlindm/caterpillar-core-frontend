@@ -11,6 +11,10 @@ import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
 import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 
 import './IUploadDiagram.css';
+import {INTERPRETATION_URL} from '../../../Constants';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import ProcessInstanceOperations from '../ProcessInstanceOperations';
 
 import {Form, Alert, Button, Card, Accordion, Row, Col} from 'react-bootstrap';
 
@@ -116,122 +120,179 @@ class IUploadDiagram extends Component {
 
      // ************* Http Requests ****************
 
-    //POST1: post request to save/deploy the model
-    saveModelHandler = (event) => {
+     //POST1: post request to save/deploy the model
+     saveModelHandler = (event) => {
         event.preventDefault();
         this.setState({showInterpretProcessModelAccordion: true});
 
         // implement a method to run the request from the backend for POST Model - Interpretation Engine
         this.modeler.saveXML((err, xml) => {
 
-            console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-            if (!err) {
-              console.log(xml);
-              axios.post("http://localhost:3000/interpreter/models",{
-                bpmn: xml, // modeler.xml
-                //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                name: this.state.selectedFile.name,    
-                registryAddress: this.props.registryAddress
-                })
-                .then(response => {
-                if(response.data != null) {
-                    this.setState({                        
-                        // new
-                        BPMNINterpreter: response.data.BPMNINterpreter,
-                        IData: response.data.IData,
-                        IFactry: response.data.IFactry,
-                        IFlow: response.data.IFlow,
-                        iFactoryTHashes: response.data.transactionHashes.iFactoryTHashes,
-                        iFlowTHashes: response.data.transactionHashes.iFlowTHashes,
-                        interpreterTHash: response.data.transactionHashes.interpreterTHash,
-                        showInterpretProcessModelAccordion: true,
-                    })
-                    console.log(response);            
-                } else {
-                    console.log("Received Incorrect Response");  
-                    // this.setState({show: false});
-                }
-            })
-            .catch(e => console.log(e.toString()));
-            }
-        });                   
-    }
-
-    // //POST2:  http://localhost:3000/interpreter/
-    // interpreterRequestHandler= (event) => {
-    //     event.preventDefault();
-    //     this.setState({showInterpreterAccordion: true});
-
-    //     this.modeler.saveXML((err, xml) => {
-            
-    //         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-    //         if (!err) {
-    //           console.log(xml);
-    //           axios.post("http://localhost:3000/interpreter",{
-    //             bpmn: xml,
-    //             name: this.state.selectedFile.name,     
-    //             //name: xml.name, //or hardcoded: 'InsureIT Payment',
-    //             registryAddress: this.props.registryAddress,
-    //             })
-    //             .then(response => {
-    //             if(response.data != null) {
-    //                 this.setState({
-    //                     contractAddress: response.data.contractAddress,
-    //                     gasCost: response.data.gasCost,
-    //                     smartContractName: response.data.smartContractName,
-    //                     transactionHash: response.data.transactionHash,
-    //                     showInterpreterAccordion: true,                                            
-    //                 })
-    //                 console.log(response);            
-    //             } else {
-    //                 console.log("Received Incorrect Response");  
-    //                 // this.setState({show: false});
-    //             }
-    //         })
-    //         .catch(e => console.log(e.toString()));
-    //         }
-    //     });                
-    // }
-
-    // GET1: /interpreter/models
-    getInterpreterModelHandler = (event) => {        
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-        this.setState({showGetProcessModelsAccordion: true});
-
-            axios.get('http://localhost:3000/interpreter/models',
-            { 
-                headers: {
-                'registryAddress': this.props.registryAddress,
-                'accept': 'application/json',        
-                }                          
+        if(!this.props.registryAddress) {
+            NotificationManager.error("There is no Registry Specified", 'ERROR');
+        } else if(err) {
+            NotificationManager.error("There is an error with your BPM Model. Please provide a name for your Model", 'ERROR');
+        } else {
+            //console.log(xml);
+            axios.post(INTERPRETATION_URL + '/models',{
+            bpmn: xml, // modeler.xml
+            //name: xml.name, //or hardcoded: 'InsureIT Payment',
+            registryAddress: this.props.registryAddress
             })
             .then(response => {
-                //this.setState({getInterpreterModelHandlerSuccessMessage: response.data[response.data.length-1]});
-                this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true})
-            console.log(response.data);          
-            })
-            .catch(e => {
-                this.setState({getInterpreterModelHandlerErrorMessage: e.toString()})
-                console.log(e.toString())
+                console.log(response);            
+                if (response.status === 201) {
+                this.setState({                                             
+                // new
+                BPMNINterpreter: response.data.BPMNINterpreter,
+                IData: response.data.IData,
+                IFactry: response.data.IFactry,
+                IFlow: response.data.IFlow,
+                iFactoryTHashes: response.data.transactionHashes.iFactoryTHashes,
+                iFlowTHashes: response.data.transactionHashes.iFlowTHashes,
+                interpreterTHash: response.data.transactionHashes.interpreterTHash,
+                showInterpretProcessModelAccordion: true,
+                })
+                NotificationManager.success('Your model has been successfully deployed', response.statusText);
+                
+            } else {
+                console.log('ERROR', response);                 
+            }})
+            .catch(error => {
+                console.log(error);
+                let errorMessage;
+    
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }    
+                NotificationManager.warning(errorMessage, 'OOPS...');  
             });
+        }});                   
     }
 
-    // GET2: /interpreter/models/:mHash
-    getInterpreterModelMHashHandler = (event) => { 
-                       
-        let mHash = this.state.mHash;
-        this.setState({showRetrieveModelMetadataAccordion: true});
+    //POST2:  http://localhost:3000/interpreter/
+    interpreterRequestHandler= (event) => {
+        event.preventDefault();
+        this.setState({showInterpreterAccordion: true});
+
+        this.modeler.saveXML((err, xml) => {
         
-            axios.get(`http://localhost:3000/interpreter/models/`+mHash, 
-            {
-                headers: {
-                    'accept': 'application/json'
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+        
+        if(!this.props.registryAddress) {
+            NotificationManager.error("There is no Registry Specified", 'ERROR');
+          } else { 
+            //console.log(xml);
+            axios.post(INTERPRETATION_URL, {
+                bpmn: xml, // modeler.xml
+                //name: xml.name, //or hardcoded: 'InsureIT Payment',
+                registryAddress: this.props.registryAddress,
+                })
+            .then(response => {
+                console.log(response);
+
+                if (response.status === 201) {
+                    this.setState({
+                        contractAddress: response.data.contractAddress,
+                        gasCost: response.data.gasCost,
+                        smartContractName: response.data.smartContractName,
+                        transactionHash: response.data.transactionHash,
+                        showInterpreterAccordion: true,                                            
+                    })
+                    NotificationManager.success('New interpreter has been successfully created', response.statusText);           
+                } else {
+                      console.log('ERROR', response);
                 }
-            }).then(response => {
-                this.setState({                    
+            })
+            .catch(error => {
+                console.log(error);
+                let errorMessage;
+
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }
+                NotificationManager.warning(errorMessage, 'OOPS...'); 
+            });            
+            }});                
+    }
+
+   // GET1: /interpreter/models
+   getInterpreterModelHandler = (event) => {        
+
+    this.setState({showGetProcessModelsAccordion: true});
+
+    if(!this.props.registryAddress) {
+        NotificationManager.error("There is no Registry Specified", 'ERROR');
+      } else {
+        axios.get(INTERPRETATION_URL +'/models',
+        { 
+            headers: {
+            'registryAddress': this.props.registryAddress,
+            'accept': 'application/json',        
+            }                          
+        })
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true});
+                NotificationManager.success('Process Models have been successfully fetched', response.statusText);
+            } else {
+                console.log('ERROR', response);
+            }})
+        .catch(error => {               
+            console.log(error);
+            let errorMessage;
+
+            if (error.response) {
+                this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+                errorMessage = "The data entered is invalid or some unknown error occurred!";
+                console.log(error.request);
+            } else if (error.request) {
+                this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+                errorMessage = "The request was made but no response was received";
+                console.log(error.request);
+            } else {
+                this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+                errorMessage = error.message;
+                console.log('Error', error.message);
+            }
+            NotificationManager.warning(errorMessage, 'OOPS...');                  
+        });
+      }           
+    }
+
+    //http://localhost:3000/interpreter/models/MHash    
+    getInterpreterModelMHashHandler = (event) => {
+            
+    let mHash = this.state.mHash;
+
+    this.setState({showRetrieveModelMetadataAccordion: true});
+
+    if(mHash === '') {
+        NotificationManager.error("Please provide ID of the Process Model you want to fetch!", 'ERROR');
+      } else {
+        axios.get(INTERPRETATION_URL + '/models/' + mHash, 
+        {
+            headers: {
+                'accept': 'application/json'
+            }
+        }).then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                this.setState({
                     getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
                     getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
                     getInterpreterModelMHashHandlerProcessID: response.data.processID,
@@ -241,30 +302,47 @@ class IUploadDiagram extends Component {
                     getInterpreterModelMHashHandlerIData: response.data.iData,
                     getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
                     getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
-                    retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),            
-                    })
-                console.log(response); 
-                console.log(this.state.getInterpreterModelMHashHandlerBpmnModel);
-                this.modeler2 = new BpmnModeler({
-                  container: "#bpmnview2",
-                  keyboard: {
-                    bindTo: window
-                  },
-                  propertiesPanel: {
-                    parent: "#propview2"
-                  },
-                  additionalModules: [propertiesPanelModule, propertiesProviderModule],
-                  moddleExtensions: {
-                    camunda: camundaModdleDescriptor
-                  }
-                });
+                    retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),               
+                  })
+                  NotificationManager.success(`Process Model metadata for: ${response.data._id} has been successfully fetched`, response.statusText);                                            
+                    this.modeler2 = new BpmnModeler({
+                        container: "#bpmnview2",
+                        keyboard: {
+                        bindTo: window
+                        },
+                        propertiesPanel: {
+                        parent: "#propview2"
+                        },
+                        additionalModules: [propertiesPanelModule, propertiesProviderModule],
+                        moddleExtensions: {
+                        camunda: camundaModdleDescriptor
+                        }
+                    });
                 this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
+            } else {
+                console.log('ERROR', response);
+            }})
+          .catch(error => {              
+              console.log(error);
+                let errorMessage;
 
-                })
-                .catch(e => {
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: e.toString()})
-                    console.log(e.toString())
-                });
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+                    console.log(error.response);
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+                    console.log('Error', error.message);
+                }
+
+                NotificationManager.warning(errorMessage, 'OOPS...');  
+          });
+      }         
     }
 
     openBpmnDiagramBasedOnmHash = async (xml) => {        
@@ -272,14 +350,14 @@ class IUploadDiagram extends Component {
           const result = await this.modeler2.importXML(xml);
           const { warnings } = result;
           console.log(warnings);
-  
+
           var canvas = this.modeler2.get("canvas");
-  
+
           canvas.zoom("fit-viewport");
-  
+
           //this.setState({retrieveModelMetadataBpmnModel: []});
           this.modeler2 = null;
-  
+
         } catch (err) {
           console.log(err.message, err.warnings);
         }
@@ -613,10 +691,10 @@ class IUploadDiagram extends Component {
                     </Card.Body>
                 </Card>
                 {/* New changes End */}                                                                        
-
-                                            
-                        {/* create some space from the footer */}
-                        <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
+                    <ProcessInstanceOperations />
+                    <NotificationContainer />                
+                    {/* create some space from the footer */}
+                    <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
 
                 </Aux> }
             </Aux>

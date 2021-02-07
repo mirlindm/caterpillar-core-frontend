@@ -251,19 +251,19 @@ class AccessAllocation extends Component {
                         <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
                         <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
                         <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
-                      </Breadcrumb> 
+                      </Breadcrumb>
+
+                          {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
+                          {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
+                          {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
                     </Col>                                                                  
                   </Row> <br/>                                                                       
                 </Card.Body>
               </Card>
-                                    
-                                    
-                                                
-              {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
-              {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
-              {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
-
-              <Card style={{border: "3px solid #d7dde8", marginTop: "10px" }}>
+                                                                                                                        
+               
+              <hr/>
+              <Card style={{border: "3px solid #d7dde8", }}>
                 <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                   Please Configure the remaining operations: Nomination, Release, Vote
                 </Alert>  
@@ -278,8 +278,8 @@ class AccessAllocation extends Component {
                 </Card.Body>
               </Card>
 
-
-               <Card border="primary" style={{marginTop: "10px"}}>
+              <hr/>
+               <Card border="primary" >
                 <Alert variant="primary" size="sm"> 
                     Query Policy Address
                 </Alert>  
@@ -465,13 +465,26 @@ class AccessAllocation extends Component {
                   </Card.Body>
                 </Card>    
 
-                <hr/>   
+                <hr/>
 
-                <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>
-                  <Breadcrumb.Item onClick={this.changeBreadCrumbNominateHandler}>Nominate</Breadcrumb.Item>
-                  <Breadcrumb.Item onClick={this.changeBreadCrumbReleaseHandler}>Release</Breadcrumb.Item>
-                  <Breadcrumb.Item onClick={this.changeBreadCrumbVoteHandler}>Vote</Breadcrumb.Item>
-                </Breadcrumb>                   
+                 <Card style={{border: "3px solid #d7dde8", }}>
+                    <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                      Nominate, Release or Vote Policies
+                    </Alert>  
+                    <Card.Body>
+                      <Row style={{textAlign: "center"}}>  
+                        <Col>
+                        <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>
+                          <Breadcrumb.Item onClick={this.changeBreadCrumbNominateHandler}>Nominate</Breadcrumb.Item>
+                          <Breadcrumb.Item onClick={this.changeBreadCrumbReleaseHandler}>Release</Breadcrumb.Item>
+                          <Breadcrumb.Item onClick={this.changeBreadCrumbVoteHandler}>Vote</Breadcrumb.Item>
+                        </Breadcrumb>    
+                        </Col>                                                                  
+                      </Row> <br/>                                                                       
+                    </Card.Body>
+                  </Card>   
+
+               
 
               { this.state.breadCrumbNominate ? 
                 <Card border="success">
