@@ -258,7 +258,7 @@ class ProcessInstanceOperations extends Component {
                 { this.state.breadCrumbCreateProcessInstance ?                                            
                 <Aux> 
                     <br/>           
-                    <Card border="primary">
+                    <Card style={{border: "1px solid #d7dde8"}}>
                         <Alert variant="primary" size="sm"> 
                             Create Process Instance
                         </Alert>  
@@ -301,7 +301,7 @@ class ProcessInstanceOperations extends Component {
             { this.state.breadCrumbQueryProcessInstances ?                                           
             <Aux>
                 <br/>
-                <Card border="primary">
+                <Card style={{border: "1px solid #d7dde8"}}>
                     <Alert variant="primary" size="sm"> 
                         Query Process Instances
                     </Alert>  
@@ -343,7 +343,7 @@ class ProcessInstanceOperations extends Component {
             { this.state.breadCrumbQueryProcessState ?
             <Aux> 
                 <br/>
-                <Card border="primary">
+                <Card style={{border: "1px solid #d7dde8"}}>
                     <Alert variant="primary" size="sm"> 
                         Query Process Instances
                     </Alert>  
@@ -456,7 +456,7 @@ class ProcessInstanceOperations extends Component {
             { this.state.breadCrumbExecuteProcessInstance ? 
             <Aux>
                 <br/>
-                <Card border="primary">
+                <Card style={{border: "1px solid #d7dde8"}}>
                     <Alert variant="primary" size="sm"> 
                         Query Process Instances
                     </Alert>  

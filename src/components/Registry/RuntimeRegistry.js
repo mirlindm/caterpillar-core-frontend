@@ -216,7 +216,7 @@ class RuntimeRegistry extends Component {
                             
                         
                             <Card.Footer style={{"textAlign": "center",}}>                              
-                                <Button  variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
+                                <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
                                     <FontAwesomeIcon icon={faPlus} /> Create New Registry
                                 </Button> 
                             </Card.Footer>                                                        
@@ -250,11 +250,11 @@ class RuntimeRegistry extends Component {
                             
                             </Card.Body>
                             <Card.Footer style={{"textAlign": "center"}}>
-                                <Button variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
+                                <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
                                     Load Registry
                                 </Button> {' '}
 
-                                <Button variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="reset">
+                                <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="reset">
                                     Reset
                                 </Button>
                             </Card.Footer>
@@ -355,11 +355,11 @@ class RuntimeRegistry extends Component {
                         </Accordion>
 
                          <div style={{marginTop: "20px", textAlign: "center"}}> 
-                            <Button variant="info" onClick={this.goToModellerHandler}>
+                            <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToModellerHandler}>
                                 Proceed to Modeller Component
                             </Button>
                             {'  '}
-                            <Button variant="info" onClick={this.goToAccessPoliciesrHandler}>
+                            <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToAccessPoliciesrHandler}>
                                 Proceed to Access Policies
                             </Button> 
                         </div>                                                        

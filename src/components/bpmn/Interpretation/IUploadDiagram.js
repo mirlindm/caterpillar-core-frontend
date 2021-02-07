@@ -383,12 +383,12 @@ class IUploadDiagram extends Component {
                         :
                         // {/* where the BPMN Model will be rendered */}
                         <Aux>
-                            <Button className="link-button" variant="primary" type="submit" 
+                            <Button className="new-buttons" variant="primary" type="submit" 
                                 style={{ marginBottom: "20px", width: "410px", marginLeft: "350px", marginRight: "350px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}>
                                 View Your Model
                             </Button>
 
-                            <Card className="bg-gray-dark" style={{border: "2px solid #008B8B", width: "110%", marginLeft: "-60px", height: "100%"}}>
+                            <Card className="bg-gray-dark" style={{border: "2px solid #757f9a", width: "110%", marginLeft: "-60px", height: "100%"}}>
                                 <div id="bpmncontainer">
                                     <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
                                     <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
@@ -409,7 +409,7 @@ class IUploadDiagram extends Component {
                  
                     {/* New changes Start - POST 1 */}
                     <br/>
-                    <Card border="primary">
+                    <Card style={{border: "1px solid #d7dde8"}}>
                         <Alert variant="primary" size="sm"> 
                             Deploy Process Model
                         </Alert>  
@@ -417,7 +417,7 @@ class IUploadDiagram extends Component {
                             <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
                                 <Col>                                        
                                 <Button onClick={this.saveModelHandler} variant="primary" type="submit" 
-                                    className="link-button" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
+                                   className="new-buttons" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
                                     Deploy Process Model 
                                 </Button>
                                 </Col>
@@ -492,7 +492,7 @@ class IUploadDiagram extends Component {
                                                 
                     {/* New changes Start - GET 1 */}
                     <br/>
-                    <Card border="primary">
+                    <Card style={{border: "1px solid #d7dde8"}}>
                         <Alert variant="primary" size="sm"> 
                             Query Process Models
                         </Alert>  
@@ -501,7 +501,7 @@ class IUploadDiagram extends Component {
                             <Col>                                        
                                 <Button onClick={this.getInterpreterModelHandler} 
                                     variant="primary" type="submit" 
-                                    className="link-button" style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}> 
+                                    className="new-buttons" style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}> 
                                     Query Process Models
                                 </Button>  
                             </Col>
@@ -528,7 +528,7 @@ class IUploadDiagram extends Component {
 
                 {/* New changes Start - GET 2 */}
                 <br/>
-                <Card border="primary">
+                <Card style={{border: "1px solid #d7dde8"}}>
                     <Alert variant="primary" size="sm"> 
                         Fetch Process Model Metadata
                     </Alert>  
@@ -541,7 +541,7 @@ class IUploadDiagram extends Component {
                             />{'      '}
 
                             <Button onClick={this.getInterpreterModelMHashHandler} variant="primary" type="submit" 
-                                className="link-button"
+                                className="new-buttons"
                                 style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                                 > Retrieve Model Metadata
                             </Button>
@@ -661,7 +661,7 @@ class IUploadDiagram extends Component {
                                             <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center" ,fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
                                         </Accordion.Collapse>
                                     </Card>
-                                    <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                                    <Card className="bg-gray-dark" style={{ border: "2px solid #757f9a", width: "110%", marginLeft: "-60px" , height: "100%" }}>
                                         <div id="bpmncontainer">
                                             <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
                                             <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>

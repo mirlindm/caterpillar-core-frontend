@@ -13,17 +13,17 @@
 }
 
 .link-button {
-    border: 1px solid #008B8B;
-    border-radius: 7px;
-    padding: 7px;
-    color: #008B8B;
+    background-color: #757f9a !important;
+    border: 1px solid #d7dde8 !important;
+    
+    
 }
 
 .link-button:hover {
- text-decoration: none;
- color: white;
- background-color: #44bcd8;
- padding: 10px;
+    border: 0px solid #d7dde8;
+    color: #757f9a !important;
+    text-decoration: underline;    
+    background-color: #d7dde8 !important;    
 }
 
 /* .par3{

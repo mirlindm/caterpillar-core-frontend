@@ -166,7 +166,7 @@ class RoleBindingPolicy extends Component {
                   </Form.Group>
                   </Form>
                   <Button variant="primary"
-                          type="submit" className="link-button" onClick={this.parseAndDeployRBPolicyHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                          type="submit" className="new-buttons" onClick={this.parseAndDeployRBPolicyHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                           > Deploy RB Policy
                   </Button> <br/>
                   {/* Render Response */}

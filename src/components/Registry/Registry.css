@@ -12,3 +12,14 @@
     font-weight: bolder;
     font-size: large;
 }
+
+.new-buttons {
+    background-color: #757f9a !important;
+    border: 1px solid #d7dde8 !important;
+}
+.new-buttons:hover {
+    border: 0px solid #d7dde8;
+    color: #757f9a !important;
+    text-decoration: underline;    
+    background-color: #d7dde8 !important;
+}

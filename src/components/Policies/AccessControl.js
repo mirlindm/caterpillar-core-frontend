@@ -180,7 +180,7 @@ class AccessControl extends Component {
                     style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                     <Button variant="primary"
-                        type="submit" className="link-button" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                        type="submit" className="new-buttons" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                         > Get Access Control Metadata
                   </Button> <br/>
 

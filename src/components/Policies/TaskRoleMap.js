@@ -212,7 +212,7 @@ class TaskRoleMap extends Component {
                   </Form.Group>
                   </Form>
                   <Button variant="primary"
-                          type="submit" className="link-button" onClick={this.parseAndDeployTaskRoleMapHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                          type="submit" className="new-buttons" onClick={this.parseAndDeployTaskRoleMapHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                           > Deploy Task-Role Map
                   </Button> <br/>
                   {/* Render Response */}

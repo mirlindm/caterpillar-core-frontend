@@ -161,7 +161,7 @@ class InterpretationEngine extends Component {
                 </Card>
 
                 { this.state.createNewInterpreter === true ?                                        
-                    <Card style={{marginTop: "10px", border: "3px solid #d7dde8"}}>
+                    <Card style={{marginTop: "10px", border: "1px solid #d7dde8"}}> 
                         <Alert  style={{backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0",}} variant="success" size="sm"> 
                             Create New Interpreter
                         </Alert>  

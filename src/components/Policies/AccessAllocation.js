@@ -286,11 +286,11 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}}>
                       <Col>                        
-                        <Form.Label> Process Case </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Process Case </Form.Label>
                         <Form.Control required  name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>                      
                       <Col>                  
-                      <Button style={{marginTop: "29px"}} onClick={this.findPolicyAddresses} className="link-button" variant="primary">Find Policy Address</Button>
+                      <Button style={{marginTop: "29px"}} onClick={this.findPolicyAddresses} className="new-buttons" variant="primary">Find Policy Address</Button>
                       </Col>
                     </Row>
                     <Row>
@@ -364,15 +364,15 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label> Role Name </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Role Name </Form.Label>
                         <Form.Control required name="roleName" value={this.state.roleName} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Role Name" />
                       </Col>
                       <Col>
-                      <Form.Label> Process Case </Form.Label>
+                      <Form.Label style={{color: "#757f9a"}}> Process Case </Form.Label>
                         <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>
                       <Col>
-                      <Button style={{marginTop: "29px"}} onClick={this.findRoleState} variant="primary">Find Role State</Button>
+                      <Button style={{marginTop: "29px"}} onClick={this.findRoleState} className="new-buttons" variant="primary">Find Role State</Button>
                       </Col>
                     </Row>
                     <Row>
@@ -405,19 +405,19 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label> Process Case </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Process Case </Form.Label>
                         <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Process Case" />
                       </Col>
                       <Col>
-                        <Form.Label> Nominee Role </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Nominee Role </Form.Label>
                         <Form.Control required name="nomineeRole" value={this.state.nomineeRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Role" />
                       </Col>
                       <Col>
-                        <Form.Label> Nominee Address </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Nominee Address </Form.Label>
                         <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
                       </Col>
                       <Col>
-                        <Button style={{marginTop: "29px"}} onClick={this.nominateCaseCreator} variant="primary">Nominate Case Creator</Button>
+                        <Button style={{marginTop: "29px"}} onClick={this.nominateCaseCreator} className="new-buttons" variant="primary">Nominate Case Creator</Button>
                       </Col>
                     </Row>
                     <Row>
@@ -450,15 +450,15 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label> Nominator Role </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Nominator Role </Form.Label>
                         <Form.Control required name="nominatorRole" value={this.state.nominatorRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Role" />
                       </Col>
                       <Col>
-                        <Form.Label> Nominee Role  </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Nominee Role  </Form.Label>
                         <Form.Control required name="nomineeRole" value={this.state.nomineeRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Role" />
                       </Col>
                       <Col>
-                        <Form.Label> Process Case  </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Process Case  </Form.Label>
                         <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Process the Case" />
                       </Col>
                     </Row>                    
@@ -485,7 +485,7 @@ class AccessAllocation extends Component {
                   </Card>   
 
                
-
+              <hr/>
               { this.state.breadCrumbNominate ? 
                 <Card border="success">
                   <Alert variant="success" size="sm"> 
@@ -494,15 +494,15 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label> Nominator Address </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Nominator Address </Form.Label>
                         <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Address" />
                       </Col>
                       <Col>
-                        <Form.Label> Nominee Address </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Nominee Address </Form.Label>
                         <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
                       </Col>
                       <Col>
-                        <Button style={{marginTop: "29px"}} onClick={this.nominate} variant="success">Nominate</Button>
+                        <Button style={{marginTop: "29px"}} onClick={this.nominate} className="new-buttons" variant="success">Nominate</Button>
                       </Col>
                     </Row>
                     <Row>
@@ -526,8 +526,9 @@ class AccessAllocation extends Component {
                   </Card.Body>
                 </Card> 
               : null }              
-
+                
               { this.state.breadCrumbRelease ? 
+              <Aux><hr/>  
                 <Card border="danger">
                   <Alert variant="danger" size="sm"> 
                     Release
@@ -535,19 +536,19 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label> Releaser/Nominator Address  </Form.Label>
+                        <Form.Label style={{color: "#757f9a"}}> Releaser/Nominator Address  </Form.Label>
                         <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Releaser Address" />
                       </Col>                      
                       <Col>
-                        <Button style={{marginTop: "29px"}} onClick={this.release} variant="danger">Release</Button>
+                        <Button style={{marginTop: "29px"}} onClick={this.release} className="new-buttons" variant="danger">Release</Button>
                       </Col>
                     </Row>                    
                   </Card.Body>
-                </Card>
+                </Card> </Aux>
               : null }
-                                                    
+                                           
               { this.state.breadCrumbVote ?
-              <Aux>
+              <Aux><hr/>  
                 <Card border="success">
                   <Alert variant="success" size="sm"> 
                     Vote
@@ -593,15 +594,15 @@ class AccessAllocation extends Component {
                 <Card.Body>
                   <Row style={{display: "flex", justifyContent: "space-around"}} >
                     <Col>
-                      <Form.Label> Endorser Role </Form.Label>
+                      <Form.Label style={{color: "#757f9a"}}> Endorser Role </Form.Label>
                       <Form.Control required name="endorserRole" value={this.state.endorserRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Role" />
                     </Col>
                     <Col>
-                      <Form.Label> Endorser Address </Form.Label>
+                      <Form.Label style={{color: "#757f9a"}}> Endorser Address </Form.Label>
                       <Form.Control required name="endorserAddress" value={this.state.endorserAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Address" />
                     </Col> 
                     <Col>
-                      <Button style={{marginTop: "29px"}} onClick={this.vote} variant="success">Vote</Button>  
+                      <Button style={{marginTop: "29px"}} onClick={this.vote} className="new-buttons" variant="success">Vote</Button>  
                     </Col>
                   </Row>
                 </Card.Body>
