@@ -376,89 +376,9 @@ class ICreateDiagram extends Component {
     render = () => {
         return(
             <Aux>
-                  {/* New changes Start - POST 2 */}
-                  <br/>
-                <Card border="primary">
-                    <Alert variant="primary" size="sm"> 
-                        Create New Interpreter
-                    </Alert>  
-                    <Card.Body>
-                        <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                            <Col>                                        
-                                <Button onClick={this.interpreterRequestHandler} 
-                                    variant="primary" type="submit" 
-                                    className="link-button" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}
-                                    > Create New Interpreter
-                                </Button>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col> <br/>                    
-                                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                                    <Card>
-                                        <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            1. Contract Address of Interpreter
-                                        </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="0">
-                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <pre> {this.state.contractAddress.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.contractAddress} </pre>  </span>  </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
-
-                                    <Card>
-                                        <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                            2. Gas Cost
-                                        </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="1">
-                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.gasCost.length === 0 ?  <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.gasCost} </pre>  </span>  </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
-
-                                    <Card>
-                                        <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                            3. Smart Contract Name
-                                        </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="2">
-                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.smartContractName.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.smartContractName} </pre>  </span>  </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
-
-                                    <Card>
-                                        <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                            4. Transaction Hash
-                                        </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="3">
-                                        <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.transactionHash.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span>  : this.state.transactionHash} </pre> </span> </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>                
-                                </Accordion>
-                            </Col>  
-                        </Row>                    
-                    </Card.Body>
-                </Card>
-            {/* New changes End */}  
-                <div className="container text-white" style={{marginTop: "20px", marginBottom: "20px", textAlign: "center", marginLeft: "120px", marginRight: "120px",}}>
                 
-                <Alert style={{marginLeft: "-15px", 
-                    fontSize: "20px",                   
-                    marginBottom: "30px", 
-                    borderRadius: "10px", 
-                    marginRight: "225px",  
-                    backgroundColor: "#d7dde8",
-                    border: "1px solid #d7dde8",
-                    color: "#A52A2A"}}            
-                    size="sm" variant="info">
-                    Create and Save Your Model Below 
-                </Alert>                 
                 <div style={{marginTop: "10px"}}> </div>                
-                </div>
+                
                                 
                 <Card className="bg-gray-dark" style={{ border: "2px solid #008B8B", width: "110%", marginLeft: "-60px" , }}>
                     <div id="bpmncontainer">
@@ -550,7 +470,7 @@ class ICreateDiagram extends Component {
                 </Card>
                 {/* New changes End */}                 
 
-            {/* New changes Start */}
+            {/* New changes Start - GET 1 */}
             <br/>
             <Card border="primary">
                 <Alert variant="primary" size="sm"> 

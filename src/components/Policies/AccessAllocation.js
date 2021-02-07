@@ -240,33 +240,46 @@ class AccessAllocation extends Component {
     render() {
         return(
             <Aux>
-                
-                  <Alert variant="warning" size="sm" style={{textAlign: "center", width: "400px", marginLeft: "355px"}} > 
-                    Please Configure the Policies below:
-                  </Alert>
-                  
-                  <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
-                    <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
-                    <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
-                    <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
-                  </Breadcrumb>                                     
+              <Card style={{border: "3px solid #d7dde8", }}>
+                <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                  Please Configure the Policies below:
+                </Alert>  
+                <Card.Body>
+                  <Row style={{textAlign: "center"}}>  
+                    <Col>
+                      <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
+                        <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
+                      </Breadcrumb> 
+                    </Col>                                                                  
+                  </Row> <br/>                                                                       
+                </Card.Body>
+              </Card>
+                                    
+                                    
                                                 
-                {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
-                {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
-                {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
+              {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
+              {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
+              {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
 
-                <hr/>
+              <Card style={{border: "3px solid #d7dde8", marginTop: "10px" }}>
+                <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                  Please Configure the remaining operations: Nomination, Release, Vote
+                </Alert>  
+                <Card.Body>
+                  <Row style={{textAlign: "center"}}>  
+                    <Col>
+                      <Alert variant="light" style={{ textAlign: "center",}} > 
+                        Select one of the Process Cases Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </span> 
+                      </Alert>
+                    </Col>                                                                  
+                  </Row> <br/>                                                                       
+                </Card.Body>
+              </Card>
 
-                <Alert variant="warning" size="sm" style={{ textAlign: "center", width: "400px", marginLeft: "355px"}} > 
-                    Please Configure the remaining operations: Nomination, Release, Vote
-                </Alert>
 
-                <Alert variant="light" style={{ textAlign: "center",}} > 
-                    Select one of the Process Cases Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </span> 
-                </Alert>
-
-
-               <Card border="primary">
+               <Card border="primary" style={{marginTop: "10px"}}>
                 <Alert variant="primary" size="sm"> 
                     Query Policy Address
                 </Alert>  

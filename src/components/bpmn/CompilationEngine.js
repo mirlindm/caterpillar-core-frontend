@@ -24,7 +24,7 @@ class CompilationEngine extends Component {
 
     onChangeCreateModelHandler = (event) => {
         console.log("1: " + event.target.name + " is initially " + event.target.value);
-        let uploadCheckBox =  document.getElementById("upload");
+        //let uploadCheckBox =  document.getElementById("upload");
         //let createCheckBox =  document.getElementById("create");
         
         if(this.state.uploadModel === true) {
@@ -33,7 +33,7 @@ class CompilationEngine extends Component {
             this.setState({
                 [event.target.name]: !event.target.value
             });
-            uploadCheckBox.style.pointerEvents = "none";                   
+            //uploadCheckBox.style.pointerEvents = "none";                   
         }
         // if(this.state.createModel === true && this.state.uploadModel === false) {
         //     uploadCheckBox.style.pointerEvents = "none";
@@ -63,7 +63,7 @@ class CompilationEngine extends Component {
             <Aux>
                 <Card style={{border: "3px solid #d7dde8", }}>
                   <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "20px", fontWeight: "bold",}} size="sm"> 
-                    Create a new model or upload an existing one
+                    Create a new model or upload an existing one with the Compilation Engine
                  </Alert>  
                   <Card.Body>
                   <Row style={{textAlign: "center"}}>  

@@ -146,15 +146,16 @@ class CCreateDiagram extends Component {
 
           console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
-          if (!err) {
+          if (!this.props.registryAddress) {
+            NotificationManager.error("There is no Registry Specified", 'ERROR')
+          } else if (!err) {
             console.log(xml);
             axios.post(COMPILATION_URL,{
               bpmn: xml,                       
               registryAddress: this.props.registryAddress,
               })
               .then(response => {
-                console.log(response);
-                
+                console.log(response);                
                 if (response.status === 201) {
                   this.setState({id: response.data, showIDAccordion: true});
                   NotificationManager.success('Process Model has been successfully deployed', response.statusText);
@@ -188,8 +189,9 @@ class CCreateDiagram extends Component {
           this.modeler.saveXML((err, xml) => {
                         
             console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-            if (!err) {
+            if (!this.props.registryAddress) {
+              NotificationManager.error("There is no Registry Specified", 'ERROR')
+            } else if (!err) {
               console.log(xml);
               axios.post(COMPILATION_URL + '/compile', 
               {
@@ -246,7 +248,7 @@ class CCreateDiagram extends Component {
 
         if (!this.props.registryAddress) {
           NotificationManager.error("There is no Registry Specified", 'ERROR')
-        } else {axios.get(COMPILATION_URL, {
+        } else { axios.get(COMPILATION_URL, {
           headers: {
             'registryAddress': this.props.registryAddress,
             'Accept': 'application/json',
@@ -274,8 +276,7 @@ class CCreateDiagram extends Component {
 
                 NotificationManager.warning(errorMessage, 'OOPS...');
           });
-        }
-          
+        }          
       }
 
       // GET 2 /models/:mHash or processId as a parameter 
@@ -415,9 +416,7 @@ class CCreateDiagram extends Component {
 
                   NotificationManager.warning(errorMessage, 'OOPS...');
             });
-
-        }
-       
+        }       
       }
 
       // Get Request 3: queryProcessInstancesHandler
@@ -551,7 +550,7 @@ class CCreateDiagram extends Component {
             </div>          
           </Card>
           
-          {/* New changes Start */}
+          {/* New changes Start - POST 1 */}
           <br/>
           <Card border="primary">
                 <Alert variant="primary" size="sm"> 
@@ -664,7 +663,7 @@ class CCreateDiagram extends Component {
                 </Card>
           {/* New changes End */}         
 
-          {/* New changes Start */}
+          {/* New changes Start - GET 1 */}
           <br/>
           <Card border="primary">
                 <Alert variant="primary" size="sm"> 
@@ -699,10 +698,8 @@ class CCreateDiagram extends Component {
                   </Card.Body>
                 </Card>
           {/* New changes End */}
-                  
-                
-
-        {/* New changes Start */}
+                                  
+          {/* New changes Start - GET 2 */}
           <br/>
           <Card border="primary">
                 <Alert variant="primary" size="sm"> 
@@ -999,9 +996,9 @@ class CCreateDiagram extends Component {
                   </Button>
                   <p> Render Response for PUT 1</p> <br/> <br/>                                                      
                                                                                             
-        {/* create some space from the footer */} 
-        <NotificationContainer/>
+        {/* create some space from the footer */}         
         <div style={{marginTop: "0px", paddingTop: "10px"}}></div>
+        <NotificationContainer/>
       </Aux>      
     );
   };
