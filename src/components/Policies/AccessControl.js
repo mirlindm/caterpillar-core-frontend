@@ -140,15 +140,14 @@ class AccessControl extends Component {
     render(){
         return(
             <Aux>
-                 {/* Access Control Configuration - POST 3 */}
-                 <br/> <hr/>
-                <div  className="Content"> 
+                 {/* Access Control Configuration - POST 3 */}                 
+                <div  className="ContentUnique"> 
                   <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
-                      Do you want to create new Access Control
+                      Create new Access Control
                   </p>
               
                   <Dropdown>
-                      <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                      <Dropdown.Toggle style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} id="dropdown-basic">
                           Select from menu
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
@@ -170,14 +169,14 @@ class AccessControl extends Component {
                           </Accordion.Collapse>
                         </Card>            
                     </Accordion> <br/>
-                    <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Access Control Address in the Input Field.
-                  </Alert>  
+                    {/* <Alert size="sm" 
+                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please provide the Access Control Address in the Input Field
+                  </Alert>   */}
                   {/* Access Control Configuration - GET 3 */}
                   <Form.Control required type="text" placeholder="Enter the Access Control Address" 
                     name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                     <Button variant="primary"
                         type="submit" className="new-buttons" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
@@ -186,14 +185,14 @@ class AccessControl extends Component {
 
                     </>
                 : this.state.createAccessControl === false ? <>
-                  <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Access Control Address in the Input Field.
-                  </Alert>  
+                  {/* <Alert size="sm"
+                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please provide the Access Control Address in the Input Field
+                  </Alert>   */}
                   {/* Access Control Configuration - GET 3 */}
                   <Form.Control required type="text" placeholder="Enter the Access Control Address" 
                     name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                    <Button variant="primary"
                         type="submit" className="link-button" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}

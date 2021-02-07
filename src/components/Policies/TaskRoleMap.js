@@ -168,14 +168,14 @@ class TaskRoleMap extends Component {
             <Aux>
                  {/* Post Request 5: Task-Role Map */}
                   {/* Task-Role Map Configuration - POST 5 */}
-                  <br/> <hr/>
-                <div  className="Content"> 
+                <hr/>
+                <div  className="ContentUnique"> 
                   <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
-                      Do you want to create new Task-Role Mapping?
+                      Create new Task-Role Mapping
                   </p>
               
                   <Dropdown>
-                      <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                      <Dropdown.Toggle style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} id="dropdown-basic">
                           Select from menu
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
@@ -188,8 +188,8 @@ class TaskRoleMap extends Component {
                   <Form>
                   <Form.Group controlId="exampleForm.ControlTextarea1">                    
                     <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Task-Role Map in the Inputs Below
+                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please provide the Task-Role Map Policy in the Inputs Below
                   </Alert> 
                   <Form.Control onChange={this.taskRoleMapChangeHandler} as="textarea" rows={4} /> 
                   {/* <Form.Control required type="text" placeholder="Enter the Task Index" 
@@ -216,7 +216,7 @@ class TaskRoleMap extends Component {
                           > Deploy Task-Role Map
                   </Button> <br/>
                   {/* Render Response */}
-                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                  <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                   <Card>
                     <Card.Header>
                       <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -230,14 +230,14 @@ class TaskRoleMap extends Component {
                       </Accordion.Collapse>
                     </Card>            
                   </Accordion> <br/>
-                  <Alert variant="warning" size="sm"
+                  {/* <Alert variant="warning" size="sm"
                         style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
                         Please, provide the Task-Role Map Address in the Input Field
-                  </Alert>  
+                  </Alert>   */}
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
                     name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                   <Button variant="primary"
                           type="submit" className="link-button" onClick={this.findRoleTaskMapMetadata} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
@@ -246,14 +246,14 @@ class TaskRoleMap extends Component {
                    <br/>                    
                     </>
                 : this.state.createTRMap === false ? <>
-                  <Alert variant="warning" size="sm"
+                  {/* <Alert variant="warning" size="sm"
                         style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
                         Please, provide the Task-Role Map Address in the Input Field
-                  </Alert>  
+                  </Alert>   */}
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
                     name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                   <Button variant="primary"
                           type="submit" className="link-button" onClick={this.findRoleTaskMapMetadata} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}

@@ -139,14 +139,14 @@ class RoleBindingPolicy extends Component {
         return(
             <Aux>
                 {/* Policy Binding Configuration - POST 4 */}
-                <br/> <hr/>
-                <div  className="Content"> 
+                <hr/>
+                <div  className="ContentUnique"> 
                   <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
-                      Do you want to create new Role Binding Policy
+                      Create new Role Binding Policy
                   </p>
               
                   <Dropdown>
-                      <Dropdown.Toggle variant="outline-info" id="dropdown-basic">
+                      <Dropdown.Toggle style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} id="dropdown-basic">
                           Select from menu
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
@@ -158,9 +158,9 @@ class RoleBindingPolicy extends Component {
                 {this.state.createRBPolicy === true ? <>                                   
                   <Form>
                   <Form.Group controlId="exampleForm.ControlTextarea1">                    
-                    <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Role Binding Policy Address in the Input Field
+                    <Alert size="sm"
+                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please provide the Role Binding Policy in the Input Field 
                   </Alert>  
                     <Form.Control onChange={this.textAreaChangeHandler} as="textarea" rows={10} />
                   </Form.Group>
@@ -170,7 +170,7 @@ class RoleBindingPolicy extends Component {
                           > Deploy RB Policy
                   </Button> <br/>
                   {/* Render Response */}
-                  <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                  <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                   <Card>
                     <Card.Header>
                       <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -182,14 +182,14 @@ class RoleBindingPolicy extends Component {
                       </Accordion.Collapse>
                     </Card>            
                   </Accordion> <br/>
-                  <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Role Binding Policy Address in the Input Field
-                  </Alert>  
+                  {/* <Alert size="sm"
+                       style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please provide the Role Binding Policy Address in the Input Field
+                  </Alert>   */}
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
                     name="policyBindingAddress" onChange={this.rbPolicyChangeHandler} 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                   <Button variant="primary"
                           type="submit" className="link-button" onClick={this.findRBPolicyMetadataHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
@@ -198,14 +198,14 @@ class RoleBindingPolicy extends Component {
                    <br/>                    
                     </>
                 : this.state.createRBPolicy === false ? <>
-                  <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Role Binding Policy Address in the Input Field
-                  </Alert>  
+                  {/* <Alert size="sm"
+                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
+                        Please provide the Role Binding Policy Address in the Input Field
+                  </Alert>   */}
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
                     name="policyBindingAddress" onChange={this.rbPolicyChangeHandler} 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                   /> <br/>
                   <Button variant="primary"
                           type="submit" className="link-button" onClick={this.findRBPolicyMetadataHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
