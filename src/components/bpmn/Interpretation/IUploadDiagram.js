@@ -230,138 +230,138 @@ class IUploadDiagram extends Component {
     }
 
    // GET1: /interpreter/models
-   getInterpreterModelHandler = (event) => {        
+//    getInterpreterModelHandler = (event) => {        
 
-    this.setState({showGetProcessModelsAccordion: true});
+//     this.setState({showGetProcessModelsAccordion: true});
 
-    if(!this.props.registryAddress) {
-        NotificationManager.error("There is no Registry Specified", 'ERROR');
-      } else {
-        axios.get(INTERPRETATION_URL +'/models',
-        { 
-            headers: {
-            'registryAddress': this.props.registryAddress,
-            'accept': 'application/json',        
-            }                          
-        })
-        .then(response => {
-            console.log(response);
-            if (response.status === 200) {
-                this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true});
-                NotificationManager.success('Process Models have been successfully fetched', response.statusText);
-            } else {
-                console.log('ERROR', response);
-            }})
-        .catch(error => {               
-            console.log(error);
-            let errorMessage;
+//     if(!this.props.registryAddress) {
+//         NotificationManager.error("There is no Registry Specified", 'ERROR');
+//       } else {
+//         axios.get(INTERPRETATION_URL +'/models',
+//         { 
+//             headers: {
+//             'registryAddress': this.props.registryAddress,
+//             'accept': 'application/json',        
+//             }                          
+//         })
+//         .then(response => {
+//             console.log(response);
+//             if (response.status === 200) {
+//                 this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true});
+//                 NotificationManager.success('Process Models have been successfully fetched', response.statusText);
+//             } else {
+//                 console.log('ERROR', response);
+//             }})
+//         .catch(error => {               
+//             console.log(error);
+//             let errorMessage;
 
-            if (error.response) {
-                this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
-                errorMessage = "The data entered is invalid or some unknown error occurred!";
-                console.log(error.request);
-            } else if (error.request) {
-                this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
-                errorMessage = "The request was made but no response was received";
-                console.log(error.request);
-            } else {
-                this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
-                errorMessage = error.message;
-                console.log('Error', error.message);
-            }
-            NotificationManager.warning(errorMessage, 'OOPS...');                  
-        });
-      }           
-    }
+//             if (error.response) {
+//                 this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+//                 errorMessage = "The data entered is invalid or some unknown error occurred!";
+//                 console.log(error.request);
+//             } else if (error.request) {
+//                 this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+//                 errorMessage = "The request was made but no response was received";
+//                 console.log(error.request);
+//             } else {
+//                 this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
+//                 errorMessage = error.message;
+//                 console.log('Error', error.message);
+//             }
+//             NotificationManager.warning(errorMessage, 'OOPS...');                  
+//         });
+//       }           
+//     }
 
     //http://localhost:3000/interpreter/models/MHash    
-    getInterpreterModelMHashHandler = (event) => {
+    // getInterpreterModelMHashHandler = (event) => {
             
-    let mHash = this.state.mHash;
+    // let mHash = this.state.mHash;
 
-    this.setState({showRetrieveModelMetadataAccordion: true});
+    // this.setState({showRetrieveModelMetadataAccordion: true});
 
-    if(mHash === '') {
-        NotificationManager.error("Please provide ID of the Process Model you want to fetch!", 'ERROR');
-      } else {
-        axios.get(INTERPRETATION_URL + '/models/' + mHash, 
-        {
-            headers: {
-                'accept': 'application/json'
-            }
-        }).then(response => {
-            console.log(response);
-            if (response.status === 200) {
-                this.setState({
-                    getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
-                    getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
-                    getInterpreterModelMHashHandlerProcessID: response.data.processID,
-                    getInterpreterModelMHashHandlerProcessName: response.data.prpcessName,
-                    getInterpreterModelMHashHandlerID: response.data._id,
-                    getInterpreterModelMHashHandlerContractInfo: response.data.contractInfo,
-                    getInterpreterModelMHashHandlerIData: response.data.iData,
-                    getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
-                    getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
-                    retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),               
-                  })
-                  NotificationManager.success(`Process Model metadata for: ${response.data._id} has been successfully fetched`, response.statusText);                                            
-                    this.modeler2 = new BpmnModeler({
-                        container: "#bpmnview2",
-                        keyboard: {
-                        bindTo: window
-                        },
-                        propertiesPanel: {
-                        parent: "#propview2"
-                        },
-                        additionalModules: [propertiesPanelModule, propertiesProviderModule],
-                        moddleExtensions: {
-                        camunda: camundaModdleDescriptor
-                        }
-                    });
-                this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
-            } else {
-                console.log('ERROR', response);
-            }})
-          .catch(error => {              
-              console.log(error);
-                let errorMessage;
+    // if(mHash === '') {
+    //     NotificationManager.error("Please provide ID of the Process Model you want to fetch!", 'ERROR');
+    //   } else {
+    //     axios.get(INTERPRETATION_URL + '/models/' + mHash, 
+    //     {
+    //         headers: {
+    //             'accept': 'application/json'
+    //         }
+    //     }).then(response => {
+    //         console.log(response);
+    //         if (response.status === 200) {
+    //             this.setState({
+    //                 getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
+    //                 getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
+    //                 getInterpreterModelMHashHandlerProcessID: response.data.processID,
+    //                 getInterpreterModelMHashHandlerProcessName: response.data.prpcessName,
+    //                 getInterpreterModelMHashHandlerID: response.data._id,
+    //                 getInterpreterModelMHashHandlerContractInfo: response.data.contractInfo,
+    //                 getInterpreterModelMHashHandlerIData: response.data.iData,
+    //                 getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
+    //                 getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
+    //                 retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),               
+    //               })
+    //               NotificationManager.success(`Process Model metadata for: ${response.data._id} has been successfully fetched`, response.statusText);                                            
+    //                 this.modeler2 = new BpmnModeler({
+    //                     container: "#bpmnview2",
+    //                     keyboard: {
+    //                     bindTo: window
+    //                     },
+    //                     propertiesPanel: {
+    //                     parent: "#propview2"
+    //                     },
+    //                     additionalModules: [propertiesPanelModule, propertiesProviderModule],
+    //                     moddleExtensions: {
+    //                     camunda: camundaModdleDescriptor
+    //                     }
+    //                 });
+    //             this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
+    //         } else {
+    //             console.log('ERROR', response);
+    //         }})
+    //       .catch(error => {              
+    //           console.log(error);
+    //             let errorMessage;
 
-                if (error.response) {
-                    errorMessage = "The data entered is invalid or some unknown error occurred!";
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
-                    console.log(error.response);
-                } else if (error.request) {
-                    errorMessage = "The request was made but no response was received";
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
-                    console.log(error.request);
-                } else {
-                    errorMessage = error.message;
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
-                    console.log('Error', error.message);
-                }
+    //             if (error.response) {
+    //                 errorMessage = "The data entered is invalid or some unknown error occurred!";
+    //                 this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+    //                 console.log(error.response);
+    //             } else if (error.request) {
+    //                 errorMessage = "The request was made but no response was received";
+    //                 this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+    //                 console.log(error.request);
+    //             } else {
+    //                 errorMessage = error.message;
+    //                 this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
+    //                 console.log('Error', error.message);
+    //             }
 
-                NotificationManager.warning(errorMessage, 'OOPS...');  
-          });
-      }         
-    }
+    //             NotificationManager.warning(errorMessage, 'OOPS...');  
+    //       });
+    //   }         
+    // }
 
-    openBpmnDiagramBasedOnmHash = async (xml) => {        
-        try {
-          const result = await this.modeler2.importXML(xml);
-          const { warnings } = result;
-          console.log(warnings);
+    // openBpmnDiagramBasedOnmHash = async (xml) => {        
+    //     try {
+    //       const result = await this.modeler2.importXML(xml);
+    //       const { warnings } = result;
+    //       console.log(warnings);
 
-          var canvas = this.modeler2.get("canvas");
+    //       var canvas = this.modeler2.get("canvas");
 
-          canvas.zoom("fit-viewport");
+    //       canvas.zoom("fit-viewport");
 
-          //this.setState({retrieveModelMetadataBpmnModel: []});
-          this.modeler2 = null;
+    //       //this.setState({retrieveModelMetadataBpmnModel: []});
+    //       this.modeler2 = null;
 
-        } catch (err) {
-          console.log(err.message, err.warnings);
-        }
-    }
+    //     } catch (err) {
+    //       console.log(err.message, err.warnings);
+    //     }
+    // }
 
     render = () => {
         return(
@@ -491,7 +491,7 @@ class IUploadDiagram extends Component {
                     {/* New changes End */} 
                                                 
                     {/* New changes Start - GET 1 */}
-                    <br/>
+                    {/* <br/>
                     <Card style={{border: "1px solid #d7dde8"}}>
                         <Alert variant="primary" size="sm"> 
                             Query Process Models
@@ -523,11 +523,11 @@ class IUploadDiagram extends Component {
                             </Col>  
                         </Row>                    
                         </Card.Body>
-                    </Card>
+                    </Card> */}
                 {/* New changes End */}
 
                 {/* New changes Start - GET 2 */}
-                <br/>
+                {/* <br/>
                 <Card style={{border: "1px solid #d7dde8"}}>
                     <Alert variant="primary" size="sm"> 
                         Fetch Process Model Metadata
@@ -689,12 +689,12 @@ class IUploadDiagram extends Component {
                             </Col>  
                         </Row>                    
                     </Card.Body>
-                </Card>
+                </Card> */}
                 {/* New changes End */}                                                                        
                     <ProcessInstanceOperations />
                     <NotificationContainer />                
                     {/* create some space from the footer */}
-                    <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
+                    <div style={{marginBottom: "60px"}}></div>
 
                 </Aux> }
             </Aux>

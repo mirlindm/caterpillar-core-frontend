@@ -188,199 +188,63 @@ class ICreateDiagram extends Component {
     }
 
     //POST2:  http://localhost:3000/interpreter/
-    interpreterRequestHandler= (event) => {
-        event.preventDefault();
-        this.setState({showInterpreterAccordion: true});
+    // interpreterRequestHandler= (event) => {
+    //     event.preventDefault();
+    //     this.setState({showInterpreterAccordion: true});
 
-        this.modeler.saveXML((err, xml) => {
+    //     this.modeler.saveXML((err, xml) => {
         
-        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+    //     console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         
-        if(!this.props.registryAddress) {
-            NotificationManager.error("There is no Registry Specified", 'ERROR');
-          } else { 
-            //console.log(xml);
-            axios.post(INTERPRETATION_URL, {
-                bpmn: xml, // modeler.xml
-                //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                registryAddress: this.props.registryAddress,
-                })
-            .then(response => {
-                console.log(response);
+    //     if(!this.props.registryAddress) {
+    //         NotificationManager.error("There is no Registry Specified", 'ERROR');
+    //       } else { 
+    //         //console.log(xml);
+    //         axios.post(INTERPRETATION_URL, {
+    //             bpmn: xml, // modeler.xml
+    //             //name: xml.name, //or hardcoded: 'InsureIT Payment',
+    //             registryAddress: this.props.registryAddress,
+    //             })
+    //         .then(response => {
+    //             console.log(response);
 
-                if (response.status === 201) {
-                    this.setState({
-                        contractAddress: response.data.contractAddress,
-                        gasCost: response.data.gasCost,
-                        smartContractName: response.data.smartContractName,
-                        transactionHash: response.data.transactionHash,
-                        showInterpreterAccordion: true,                                            
-                    })
-                    NotificationManager.success('New interpreter has been successfully created', response.statusText);           
-                } else {
-                      console.log('ERROR', response);
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                let errorMessage;
+    //             if (response.status === 201) {
+    //                 this.setState({
+    //                     contractAddress: response.data.contractAddress,
+    //                     gasCost: response.data.gasCost,
+    //                     smartContractName: response.data.smartContractName,
+    //                     transactionHash: response.data.transactionHash,
+    //                     showInterpreterAccordion: true,                                            
+    //                 })
+    //                 NotificationManager.success('New interpreter has been successfully created', response.statusText);           
+    //             } else {
+    //                   console.log('ERROR', response);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             let errorMessage;
 
-                if (error.response) {
-                    errorMessage = "The data entered is invalid or some unknown error occurred!";
-                } else if (error.request) {
-                    errorMessage = "The request was made but no response was received";
-                    console.log(error.request);
-                } else {
-                    errorMessage = error.message;
-                    console.log('Error', error.message);
-                }
-                NotificationManager.warning(errorMessage, 'OOPS...'); 
-            });            
-            }});                
-    }
+    //             if (error.response) {
+    //                 errorMessage = "The data entered is invalid or some unknown error occurred!";
+    //             } else if (error.request) {
+    //                 errorMessage = "The request was made but no response was received";
+    //                 console.log(error.request);
+    //             } else {
+    //                 errorMessage = error.message;
+    //                 console.log('Error', error.message);
+    //             }
+    //             NotificationManager.warning(errorMessage, 'OOPS...'); 
+    //         });            
+    //         }});                
+    // }
 
-    // GET1: /interpreter/models
-    getInterpreterModelHandler = (event) => {        
-
-        this.setState({showGetProcessModelsAccordion: true});
-
-        if(!this.props.registryAddress) {
-            NotificationManager.error("There is no Registry Specified", 'ERROR');
-          } else {
-            axios.get(INTERPRETATION_URL +'/models',
-            { 
-                headers: {
-                'registryAddress': this.props.registryAddress,
-                'accept': 'application/json',        
-                }                          
-            })
-            .then(response => {
-                console.log(response);
-                if (response.status === 200) {
-                    this.setState({getInterpreterModelHandlerSuccessMessage: response.data, showGetProcessModelsAccordion: true});
-                    NotificationManager.success('Process Models have been successfully fetched', response.statusText);
-                } else {
-                    console.log('ERROR', response);
-                }})
-            .catch(error => {               
-                console.log(error);
-                let errorMessage;
-
-                if (error.response) {
-                    this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
-                    errorMessage = "The data entered is invalid or some unknown error occurred!";
-                    console.log(error.request);
-                } else if (error.request) {
-                    this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
-                    errorMessage = "The request was made but no response was received";
-                    console.log(error.request);
-                } else {
-                    this.setState({getInterpreterModelHandlerErrorMessage: error.toString()})
-                    errorMessage = error.message;
-                    console.log('Error', error.message);
-                }
-                NotificationManager.warning(errorMessage, 'OOPS...');                  
-            });
-          }           
-    }
-
-    
-    //http://localhost:3000/interpreter/models/MHash    
-    getInterpreterModelMHashHandler = (event) => {
-            
-    let mHash = this.state.mHash;
-
-    this.setState({showRetrieveModelMetadataAccordion: true});
-
-    if(mHash === '') {
-        NotificationManager.error("Please provide ID of the Process Model you want to fetch!", 'ERROR');
-      } else {
-        axios.get(INTERPRETATION_URL + '/models/' + mHash, 
-        {
-            headers: {
-                'accept': 'application/json'
-            }
-        }).then(response => {
-            console.log(response);
-            if (response.status === 200) {
-                this.setState({
-                    getInterpreterModelMHashHandlerSuccessMessage: response.data.processName,
-                    getInterpreterModelMHashHandlerBpmnModel: response.data.bpmnModel,
-                    getInterpreterModelMHashHandlerProcessID: response.data.processID,
-                    getInterpreterModelMHashHandlerProcessName: response.data.prpcessName,
-                    getInterpreterModelMHashHandlerID: response.data._id,
-                    getInterpreterModelMHashHandlerContractInfo: response.data.contractInfo,
-                    getInterpreterModelMHashHandlerIData: response.data.iData,
-                    getInterpreterModelMHashHandlerIFactory: response.data.iFactory,
-                    getInterpreterModelMHashHandlerIFlow: response.data.iFlow,
-                    retrieveModelMetadataElementInfo: response.data.indexToElement.filter(element => element !== null),               
-                  })
-                  NotificationManager.success(`Process Model metadata for: ${response.data._id} has been successfully fetched`, response.statusText);                                            
-                    this.modeler2 = new BpmnModeler({
-                        container: "#bpmnview2",
-                        keyboard: {
-                        bindTo: window
-                        },
-                        propertiesPanel: {
-                        parent: "#propview2"
-                        },
-                        additionalModules: [propertiesPanelModule, propertiesProviderModule],
-                        moddleExtensions: {
-                        camunda: camundaModdleDescriptor
-                        }
-                    });
-                this.openBpmnDiagramBasedOnmHash(this.state.getInterpreterModelMHashHandlerBpmnModel);
-            } else {
-                console.log('ERROR', response);
-            }})
-          .catch(error => {              
-              console.log(error);
-                let errorMessage;
-
-                if (error.response) {
-                    errorMessage = "The data entered is invalid or some unknown error occurred!";
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
-                    console.log(error.response);
-                } else if (error.request) {
-                    errorMessage = "The request was made but no response was received";
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
-                    console.log(error.request);
-                } else {
-                    errorMessage = error.message;
-                    this.setState({getInterpreterModelMHashHandlerErrorMessage: error.toString()})
-                    console.log('Error', error.message);
-                }
-
-                NotificationManager.warning(errorMessage, 'OOPS...');  
-          });
-      }         
-    }
-
-    openBpmnDiagramBasedOnmHash = async (xml) => {        
-        try {
-          const result = await this.modeler2.importXML(xml);
-          const { warnings } = result;
-          console.log(warnings);
-
-          var canvas = this.modeler2.get("canvas");
-
-          canvas.zoom("fit-viewport");
-
-          //this.setState({retrieveModelMetadataBpmnModel: []});
-          this.modeler2 = null;
-
-        } catch (err) {
-          console.log(err.message, err.warnings);
-        }
-    }
 
     render = () => {
         return(
             <Aux>
                 
-                <div style={{marginTop: "10px"}}> </div>                
-                
-                                
+                <div style={{marginTop: "10px"}}> </div>                                                                
                 <Card className="bg-gray-dark" style={{ border: "2px solid #757f9a", width: "110%", marginLeft: "-60px" , }}>
                     <div id="bpmncontainer">
                         <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
@@ -472,7 +336,7 @@ class ICreateDiagram extends Component {
                 {/* New changes End */}                 
 
             {/* New changes Start - GET 1 */}
-            <br/>
+            {/* <br/>
             <Card style={{border: "1px solid #d7dde8"}}>
                 <Alert variant="primary" size="sm"> 
                     Query Process Models
@@ -504,11 +368,11 @@ class ICreateDiagram extends Component {
                     </Col>  
                   </Row>                    
                   </Card.Body>
-            </Card>
+            </Card> */}
             {/* New changes End */}
 
             {/* New changes Start - GET 2 */}
-            <br/>
+            {/* <br/>
             <Card style={{border: "1px solid #d7dde8"}}>
                 <Alert variant="primary" size="sm"> 
                     Fetch Process Model Metadata
@@ -670,7 +534,7 @@ class ICreateDiagram extends Component {
                         </Col>  
                     </Row>                    
                   </Card.Body>
-            </Card>
+            </Card> */}
             {/* New changes End */}
                 <ProcessInstanceOperations/>                                                   
                 <NotificationContainer/>
