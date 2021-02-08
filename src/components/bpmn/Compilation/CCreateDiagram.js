@@ -14,7 +14,7 @@ import "bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {COMPILATION_URL} from '../../../Constants';
-import ProcessInstanceOperations from '../ProcessInstanceOperations';
+
 
 import './CCreateDiagram.css';
 
@@ -847,7 +847,7 @@ class CCreateDiagram extends Component {
                 </Card> */}
           {/* New changes End */}
 
-          <ProcessInstanceOperations/>
+          {/* <ProcessInstanceOperations/> */}
 
           {/* <Card style={{border: "3px solid #d7dde8", marginTop: "20px" }}>
               <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
@@ -1097,7 +1097,7 @@ class CCreateDiagram extends Component {
             {/* New changes End */} 
                                                                                                                                                                                  
         {/* create some space from the footer */}         
-        <div style={{marginTop: "65px"}}></div>
+        {/* <div style={{marginTop: "65px"}}></div> */}
         <NotificationContainer/>
       </Aux>      
     );

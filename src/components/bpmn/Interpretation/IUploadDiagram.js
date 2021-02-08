@@ -135,7 +135,7 @@ class IUploadDiagram extends Component {
             NotificationManager.error("There is an error with your BPM Model. Please provide a name for your Model", 'ERROR');
         } else {
             //console.log(xml);
-            axios.post(INTERPRETATION_URL + '/models',{
+            axios.post(INTERPRETATION_URL + '/models', {
             bpmn: xml, // modeler.xml
             //name: xml.name, //or hardcoded: 'InsureIT Payment',
             registryAddress: this.props.registryAddress
@@ -178,56 +178,56 @@ class IUploadDiagram extends Component {
     }
 
     //POST2:  http://localhost:3000/interpreter/
-    interpreterRequestHandler= (event) => {
-        event.preventDefault();
-        this.setState({showInterpreterAccordion: true});
+    // interpreterRequestHandler= (event) => {
+    //     event.preventDefault();
+    //     this.setState({showInterpreterAccordion: true});
 
-        this.modeler.saveXML((err, xml) => {
+    //     this.modeler.saveXML((err, xml) => {
         
-        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+    //     console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         
-        if(!this.props.registryAddress) {
-            NotificationManager.error("There is no Registry Specified", 'ERROR');
-          } else { 
-            //console.log(xml);
-            axios.post(INTERPRETATION_URL, {
-                bpmn: xml, // modeler.xml
-                //name: xml.name, //or hardcoded: 'InsureIT Payment',
-                registryAddress: this.props.registryAddress,
-                })
-            .then(response => {
-                console.log(response);
+    //     if(!this.props.registryAddress) {
+    //         NotificationManager.error("There is no Registry Specified", 'ERROR');
+    //       } else { 
+    //         //console.log(xml);
+    //         axios.post(INTERPRETATION_URL, {
+    //             bpmn: xml, // modeler.xml
+    //             //name: xml.name, //or hardcoded: 'InsureIT Payment',
+    //             registryAddress: this.props.registryAddress,
+    //             })
+    //         .then(response => {
+    //             console.log(response);
 
-                if (response.status === 201) {
-                    this.setState({
-                        contractAddress: response.data.contractAddress,
-                        gasCost: response.data.gasCost,
-                        smartContractName: response.data.smartContractName,
-                        transactionHash: response.data.transactionHash,
-                        showInterpreterAccordion: true,                                            
-                    })
-                    NotificationManager.success('New interpreter has been successfully created', response.statusText);           
-                } else {
-                      console.log('ERROR', response);
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                let errorMessage;
+    //             if (response.status === 201) {
+    //                 this.setState({
+    //                     contractAddress: response.data.contractAddress,
+    //                     gasCost: response.data.gasCost,
+    //                     smartContractName: response.data.smartContractName,
+    //                     transactionHash: response.data.transactionHash,
+    //                     showInterpreterAccordion: true,                                            
+    //                 })
+    //                 NotificationManager.success('New interpreter has been successfully created', response.statusText);           
+    //             } else {
+    //                   console.log('ERROR', response);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             let errorMessage;
 
-                if (error.response) {
-                    errorMessage = "The data entered is invalid or some unknown error occurred!";
-                } else if (error.request) {
-                    errorMessage = "The request was made but no response was received";
-                    console.log(error.request);
-                } else {
-                    errorMessage = error.message;
-                    console.log('Error', error.message);
-                }
-                NotificationManager.warning(errorMessage, 'OOPS...'); 
-            });            
-            }});                
-    }
+    //             if (error.response) {
+    //                 errorMessage = "The data entered is invalid or some unknown error occurred!";
+    //             } else if (error.request) {
+    //                 errorMessage = "The request was made but no response was received";
+    //                 console.log(error.request);
+    //             } else {
+    //                 errorMessage = error.message;
+    //                 console.log('Error', error.message);
+    //             }
+    //             NotificationManager.warning(errorMessage, 'OOPS...'); 
+    //         });            
+    //         }});                
+    // }
 
    // GET1: /interpreter/models
 //    getInterpreterModelHandler = (event) => {        

@@ -6,6 +6,10 @@ import './BpmnModelling.css';
 
 // import CCreateDiagram from './Compilation/CCreateDiagram';
 // import CUploadDiagram from './Compilation/CUploadDiagram';
+import AccessControl from '../Policies/AccessControl';
+import RoleBindingPolicy from '../Policies/RoleBindingPolicy';
+import TaskRoleMap from '../Policies/TaskRoleMap';
+
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {COMPILATION_URL, PROCESS_INSTANCE_QUERY_URL} from '../../Constants';
@@ -13,7 +17,7 @@ import {COMPILATION_URL, PROCESS_INSTANCE_QUERY_URL} from '../../Constants';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
-import {Alert, Row, Col, Card, Accordion, Button, Breadcrumb} from 'react-bootstrap'; 
+import {Alert, Row, Col, Card, Accordion, Button, Breadcrumb, Modal} from 'react-bootstrap'; 
 
 class ProcessInstanceOperations extends Component {
 
@@ -23,6 +27,7 @@ class ProcessInstanceOperations extends Component {
         this.state = {
             createModel: false,
             uploadModel: false,
+            accessPoliciesModal: false,
 
             mHash: '',
 
@@ -39,6 +44,10 @@ class ProcessInstanceOperations extends Component {
             breadCrumbQueryProcessInstances: false,
             breadCrumbQueryProcessState: false,
             breadCrumbExecuteProcessInstance: false,
+
+            breadCrumbAccessControl: false,
+            breadCrumbRoleBindingPolicy: false,
+            breadCrumbTaskRoleMap: false,
         }
     }
 
@@ -66,19 +75,38 @@ class ProcessInstanceOperations extends Component {
       this.setState({breadCrumbExecuteProcessInstance: !this.state.breadCrumbExecuteProcessInstance})
     }
 
+    defineAccessPoliciesHandler = () => {
+        this.setState({accessPoliciesModal: !this.state.accessPoliciesModal})
+    }
+
+    changeBreadCrumbAccessControlHandler = () => {
+        this.setState({breadCrumbAccessControl: !this.state.breadCrumbAccessControl})
+      }
+  
+      changeBreadCrumbRoleBindingPolicyHandler = () => {
+        this.setState({breadCrumbRoleBindingPolicy: !this.state.breadCrumbRoleBindingPolicy})
+      }
+      
+      changeBreadCrumbTaskRoleMapHandler = () => {
+        this.setState({breadCrumbTaskRoleMap: !this.state.breadCrumbTaskRoleMap})
+      }
+
      // Post Request 3: createNewProcessInstance
      createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
         //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress);
 
-        console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
+        console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.props.accessControlAddress);
+        console.log(" and also the Role Binding Policy :" + this.props.roleBindingAddress + " and also with TRM: "  + this.props.taskRoleMapAddress);
         if (!this.props.registryAddress) {
           NotificationManager.error("There is no Registry Specified", 'ERROR');
         } else if(mHash === '') {
           NotificationManager.error("Please provide ID of the Process Model you want to create an instance of.", 'ERROR');
+        } else if(this.props.accessControlAddress === '' || !this.props.roleBindingAddress === '' || !this.props.taskRoleMapAddr === '') {
+            NotificationManager.error("You are missing the Access Policies!", 'ERROR');
         } else {
-          axios.post(COMPILATION_URL + `/${mHash}/processes`,
+          axios.post(`http://localhost:3000/models/${mHash}/processes`,
           {                    
             registryAddress: this.props.registryAddress,
             accessCtrlAddr: this.props.accessControlAddress,
@@ -279,6 +307,10 @@ class ProcessInstanceOperations extends Component {
                                 <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
                                         type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                                         > Create New Process Instance
+                                </Button> {'      '}     
+                                <Button onClick={this.defineAccessPoliciesHandler} variant="primary"
+                                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                                        > Define Access Policies
                                 </Button>                      
                                 </Col>
                             </Row>
@@ -302,6 +334,44 @@ class ProcessInstanceOperations extends Component {
                     </Card>
                 </Aux> : null}
                 {/* New changes End */}  
+
+            {/* Shortcut for Defining Access Policies in order to Create Process Instance */}
+            {this.state.accessPoliciesModal ? 
+                <Modal
+                    show={this.state.accessPoliciesModal} 
+                    onHide={() => this.setState({accessPoliciesModal: false})}                  
+                    dialogClassName="modal-90w"
+                    aria-labelledby="example-custom-modal-styling-title"
+                >
+                    <Modal.Header closeButton>
+                    <Modal.Title id="example-custom-modal-styling-title">
+                        Define Your Access Policies (Access Control, Role Binding Policy and Task-Role Map)
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Card style={{border: "3px solid #d7dde8", }}>
+                            <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                            Please Configure the Policies below:
+                            </Alert>  
+                            <Card.Body>
+                            <Row style={{textAlign: "center"}}>  
+                                <Col>
+                                <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
+                                    <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
+                                    <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
+                                    <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
+                                </Breadcrumb>
+
+                                    {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
+                                    {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
+                                    {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
+                                </Col>                                                                  
+                            </Row> <br/>                                                                       
+                            </Card.Body>
+                        </Card>
+                    </Modal.Body>
+                </Modal>            
+            : null}
             
                             
             {/* New changes Start - POST 3 */}

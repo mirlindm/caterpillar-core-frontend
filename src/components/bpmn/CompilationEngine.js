@@ -6,6 +6,7 @@ import './BpmnModelling.css';
 
 import CCreateDiagram from './Compilation/CCreateDiagram';
 import CUploadDiagram from './Compilation/CUploadDiagram';
+import ProcessInstanceOperations from './ProcessInstanceOperations';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
@@ -457,7 +458,8 @@ class CompilationEngine extends Component {
                 <CUploadDiagram/>
                 : null
                 }
-                <NotificationContainer/>
+                <ProcessInstanceOperations/>
+                <NotificationContainer/>                
                 <div style={{marginTop: "65px"}}></div>
             </Aux>
         );

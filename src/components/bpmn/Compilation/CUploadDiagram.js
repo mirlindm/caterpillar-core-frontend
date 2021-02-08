@@ -15,7 +15,7 @@ import './CUploadDiagram.css';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {COMPILATION_URL} from '../../../Constants';
-import ProcessInstanceOperations from '../ProcessInstanceOperations';
+
 
 import {Form, Alert, Button, Card, Accordion, Row, Col} from 'react-bootstrap';
 
@@ -809,7 +809,7 @@ class CUploadDiagram extends Component {
                         </Card.Body>
                       </Card> */}
                     {/* New changes End */}            
-                    <ProcessInstanceOperations/>
+                    {/* <ProcessInstanceOperations/> */}
                                                              
                                                                                                         
                 {/* create some space from the footer */}                
