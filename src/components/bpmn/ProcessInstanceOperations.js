@@ -117,7 +117,7 @@ class ProcessInstanceOperations extends Component {
       }
 
       // Get Request 3: queryProcessInstancesHandler
-      queryProcessInstancesHandler = () => {
+      processInstanceAddress = (dispatch) => {
         let mHash = this.state.mHash;
                 
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
@@ -137,7 +137,8 @@ class ProcessInstanceOperations extends Component {
           }).then(response => { 
             console.log(response);
             if (response.status === 200) {
-              this.setState({queryProcessInstancesResponse: response.data});           
+              this.setState({queryProcessInstancesResponse: response.data}); 
+              dispatch({type: 'PROCESS_CASE', payload: response.data});                     
               NotificationManager.success('Registry has been loaded', response.statusText);
             } else {
               console.log('ERROR', response);
@@ -160,6 +161,12 @@ class ProcessInstanceOperations extends Component {
           });  
         }              
       }
+
+      queryProcessInstancesHandler = () => {
+        console.log("Process Case Address on Redux!!!!" );
+        this.props.dispatch(this.processInstanceAddress);
+    
+    }
       
       // Get Request 4: queryProcessState
       queryProcessStateHandler = () => {
@@ -182,7 +189,7 @@ class ProcessInstanceOperations extends Component {
             }
           }).then(response => {
             console.log(response);
-            if (response.status === 202) {
+            if (response.status === 200) {
               this.setState({queryProcessStateResponse: response.data});  
               NotificationManager.success('Registry has been loaded', response.statusText);            
             } else {
@@ -484,7 +491,7 @@ class ProcessInstanceOperations extends Component {
                 {/* New changes End */} 
                                                                                                                                                                                     
             {/* create some space from the footer */}         
-            <div style={{marginTop: "65px"}}></div>
+            
                 
                 <NotificationContainer/>
             </Aux>

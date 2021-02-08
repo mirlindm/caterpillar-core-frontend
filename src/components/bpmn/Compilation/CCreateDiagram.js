@@ -682,7 +682,7 @@ class CCreateDiagram extends Component {
           {/* New changes End */}         
 
           {/* New changes Start - GET 1 */}
-          <br/>
+          {/* <br/>
           <Card style={{border: "1px solid #d7dde8"}}>
                 <Alert variant="primary" size="sm"> 
                     Query Process Models
@@ -714,11 +714,11 @@ class CCreateDiagram extends Component {
                     </Col>  
                   </Row>                    
                   </Card.Body>
-                </Card>
+                </Card> */}
           {/* New changes End */}
                                   
           {/* New changes Start - GET 2 */}
-          <br/>
+          {/* <br/>
           <Card style={{border: "1px solid #d7dde8"}}>
                 <Alert variant="primary" size="sm"> 
                     Query Process Models
@@ -826,10 +826,10 @@ class CCreateDiagram extends Component {
                           </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="6">
-                          <Card.Body>  
+                          <Card.Body>   */}
                                   {/* <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre>{this.state.retrieveModelMetadataElementInfo}</pre></span> */}
 
-                                  {
+                                  {/* {
                                   this.state.retrieveModelMetadataElementInfo.map((element, i)  => {
                                     return (
                                       <div key={i}> <p key={i}> Element {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}> [name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}] </span> </p> <hr/> </div>
@@ -844,7 +844,7 @@ class CCreateDiagram extends Component {
                     </Col>  
                   </Row>                    
                   </Card.Body>
-                </Card>
+                </Card> */}
           {/* New changes End */}
 
           <ProcessInstanceOperations/>
@@ -1104,7 +1104,6 @@ class CCreateDiagram extends Component {
   };
 }
 
-//export default CCreateDiagram;
 export default connect((store) => {
   return {
     registryAddress: store.registryAddress,

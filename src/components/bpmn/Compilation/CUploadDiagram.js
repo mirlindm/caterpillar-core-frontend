@@ -362,58 +362,58 @@ class CUploadDiagram extends Component {
       }
     
       // Post Request 3: createNewProcessInstance
-      createNewProcessInstanceHandler = () => {
-        let mHash = this.state.mHash;
-        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+      // createNewProcessInstanceHandler = () => {
+      //   let mHash = this.state.mHash;
+      //   console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+      //   //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
         
-        console.log("Here Post 3, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
+      //   console.log("Here Post 3, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
         
-        axios.post(`http://localhost:3000/models/${mHash}/processes`,
-        {                    
-          registryAddress: this.props.registryAddress,
-          accessCtrlAddr: this.props.accessControlAddress,
-          rbPolicyAddr: this.props.roleBindingAddress,
-          taskRoleMapAddr: this.props.taskRoleMapAddress, 
-        },
-        {
-          headers: {
-              'Accept': 'application/json',
-          }
-        }).then(response =>  {
-          this.setState({processInstanceResponse: response.data})                                                                           
-          console.log(response);          
-        })
-        .catch(error => {              
-            console.log(error)
-        });
-      }
+      //   axios.post(`http://localhost:3000/models/${mHash}/processes`,
+      //   {                    
+      //     registryAddress: this.props.registryAddress,
+      //     accessCtrlAddr: this.props.accessControlAddress,
+      //     rbPolicyAddr: this.props.roleBindingAddress,
+      //     taskRoleMapAddr: this.props.taskRoleMapAddress, 
+      //   },
+      //   {
+      //     headers: {
+      //         'Accept': 'application/json',
+      //     }
+      //   }).then(response =>  {
+      //     this.setState({processInstanceResponse: response.data})                                                                           
+      //     console.log(response);          
+      //   })
+      //   .catch(error => {              
+      //       console.log(error)
+      //   });
+      // }
 
-      processInstanceAddress = (dispatch) => {
-        let mHash = this.state.mHash;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)      
+      // processInstanceAddress = (dispatch) => {
+      //   let mHash = this.state.mHash;
+      //   //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+      //   console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)      
         
-      axios.get(`http://localhost:3000/models/${mHash}/processes`,
-        {
-          headers: {
-            'registryAddress': this.props.registryAddress,
-              'accept': 'application/json'
-          }
-        }).then(response => {   
-          this.setState({queryProcessInstancesResponse: response.data});
-          dispatch({type: 'PROCESS_CASE', payload: response.data});           
-          console.log(response);          
-        })
-        .catch(error => {              
-          console.log(error)
-        });   
-      }
+      // axios.get(`http://localhost:3000/models/${mHash}/processes`,
+      //   {
+      //     headers: {
+      //       'registryAddress': this.props.registryAddress,
+      //         'accept': 'application/json'
+      //     }
+      //   }).then(response => {   
+      //     this.setState({queryProcessInstancesResponse: response.data});
+      //     dispatch({type: 'PROCESS_CASE', payload: response.data});           
+      //     console.log(response);          
+      //   })
+      //   .catch(error => {              
+      //     console.log(error)
+      //   });   
+      // }
 
       // Get Request 3: queryProcessInstancesHandler
-      queryProcessInstancesHandler = () => {
-        console.log("Process Case Address on Redux!!!!" );
-        this.props.dispatch(this.processInstanceAddress);
+      // queryProcessInstancesHandler = () => {
+      //   console.log("Process Case Address on Redux!!!!" );
+      //   this.props.dispatch(this.processInstanceAddress);
       //   let mHash = this.state.mHash;
       //   let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
       //   console.log("GET3" + registryAddress);
@@ -431,57 +431,57 @@ class CUploadDiagram extends Component {
       //   .catch(error => {              
       //     console.log(error)
       //   });          
-      }
+      //}
       
       // Get Request 4: queryProcessState
-      queryProcessStateHandler = () => {
-        //pAddress is same as mHash
-        let pAddress = this.state.mHash;         
-        //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-        console.log("GET3 and the pAddress: " + pAddress);
-        console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
+      // queryProcessStateHandler = () => {
+      //   //pAddress is same as mHash
+      //   let pAddress = this.state.mHash;         
+      //   //let pAddress1 = this.state.queryProcessInstancesResponse[1];         
+      //   //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+      //   console.log("GET3 and the pAddress: " + pAddress);
+      //   console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
         
-      axios.get('http://localhost:3000/processes/'+pAddress,
-        {
-          headers: {
-            'registryAddress': this.props.registryAddress,
-            'accept': 'application/json',
-          }
-        }).then(response => {
-          this.setState({queryProcessStateResponse: response.data});              
-          console.log(response);          
-        })
-        .catch(error => {              
-          console.log(error)
-        });       
-      }
+      // axios.get('http://localhost:3000/processes/'+pAddress,
+      //   {
+      //     headers: {
+      //       'registryAddress': this.props.registryAddress,
+      //       'accept': 'application/json',
+      //     }
+      //   }).then(response => {
+      //     this.setState({queryProcessStateResponse: response.data});              
+      //     console.log(response);          
+      //   })
+      //   .catch(error => {              
+      //     console.log(error)
+      //   });       
+      // }
 
       //Put Request 1
-      executeWorkItemHandler =  () => {
-         //wlAddress is same as mHash
-         let wlAddress = '0xA70E385Ca9b2202726CA8D719255Ca228298b7AF'; 
-         //let wiIndex = this.state.queryProcessInstancesResponse[this.state.queryProcessStateResponse.length-1];
-         let wiIndex = '5';
-         //let worklist = this.state.queryProcessStateResponse.map(state => state.hrefs[0]);
-         let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-         console.log("PUT1: 1. RegistryAddress" + registryAddress + ", wlAddress: " + wlAddress + ", wiIndex: " + wiIndex);
+      // executeWorkItemHandler =  () => {
+      //    //wlAddress is same as mHash
+      //    let wlAddress = '0xA70E385Ca9b2202726CA8D719255Ca228298b7AF'; 
+      //    //let wiIndex = this.state.queryProcessInstancesResponse[this.state.queryProcessStateResponse.length-1];
+      //    let wiIndex = '5';
+      //    //let worklist = this.state.queryProcessStateResponse.map(state => state.hrefs[0]);
+      //    let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+      //    console.log("PUT1: 1. RegistryAddress" + registryAddress + ", wlAddress: " + wlAddress + ", wiIndex: " + wiIndex);
          
-        axios.put('http://localhost:3000/worklists/0xA17bC4f9f8F376339bA44cF0d7912906723c1A40/workitems/3', {
-          "registryAddress": registryAddress,
-          "inputParameters": "[true]",
-        },  
-         {
-           headers: {            
-               'accept': 'application/json',
-           }
-         }).then(response => {              
-           console.log(response);          
-         })
-         .catch(error => {              
-           console.log(error)
-         });       
-      } 
+      //   axios.put('http://localhost:3000/worklists/0xA17bC4f9f8F376339bA44cF0d7912906723c1A40/workitems/3', {
+      //     "registryAddress": registryAddress,
+      //     "inputParameters": "[true]",
+      //   },  
+      //    {
+      //      headers: {            
+      //          'accept': 'application/json',
+      //      }
+      //    }).then(response => {              
+      //      console.log(response);          
+      //    })
+      //    .catch(error => {              
+      //      console.log(error)
+      //    });       
+      // } 
 
     render = () => {
         return(
@@ -524,7 +524,7 @@ class CUploadDiagram extends Component {
 
                 {this.state.uploadedDiagramName === undefined ?
                         <Alert variant="danger" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
+                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", marginBottom: "50px", textAlign: "center",}}> 
                         *No Model Found to Deploy
                         </Alert>                        
                     :
@@ -644,7 +644,7 @@ class CUploadDiagram extends Component {
                     {/* New changes End */}
 
                     {/* New changes Start - GET 1 */}
-                    <br/>
+                    {/* <br/>
                     <Card style={{border: "1px solid #d7dde8"}}>
                           <Alert variant="primary" size="sm"> 
                               Query Process Models
@@ -676,11 +676,11 @@ class CUploadDiagram extends Component {
                               </Col>  
                             </Row>                    
                             </Card.Body>
-                          </Card>
+                          </Card> */}
                       {/* New changes End */}
 
                       {/* New changes Start - GET 2 */}
-                      <br/>
+                      {/* <br/>
                       <Card style={{border: "1px solid #d7dde8"}}>
                           <Alert variant="primary" size="sm"> 
                               Query Process Models
@@ -789,10 +789,10 @@ class CUploadDiagram extends Component {
                                     </Accordion.Toggle>
                                   </Card.Header>
                                   <Accordion.Collapse eventKey="6">
-                                    <Card.Body>  
+                                    <Card.Body>   */}
                                             {/* <span style={{textAlign: "center", color: "#008B8B", fontWeight: "bolder", overflow: "hidden", textOverflow: "ellipsis", display: "block", WebkitLineClamp: "2", WebkitBoxOrient: "vertical", overflowWrap: "break-word", wordWrap: "break-word", hyphens: "auto",}}> <pre>{this.state.retrieveModelMetadataElementInfo}</pre></span> */}
 
-                                            {
+                                            {/* {
                                             this.state.retrieveModelMetadataElementInfo.map((element, i)  => {
                                               return (
                                                 <div key={i}> <p key={i}> Element {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}> [name: {element.name}, id: {element.id}, type: {element.type}, role: {element.role}] </span> </p> <hr/> </div>
@@ -807,13 +807,12 @@ class CUploadDiagram extends Component {
                               </Col>  
                             </Row>                    
                         </Card.Body>
-                      </Card>
+                      </Card> */}
                     {/* New changes End */}            
                     <ProcessInstanceOperations/>
                                                              
                                                                                                         
-                {/* create some space from the footer */}
-                <div style={{marginTop: "20px", paddingTop: "10px"}}></div>
+                {/* create some space from the footer */}                
                 <NotificationContainer/>
                 </Aux> }
             

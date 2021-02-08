@@ -5,7 +5,7 @@ import {ACCESS_CONTROL_URL} from '../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
+import {Form, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -114,28 +114,8 @@ class AccessControl extends Component {
        //GET 3 - Dynamic Access Control
       findAccessControlMetadata =  () => {
         console.log("Access Control Address on Redux!!!!" );
-        this.props.dispatch(this.accessControlAddressReduxStoreHandler);
-        // let accessCtrlAddr = this.state.accessControlAddress;
-        // let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        // console.log(accessCtrlAddr + ' and registry address: ' + registryAddress);
-        
-        // axios.get('http://localhost:3000/access-control/' + accessCtrlAddr,      
-        // {
-        //   headers: {          
-        //     'accept': 'application/json',
-        //     'registryAddress': registryAddress
-        //   }
-        // })
-        //   .then(response => {
-        //     console.log(response);
-        //     this.setState({accessControlAddressMetadata: response.data});
-        //     this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-        //   }).catch(error => console.warn(error));
+        this.props.dispatch(this.accessControlAddressReduxStoreHandler); 
       }
-      
-      // sendData = () => {
-      //   this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-      // }
 
     render(){
         return(
@@ -263,8 +243,6 @@ class AccessControl extends Component {
         );
     }
 }
-
-//export default AccessControl;
 
 export default connect((store) => {
   return {
