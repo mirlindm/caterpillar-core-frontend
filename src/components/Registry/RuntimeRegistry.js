@@ -182,6 +182,10 @@ class RuntimeRegistry extends Component {
         this.props.history.push(`/access`);   
     }
 
+    passingRegistryIdToSearchInputHandler = () => {
+        this.setState({idOrAddress: this.state.registry.ID})
+    }
+
     render () {
         return (
             <Aux> 
@@ -207,7 +211,7 @@ class RuntimeRegistry extends Component {
                                                 <p  style={{textAlign:"center", color: "#A52A2A", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
-                                                    <p style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> New Registry ID: <span style={{textDecoration: "underline",}}> {this.state.registry.ID} </span> </p>
+                                                    <p style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> New Registry ID: <span onClick={this.passingRegistryIdToSearchInputHandler} style={{textDecoration: "underline", cursor: "pointer"}}> {this.state.registry.ID} </span> </p>
                                                 </div>                                                                                        
                                             }                                           
                                     </Form.Group>
