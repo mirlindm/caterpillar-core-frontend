@@ -5,7 +5,7 @@ import {TASK_ROLE_MAP_URL} from '../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
+import {Form, Alert, Button, Card, Accordion, Dropdown, Row, Col} from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -23,6 +23,10 @@ class TaskRoleMap extends Component {
             trMapResponse: '',
             trMapAddressInput: '',
             trMapMetadata: [],
+
+            taskIndexValue: '',
+            roleIndexValue: '',
+            taskRoleMapPolicy: {},
         }
     }
 
@@ -44,21 +48,50 @@ class TaskRoleMap extends Component {
       taskRoleMapAddressChangeHandler = (event) => {
         this.setState({trMapAddressInput: event.target.value});
       }
+      
+      taskRoleIndexValueChangeHandler = (event) => {
+        this.setState({
+          [event.target.name]: event.target.value
+        })                  
+      }
+
+    createTaskRoleMapHandler = (event) => {
+      event.preventDefault();
+
+      let trmPolicy = [];
+      let trmObject = {
+        "taskIndex": this.state.taskIndexValue.toString(),
+        "roleIndex": this.state.roleIndexValue.toString(),
+      }
+
+      console.log(trmObject);
+
+      trmPolicy.push([trmObject.toString()]);
+
+      this.setState({
+        taskRoleMapPolicy: trmObject
+      })
+
+      console.log(trmPolicy);
+    }
+
       // POST 5 - Task Role Map
       parseAndDeployTaskRoleMapHandler = () => {
         let trMap = this.state.taskRoleMapInput;
         
         console.log("Registry Address from Redux Store: " + this.props.registryAddress);
-        //console.log(trMap);
+        console.log(this.state.taskRoleMapPolicy);
+        console.log(trMap);
 
         if(!this.props.registryAddress) {
           NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
-        } else if(trMap === '') {
+        } else if(this.state.taskRoleMapPolicy === '') {
           NotificationManager.error("Please provide valid Task-Role Map Policy!", 'ERROR');
         } else {
           axios.post(TASK_ROLE_MAP_URL, 
             {
-              roleTaskPairs: trMap, 
+              //roleTaskPairs: "["+this.state.taskRoleMapPolicy+"]", 
+              roleTaskPairs: trMap,
               contractName: 'RoleTaskMap',
               registryAddress: this.props.registryAddress
             }, 
@@ -93,6 +126,7 @@ class TaskRoleMap extends Component {
         }       
       }
 
+      // GET 5 - Task Role Map - REDUX
       taskRoleMapAddressReduxStoreHandler = (dispatch) => {
         let trMapAddress = this.state.trMapAddressInput;        
         console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
@@ -140,23 +174,7 @@ class TaskRoleMap extends Component {
       // GET 5 - Task Role Map
       findRoleTaskMapMetadata = () => {
         console.log("Task Role Map Address on Redux!!!!" );
-        this.props.dispatch(this.taskRoleMapAddressReduxStoreHandler);
-        // let trMapAddress = this.state.trMapAddressInput;
-        // let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp;
-        // console.log(trMapAddress + ' and registry address: ' + registryAddress);
-        
-        // axios.get('http://localhost:3000/task-role-map/' + trMapAddress,      
-        // {
-        //   headers: {          
-        //     'accept': 'application/json',
-        //     'registryAddress': registryAddress
-        //   }
-        // })
-        //   .then(response => {
-        //     console.log(response);
-        //     this.setState({trMapMetadata: response.data});
-        //     this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);
-        //   }).catch(error => console.warn(error));
+        this.props.dispatch(this.taskRoleMapAddressReduxStoreHandler); 
       }
 
       sendData = () => {
@@ -191,24 +209,44 @@ class TaskRoleMap extends Component {
                         style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
                         Please provide the Task-Role Map Policy in the Inputs Below
                   </Alert> 
-                  <Form.Control onChange={this.taskRoleMapChangeHandler} as="textarea" rows={4} /> 
-                  {/* <Form.Control required type="text" placeholder="Enter the Task Index" 
-                    name="taskIndex" value="taskIndex" 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> 
-                  <Form.Control required type="text" placeholder="Enter the Task Index Value" 
-                  name="taskIndexValue" onChange={this.taskRoleMapChangeHandler} 
-                  style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  />
-                  <hr/>
-                  <Form.Control required type="text" placeholder="Enter the Role Index" 
-                    name="roleIndex" value="roleIndex" 
-                    style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> 
-                  <Form.Control required type="text" placeholder="Enter the Role Index Value" 
-                  name="roleIndexValue" onChange={this.taskRoleMapChangeHandler} 
-                  style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> */}
+                  <Form.Control onChange={this.taskRoleMapChangeHandler} as="textarea" rows={4} />
+
+                  <Row style={{display: "flex", justifyContent: "space-around"}} >
+                      <Col>
+                        <Form.Control required type="text" placeholder="Enter the Task Index" 
+                          name="taskIndex" value="taskIndex" disabled
+                          style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                        /> 
+                      </Col>
+                      <Col>
+                        <Form.Control required type="text" placeholder="Enter the Task Index Value" 
+                        name="taskIndexValue" onChange={this.taskRoleIndexValueChangeHandler} 
+                        style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                        />
+                      </Col>
+                    </Row> <br/>
+                    <Row style={{display: "flex", justifyContent: "space-around"}} >
+                      <Col>
+                        <Form.Control required type="text" placeholder="Enter the Role Index" 
+                          name="roleIndex" value="roleIndex"  disabled
+                          style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                        />                         
+                      </Col>
+                      <Col>
+                        <Form.Control required type="text" placeholder="Enter the Role Index Value" 
+                          name="roleIndexValue" onChange={this.taskRoleIndexValueChangeHandler}
+                          style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                        />                       
+                      </Col>
+                    </Row> <br/>
+                    <Row style={{display: "flex", justifyContent: "space-around"}} >
+                      <Col>
+                        <Button variant="primary"
+                          type="submit" className="new-buttons" onClick={this.createTaskRoleMapHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                          > Define Task-Role
+                        </Button>
+                      </Col>
+                    </Row> 
                   </Form.Group>
                   </Form>
                   <Button variant="primary"

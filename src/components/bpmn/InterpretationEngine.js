@@ -379,7 +379,7 @@ class InterpretationEngine extends Component {
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="0">
-                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <pre> {this.state.contractAddress.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.contractAddress} </pre>  </span>  </Card.Body>
+                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <pre> {this.state.contractAddress.length === 0 ? <span style={{color: "#FA8072"}}> No interpreter yet created  </span> : this.state.contractAddress} </pre>  </span>  </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
     
@@ -390,7 +390,7 @@ class InterpretationEngine extends Component {
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="1">
-                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.gasCost.length === 0 ?  <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.gasCost} </pre>  </span>  </Card.Body>
+                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.gasCost.length === 0 ?  <span style={{color: "#FA8072"}}> No interpreter yet created </span> : this.state.gasCost} </pre>  </span>  </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
     
@@ -401,7 +401,7 @@ class InterpretationEngine extends Component {
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="2">
-                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.smartContractName.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.smartContractName} </pre>  </span>  </Card.Body>
+                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.smartContractName.length === 0 ? <span style={{color: "#FA8072"}}> No interpreter yet created </span> : this.state.smartContractName} </pre>  </span>  </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
     
@@ -412,7 +412,7 @@ class InterpretationEngine extends Component {
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="3">
-                                            <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.transactionHash.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span>  : this.state.transactionHash} </pre> </span> </Card.Body>
+                                            <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.transactionHash.length === 0 ? <span style={{color: "#FA8072"}}> No interpreter yet created </span>  : this.state.transactionHash} </pre> </span> </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>                
                                     </Accordion>
@@ -450,7 +450,7 @@ class InterpretationEngine extends Component {
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="0">                                
-                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.getInterpreterModelHandlerSuccessMessage.map((process, id) => <ul key={id}><li key={id}> {process} </li> </ul> )} </pre> </span>  </Card.Body>                                
+                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> There are no Models in the database </span> : this.state.getInterpreterModelHandlerSuccessMessage.map((process, id) => <ul key={id}><li key={id}> {process} </li> </ul> )} </pre> </span>  </Card.Body>                                
                                         </Accordion.Collapse>
                                     </Card>            
                                 </Accordion>
@@ -510,7 +510,7 @@ class InterpretationEngine extends Component {
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="1">
-                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerProcessName.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.getInterpreterModelMHashHandlerProcessName} </pre> </span>  </Card.Body>
+                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerProcessName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.getInterpreterModelMHashHandlerProcessName} </pre> </span>  </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
 

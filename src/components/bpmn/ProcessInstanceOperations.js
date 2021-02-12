@@ -99,10 +99,11 @@ class ProcessInstanceOperations extends Component {
 
         console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.props.accessControlAddress);
         console.log(" and also the Role Binding Policy :" + this.props.roleBindingAddress + " and also with TRM: "  + this.props.taskRoleMapAddress);
+        
         if (!this.props.registryAddress) {
-          NotificationManager.error("There is no Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Registry Specified!", 'ERROR');
         } else if(mHash === '') {
-          NotificationManager.error("Please provide ID of the Process Model you want to create an instance of.", 'ERROR');
+          NotificationManager.error("Please provide ID of the Process Model you want to create an instance of!", 'ERROR');
         } else if(this.props.accessControlAddress === '' || !this.props.roleBindingAddress === '' || !this.props.taskRoleMapAddr === '') {
             NotificationManager.error("You are missing the Access Policies!", 'ERROR');
         } else {
@@ -121,7 +122,7 @@ class ProcessInstanceOperations extends Component {
             console.log(response);
             if (response.status === 202) {
             this.setState({processInstanceResponse: response.data});
-            NotificationManager.success('Process Instance Has been Created', response.statusText);                                                                           
+            NotificationManager.success('Process Instance Has been Created!', response.statusText);                                                                           
             } else {
               console.log('ERROR', response);
             }})
@@ -132,7 +133,7 @@ class ProcessInstanceOperations extends Component {
                   if (error.response) {
                       errorMessage = "The data entered is invalid or some unknown error occurred!";
                   } else if (error.request) {
-                      errorMessage = "The request was made but no response was received";
+                      errorMessage = "The request was made but no response was received!";
                       console.log(error.request);
                   } else {
                       errorMessage = error.message;
@@ -151,10 +152,10 @@ class ProcessInstanceOperations extends Component {
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Registry Specified!", 'ERROR');
         }
         else if(mHash === '') {
-          NotificationManager.error("Please provide ID of the Process Model you want to query instances of.", 'ERROR');
+          NotificationManager.error("Please provide the ID of the Process Model you want to query instances of!", 'ERROR');
         } else {
           axios.get(COMPILATION_URL + `/${mHash}/processes`,
           {
@@ -167,7 +168,7 @@ class ProcessInstanceOperations extends Component {
             if (response.status === 200) {
               this.setState({queryProcessInstancesResponse: response.data}); 
               dispatch({type: 'PROCESS_CASE', payload: response.data});                     
-              NotificationManager.success('Registry has been loaded', response.statusText);
+              NotificationManager.success('Process Instances have been successfully fetched!', response.statusText);
             } else {
               console.log('ERROR', response);
             }})
@@ -178,7 +179,7 @@ class ProcessInstanceOperations extends Component {
             if (error.response) {
                 errorMessage = "The data entered is invalid or some unknown error occurred!";
             } else if (error.request) {
-                errorMessage = "The request was made but no response was received";
+                errorMessage = "The request was made but no response was received!";
                 console.log(error.request);
             } else {
                 errorMessage = error.message;
@@ -204,10 +205,10 @@ class ProcessInstanceOperations extends Component {
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
         if(!this.props.registryAddress) {
-          NotificationManager.error("There is no Registry Specified", 'ERROR');
+          NotificationManager.error("There is no Registry Specified!", 'ERROR');
         }
         else if(pAddress === '') {
-          NotificationManager.error("Please provide ID of the Process Model you want to query instance state of.", 'ERROR');
+          NotificationManager.error("Please provide the Address of the Process Instance you want to query instance state of!", 'ERROR');
         } else {
           axios.get(PROCESS_INSTANCE_QUERY_URL + '/' + pAddress,
           {
@@ -219,7 +220,7 @@ class ProcessInstanceOperations extends Component {
             console.log(response);
             if (response.status === 200) {
               this.setState({queryProcessStateResponse: response.data});  
-              NotificationManager.success('Registry has been loaded', response.statusText);            
+              NotificationManager.success('Process Instance State has been successfully fetched!', response.statusText);            
             } else {
               console.log('ERROR', response);
             }})
@@ -230,7 +231,7 @@ class ProcessInstanceOperations extends Component {
               if (error.response) {
                   errorMessage = "The data entered is invalid or some unknown error occurred!";
               } else if (error.request) {
-                  errorMessage = "The request was made but no response was received";
+                  errorMessage = "The request was made but no response was received!";
                   console.log(error.request);
               } else {
                   errorMessage = error.message;
@@ -374,7 +375,7 @@ class ProcessInstanceOperations extends Component {
             : null}
             
                             
-            {/* New changes Start - POST 3 */}
+            {/* New changes Start - GET 1 */}
             { this.state.breadCrumbQueryProcessInstances ?                                           
             <Aux>
                 <br/>
@@ -397,7 +398,7 @@ class ProcessInstanceOperations extends Component {
                         </Row>
                         <Row>
                             <Col> <br/>
-                                <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                                     <Card>
                                         <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -416,13 +417,13 @@ class ProcessInstanceOperations extends Component {
             </Aux> : null}
             {/* New changes End */}                       
 
-            {/* New changes Start - POST 3 */}
+            {/* New changes Start - GET 2 */}
             { this.state.breadCrumbQueryProcessState ?
             <Aux> 
                 <br/>
                 <Card style={{border: "1px solid #d7dde8"}}>
                     <Alert variant="primary" size="sm"> 
-                        Query Process Instances
+                        Query Process Instance State
                     </Alert>  
                         <Card.Body>
                         <Row style={{display: "flex", justifyContent: "space-around"}}>                                           

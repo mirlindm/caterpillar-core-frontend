@@ -137,11 +137,11 @@ class AccessControl extends Component {
                   </Dropdown>
                 </div>
                 {this.state.createAccessControl === true ? <>
-                    <Accordion defaultActiveKey="0" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                    <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                       <Card>
                         <Card.Header>
                           <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            1. Access Control Address
+                            1. Access Control Transaction Hash
                           </Accordion.Toggle>
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">

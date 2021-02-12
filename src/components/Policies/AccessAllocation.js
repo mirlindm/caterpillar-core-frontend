@@ -4,6 +4,8 @@ import AccessControl from './AccessControl';
 import RoleBindingPolicy from './RoleBindingPolicy';
 import TaskRoleMap from './TaskRoleMap';
 import {connect} from 'react-redux';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import Aux from '../../hoc/Auxiliary';
 import {POLICIES_URL} from '../../Constants';
@@ -101,72 +103,144 @@ class AccessAllocation extends Component {
 
      // /rb-opertation/:pCase => findPolicyAddresses
      findPolicyAddresses =  () => {    
-        //process instance/case address - get it from the props or something
-        //let pCaseTest = '0x9891474BB610B112EA6b4c197827eDCF538A3845';  
+          
         let pCase = this.state.pCase;
         console.log(pCase);
         console.log(this.props.registryAddress);
-        //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';
+        
         console.log("on nomination value is: "+ this.state.onNomination)
-        axios.get(POLICIES_URL + pCase,      
-        {
-          headers: {          
-            'accept': 'application/json',
-            'registryAddress': this.props.registryAddress
-          }
-        })
-          .then(response => {
-            console.log(response);
-            this.setState({policyAddressesResponse: response.data});
-            //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-          }).catch(error => console.warn(error));
+
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified!", 'ERROR')
+        } else if(pCase === '') {
+            NotificationManager.error("There is no Process Case Specified!", 'ERROR')
+          } else {
+            axios.get(POLICIES_URL + pCase,      
+              {
+                headers: {          
+                  'accept': 'application/json',
+                  'registryAddress': this.props.registryAddress
+                }
+              })
+              .then(response => {
+                  if (response.status === 200) {
+                    console.log(response);
+                    this.setState({policyAddressesResponse: response.data});            
+                    NotificationManager.success('Policy Addresses have been successfully fetched!', response.statusText);
+                  }else {
+                    console.log('ERROR', response);
+                  }}).catch(error => {
+                    console.log(error);
+                    let errorMessage;
+    
+                    if (error.response) {
+                        errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                    } else if (error.request) {
+                        errorMessage = "The request was made but no response was received";
+                        console.log(error.request);
+                    } else {
+                        errorMessage = error.message;
+                        console.log('Error', error.message);
+                    }
+    
+                NotificationManager.warning(errorMessage, 'OOPS...');
+              });
+            }        
       }
 
       // /rb-opertation/:pCase/state => findRoleState
-      findRoleState =  () => {        
-        //process instance/case address - get it from the props or something
-        let pCase = this.state.pCase;  
-        //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591';  
-             
-        axios.get(POLICIES_URL + pCase + '/state',      
-        {
-          headers: {          
-            'accept': 'application/json',
-            'registryAddress': this.props.registryAddress,
-            'role': this.state.roleName,
-          }
-        })
-          .then(response => {
-            console.log(response);
-            this.setState({roleStateResponse: response.data});
-            //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-          }).catch(error => console.warn(error));
+      findRoleState =  () => {                
+        let pCase = this.state.pCase;
+        
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified!", 'ERROR')
+        } else if(pCase === '') {
+            NotificationManager.error("There is no Process Case Specified!", 'ERROR')
+        } else if(this.state.roleName === '') {
+            NotificationManager.error("There is no Role Specified!", 'ERROR')
+        } else {
+          axios.get(POLICIES_URL + pCase + '/state',      
+          {
+            headers: {          
+              'accept': 'application/json',
+              'registryAddress': this.props.registryAddress,
+              'role': this.state.roleName,
+            }
+          })
+            .then(response => {
+              if (response.status === 200) {
+                console.log(response);
+                this.setState({roleStateResponse: response.data}); 
+                NotificationManager.success(`Information about the role: ${this.state.roleName}, have been successfully fetched!`, response.statusText);
+              } else {
+                console.log('ERROR', response);
+              }}).catch(error => {
+                  console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
+                  } else {
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
+                  }
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');
+              });
+        }                            
       }
 
       // /rb-opertation/:pCase/nominate-creator
-      nominateCaseCreator =  () => {        
-        //process instance/case address - get it from the props or something
+      nominateCaseCreator =  () => {                
         let pCase = this.state.pCase;  
-        //let registryAddress = '0x03aeDb94A0F6ba86B8B6cf766774C58687325591'; 
+
         let requestBody = {
           registryAddress: this.props.registryAddress,
           rNominee: this.state.nomineeRole,
           nominee: this.state.nomineeAddress,
         }       
       
-        axios.patch(POLICIES_URL + pCase + '/nominate-creator', requestBody)
-          .then(response => {
-            console.log(response);
-            this.setState({caseCreatorResponse: response.data});
-            //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-          }).catch(error => console.warn(error));
-      }
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified!", 'ERROR')
+        } else if(pCase === '') {
+            NotificationManager.error("There is no Process Case Specified!", 'ERROR')
+        } else if(this.state.nomineeRole === '' || this.state.nomineeAddress === '') {
+            NotificationManager.error("Please make sure to have correct information for the Nominee!", 'ERROR')
+        } else {
+            axios.patch(POLICIES_URL + pCase + '/nominate-creator', requestBody)
+            .then(response => {
+              if (response.status === 202) {
+                console.log(response);
+                this.setState({caseCreatorResponse: response.data});
+                NotificationManager.success('Case creator has been successfully nominated!', response.statusText);
+              } else {
+                console.log('ERROR', response);
+              }}).catch(error => {
+                console.log(error);
+                let errorMessage;
+
+                if (error.response) {
+                    errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                } else if (error.request) {
+                    errorMessage = "The request was made but no response was received";
+                    console.log(error.request);
+                } else {
+                    errorMessage = error.message;
+                    console.log('Error', error.message);
+                }
+
+                NotificationManager.warning(errorMessage, 'OOPS...');
+              });
+        }       
+  }
 
       // /rb-opertation/:pCase/nominate
       nominate =  () => {        
-        //process instance/case address - get it from the props or something
         let pCase = this.state.pCase;  
-        //let registryAddress = '0x7F97f7fd1C7a352bf30B18aE1855c22b4657DCe5';
+
         let requestBody = {
           rNominator: this.state.nominatorRole,
           rNominee: this.state.nomineeRole,
@@ -175,36 +249,88 @@ class AccessAllocation extends Component {
           registryAddress: this.props.registryAddress,
         }
 
-        axios.patch(POLICIES_URL + pCase + '/nominate',  requestBody)
-          .then(response => {
-            console.log(response);
-            this.setState({nominateResponse: response.data});
-            //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-          }).catch(error => console.warn(error));
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified!", 'ERROR')
+        } else if(pCase === '') {
+            NotificationManager.error("There is no Process Case Specified!", 'ERROR')
+        } else if(this.state.nomineeRole === '' || this.state.nomineeAddress === '' || this.state.nominatorRole === '' || this.state.nominatorAddress === '' ) {
+            NotificationManager.error("Please make sure to have a correct request body!", 'ERROR')
+        } else {
+            axios.patch(POLICIES_URL + pCase + '/nominate',  requestBody)
+            .then(response => {
+              if (response.status === 202) {
+                console.log(response);
+                this.setState({nominateResponse: response.data});
+                NotificationManager.success('Nomination has been successfully made!', response.statusText);
+              }  else {
+                console.log('ERROR', response);
+              }}).catch(error => {
+                  console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
+                  } else {
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
+                  }
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');
+              });
+        }        
       }
 
       // /rb-opertation/:pCase/release
-      release =  () => {        
-        //process instance/case address - get it from the props or something
-        let pCase = this.state.pCase;
-        //let registryAddress = '0x7F97f7fd1C7a352bf30B18aE1855c22b4657DCe5'; 
+      release =  () => {                
+        let pCase = this.state.pCase;        
         let releaserAddress = this.state.nominatorAddress;
+
         let requestBody = {
           rNominator: this.state.nominatorRole,
           rNominee: this.state.nomineeRole,
           nominator: releaserAddress,          
           registryAddress: this.props.registryAddress,
-        }       
-        axios.patch(POLICIES_URL + pCase + '/release', requestBody)
-          .then(response => {
-            console.log(response);
-            this.setState({releaseResponse: response.data});
-            //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
-          }).catch(error => console.warn(error));
-      }
+        }
 
-      // /rb-opertation/:pCase/vote
-      vote =  () => {        
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified!", 'ERROR')
+        } else if(pCase === '') {
+            NotificationManager.error("There is no Process Case Specified!", 'ERROR')
+        } else if(this.state.nomineeRole === '' || this.state.nominatorRole === '' || releaserAddress === '' ) {
+            NotificationManager.error("Please make sure to have a correct request body!", 'ERROR')
+        } else {
+            axios.patch(POLICIES_URL + pCase + '/release', requestBody)
+            .then(response => {
+              if (response.status === 202) {
+                console.log(response);
+                this.setState({releaseResponse: response.data}); 
+                NotificationManager.success('Release Operation has been successfully made!', response.statusText);
+              }else {
+                console.log('ERROR', response);
+              }}).catch(error => {
+                  console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
+                  } else {
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
+                  }
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');
+              });
+          }       
+    }
+
+    // /rb-opertation/:pCase/vote
+    vote =  () => {        
         //process instance/case address - get it from the props or something
         let pCase = this.state.pCase;
         //let registryAddress = '0x7F97f7fd1C7a352bf30B18aE1855c22b4657DCe5';
@@ -229,13 +355,41 @@ class AccessAllocation extends Component {
         ", 5: onNomination Value " + requestBody.onNomination + ", 6: isAccepted Value: " + requestBody.isAccepted +
         ", 7: registryAddress Value: " + requestBody.registryAddress )
 
-        axios.patch(POLICIES_URL + pCase + '/vote', requestBody)
-          .then(response => {
-            console.log(response);
-            this.setState({voteResponse: response.data});
-            
-          }).catch(error => console.warn(error));
-      }
+        if (!this.props.registryAddress) {
+          NotificationManager.error("There is no Registry Specified!", 'ERROR')
+        } else if(pCase === '') {
+            NotificationManager.error("There is no Process Case Specified!", 'ERROR')
+        } else if(this.state.nomineeRole === '' || this.state.nominatorRole === '' || this.state.endorserRole  === '' || 
+                  this.state.endorserAddress === '' || this.state.onNomination === undefined || this.state.onRelease === undefined ||
+                  this.state.accept === undefined || this.state.reject === undefined) {
+            NotificationManager.error("Please make sure to have a correct request body!", 'ERROR')
+        } else {
+            axios.patch(POLICIES_URL + pCase + '/vote', requestBody)
+            .then(response => {
+              if (response.status === 202) {
+                console.log(response);
+                this.setState({voteResponse: response.data});
+                NotificationManager.success('Process Models have been fetched', response.statusText);
+              } else {
+                console.log('ERROR', response);
+              }}).catch(error => {
+                  console.log(error);
+                  let errorMessage;
+
+                  if (error.response) {
+                      errorMessage = "The data entered is invalid or some unknown error occurred with the request!";
+                  } else if (error.request) {
+                      errorMessage = "The request was made but no response was received";
+                      console.log(error.request);
+                  } else {
+                      errorMessage = error.message;
+                      console.log('Error', error.message);
+                  }
+
+                  NotificationManager.warning(errorMessage, 'OOPS...');
+              });
+        }        
+    }
       
     render() {
         return(
@@ -304,7 +458,7 @@ class AccessAllocation extends Component {
                             </Card.Header>
                             <Accordion.Collapse eventKey="0">
                               <Card.Body>  
-                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.policyAddressesResponse.accessControl} </pre> </span> 
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> No Access Control Policy Found </span> : this.state.policyAddressesResponse.accessControl} </pre> </span> 
                               </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>
@@ -317,7 +471,7 @@ class AccessAllocation extends Component {
                             </Card.Header>
                             <Accordion.Collapse eventKey="1">
                               <Card.Body>  
-                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.policyAddressesResponse.bindingPolicy} </pre> </span> 
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> No Role Binding Policy Found </span> : this.state.policyAddressesResponse.bindingPolicy} </pre> </span> 
                               </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>
@@ -330,7 +484,7 @@ class AccessAllocation extends Component {
                             </Card.Header>
                             <Accordion.Collapse eventKey="2">
                               <Card.Body>  
-                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.policyAddressesResponse.roleTaskMap} </pre> </span> 
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> No Task Role Map Policy Found </span> : this.state.policyAddressesResponse.roleTaskMap} </pre> </span> 
                               </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>
@@ -386,7 +540,7 @@ class AccessAllocation extends Component {
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
                                 <Card.Body>  
-                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.roleStateResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.roleStateResponse.state} </pre> </span>
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {Object.keys(this.state.roleStateResponse).length === 0 ? <span style={{color: "#FA8072"}}> No information about the state is found </span> : this.state.roleStateResponse.state} </pre> </span>
                                 </Card.Body>                      
                               </Accordion.Collapse>
                             </Card>
@@ -431,7 +585,7 @@ class AccessAllocation extends Component {
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
                                 <Card.Body>  
-                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.caseCreatorResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.caseCreatorResponse.transactionHash} </pre> </span>
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.caseCreatorResponse.length === 0 ? <span style={{color: "#FA8072"}}> Case creator is not yet nominated </span> : this.state.caseCreatorResponse.transactionHash} </pre> </span>
                                 </Card.Body>                      
                               </Accordion.Collapse>
                             </Card>
@@ -516,7 +670,7 @@ class AccessAllocation extends Component {
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
                                 <Card.Body>  
-                                  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.nominateResponse.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.nominateResponse.transactionHash} </pre> </span>
+                                  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.nominateResponse.length === 0 ? <span style={{color: "#FA8072"}}> No nomination has been performed yet </span> : this.state.nominateResponse.transactionHash} </pre> </span>
                                 </Card.Body>                      
                               </Accordion.Collapse>
                             </Card>
@@ -627,7 +781,7 @@ class AccessAllocation extends Component {
                 > Find Role State
                 </Button> <br/>    */}
             
-            
+              <NotificationContainer/>   
               <div style={{marginTop: "65px"}}></div>
             </Aux>
              
