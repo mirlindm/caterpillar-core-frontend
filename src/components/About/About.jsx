@@ -5,6 +5,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 import './About.css'
 
+
 class About extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,7 @@ class About extends Component {
         this.state = {            
             show: false,         
         }
-    }
+    } 
 
     goToWelcomeComponentHandler = () => {
         this.props.history.push(`/welcome`);   

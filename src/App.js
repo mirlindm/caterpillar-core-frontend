@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+
+import {w3cwebsocket as W3CWebSocket } from 'websocket';
+import ls from 'local-storage';
+
 import './App.css';
 
 import { Container, Row, Col } from 'react-bootstrap';
@@ -22,21 +26,36 @@ import AccessAllocation from './components/Policies/AccessAllocation';
 
 //import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute.jsx';
 
+const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class App extends Component {
 
-    render() {
+  componentWillMount() {
+  
+    client.onopen = () => {
+      console.log('WebSocket Client Connected from App.js');
+    };
+    client.onmessage = (message) => {
+      const dataFromServer = JSON.parse(message.data);
+      const step2 = JSON.parse(dataFromServer.policyInfo);
+      console.log(step2.contractAddress);
+      //check here if the info from the message (the name) is access control, then set the ls like below, 
+      // else - set the ls for the role binding policy, else for the task role map ... 
+      ls.set('accessControlAddress', step2.contractAddress)
+    };
+  }
+
+  
+  render() {
+    
       const marginTop = {
         marginTop: "30px"
-      };
-      
-  return (
+      }; 
 
-                              
+  return (                              
              <Router>
               <NavigationBar />
-              
-              
+
               {/* <BpmnModelerComponent></BpmnModelerComponent> */}
               <Container>
                 <Row>

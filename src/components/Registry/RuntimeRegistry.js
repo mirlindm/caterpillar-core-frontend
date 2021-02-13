@@ -22,7 +22,7 @@ class RuntimeRegistry extends Component {
             show1: false,        
             show2: false,        
             registry: [],
-            errorMessage: 'No registry found!',
+            errorMessage: 'No registry created ...',
             idOrAddress: '',
             registryData: [],     
         }
@@ -208,7 +208,7 @@ class RuntimeRegistry extends Component {
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
                                                 this.state.registry.length === 0 ?                                             
-                                                <p  style={{textAlign:"center", color: "#A52A2A", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
+                                                <p  style={{textAlign:"center", color: "#FA8072", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
                                                     <p style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> New Registry ID: <span onClick={this.passingRegistryIdToSearchInputHandler} style={{textDecoration: "underline", cursor: "pointer"}}> {this.state.registry.ID} </span> </p>
@@ -269,7 +269,7 @@ class RuntimeRegistry extends Component {
                     this.state.registryData.length === 0 ?
 
                     <Alert  
-                        style={{color: "#A52A2A",                                            
+                        style={{color: "#FA8072",                                            
                             fontSize: "17px", 
                             fontWeight: "normal",
                             borderRadius: "10px",
@@ -279,7 +279,7 @@ class RuntimeRegistry extends Component {
                             backgroundColor: "#d7dde8",
                             border: "1px solid #d7dde8"}}
                         size="sm">
-                        <strong> No registry found!  </strong> 
+                        <strong> No registry found </strong> 
                     </Alert> :
                     <Aux>
 

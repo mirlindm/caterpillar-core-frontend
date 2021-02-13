@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
+import {w3cwebsocket as W3CWebSocket } from 'websocket';
 
 import Aux from '../../hoc/Auxiliary';
 import {ACCESS_CONTROL_URL} from '../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ls from 'local-storage';
 
-import {Form, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
+import {Form, Button, Card, Accordion, Dropdown, Alert} from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
+
+const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class AccessControl extends Component {
     constructor(props) {
@@ -19,8 +23,16 @@ class AccessControl extends Component {
             createAccessControl: undefined,
             accessControlAddress: '',
             accessControlAddressMetadata: [],
+            accessControlAddressFromWebSocket: [],
         }
     }
+
+    //  componentDidMount() {
+    //     console.log("on mount")
+    //     client.onopen = () => {
+    //     console.log('WebSocket Client Connected from access control component!');
+    //   };
+    //  }
 
     //POST 3 - Dynamic Access Control
     deployAccessControl = () => {
@@ -29,7 +41,36 @@ class AccessControl extends Component {
           .then(response =>  {
             this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
             NotificationManager.success('Access Control Policy Created!', response.statusText);
-            console.log(response);          
+            console.log(response.data); 
+         
+            // client.onmessage = (message) => {
+            //       const dataFromServer = JSON.parse(message.data);
+            //       const step2 = JSON.parse(dataFromServer.policyInfo);
+            //       console.log(step2.contractAddress);
+            //       ls.set('accessControlAddress', step2.contractAddress)
+            // };
+            
+            client.onmessage = (message) => {
+              const dataFromServer = JSON.parse(message.data);
+              const step2 = JSON.parse(dataFromServer.policyInfo);
+              console.log("contract address:  " + step2.contractAddress);
+              ls.set('accessControlAddress', step2.contractAddress)
+              // this.setState({
+              //   accessControlAddressFromWebSocket: dataFromServer
+              // })
+              console.log("Here!")
+              //console.log(message.data)
+              const stateToChange = {};
+              if (dataFromServer.type === "userevent") {
+                stateToChange.currentUsers = Object.values(dataFromServer.data.users);
+              } else if (dataFromServer.type === "contentchange") {
+                stateToChange.text = dataFromServer.data.editorContent || dataFromServer.contentDefaultMessage;
+              }
+              stateToChange.userActivity = dataFromServer.data.userActivity;
+              //console.log("LOGGING FROM WEB SOCKET: " + stateToChange);                      
+            };         
+          
+            console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
           })
           .catch(error => {
             console.log(error);
@@ -154,6 +195,9 @@ class AccessControl extends Component {
                         Please provide the Access Control Address in the Input Field
                   </Alert>   */}
                   {/* Access Control Configuration - GET 3 */}
+                  <Alert variant="light" style={{ textAlign: "center",}} > 
+                      Access Control Addresses Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {ls.get('accessControlAddress')} </span> 
+                  </Alert>
                   <Form.Control required type="text" placeholder="Enter the Access Control Address" 
                     name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
                     style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}

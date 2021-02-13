@@ -14,6 +14,7 @@ import {Form, Alert, Button, Accordion, Card, Col, Row, Breadcrumb } from 'react
 
 import axios from 'axios';
 
+
 class AccessAllocation extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +55,9 @@ class AccessAllocation extends Component {
             breadCrumbTaskRoleMap: false,
 
         }
-    }
+    } 
+    
+
 
     // change the input process case value
     inputProcessCaseChangeHandler = (event) => {

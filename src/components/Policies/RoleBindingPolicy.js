@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {w3cwebsocket as W3CWebSocket } from 'websocket';
 
 import Aux from '../../hoc/Auxiliary';
 import {RB_POLICY_URL} from '../../Constants';
@@ -9,6 +10,8 @@ import {Form, Alert, Button, Card, Accordion, Dropdown} from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
+
+const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class RoleBindingPolicy extends Component {
     constructor(props) {
@@ -23,6 +26,13 @@ class RoleBindingPolicy extends Component {
             rbPolicyMetadata: [],
         }
     }
+
+    componentWillMount() {
+      console.log("on mount")
+     client.onopen = () => {
+       console.log('WebSocket Client Connected from access control component!');
+     };
+  }
 
     //onChangeTextArea
     textAreaChangeHandler = (event) => {
@@ -63,7 +73,25 @@ class RoleBindingPolicy extends Component {
             console.log(response);
             if (response.status === 202) {
               this.setState({rbPolicyResponse: response.data});  
-              NotificationManager.success('New Role Binding Policy has been successfuly deployed!', response.statusText);                                                
+              NotificationManager.success('New Role Binding Policy has been successfuly deployed!', response.statusText);
+              
+              client.onmessage = (message) => {
+                const dataFromServer = JSON.parse(message.data);
+                this.setState({
+                  accessControlAddressFromWebSocket: dataFromServer
+                })
+                console.log(message.data)
+                const stateToChange = {};
+                if (dataFromServer.type === "userevent") {
+                  stateToChange.currentUsers = Object.values(dataFromServer.data.users);
+                } else if (dataFromServer.type === "contentchange") {
+                  stateToChange.text = dataFromServer.data.editorContent || dataFromServer.contentDefaultMessage;
+                }
+                stateToChange.userActivity = dataFromServer.data.userActivity;
+                                    
+              };
+              
+              
             } else {
               console.log('ERROR', response);
             }})
