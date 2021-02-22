@@ -23,7 +23,12 @@ const reducer = (state = {}, action) => {
 		case 'PROCESS_CASE': {
 			state = {...state, loaded: true, loading: false, processCaseAddress: action.payload};
 			break;
-		}		
+		}	
+		case 'ACCESS_CONTROL_ADDRESS_WEBSOCKET': {
+			state = {...state, accessControlAddressWebSocket: action.payload};
+			break;
+		}
+		
 		case 'ERROR': {
 			state = {...state, loading: false, error: action.payload};
 			break;

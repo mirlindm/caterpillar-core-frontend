@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {w3cwebsocket as W3CWebSocket } from 'websocket';
+
 
 import Aux from '../../hoc/Auxiliary';
 import {ACCESS_CONTROL_URL} from '../../Constants';
@@ -7,12 +7,12 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import ls from 'local-storage';
 
+
 import {Form, Button, Card, Accordion, Dropdown, Alert} from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
 
-const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class AccessControl extends Component {
     constructor(props) {
@@ -23,53 +23,29 @@ class AccessControl extends Component {
             createAccessControl: undefined,
             accessControlAddress: '',
             accessControlAddressMetadata: [],
-            accessControlAddressFromWebSocket: [],
+            accessControlAddressFromWebSocket: '',
         }
     }
 
-    //  componentDidMount() {
+      componentDidMount() {
+        this.setState({
+          accessControlAddressFromWebSocket: ls.get('aca'),
+        })
     //     console.log("on mount")
     //     client.onopen = () => {
     //     console.log('WebSocket Client Connected from access control component!');
-    //   };
-    //  }
+    //   };      
+      }
+
 
     //POST 3 - Dynamic Access Control
-    deployAccessControl = () => {
-
-        axios.post(ACCESS_CONTROL_URL)
+    deployAccessControl = async () => {
+       
+      await axios.post(ACCESS_CONTROL_URL)
           .then(response =>  {
             this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
             NotificationManager.success('Access Control Policy Created!', response.statusText);
-            console.log(response.data); 
-         
-            // client.onmessage = (message) => {
-            //       const dataFromServer = JSON.parse(message.data);
-            //       const step2 = JSON.parse(dataFromServer.policyInfo);
-            //       console.log(step2.contractAddress);
-            //       ls.set('accessControlAddress', step2.contractAddress)
-            // };
-            
-            client.onmessage = (message) => {
-              const dataFromServer = JSON.parse(message.data);
-              const step2 = JSON.parse(dataFromServer.policyInfo);
-              console.log("contract address:  " + step2.contractAddress);
-              ls.set('accessControlAddress', step2.contractAddress)
-              // this.setState({
-              //   accessControlAddressFromWebSocket: dataFromServer
-              // })
-              console.log("Here!")
-              //console.log(message.data)
-              const stateToChange = {};
-              if (dataFromServer.type === "userevent") {
-                stateToChange.currentUsers = Object.values(dataFromServer.data.users);
-              } else if (dataFromServer.type === "contentchange") {
-                stateToChange.text = dataFromServer.data.editorContent || dataFromServer.contentDefaultMessage;
-              }
-              stateToChange.userActivity = dataFromServer.data.userActivity;
-              //console.log("LOGGING FROM WEB SOCKET: " + stateToChange);                      
-            };         
-          
+            console.log(response.data);                                                                           
             console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
           })
           .catch(error => {
@@ -87,12 +63,8 @@ class AccessControl extends Component {
             }
 
             NotificationManager.warning(errorMessage, 'OOPS...');                           
-          });
-      }
-  
-      // saveAccessControlAddressHandler = () => {
-      //   this.setState({accessControlAddress: });                                                  
-      // }
+          });      
+      }    
   
       // change the accessControlAddress value
       accessControlAddressChangeHandler = (event) => {
@@ -161,7 +133,7 @@ class AccessControl extends Component {
     render(){
         return(
             <Aux>
-                 {/* Access Control Configuration - POST 3 */}                 
+                             
                 <div  className="ContentUnique"> 
                   <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
                       Create new Access Control
@@ -177,7 +149,7 @@ class AccessControl extends Component {
                       </Dropdown.Menu>
                   </Dropdown>
                 </div>
-                {this.state.createAccessControl === true ? <>
+                { this.state.createAccessControl === true ? <>
                     <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                       <Card>
                         <Card.Header>
@@ -196,8 +168,14 @@ class AccessControl extends Component {
                   </Alert>   */}
                   {/* Access Control Configuration - GET 3 */}
                   <Alert variant="light" style={{ textAlign: "center",}} > 
-                      Access Control Addresses Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {ls.get('accessControlAddress')} </span> 
+                      Access Control Addresses Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> <p id="here"> {ls.get('aca')} </p> </span> 
+                  </Alert> 
+                  
+                  <Alert variant="light" style={{ textAlign: "center",}} > 
+                     NEEWWWWWW Access Control Addresses Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.state.accessControlAddressFromWebSocket} </span> 
                   </Alert>
+
+                  
                   <Form.Control required type="text" placeholder="Enter the Access Control Address" 
                     name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
                     style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}

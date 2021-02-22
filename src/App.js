@@ -21,6 +21,7 @@ import CompilationEngine from './components/bpmn/CompilationEngine';
 import InterpretationEngine from './components/bpmn/InterpretationEngine';
 import Error from './components/Error/Error.jsx';
 import AccessAllocation from './components/Policies/AccessAllocation';
+import AccessControl from './components/Policies/AccessControl'
 
 
 
@@ -29,31 +30,52 @@ import AccessAllocation from './components/Policies/AccessAllocation';
 const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class App extends Component {
+  constructor(props) {
+    super(props);
 
-  componentWillMount() {
+    this.state = {      
+        accessControlAddressFromWebSocket: '',
+    }
+}
+
+  componentDidMount() {
   
     client.onopen = () => {
       console.log('WebSocket Client Connected from App.js');
-    };
+    };    
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
-      const step2 = JSON.parse(dataFromServer.policyInfo);
-      console.log(step2.contractAddress);
+      console.log(dataFromServer);
+      const parsedData = JSON.parse(dataFromServer.policyInfo);
+      console.log("The address from the app component through websocket: " + parsedData.contractAddress);
+      
       //check here if the info from the message (the name) is access control, then set the ls like below, 
       // else - set the ls for the role binding policy, else for the task role map ... 
-      ls.set('accessControlAddress', step2.contractAddress)
-    };
+      if(parsedData.compilationInfo.contractName === "BindingAccessControl"){  
+        this.setState({
+          accessControlAddressFromWebSocket: parsedData.contractAddress
+        })
+        console.log("Done with updating the state!")       
+        ls.set('aca', parsedData.contractAddress)
+        console.log("The new state in App.js: " + this.state.accessControlAddressFromWebSocket)
+      }
+            
+    };    
   }
-
   
+  reduxFunction = (dispatch) => {    
+      console.log("HERE2")
+      dispatch({type: 'ACCESS_CONTROL_ADDRESS_WEBSOCKET', payload: this.state.accessControlAddressFromWebSocket });    
+  }
+       
   render() {
     
-      const marginTop = {
+    const marginTop = {
         marginTop: "30px"
-      }; 
+    }; 
 
-  return (                              
-             <Router>
+      return (                              
+             <Router>               
               <NavigationBar />
 
               {/* <BpmnModelerComponent></BpmnModelerComponent> */}
@@ -70,6 +92,7 @@ class App extends Component {
                       {/* <Route path="/compilation" exact component={CCreateModel} />*/}
                       {/* <Route path="/interpretation" exact component={ICreateModel} />*/}
                       <Route path="/access" exact component={AccessAllocation} />                    
+                      <Route path="/accessControl" exact component={AccessControl} />                    
                       <Route path="/runtimeRegistry" exact component={RuntimeRegistry} />                    
                       <Route path="/logout" exact component={Logout} />
                       <Route path="/about" exact component={About} />

@@ -22,7 +22,7 @@ class RuntimeRegistry extends Component {
             show1: false,        
             show2: false,        
             registry: [],
-            errorMessage: 'No registry created ...',
+            errorMessage: 'No registry created',
             idOrAddress: '',
             registryData: [],     
         }
@@ -114,7 +114,7 @@ class RuntimeRegistry extends Component {
                 console.log(error);
                 let errorMessage;
                 if (error.response) {
-                    errorMessage = "The data entered is invalid or some unknown error occurred!";
+                    errorMessage = "The data entered is incorrect or some unknown error occurred!";
                     dispatch({type: 'ERROR', payload: errorMessage});
                 } else if (error.request) {
                     errorMessage = "The request was made but no response was received";
@@ -131,8 +131,7 @@ class RuntimeRegistry extends Component {
     }
 
     // Get request to fetch registry's data based on its address and dispatch registry's address to redux store
-    getRegistryAddressByAddress = (dispatch) => {        
-        //const URL = 'http://' + window.location.hostname + ':3000/registries/';
+    getRegistryAddressByAddress = (dispatch) => {                
         if(this.state.idOrAddress === ''){
             NotificationManager.error("Please provide Registry ID or Address to load registry data", 'ERROR')
         } else {
@@ -263,21 +262,20 @@ class RuntimeRegistry extends Component {
                                 </Button>
                             </Card.Footer>
                         </Form>
-                    </Card>                                         
-                </div>     
-                {
+                        {
                     this.state.registryData.length === 0 ?
 
                     <Alert  
                         style={{color: "#FA8072",                                            
                             fontSize: "17px", 
                             fontWeight: "normal",
-                            borderRadius: "10px",
+                            //borderRadius: "10px",
                             marginRight: "250px",
                             marginLeft: "250px",
                             textAlign: "center",
-                            backgroundColor: "#d7dde8",
-                            border: "1px solid #d7dde8"}}
+                            //backgroundColor: "#d7dde8",
+                            //border: "1px solid #d7dde8"
+                        }}
                         size="sm">
                         <strong> No registry found </strong> 
                     </Alert> :
@@ -291,7 +289,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                           1. Contract Name
+                                           Contract Name
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
@@ -303,7 +301,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                           2. ABI
+                                           ABI
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="1">
@@ -317,7 +315,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                           3. Byte Code
+                                           Byte Code
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="2">
@@ -331,7 +329,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                           4. Solidity Code
+                                           Solidity Code
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="3">
@@ -345,7 +343,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                           5. Registry Address
+                                            Registry Address
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="4">
@@ -358,7 +356,7 @@ class RuntimeRegistry extends Component {
                             </Card>
                         </Accordion>
 
-                         <div style={{marginTop: "20px", textAlign: "center"}}> 
+                         <div style={{margin: "20px 0",  textAlign: "center"}}> 
                             <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToModellerHandler}>
                                 Proceed to Modeller Component
                             </Button>
@@ -368,7 +366,10 @@ class RuntimeRegistry extends Component {
                             </Button> 
                         </div>                                                        
                     </Aux>
-                    }               
+                    }   
+                    </Card>                                           
+                </div>     
+                         
            
             <NotificationContainer/>
             <div style={{marginTop: "60px"}}> </div>

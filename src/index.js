@@ -20,6 +20,7 @@ const initialState = {
   taskRoleMapAddress: '',
   processCaseAddress: [],
 	error: null,
+  accessControlAddressWebSocket: '',
 };
 
 const middleware = applyMiddleware(thunk);
