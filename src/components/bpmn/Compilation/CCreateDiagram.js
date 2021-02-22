@@ -209,7 +209,7 @@ class CCreateDiagram extends Component {
             console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
             if (!this.props.registryAddress) {
               NotificationManager.error("There is no Registry Specified", 'ERROR')
-            } else if (!err) {
+            } else if (!err) {    
               console.log(xml);
               axios.post(COMPILATION_URL + '/compile', 
               {
@@ -386,175 +386,7 @@ class CCreateDiagram extends Component {
         //   console.log(err.message, err.warnings);
         // }
       }
-                   
-      // Post Request 3: createNewProcessInstance
-      // createNewProcessInstanceHandler = () => {
-      //   let mHash = this.state.mHash;
-      //   //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-      //   console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-      //   console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.state.accessControlState);
-      //   if (!this.props.registryAddress) {
-      //     NotificationManager.error("There is no Registry Specified", 'ERROR');
-      //   } else if(mHash === '') {
-      //     NotificationManager.error("Please provide ID of the Process Model you want to create an instance of.", 'ERROR');
-      //   } else {
-      //     axios.post(COMPILATION_URL + `/${mHash}/processes`,
-      //     {                    
-      //       registryAddress: this.props.registryAddress,
-      //       accessCtrlAddr: this.state.accessControlState,
-      //       rbPolicyAddr: this.state.rbPolicyState,
-      //       taskRoleMapAddr: this.state.taskRoleMapState, 
-      //     },
-      //     {
-      //       headers: {
-      //           'Accept': 'application/json',
-      //       }
-      //     }).then(response =>  {
-      //       console.log(response);
-      //       if (response.status === 201) {
-      //       this.setState({processInstanceResponse: response.data});
-      //       NotificationManager.success('Process Instance Has been Created', response.statusText);                                                                           
-      //       } else {
-      //         console.log('ERROR', response);
-      //       }})
-      //       .catch(error => {              
-      //         console.log(error);
-      //             let errorMessage;
-
-      //             if (error.response) {
-      //                 errorMessage = "The data entered is invalid or some unknown error occurred!";
-      //             } else if (error.request) {
-      //                 errorMessage = "The request was made but no response was received";
-      //                 console.log(error.request);
-      //             } else {
-      //                 errorMessage = error.message;
-      //                 console.log('Error', error.message);
-      //             }
-
-      //             NotificationManager.warning(errorMessage, 'OOPS...');
-      //       });
-      //   }       
-      // }
-
-      // Get Request 3: queryProcessInstancesHandler
-      // queryProcessInstancesHandler = () => {
-      //   let mHash = this.state.mHash;
-                
-      //   console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-      //   if(!this.props.registryAddress) {
-      //     NotificationManager.error("There is no Registry Specified", 'ERROR');
-      //   }
-      //   else if(mHash === '') {
-      //     NotificationManager.error("Please provide ID of the Process Model you want to query instances of.", 'ERROR');
-      //   } else {
-      //     axios.get(COMPILATION_URL + `/${mHash}/processes`,
-      //     {
-      //       headers: {
-      //         'registryAddress': this.props.registryAddress,
-      //           'accept': 'application/json'
-      //       }
-      //     }).then(response => { 
-      //       console.log(response);
-      //       if (response.status === 200) {
-      //         this.setState({queryProcessInstancesResponse: response.data});           
-      //         NotificationManager.success('Registry has been loaded', response.statusText);
-      //       } else {
-      //         console.log('ERROR', response);
-      //       }})
-      //     .catch(error => {
-      //       console.log(error);
-      //       let errorMessage;
-
-      //       if (error.response) {
-      //           errorMessage = "The data entered is invalid or some unknown error occurred!";
-      //       } else if (error.request) {
-      //           errorMessage = "The request was made but no response was received";
-      //           console.log(error.request);
-      //       } else {
-      //           errorMessage = error.message;
-      //           console.log('Error', error.message);
-      //       }
-
-      //       NotificationManager.warning(errorMessage, 'OOPS...');  
-      //     });  
-      //   }              
-      // }
-      
-      // Get Request 4: queryProcessState
-      // queryProcessStateHandler = () => {
-      //   //pAddress is same as mHash
-      //   let pAddress = this.state.mHash;         
-
-      //   console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
-
-      //   if(!this.props.registryAddress) {
-      //     NotificationManager.error("There is no Registry Specified", 'ERROR');
-      //   }
-      //   else if(pAddress === '') {
-      //     NotificationManager.error("Please provide ID of the Process Model you want to query instance state of.", 'ERROR');
-      //   } else {
-      //     axios.get(PROCESS_INSTANCE_QUERY_URL + pAddress,
-      //     {
-      //       headers: {
-      //         'registryAddress': this.props.registryAddress,
-      //         'accept': 'application/json',
-      //       }
-      //     }).then(response => {
-      //       console.log(response);
-      //       if (response.status === 200) {
-      //         this.setState({queryProcessStateResponse: response.data});  
-      //         NotificationManager.success('Registry has been loaded', response.statusText);            
-      //       } else {
-      //         console.log('ERROR', response);
-      //       }})
-      //       .catch(error => {              
-      //         console.log(error);
-      //         let errorMessage;
-  
-      //         if (error.response) {
-      //             errorMessage = "The data entered is invalid or some unknown error occurred!";
-      //         } else if (error.request) {
-      //             errorMessage = "The request was made but no response was received";
-      //             console.log(error.request);
-      //         } else {
-      //             errorMessage = error.message;
-      //             console.log('Error', error.message);
-      //         }
-  
-      //         NotificationManager.warning(errorMessage, 'OOPS...');
-      //       });       
-      //   }       
-      // }
-
-      //Put Request 1
-      // executeWorkItemHandler =  () => {
-      //    //wlAddress is same as mHash
-      //    let wlAddress = '0xA70E385Ca9b2202726CA8D719255Ca228298b7AF'; 
-      //    //let wiIndex = this.state.queryProcessInstancesResponse[this.state.queryProcessStateResponse.length-1];
-      //    let wiIndex = '5';
-      //    let worklist = this.state.queryProcessStateResponse.map(state => state.hrefs[0]);
-      //    let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-      //    console.log("PUT1: 1. RegistryAddress" + registryAddress + ", wlAddress: " + wlAddress + ", wiIndex: " + wiIndex);
-         
-      //   axios.put('http://localhost:3000'+ worklist, {
-      //     "registryAddress": registryAddress,
-      //     //"inputParameters": "[true]",
-      //   },  
-      //    {
-      //      headers: {            
-      //          'accept': 'application/json',
-      //      }
-      //    }).then(response => {              
-      //      console.log(response);          
-      //    })
-      //    .catch(error => {              
-      //      console.log(error)
-      //    });       
-      // } 
- 
-
+                      
   render = () => {
     return (
       <Aux>
@@ -571,42 +403,112 @@ class CCreateDiagram extends Component {
           {/* New changes Start - POST 1 */}
           <br/>
           <Card style={{border: "1px solid #d7dde8"}}>
-                <Alert variant="primary" size="sm"> 
-                    Deploy Process Model
+                <Alert style={{textAlign: "center"}} variant="light" size="sm"> 
+                  <Button onClick={this.deployProcessModels}
+                        variant="primary" type="submit" className="new-buttons"
+                        style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
+                        Deploy Process Model
+                      </Button> {' '}
+                      <Button onClick={this.compileProcessModels}
+                            variant="primary" type="submit" className="new-buttons"
+                            style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
+                            Compile Process Model
+                      </Button>
                 </Alert>  
-                  <Card.Body>
-                    <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
+              
+                    {/* <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
                       <Col>                                        
                       <Button onClick={this.deployProcessModels}
                         variant="primary" type="submit" className="new-buttons"
                         style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
                         Deploy Process Model
+                      </Button> {' '}
+                      <Button onClick={this.compileProcessModels}
+                            variant="primary" type="submit" className="new-buttons"
+                            style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
+                            Compile Process Model
                       </Button>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                       <Col> <br/>
-                  
-                         <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                            <Card>
-                              <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  1. Bundle ID of Deployed Model
-                                </Accordion.Toggle>
-                              </Card.Header>
-                              <Accordion.Collapse eventKey="0">
-                                <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.id.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.id.bundleID} </pre> </span> </Card.Body>
-                              </Accordion.Collapse>
-                            </Card>            
-                          </Accordion>
+                        { this.state.showIDAccordion ? 
+                          <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                Bundle ID of Deployed Model
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="0">
+                              <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.id.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.id.bundleID} </pre> </span> </Card.Body>
+                            </Accordion.Collapse>
+                          </Card>            
+                        </Accordion>
+                        : null }   <hr/>
+                        { this.state.showCompileProcessModelsAccordion ?
+                            <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    Contract Name of Deployed Model
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                  <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.compileProcessModelsContractName.length === 0 ?  <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.compileProcessModelsContractName} </pre>  </span> </Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    Solidity Code of Deployed Model
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                        <Accordion.Collapse eventKey="1">
+                                          <Card.Body style={{textAlign: "center"}}> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.compileProcessModelsSolidityCode === [] ? "Something went wrong!" : this.state.compileProcessModelsSolidityCode } </pre> </span> </Card.Body>
+                                        </Accordion.Collapse>
+                              </Card>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                    Code Dependencies of Deployed Model
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="2">
+                                  <Card.Body style={{textAlign: "center"}}> 
+                                    Solidity Code 1: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[0]} </pre> </span> <hr/>
+                                    Solidity Code 2: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[1]} </pre> </span> <hr/>
+                                    Solidity Code 3: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[2]} </pre> </span> <hr/>
+                                    Solidity Code 4: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center",  }}> <pre> {this.state.compileProcessModelsCodeDependencies[3]} </pre> </span>                                         
+                                  </Card.Body>
+                                </Accordion.Collapse>
+                              </Card>
+
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                                    Compilation Metadata of Deployed Model
+                                  </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="3">
+                                  <Card.Body> 
+                                    Contract Name: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <pre> {this.state.compileProcessModelsCompilationMetadataContractName} </pre> </span> <hr/>
+                                    ABI: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <br/> <pre>  {this.state.compileProcessModelsCompilationMetadataABI} </pre> </span> <hr/>
+                                    Byte Code: <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",}}> <br/> <pre> {this.state.compileProcessModelsCompilationMetadataByteCode} </pre> </span> <hr/>
+                                  </Card.Body>
+                                </Accordion.Collapse>
+                              </Card>                                                
+                            </Accordion>                          
+                          : null
+                        }                     
                       </Col>  
                     </Row>                    
-                  </Card.Body>
+                 
                 </Card>
           {/* New changes End */}
                                   
           {/* New changes Start */}
-          <br/>
+          {/* <br/>
           <Card style={{border: "1px solid #d7dde8"}}>
                 <Alert variant="primary" size="sm"> 
                     Compile Process Model
@@ -678,7 +580,7 @@ class CCreateDiagram extends Component {
                         </Col>  
                       </Row>                    
                   </Card.Body>
-                </Card>
+                </Card> */}
           {/* New changes End */}         
 
           {/* New changes Start - GET 1 */}
