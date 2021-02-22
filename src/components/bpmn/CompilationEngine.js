@@ -148,8 +148,8 @@ class CompilationEngine extends Component {
       }
 
       // GET 2 /models/:mHash or processId as a parameter 
-      retrieveModelMetadata = (event) => { 
-        let mHash = this.state.mHash;
+      retrieveModelMetadata = (mHash) => { 
+        //let mHash = this.state.mHash;
         this.setState({showRetrieveModelMetadataAccordion: true});
                 
         
@@ -254,13 +254,13 @@ class CompilationEngine extends Component {
                           },
                         })                          
                         }} label="Query Process Models"/>
-                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.breadCrumbFetchModelMetadata} id="create" name="queryModels" onChange={(event) => { this.changeBreadCrumbFetchModelMetadataHandler({
+                        {/* <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.breadCrumbFetchModelMetadata} id="create" name="queryModels" onChange={(event) => { this.changeBreadCrumbFetchModelMetadataHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
                           },
                         })                          
-                        }} label="Fetch Model Metadata"/>    
+                        }} label="Fetch Model Metadata"/>     */}
                         <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.createModel} id="create" name="createModel" onChange={(event) => { this.onChangeCreateModelHandler({
                           target: {
                             name: event.target.name,
@@ -304,46 +304,32 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  1. Query Process Models /models 
+                                  Query Process Models /models 
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
-                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> There are no Models in the database </span> : this.state.getProcessModelsSuccessMessage.map((process, id) => <ul key={id}><li key={id}> {process} </li></ul>)} </pre> </span> </Card.Body>
+                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getProcessModelsSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> There are no Models in the database </span> : this.state.getProcessModelsSuccessMessage.map((process, id) => (
+                                <ul key={id}>
+                                  <li key={id}> 
+                                    {process} {'  '} 
+                                    <Button onClick={() => this.retrieveModelMetadata(process)} variant="primary" className="new-buttons"
+                                      type="submit" > 
+                                        Retrieve Model Metadata
+                                    </Button>                                 
+                                  </li>
+                                </ul>                                 
+                                ))} </pre> </span> </Card.Body>
                               </Accordion.Collapse>
                             </Card>            
                           </Accordion>
                         </Col>  
                       </Row>                    
                   </Card.Body>
-                </Card>
-            </Aux> : null }
-            {/* New changes End */}
-                                    
-            {/* New changes Start - GET 2 */}
-            { this.state.breadCrumbFetchModelMetadata ? 
-            <Aux>
-              <br/>
-              <Card style={{border: "1px solid #d7dde8"}}>
-                    <Alert variant="primary" size="sm"> 
-                        Query Process Models
-                    </Alert>  
-                      <Card.Body>
-                        <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                          <Col>                                        
-                            <input required type="text" placeholder="Enter the mHash" 
-                              name="mHash" value={this.state.mHash}
-                              onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                            /> {'      '}
-                            <Button onClick={this.retrieveModelMetadata} variant="primary" className="new-buttons"
-                                  type="submit" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}> 
-                                  Retrieve Model Metadata
-                            </Button>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col> 
-                          <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                            <Card>
+
+                  {/* ********************** */}
+                  { this.state.showRetrieveModelMetadataAccordion ? 
+                    <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                        <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
                                   1. Smart Contract Information
@@ -443,13 +429,16 @@ class CompilationEngine extends Component {
                                         
                               </Card.Body>
                             </Accordion.Collapse>
-                          </Card>                         
-                        </Accordion>                                      
-                      </Col>  
-                    </Row>                    
-                </Card.Body>
-              </Card>
+                        </Card>                         
+                    </Accordion>                                 
+                  : null }
+                  {/* *********************** */}
+                </Card>
             </Aux> : null }
+            {/* New changes End */}
+                                    
+            {/* New changes Start - GET 2 */}
+
             {/* New changes End */}
 
                 { this.state.createModel === true ?
