@@ -54,6 +54,9 @@ class AccessAllocation extends Component {
             breadCrumbRoleBindingPolicy: false,
             breadCrumbTaskRoleMap: false,
 
+            // new
+            showAccordionOfFindPolicyAddress: false,
+            showAccordionOfFindRoleState: false,
         }
     } 
     
@@ -105,10 +108,10 @@ class AccessAllocation extends Component {
     }
 
      // /rb-opertation/:pCase => findPolicyAddresses
-     findPolicyAddresses =  () => {    
+     findPolicyAddresses =  (pCase) => {    
           
-        let pCase = this.state.pCase;
-        console.log(pCase);
+        // let pCase = this.state.pCase;
+        // console.log(pCase);
         console.log(this.props.registryAddress);
         
         console.log("on nomination value is: "+ this.state.onNomination)
@@ -128,7 +131,7 @@ class AccessAllocation extends Component {
               .then(response => {
                   if (response.status === 200) {
                     console.log(response);
-                    this.setState({policyAddressesResponse: response.data});            
+                    this.setState({policyAddressesResponse: response.data, showAccordionOfFindPolicyAddress: true});            
                     NotificationManager.success('Policy Addresses have been successfully fetched!', response.statusText);
                   }else {
                     console.log('ERROR', response);
@@ -152,8 +155,8 @@ class AccessAllocation extends Component {
       }
 
       // /rb-opertation/:pCase/state => findRoleState
-      findRoleState =  () => {                
-        let pCase = this.state.pCase;
+      findRoleState =  (pCase) => {                
+        // let pCase = this.state.pCase;
         
         if (!this.props.registryAddress) {
           NotificationManager.error("There is no Registry Specified!", 'ERROR')
@@ -173,7 +176,7 @@ class AccessAllocation extends Component {
             .then(response => {
               if (response.status === 200) {
                 console.log(response);
-                this.setState({roleStateResponse: response.data}); 
+                this.setState({roleStateResponse: response.data, showAccordionOfFindRoleState: true}); 
                 NotificationManager.success(`Information about the role: ${this.state.roleName}, have been successfully fetched!`, response.statusText);
               } else {
                 console.log('ERROR', response);
@@ -422,21 +425,95 @@ class AccessAllocation extends Component {
               <hr/>
               <Card style={{border: "3px solid #d7dde8", }}>
                 <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
-                  Please Configure the remaining operations: Nomination, Release, Vote
+                  Process Cases Available
                 </Alert>  
                 <Card.Body>
-                  <Row style={{textAlign: "center"}}>  
+                  <Row>  
                     <Col>
-                      <Alert variant="light" style={{ textAlign: "center",}} > 
-                        Select one of the Process Cases Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </span> 
+                      <Alert variant="light" > 
+                        Select one of the Process Cases: <br/> <br/> <span style={{  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => (
+                          <ul key={id}>
+                            <li key={id}> 
+                              {instance} {' '} 
+                              <Button onClick={() => this.findPolicyAddresses(instance)} className="new-buttons" variant="primary" style={{position: "absolute", display: "inline-block"}}>Find Policy Address</Button>
+                              
+                              {/* <Form.Label style={{color: "#757f9a"}}> Role Name </Form.Label> */}
+                              <Form.Control required name="roleName" value={this.state.roleName} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Role Name" style={{width: "150px", position: "absolute", display: "inline-block", marginLeft: "170px"}} /> 
+                              <Button onClick={() => this.findRoleState(instance)} className="new-buttons" variant="primary" style={{marginLeft: "330px"}}>Find Role State</Button>
+                            </li>
+                          </ul>
+                        ))} </span> 
                       </Alert>
                     </Col>                                                                  
-                  </Row> <br/>                                                                       
+                  </Row> 
+                  { this.state.showAccordionOfFindPolicyAddress ? 
+                    <Row>
+                      <Col> 
+                        <Accordion>
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                Access Control
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="0">
+                              <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> No Access Control Policy Found </span> : this.state.policyAddressesResponse.accessControl} </pre> </span> 
+                              </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                Binding Policy
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="1">
+                              <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> No Role Binding Policy Found </span> : this.state.policyAddressesResponse.bindingPolicy} </pre> </span> 
+                              </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+
+                          <Card>
+                            <Card.Header>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                Role Task Map
+                              </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="2">
+                              <Card.Body>  
+                                <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.policyAddressesResponse.length === 0 ? <span style={{color: "#FA8072"}}> No Task Role Map Policy Found </span> : this.state.policyAddressesResponse.roleTaskMap} </pre> </span> 
+                              </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+                        </Accordion> <hr/>
+                      </Col>  
+                    </Row>                     
+                  : null} 
+                  
+                  {this.state.showAccordionOfFindRoleState ? 
+                      <Accordion>
+                        <Card>
+                          <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                              State
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey="0">
+                            <Card.Body>  
+                            <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {Object.keys(this.state.roleStateResponse).length === 0 ? <span style={{color: "#FA8072"}}> No information about the state is found </span> : this.state.roleStateResponse.state} </pre> </span>
+                            </Card.Body>                      
+                          </Accordion.Collapse>
+                        </Card>
+                    </Accordion>                  
+                  : null}                 
                 </Card.Body>
               </Card>
 
-              <hr/>
-               <Card border="primary" >
+              {/* <hr/> */}
+               {/* <Card border="primary" >
                 <Alert variant="primary" size="sm"> 
                     Query Policy Address
                 </Alert>  
@@ -449,8 +526,8 @@ class AccessAllocation extends Component {
                       <Col>                  
                       <Button style={{marginTop: "29px"}} onClick={this.findPolicyAddresses} className="new-buttons" variant="primary">Find Policy Address</Button>
                       </Col>
-                    </Row>
-                    <Row>
+                    </Row> */}
+                    {/* <Row>
                       <Col> <br/>
                          <Accordion>
                           <Card>
@@ -493,9 +570,9 @@ class AccessAllocation extends Component {
                           </Card>
                         </Accordion>
                       </Col>  
-                    </Row>                    
-                  </Card.Body>
-                </Card>
+                    </Row>                     */}
+                  {/* </Card.Body>
+                </Card> */}
 
                
                 {/* <Alert variant="warning" size="sm"
@@ -512,9 +589,9 @@ class AccessAllocation extends Component {
                 > Find Policy Address
                 </Button> <br/> */}
 
-                <hr/>
+                {/* <hr/> */}
 
-                <Card border="primary">
+                {/* <Card border="primary">
                   <Alert variant="primary" size="sm"> 
                       Query the State of the Role
                   </Alert>  
@@ -596,9 +673,9 @@ class AccessAllocation extends Component {
                       </Col>                      
                     </Row>   
                   </Card.Body>
-                </Card>
+                </Card> */}
 
-                <hr/>
+                {/* <hr/> */}
 
                 <Card border="warning">
                   <Alert variant="warning" size="sm"> 
