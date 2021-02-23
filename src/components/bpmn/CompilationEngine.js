@@ -284,8 +284,8 @@ class CompilationEngine extends Component {
             { this.state.breadCrumbQueryModels ? 
             <Aux>
               <br/>
-              <Card style={{border: "1px solid #d7dde8"}}>
-                    <Alert variant="light" size="sm"> 
+              <Card style={{border: "3px solid #d7dde8", }}>
+                    <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
                       <Button onClick={this.queryProcessModels}
                               variant="primary" type="submit" className="new-buttons"
                               style={{ padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
@@ -302,9 +302,8 @@ class CompilationEngine extends Component {
                           </Button> */}
                           {/* </Col>
                         </Row> */}
-                      <Row>
-                        <Col>                 
-                          <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                                  
+                          <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", display: "inline-block", position: "inherit", marginLeft: "250px"}}>
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -325,9 +324,7 @@ class CompilationEngine extends Component {
                                 ))} </pre> </span> </Card.Body>
                               </Accordion.Collapse>
                             </Card>            
-                          </Accordion>
-                        </Col>  
-                      </Row>                    
+                          </Accordion>                                       
                
 
                   {/* ********************** */}

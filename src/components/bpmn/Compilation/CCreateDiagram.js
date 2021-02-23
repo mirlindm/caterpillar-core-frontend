@@ -402,7 +402,7 @@ class CCreateDiagram extends Component {
           
           {/* New changes Start - POST 1 */}
           <br/>
-          <Card style={{border: "1px solid #d7dde8"}}>
+          <Card style={{border: "3px solid #d7dde8",}}>
                 <Alert style={{textAlign: "center"}} variant="light" size="sm"> 
                   <Button onClick={this.deployProcessModels}
                         variant="primary" type="submit" className="new-buttons"

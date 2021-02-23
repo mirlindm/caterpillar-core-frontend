@@ -16,7 +16,7 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import ProcessInstanceOperations from '../ProcessInstanceOperations';
 
-import {Form, Alert, Button, Card, Accordion, Row, Col} from 'react-bootstrap';
+import {Form, Alert, Button, Card, Accordion, } from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -388,7 +388,7 @@ class IUploadDiagram extends Component {
                                 View Your Model
                             </Button>
 
-                            <Card className="bg-gray-dark" style={{border: "2px solid #757f9a", width: "110%", marginLeft: "-60px", height: "100%"}}>
+                            <Card className="bg-gray-dark" style={{border: "3px solid #d7dde8", width: "110%", marginLeft: "-60px", height: "100%"}}>
                                 <div id="bpmncontainer">
                                     <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
                                     <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
@@ -397,8 +397,7 @@ class IUploadDiagram extends Component {
                         </Aux>                   
                     }
                 </Form>
-                                                              
-                {/* <hr className="style-seven" /> */}
+     
                 {this.state.uploadedDiagramName === undefined ?
                 <Alert variant="danger" size="sm"
                 style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "350px", marginLeft: "350px", textAlign: "center",}}> 
@@ -409,33 +408,26 @@ class IUploadDiagram extends Component {
                  
                     {/* New changes Start - POST 1 */}
                     <br/>
-                    <Card style={{border: "1px solid #d7dde8"}}>
-                        <Alert variant="primary" size="sm"> 
-                            Deploy Process Model
-                        </Alert>  
-                        <Card.Body>
-                            <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                                <Col>                                        
-                                <Button onClick={this.saveModelHandler} variant="primary" type="submit" 
-                                   className="new-buttons" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
-                                    Deploy Process Model 
-                                </Button>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col> <br/>
-                                    <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                    <Card style={{border: "3px solid #d7dde8"}}>
+                        <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
+                            <Button onClick={this.saveModelHandler} variant="primary" type="submit" 
+                                className="new-buttons" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 
+                                Deploy Process Model 
+                            </Button>
+                        </Alert>                           
+                            
+                            <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", display: "inline-block", position: "inherit", marginLeft: "250px"}}>
                                         <Card>
                                             <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                1. Transaction Hashes
+                                                Transaction Hashes
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="0">
                                             <Card.Body>  
-                                            iFactoryTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.iFactoryTHashes.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.iFactoryTHashes} </pre> </span> <hr/>
-                                            iFlowTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.iFlowTHashes.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.iFlowTHashes} </pre> </span> <hr/>
-                                            interpreterTHash: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.interpreterTHash.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.interpreterTHash} </pre> </span> 
+                                                iFactoryTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.iFactoryTHashes.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.iFactoryTHashes} </pre> </span> <hr/>
+                                                iFlowTHashes: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre> {this.state.iFlowTHashes.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.iFlowTHashes} </pre> </span> <hr/>
+                                                interpreterTHash: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.interpreterTHash.length === 0 ? <span style={{color: "#FA8072"}}> Something went wrong. Please make sure your model is complete and has a correct name and try again ... </span> : this.state.interpreterTHash} </pre> </span> 
                                             </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
@@ -443,7 +435,7 @@ class IUploadDiagram extends Component {
                                         <Card>
                                             <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                                2. BPMN Interpreter
+                                                BPMN Interpreter
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="1">
@@ -454,7 +446,7 @@ class IUploadDiagram extends Component {
                                         <Card>
                                             <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                                3. iDATA 
+                                                iDATA 
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="2">
@@ -465,7 +457,7 @@ class IUploadDiagram extends Component {
                                         <Card>
                                             <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                                4. iFactory
+                                                iFactory
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="3">
@@ -476,17 +468,14 @@ class IUploadDiagram extends Component {
                                         <Card>
                                             <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                                5. iFlow 
+                                                iFlow 
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="4">
                                             <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.IFlow} </pre> </span> </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
-                                    </Accordion>                                                                                                                               
-                                </Col>  
-                            </Row>                    
-                        </Card.Body>
+                            </Accordion>                                                                                                                                                           
                     </Card>
                     {/* New changes End */} 
                                                 
