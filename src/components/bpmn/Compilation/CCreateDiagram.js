@@ -431,7 +431,7 @@ class CCreateDiagram extends Component {
                       </Col>
                     </Row> */}
                     <Row>
-                      <Col> <br/>
+                      <Col> 
                         { this.state.showIDAccordion ? 
                           <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                           <Card>

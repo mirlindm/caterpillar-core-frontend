@@ -285,26 +285,30 @@ class CompilationEngine extends Component {
             <Aux>
               <br/>
               <Card style={{border: "1px solid #d7dde8"}}>
-                    <Alert variant="primary" size="sm"> 
-                        Query Process Models
+                    <Alert variant="light" size="sm"> 
+                      <Button onClick={this.queryProcessModels}
+                              variant="primary" type="submit" className="new-buttons"
+                              style={{ padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
+                          > Query Process Models
+                          </Button>
                     </Alert>  
-                      <Card.Body>
-                        <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                          <Col>                                        
-                          <Button onClick={this.queryProcessModels}
+                      
+                        {/* <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
+                          <Col>                                         */}
+                          {/* <Button onClick={this.queryProcessModels}
                               variant="primary" type="submit" className="new-buttons"
                               style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
                           > Query Process Models
-                          </Button>
-                          </Col>
-                        </Row>
+                          </Button> */}
+                          {/* </Col>
+                        </Row> */}
                       <Row>
-                        <Col> <br/>                
+                        <Col>                 
                           <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  Query Process Models /models 
+                                  Process Models 
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
@@ -324,7 +328,7 @@ class CompilationEngine extends Component {
                           </Accordion>
                         </Col>  
                       </Row>                    
-                  </Card.Body>
+               
 
                   {/* ********************** */}
                   { this.state.showRetrieveModelMetadataAccordion ? 
@@ -332,7 +336,7 @@ class CompilationEngine extends Component {
                         <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  1. Smart Contract Information
+                                  Smart Contract Information
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
@@ -348,7 +352,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                  2. Repo ID
+                                  Repo ID
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="1">
@@ -359,7 +363,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                  3. Root Model ID
+                                  Root Model ID
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="2">
@@ -370,7 +374,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                  4. Root Model Name
+                                  Root Model Name
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="3">
@@ -381,7 +385,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                  5. BPMN Model (XML and Process Model)
+                                  BPMN Model (XML and Process Model)
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="4">
@@ -401,7 +405,7 @@ class CompilationEngine extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                6. Worklist ABI
+                                Worklist ABI
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="5">
@@ -412,7 +416,7 @@ class CompilationEngine extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="6">
-                                7. Process Model Elements Information
+                                Process Model Elements Information
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="6">
