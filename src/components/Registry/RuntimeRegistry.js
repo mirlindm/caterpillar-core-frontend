@@ -197,11 +197,14 @@ class RuntimeRegistry extends Component {
                     {/* Creating the Registry */}
                    
                     <Card className={"border border-secondary"} >
-                        <Card.Header>
-                            <p style={{color: "#757f9a", fontSize: "20px", textAlign: "center", fontWeight: "bold", margin: "0" }}>Create Runtime Registry</p>
+                        <Card.Header style={{"textAlign": "center",}}>
+                            <Button onClick={this.createRegistryHandler} className="new-buttons" variant="primary" 
+                                style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
+                                <FontAwesomeIcon icon={faPlus} /> Create New Registry
+                            </Button> 
                         </Card.Header>
                         
-                        <Form onSubmit={this.createRegistryHandler} id="registryCreate">
+                        <Form id="registryCreate">
                             <Card.Body>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >    
@@ -218,29 +221,8 @@ class RuntimeRegistry extends Component {
                             </Card.Body>    
                             
                         
-                            <Card.Footer style={{"textAlign": "center",}}>                              
-                                <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
-                                    <FontAwesomeIcon icon={faPlus} /> Create New Registry
-                                </Button> 
-                            </Card.Footer>                                                        
-                        </Form>
-                    </Card>                                      
-                </div>
-
-                <div className="ContentUnique">
-                    {/* Fetching the Registry */}
-
-                    <Card className={"border border-secondary"}>
-                        <Card.Header>
-                            <p  style={{color: "#757f9a", fontSize: "20px", textAlign: "center", fontWeight: "bold", margin: "0" }}>Fetch Registriy</p>
-                        </Card.Header>
-
-                        
-                        <Form onReset={this.resetRegistryInput} onSubmit={ e => {e.preventDefault(); this.getRegistriesByIdHandler()}} id="registry">
-                            <Card.Body>
-                                <Form.Row>
-                                    <Form.Group as={Col} controlId="formGridTitle" >
-                                        
+                            <Card.Footer style={{"textAlign": "center",}}>                               
+                                    <Form.Group as={Col} controlId="formGridTitle" >                                        
                                         <Form.Control required autoComplete="off"
                                             type="text"
                                             name="idOrAddress"
@@ -248,23 +230,17 @@ class RuntimeRegistry extends Component {
                                             onChange={this.registryChangeHandler}
                                             className={"bg-light"}
                                             placeholder="Enter Registry ID or Address" />
-                                    </Form.Group>
-                                </Form.Row>
-                            
-                            </Card.Body>
-                            <Card.Footer style={{"textAlign": "center"}}>
-                                <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
+                                    </Form.Group>  <br/>
+                                    <Button className="new-buttons" onClick={this.getRegistriesByIdHandler} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
                                     Load Registry
                                 </Button> {' '}
 
-                                <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="reset">
+                                <Button onClick={this.resetRegistryInput} className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
                                     Reset
-                                </Button>
-                            </Card.Footer>
-                        </Form>
-                        {
+                                </Button>  <br/>
+                                
+                                {
                     this.state.registryData.length === 0 ?
-
                     <Alert  
                         style={{color: "#FA8072",                                            
                             fontSize: "17px", 
@@ -272,6 +248,7 @@ class RuntimeRegistry extends Component {
                             //borderRadius: "10px",
                             marginRight: "250px",
                             marginLeft: "250px",
+                            marginTop: "10px",
                             textAlign: "center",
                             //backgroundColor: "#d7dde8",
                             //border: "1px solid #d7dde8"
@@ -284,8 +261,9 @@ class RuntimeRegistry extends Component {
                         <div style={{"display" : this.state.show2 ? "block" : "none"}}>
                             <RegistryToast children={{show: this.state.show2, message: "Registry Fetched Successfully."}} />
                         </div>
+
                         {/* Render Response through Accordion */}
-                    <Accordion>
+                    <Accordion style={{marginTop: "10px"}}>
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -366,9 +344,14 @@ class RuntimeRegistry extends Component {
                             </Button> 
                         </div>                                                        
                     </Aux>
-                    }   
-                    </Card>                                           
-                </div>     
+                    }              
+                                {/* <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
+                                    <FontAwesomeIcon icon={faPlus} /> Create New Registry
+                                </Button>  */}
+                            </Card.Footer>                                                        
+                        </Form>
+                    </Card>                                      
+                </div>             
                          
            
             <NotificationContainer/>
