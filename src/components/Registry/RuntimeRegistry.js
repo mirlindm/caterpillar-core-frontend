@@ -3,7 +3,7 @@ import Aux from '../../hoc/Auxiliary';
 
 import RegistryToast from '../Registry/RegistryToast/RegistryToast'; 
 
-import {Card, Alert, Form, Button, Col, Accordion} from 'react-bootstrap'; 
+import {Card, Form, Button, Col, Accordion} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faPlus} from '@fortawesome/free-solid-svg-icons';
 import './Registry.css'
