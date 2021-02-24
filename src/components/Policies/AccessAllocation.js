@@ -675,7 +675,7 @@ class AccessAllocation extends Component {
                   </Card.Body>
                 </Card> */}
 
-                {/* <hr/> */}
+                <hr/>
 
                 <Card border="warning">
                   <Alert variant="warning" size="sm"> 

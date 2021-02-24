@@ -173,7 +173,11 @@ class RuntimeRegistry extends Component {
     }
 
     // takes user to Modeler component on click
-    goToModellerHandler = () => {
+    goToCompilation = () => {
+        this.props.history.push(`/modeler`);   
+    }
+
+    goToInterpretation = () => {
         this.props.history.push(`/modeler`);   
     }
 
@@ -323,8 +327,12 @@ class RuntimeRegistry extends Component {
                         </Accordion>
 
                          <div style={{margin: "20px 0",  textAlign: "center"}}> 
-                            <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToModellerHandler}>
-                                Proceed to Modeller Component
+                            <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToCompilation}>
+                                Proceed to Compilation Engine
+                            </Button>
+                            {' '}
+                            <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToInterpretation}>
+                                Proceed to Interpretation Engine
                             </Button>
                             {'  '}
                             <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToAccessPoliciesrHandler}>
