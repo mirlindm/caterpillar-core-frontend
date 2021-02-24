@@ -217,20 +217,22 @@ class RuntimeRegistry extends Component {
                                                 </div>                                                                                        
                                             }                                           
                                     </Form.Group>
-                                </Form.Row>                            
-                            </Card.Body>    
+                                </Form.Row>
                             
-                        
-                            <Card.Footer style={{"textAlign": "center",}}>                               
-                                    <Form.Group as={Col} controlId="formGridTitle" >                                        
+                                <Col sm="5" style={{marginLeft: "280px"}}>
                                         <Form.Control required autoComplete="off"
                                             type="text"
-                                            name="idOrAddress"
+                                            name="idOrAddress" style={{textAlign: "center"}}
                                             value={this.state.idOrAddress}
                                             onChange={this.registryChangeHandler}
                                             className={"bg-light"}
                                             placeholder="Enter Registry ID or Address" />
-                                    </Form.Group>  <br/>
+                                </Col>           
+                            </Card.Body>    
+                            
+                        
+                            <Card.Footer style={{"textAlign": "center",}}>                               
+                                     
                                     <Button className="new-buttons" onClick={this.getRegistriesByIdHandler} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
                                     Load Registry
                                 </Button> {' '}
@@ -241,21 +243,7 @@ class RuntimeRegistry extends Component {
                                 
                                 {
                     this.state.registryData.length === 0 ?
-                    <Alert  
-                        style={{color: "#FA8072",                                            
-                            fontSize: "17px", 
-                            fontWeight: "normal",
-                            //borderRadius: "10px",
-                            marginRight: "250px",
-                            marginLeft: "250px",
-                            marginTop: "10px",
-                            textAlign: "center",
-                            //backgroundColor: "#d7dde8",
-                            //border: "1px solid #d7dde8"
-                        }}
-                        size="sm">
-                        <strong> No registry found </strong> 
-                    </Alert> :
+                    null :
                     <Aux>
 
                         <div style={{"display" : this.state.show2 ? "block" : "none"}}>
