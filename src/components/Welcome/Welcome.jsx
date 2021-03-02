@@ -36,8 +36,8 @@ function  Welcome(props) {
         
         return (
             <div>
-                <Jumbotron className="bg-light" style={{border: "1.5px solid #d7dde8", borderRadius: "10px", background: "linear-gradient(to right, #757f9a, #757f9a)"}}>
-                    <h1 className="text-white" style={{  fontFamily: "Trocchi", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
+        
+                    <h1 style={{  fontFamily: "Trocchi", fontSize: "30px", fontWeight: "normal", lineHeight: "48px" }}>
                         <span style={{borderBottom: "1px solid #d7dde8"}}>  Welcome to Caterpillar</span>
                     </h1>
                     <br/>
@@ -50,7 +50,7 @@ function  Welcome(props) {
                         <Button className="buttons-welcome"  onClick={goToAboutComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Learn More About Caterpillar</Button>
                     </p>
 
-                </Jumbotron>
+                
 
                 <div style={{marginTop: "60px", paddingTop: "10px"}}>   </div>
               </div>

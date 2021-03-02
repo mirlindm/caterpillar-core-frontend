@@ -1,9 +1,9 @@
 .ContentUnique {
-    background-color: #d7dde8;
+    background-color: #482474;
     background: -webkit-linear-gradient(to right, #757f9a, #d7dde8);
-    background: linear-gradient(to right, #757f9a, #757f9a);
+    background: linear-gradient(to right, #FFE4E1, #FFE4E1);
     width: 100%;
-    border: 1px solid #d7dde8;
+    border: 1px solid #482474;
     padding: 50px;
     margin: auto;
     border-radius: 10px;

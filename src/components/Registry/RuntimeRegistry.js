@@ -196,12 +196,12 @@ class RuntimeRegistry extends Component {
                     <RegistryToast children={{show: this.state.show1, message: "Registry Created Successfully."}} />
                 </div>
 
-                <div className="ContentUnique">
+                <div className="" >
                    
                     {/* Creating the Registry */}
                    
-                    <Card className={"border border-secondary"} >
-                        <Card.Header style={{"textAlign": "center",}}>
+                    <Card style={{border: "5px solid #FFF0F5", margin: "auto", marginTop: "40px", fontSize: "large" }}>
+                        <Card.Header style={{"textAlign": "center", backgroundColor: "#FFF0F5"}}>
                             <Button onClick={this.createRegistryHandler} className="new-buttons" variant="primary" 
                                 style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
                                 <FontAwesomeIcon icon={faPlus} /> Create New Registry
@@ -235,7 +235,7 @@ class RuntimeRegistry extends Component {
                             </Card.Body>    
                             
                         
-                            <Card.Footer style={{"textAlign": "center",}}>                               
+                            <Card.Footer style={{"textAlign": "center", backgroundColor: "#FFF0F5"}}>                               
                                      
                                     <Button className="new-buttons" onClick={this.getRegistriesByIdHandler} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
                                     Load Registry

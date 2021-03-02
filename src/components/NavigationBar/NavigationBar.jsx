@@ -10,20 +10,20 @@ class NavigationBar extends Component {
     render() {
         //const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         return (
-            <header>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark stroke">
+            <header>            
+                <nav className="navbar navbar-expand-md navbar-dark stroke" style={{backgroundColor: "#482474"}}>
                     <ul className="navbar-nav"><li><Link to={`/welcome`} className="navbar-brand">Caterpillar</Link></li></ul>                 
-                        <ul className="navbar-nav">
+                        <ul className="navbar-nav" style={{color: "	#FFFFFF"}}>
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
-                            <li><Link to={"/runtimeRegistry"} className="nav-link">Runtime Registry</Link></li>                                                                          
+                            <li><Link to={"/runtimeRegistry"} className="nav-link" style={{color: "	#FFFFFF"}}>Runtime Registry</Link></li>                                                                          
                             {/* <li><Link to={"/modeler"} className="nav-link">BPMN</Link></li>                                                                           */}
                             <NavDropdown title="Modeler" id="collasible-nav-dropdown">
                                 <NavDropdown.Item><Link to={"/compilation"}>Compilation Engine</Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to={"/interpretation"}>Interpretation Engine</Link></NavDropdown.Item>                                                 
                             </NavDropdown>
-                            <li><Link to={"/access"} className="nav-link">Access</Link></li>                             
+                            <li><Link style={{color: "#FFFFFF"}} to={"/access"} className="nav-link">Access</Link></li>                             
                             {/* {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>} */}                   
-                            <li><Link to={"/about"} className="nav-link">About</Link></li>                        
+                            <li><Link style={{color: "#FFFFFF"}} to={"/about"} className="nav-link">About</Link></li>                        
                         </ul>
                     <ul className="navbar-nav navbar-collapse justify-content-end">
                         {/* <li><Link to={"/login"} className="nav-link">Login</Link></li> */}
