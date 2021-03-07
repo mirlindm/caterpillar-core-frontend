@@ -55,9 +55,56 @@ color: white;
 background-color: #44bcd8;
 }
 
+.buttons-welcome {
+  border: 1px solid #FF6347 !important;
+  color: #757f9a !important;     
+  background-color: #FFE4C4 !important;
+}
+
 .buttons-welcome:hover {
   border: 0px solid #d7dde8;
-  color: #757f9a !important;
+  color: #000000 !important;
   text-decoration: underline;    
   background-color: #d7dde8 !important;
 }
+
+.col-md-6 {
+  padding: 1rem;
+  /* background-color: #FFFACD; */
+  border: 2px solid #fff;
+  color: #fff;
+  text-align: center;
+  color: black;
+  }
+
+  .col-md-4 {
+    
+    padding: 1rem;
+    /* background-color: #33b5e5; */
+    border: 2px solid #fff;
+    border-top: 2px solid #FF6347;
+    border-left: 2px solid #FF6347;
+    color: #fff;
+    text-align: center;
+    }
+
+    .curved-div {
+      background: #ff3c00;
+      color: #FFF;
+      text-align: center;
+      width: 100vw;
+      position: relative;
+      margin-left: -50vw;
+      left: 50%;
+    }
+    .curved-div h1 {
+      padding-top: 20px;
+      font-size: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    .curved-div p {
+      font-size: 1rem;
+      text-align: center;
+      margin: 20px 100px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
