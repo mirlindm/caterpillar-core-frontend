@@ -432,8 +432,9 @@ class AccessAllocation extends Component {
                   <Row>  
                     <Col>
                       <Alert> 
-                        Select one of the Process Cases: <br/> <br/> <span style={{  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => (
-                          <ul key={id}>
+                        Select one of the Process Cases: <span style={{  color: "#ff3c00"}}> { this.props.processCaseAddress.length === 0 ? "There are no Process Cases in the store"
+                          :  this.props.processCaseAddress.map((instance, id) => (
+                          <ul key={id}> <br/>
                             <li key={id}> 
                               {instance} {' '} 
                               <Button onClick={() => this.findPolicyAddresses(instance)} className="new-buttons" variant="primary" style={{position: "absolute", display: "inline-block"}}>Find Policy Address</Button>
@@ -685,15 +686,15 @@ class AccessAllocation extends Component {
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label style={{color: "#757f9a"}}> Nominator Role </Form.Label>
+                        <Form.Label style={{color: "#ff3c00"}}> Nominator Role </Form.Label>
                         <Form.Control required name="nominatorRole" value={this.state.nominatorRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Role" />
                       </Col>
                       <Col>
-                        <Form.Label style={{color: "#757f9a"}}> Nominee Role  </Form.Label>
+                        <Form.Label style={{color: "#ff3c00"}}> Nominee Role  </Form.Label>
                         <Form.Control required name="nomineeRole" value={this.state.nomineeRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Role" />
                       </Col>
                       <Col>
-                        <Form.Label style={{color: "#757f9a"}}> Process Case  </Form.Label>
+                        <Form.Label style={{color: "#ff3c00"}}> Process Case  </Form.Label>
                         <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Process the Case" />
                       </Col>
                     </Row>                    

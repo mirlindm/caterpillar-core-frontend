@@ -59,7 +59,7 @@ function  Welcome(props) {
                         <MDBCol md="4">.col-md-4</MDBCol> */}
                     </MDBRow>
                 </MDBContainer>
-
+                <br/> <br/>
                 <div class="curved-div">
                     <h1>What does Caterpillar do? <span role="img" aria-label="caterpillar"> 🚀</span></h1>
                     <p>
