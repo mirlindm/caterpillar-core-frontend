@@ -4,7 +4,7 @@ import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import { Link } from 'react-router-dom';
 
 //import {Link} from 'react-router-dom';
-import {Jumbotron, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import './Welcome.css'
 
 function  Welcome(props) {
@@ -50,7 +50,7 @@ function  Welcome(props) {
                         <Button className="read-more-btn" style={{backgroundColor: "#FFE4C4", color: "#757f9a", border: "3px solid #d7dde8", borderTop: "none", borderRight: 'none', borderLeft: 'none'}} variant="primary" size="sm"> {linkName} </Button> </p>
                         {readMore && extraContent}
                         <p style={{textAlign: "left"}}>                        
-                            {/* <Button className="buttons-welcome" onClick={goToRuntimeRegistryComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Get Started</Button> {' '}                                              */}
+                            <Button className="buttons-welcome" onClick={goToRuntimeRegistryComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Get Started</Button> {' '}                                             
                             <Button className="buttons-welcome"  onClick={goToAboutComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Learn More About Caterpillar</Button>
                         </p>
                         </MDBCol>
@@ -61,7 +61,7 @@ function  Welcome(props) {
                 </MDBContainer>
 
                 <div class="curved-div">
-                    <h1>What does Caterpillar do? 🚀</h1>
+                    <h1>What does Caterpillar do? <span role="img" aria-label="caterpillar"> 🚀</span></h1>
                     <p>
                         Caterpillar accepts as input a process model specified in BPMN
                         and generates a set of smart contracts that captures the underlying behavior. The smart contracts, written in Ethereum's Solidity language, 

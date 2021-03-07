@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 //import {Link} from 'react-router-dom';
-import {Modal, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 
 import './About.css'
 
@@ -29,7 +30,44 @@ class About extends Component {
 
         return (
             <div>
-                <div className="ContentUnique"> 
+                <div class="bar">
+                <MDBContainer>
+                    <MDBRow>
+                        <MDBCol md="3">
+                        <h5 style={{textAlign: "center", color: "#FFFFFF", fontSize: "40px", borderTop: "2px solid #FFFFFF", borderLeft: "2px solid #FFFFFF"}}> WHAT?</h5> <br/>                    
+                            <p style={{textAlign: "justify", color: "#000000"}}>
+                            Caterpillar is a Business Process Management System prototype that runs on top of Ethereum and
+                            that relies on the translation of process models into smart contracts.                            
+                            </p>
+                        </MDBCol>
+                        <MDBCol style={{ border: "none", marginTop: "40px"}} md="6"> 
+                        <h5 style={{textAlign: "center", marginTop: "40px", color: "#FFFFFF", fontSize: "40px", borderTop: "2px solid #FFFFFF" }}> HOW?</h5> <br/>                    
+                            <p style={{textAlign: "center", marginBottom: "40px", color: "#000000"}}> 
+                            Caterpillar accepts as input a process model specified in BPMN and generates 
+                            a set of smart contracts that captures the underlying behavior.                            
+                            The smart contracts, written in Ethereum's Solidity language, can then be compiled and deployed to the public 
+                            or any other private Ethereum network using standard tools. 
+                           
+                            </p>
+
+                        </MDBCol>
+                        <MDBCol md="3">
+                        <h5 style={{textAlign: "center", color: "#FFFFFF", fontSize: "40px", borderTop: "2px solid #FFFFFF", borderRight: "2px solid #FFFFFF"}}> WHO?</h5> <br/>                    
+                            <p style={{textAlign: "justify", color: "#000000"}}> 
+                            Moreover, Caterpillar exhibits a REST API that can be used to interact with running instances
+                            of the deployed process models.                            
+                            </p>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+
+                <Button className="buttons-welcome" onClick={this.goToWelcomeComponentHandler} style={{ backgroundColor: "#757f9a", width: "10vw" }}>Back Home</Button> {' '}             
+                </div>
+                <br/>
+                     
+
+                
+                {/* <div className="ContentUnique"> 
                 <h2 onClick={this.handleShow} style={{fontFamily: "Open Sans, sans-serif", fontSize: "30px", fontWeight: "normal", lineHeight: "48px", textAlign: "center", borderBottom: "1px solid #d7dde8" }}>Learn more about Caterpillar</h2>
                 <br/>
                 <p style={{fontFamily: "Open Sans", color: "#000", fontSize: "16px", textAlign: "justify", fontWeight: "500"}} onClick={this.handleShow}>
@@ -50,16 +88,16 @@ class About extends Component {
                 
                 You can find more information on how to run Caterpillar Rest Api Application by clicking <a className="Anchor" href="https://github.com/orlenyslp/Caterpillar" rel="noopener noreferrer" target="_blank"> here! </a>
                 <br/>
-                <br />
+                <br /> */}
                                 
-                <Button className="buttons-welcome" onClick={this.goToWelcomeComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Back Home</Button> {' '}                                             
+                
                 {/* <Link to={`/welcome`} className="link-button">Back Home</Link>  */}
-                </p>
+                {/* </p>
 
 
-                </div>
+                </div> */}
 
-                <Modal show={this.state.show} onHide={this.handleClose} size="lg"
+                {/* <Modal show={this.state.show} onHide={this.handleClose} size="lg"
                        aria-labelledby="contained-modal-title-vcenter"centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Welcome to Caterpillar</Modal.Title>
@@ -92,8 +130,10 @@ class About extends Component {
                             GitHub
                         </Button>
                     </Modal.Footer>
-                </Modal>
-                <div style={{marginTop: "60px"}}></div>
+                </Modal> */}
+                <div style={{marginTop: "50px"}}></div>
+
+
             </div>
         );
     }

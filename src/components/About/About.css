@@ -65,3 +65,66 @@
     text-decoration: none;
     display: inline-block;
   }
+
+
+
+  .bar {
+    background: #FF7F50;
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+    bottom: 0;
+    padding: 10vw;    
+    text-align: center;    
+  }
+  
+  .circle {
+    position: relative;
+    top: -10px;
+    border-radius: 100%;
+    background: white;
+    width: 60px;
+    height: 60px;
+    margin: 0 16px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    transition: box-shadow ease-in 150ms;
+    background: white;
+    border: 0;
+    outline: none;
+  }
+  
+  .circle:hover {
+    box-shadow: 0 16px 16px 0 rgba(0, 0, 0, .125);
+  }
+  
+  .circle:active {
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .125);
+  }
+  
+  .circle::before,
+  .circle::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    width: 32px;
+    height: 6px;
+    background: white;
+    z-index: 1;
+  }
+  
+  .circle::before {
+    left: -18px;
+    background: radial-gradient(ellipse at 0% -25%, transparent 0, transparent 70%, white 70%, white 100%);
+  }
+  
+  .circle::after {
+    right: -18px;
+    background: radial-gradient(ellipse at 100% -25%, transparent 0, transparent 70%, white 70%, white 100%);
+  }
