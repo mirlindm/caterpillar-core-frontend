@@ -10,8 +10,9 @@ class NavigationBar extends Component {
     render() {
         //const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         return (
+            <div> 
             <header>            
-                <nav className="navbar navbar-expand-md navbar-dark stroke" style={{backgroundColor: "#482474"}}>
+                <nav className="navbar navbar-expand-md navbar-dark stroke" style={{backgroundColor: "#E9967A"}}>                    
                     <ul className="navbar-nav"><li><Link to={`/welcome`} className="navbar-brand">Caterpillar</Link></li></ul>                 
                         <ul className="navbar-nav" style={{color: "	#FFFFFF"}}>
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
@@ -31,8 +32,8 @@ class NavigationBar extends Component {
                     </ul>
                 </nav>
             </header>
-
-
+            <div style={{borderTop: "5px solid #FF6347"}}></div>
+            </div>
 
             // <Navbar bg="dark" variant="dark" > 
             //     <Link to={"/"} className="navbar-brand">

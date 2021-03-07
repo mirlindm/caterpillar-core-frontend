@@ -304,8 +304,8 @@ class InterpretationEngine extends Component {
     render() {
         return (
             <Aux>
-                <Card style={{border: "3px solid #FFF0F5", }}>
-                  <Alert style={{textAlign: "center", backgroundColor: "#FFF0F5", color: "#000000", borderRadius: "0", fontSize: "20px", fontWeight: "500",}} size="sm"> 
+                <Card style={{border: "3px solid #FFE4C4", }}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Create a new model or upload an existing one with the Interpreter Engine
                  </Alert>  
                   <Card.Body>
@@ -353,7 +353,7 @@ class InterpretationEngine extends Component {
 
                 
                 { this.state.createNewInterpreter === true ?                                        
-                    <Card style={{marginTop: "10px", border: "3px solid #d7dde8",}}> 
+                    <Card style={{marginTop: "10px", border: "3px solid #FFE4C4",}}> 
                         <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
                             <Button onClick={this.interpreterRequestHandler} 
                                 variant="primary" type="submit" 
@@ -413,7 +413,7 @@ class InterpretationEngine extends Component {
                 { this.state.queryModels ? 
                 <Aux>
                     <br/>
-                    <Card style={{border: "3px solid #d7dde8",}}>
+                    <Card style={{border: "3px solid #FFE4C4",}}>
                         <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
                             <Button onClick={this.getInterpreterModelHandler} 
                                 variant="primary" type="submit" 

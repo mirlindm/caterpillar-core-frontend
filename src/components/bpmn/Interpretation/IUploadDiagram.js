@@ -388,7 +388,7 @@ class IUploadDiagram extends Component {
                                 View Your Model
                             </Button>
 
-                            <Card className="bg-gray-dark" style={{border: "3px solid #d7dde8", width: "110%", marginLeft: "-60px", height: "100%"}}>
+                            <Card className="bg-gray-dark" style={{border: "3px solid #FFE4C4", width: "110%", marginLeft: "-60px", height: "100%"}}>
                                 <div id="bpmncontainer">
                                     <div id="propview" style={{ width: '25%', height: '98vh', float: 'right', maxHeight: '98vh', overflowX: 'auto' }}></div>
                                     <div id="bpmnview" style={{ width: '75%', height: '98vh', float: 'left' }}></div>
@@ -408,7 +408,7 @@ class IUploadDiagram extends Component {
                  
                     {/* New changes Start - POST 1 */}
                     <br/>
-                    <Card style={{border: "3px solid #d7dde8"}}>
+                    <Card style={{border: "3px solid #FFE4C4"}}>
                         <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
                             <Button onClick={this.saveModelHandler} variant="primary" type="submit" 
                                 className="new-buttons" style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}> 

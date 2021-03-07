@@ -8,10 +8,10 @@ class Footer extends Component {
         let fullYear = new Date().getFullYear();
 
         return (
-            <Navbar fixed="bottom" style={{borderTop:"0px solid lightdark", backgroundColor: "#482474"}}>
+            <Navbar fixed="bottom" style={{borderTop:"0px solid lightdark", backgroundColor: "#FFE4C4"}}>
                 <Container>
                     <Col lg={12} className="text-center">
-                        <div style={{color: "#FFFFFF"}}>
+                        <div style={{color: "#000000"}}>
                             {fullYear} - {fullYear + 1},
                             All Rights Reserved -&nbsp;  
                             <a className="Anchor" style={{color: "#757f9a"}} href="https://github.com/orlenyslp/Caterpillar" target="_blank" rel="noopener noreferrer">

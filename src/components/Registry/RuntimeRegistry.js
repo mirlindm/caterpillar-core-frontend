@@ -200,8 +200,8 @@ class RuntimeRegistry extends Component {
                    
                     {/* Creating the Registry */}
                    
-                    <Card style={{border: "5px solid #FFF0F5", margin: "auto", marginTop: "40px", fontSize: "large" }}>
-                        <Card.Header style={{"textAlign": "center", backgroundColor: "#FFF0F5"}}>
+                    <Card style={{border: "5px solid #FFE4C4", margin: "auto", marginTop: "40px", fontSize: "large" }}>
+                        <Card.Header style={{"textAlign": "center", backgroundColor: "#FFE4C4"}}>
                             <Button onClick={this.createRegistryHandler} className="new-buttons" variant="primary" 
                                 style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
                                 <FontAwesomeIcon icon={faPlus} /> Create New Registry
@@ -235,9 +235,9 @@ class RuntimeRegistry extends Component {
                             </Card.Body>    
                             
                         
-                            <Card.Footer style={{"textAlign": "center", backgroundColor: "#FFF0F5"}}>                               
+                            <Card.Footer style={{"textAlign": "center", backgroundColor: "#FFE4C4"}}>                               
                                      
-                                    <Button className="new-buttons" onClick={this.getRegistriesByIdHandler} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
+                                <Button className="new-buttons" onClick={this.getRegistriesByIdHandler} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
                                     Load Registry
                                 </Button> {' '}
 

@@ -393,7 +393,7 @@ class CCreateDiagram extends Component {
                                   
         <div style={{ marginTop: "10px" }}> </div>        
 
-          <Card className="bg-gray-dark" style={{ border: "2px solid #d7dde8", width: "110%", marginLeft: "-60px" , }}>
+          <Card className="bg-gray-dark" style={{ border: "2px solid #FFE4C4", width: "110%", marginLeft: "-60px" , }}>
             <div id="bpmncontainer">
               <div id="propview" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
               <div id="bpmnview" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
@@ -402,7 +402,7 @@ class CCreateDiagram extends Component {
           
           {/* New changes Start - POST 1 */}
           <br/>
-          <Card style={{border: "3px solid #d7dde8",}}>
+          <Card style={{border: "3px solid #FFE4C4",}}>
                 <Alert style={{textAlign: "center"}} variant="light" size="sm"> 
                   <Button onClick={this.deployProcessModels}
                         variant="primary" type="submit" className="new-buttons"
@@ -445,7 +445,7 @@ class CCreateDiagram extends Component {
                             </Accordion.Collapse>
                           </Card>            
                         </Accordion>
-                        : null }   <hr/>
+                        : null }   <hr style={{backgroundColor: "#FFE4C4"}}/>
                         { this.state.showCompileProcessModelsAccordion ?
                             <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                               <Card>

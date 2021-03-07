@@ -239,11 +239,13 @@ class CompilationEngine extends Component {
     
     render() {
         return (
-            <Aux>               
-              <Card style={{border: "3px solid #d7dde8", }}>
-                  <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+            <Aux> 
+                            
+              <Card style={{border: "3px solid #FFE4C4",  }}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Create a new model or upload an existing one with the Compilation Engine
-                 </Alert>  
+                 </Alert>
+                   
                   <Card.Body>
                   <Row style={{textAlign: "center"}}>  
                       <Col> 
@@ -284,7 +286,7 @@ class CompilationEngine extends Component {
             { this.state.breadCrumbQueryModels ? 
             <Aux>
               <br/>
-              <Card style={{border: "3px solid #d7dde8", }}>
+              <Card style={{border: "3px solid #FFE4C4", }}>
                     <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
                       <Button onClick={this.queryProcessModels}
                               variant="primary" type="submit" className="new-buttons"

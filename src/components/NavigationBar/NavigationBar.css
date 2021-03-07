@@ -13,7 +13,7 @@ nav.fill ul li a:after {
   width: 0%;
   content: '.';
   color: transparent;
-  background: #aaa;
+  background: #FFFFFF;
   height: 1px;
 }
 nav.stroke ul li a:hover:after {

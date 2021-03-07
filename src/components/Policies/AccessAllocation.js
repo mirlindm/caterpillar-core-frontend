@@ -400,9 +400,9 @@ class AccessAllocation extends Component {
     render() {
         return(
             <Aux>
-              <Card style={{border: "3px solid #d7dde8", }}>
-                <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
-                  Please Configure the Policies below:
+              <Card style={{border: "3px solid #FFE4C4", }}>
+                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm">
+                  Please Configure the Policies Below
                 </Alert>  
                 <Card.Body>
                   <Row style={{textAlign: "center"}}>  
@@ -422,15 +422,16 @@ class AccessAllocation extends Component {
               </Card>
                                                                                                                         
                
-              <hr/>
-              <Card style={{border: "3px solid #d7dde8", }}>
-                <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+              <hr style={{backgroundColor: "#FF6347"}}/>
+
+              <Card style={{border: "3px solid #FFE4C4", }}>
+                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                   Process Cases Available
                 </Alert>  
                 <Card.Body>
                   <Row>  
                     <Col>
-                      <Alert variant="light" > 
+                      <Alert> 
                         Select one of the Process Cases: <br/> <br/> <span style={{  color: "#000000"}}> {this.props.processCaseAddress.map((instance, id) => (
                           <ul key={id}>
                             <li key={id}> 
@@ -675,10 +676,10 @@ class AccessAllocation extends Component {
                   </Card.Body>
                 </Card> */}
 
-                <hr/>
+                <hr style={{backgroundColor: "#FF6347"}}/>
 
-                <Card border="warning">
-                  <Alert variant="warning" size="sm"> 
+                <Card style={{border: "3px solid #FFE4C4", }}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                       Configure common parameters of nominate, release and vote operations
                   </Alert>  
                   <Card.Body>
@@ -699,10 +700,10 @@ class AccessAllocation extends Component {
                   </Card.Body>
                 </Card>    
 
-                <hr/>
+                <hr style={{backgroundColor: "#FF6347"}}/>
 
-                 <Card style={{border: "3px solid #d7dde8", }}>
-                    <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Card style={{border: "3px solid #FFE4C4", }}>
+                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                       Nominate, Release or Vote Policies
                     </Alert>  
                     <Card.Body>
