@@ -47,7 +47,7 @@ function  Welcome(props) {
                         <br/>
                         <p onClick={()=>{setReadMore(!readMore)}} style={{ fontFamily: "Open Sans", fontSize: "16px", textAlign: "justify", fontWeight: "500"}}>Caterpillar is a Business Process Management System (BPMS) prototype
                         that runs on top of Ethereum and that relies on the translation of process models into smart contracts. 
-                        <Button className="read-more-btn" style={{backgroundColor: "#FFE4C4", color: "#757f9a", border: "3px solid #d7dde8", borderTop: "none", borderRight: 'none', borderLeft: 'none'}} variant="primary" size="sm"> {linkName} </Button> </p>
+                        <Button className="buttons-welcome" style={{backgroundColor: "#FFE4C4", color: "#757f9a", border: "3px solid #d7dde8", borderTop: "none", borderRight: 'none', borderLeft: 'none'}} variant="primary" size="sm"> {linkName} </Button> </p>
                         {readMore && extraContent}
                         <p style={{textAlign: "left"}}>                        
                             <Button className="buttons-welcome" onClick={goToRuntimeRegistryComponentHandler} style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }}>Get Started</Button> {' '}                                             

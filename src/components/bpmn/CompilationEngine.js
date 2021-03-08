@@ -241,8 +241,8 @@ class CompilationEngine extends Component {
         return (
             <Aux> 
                             
-              <Card style={{border: "3px solid #FFE4C4",  }}>
-                  <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+              <Card style={{border: "3px solid #FF7F50",  }}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF ", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Create a new model or upload an existing one with the Compilation Engine
                  </Alert>
                    
@@ -309,7 +309,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  Process Models 
+                                <span style={{color: "#E9967A"}}>  Process Models </span>
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
@@ -335,7 +335,7 @@ class CompilationEngine extends Component {
                         <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  Smart Contract Information
+                                <span style={{color: "#E9967A"}}>  Smart Contract Information </span>  
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">

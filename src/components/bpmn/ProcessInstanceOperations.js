@@ -276,18 +276,18 @@ class ProcessInstanceOperations extends Component {
     render() {
         return (
             <Aux>
-                <Card style={{border: "3px solid #FFE4C4", marginTop: "20px" }}>
-                    <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Card style={{border: "3px solid #FF7F50", marginTop: "20px" }}>
+                    <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                         Create a Process Instance, Query Process Instances and their State or Execute a Process Instance
                     </Alert>  
                     <Card.Body>
                         <Row style={{textAlign: "center"}}>  
                         <Col>
                             <Breadcrumb style={{ display: "flex", justifyContent: "center",}}>            
-                            <Breadcrumb.Item onClick={this.changeBreadCrumbCreateProcessInstanceHandler}>Create or Query Process Instances</Breadcrumb.Item>
+                            <Breadcrumb.Item onClick={this.changeBreadCrumbCreateProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Create or Query Process Instances </span> </Breadcrumb.Item>
                             {/* <Breadcrumb.Item onClick={this.changeBreadCrumbQueryProcessInstanceHandler}>Query Process Instances</Breadcrumb.Item> */}
                             {/* <Breadcrumb.Item onClick={this.changeBreadCrumbQueryStatusHandler}>Query Process Instance State</Breadcrumb.Item> */}
-                            <Breadcrumb.Item onClick={this.changeBreadCrumbExecuteProcessInstanceHandler}>Execute Process Instance</Breadcrumb.Item>
+                            <Breadcrumb.Item onClick={this.changeBreadCrumbExecuteProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Execute Process Instance </span></Breadcrumb.Item>
                             </Breadcrumb>                        
                         </Col>                                                                  
                     </Row> <br/>                                                                       
@@ -299,21 +299,21 @@ class ProcessInstanceOperations extends Component {
                 <Aux> 
                     <br/>           
                     <Card style={{border: "3px solid #FFE4C4",}}>
-                        <Alert variant="light" size="sm"> 
+                        <Alert  size="sm"> 
                                 <input required type="text" placeholder="Enter the mHash" 
                                     name="mHash" value={this.state.mHash}
-                                    onChange={this.mHashChangeHandler} style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                                    onChange={this.mHashChangeHandler} style={{border: "1px solid #E9967A", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal", }}
                                 /> {'      '}
                                 <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
-                                        type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                                        type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginTop: "5px"}}
                                         > Create New Process Instance
                                 </Button> {'      '}     
                                 <Button onClick={this.defineAccessPoliciesHandler} variant="primary"
-                                        type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                                        type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginTop: "5px"}}
                                         > Define Access Policies
                                 </Button> {'      '}
                                 <Button onClick={this.queryProcessInstancesHandler} variant="primary"
-                                    type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                                    type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginTop: "5px"}}
                                     > Query Process Instances
                                 </Button>                                                                    
                         </Alert>                              
@@ -672,10 +672,10 @@ class ProcessInstanceOperations extends Component {
                             <Col>
                             <input required type="text" placeholder="Enter the Process Model Address" 
                                 name="mHash"
-                                onChange={this.mHashChangeHandler} style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
+                                onChange={this.mHashChangeHandler} style={{border: "1px solid #E9967A", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
                             /> {'      '}
                             <Button onClick={this.executeWorkItemHandler} variant="primary"
-                                    type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                                    type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginTop: "5px"}}
                                     > Execute Work Item
                             </Button>                                                                    
                             </Col>

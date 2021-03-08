@@ -304,8 +304,8 @@ class InterpretationEngine extends Component {
     render() {
         return (
             <Aux>
-                <Card style={{border: "3px solid #FFE4C4", }}>
-                  <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Card style={{border: "3px solid #FF7F50", }}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Create a new model or upload an existing one with the Interpreter Engine
                  </Alert>  
                   <Card.Body>

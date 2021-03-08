@@ -13,10 +13,8 @@
 }
 
 .link-button {
-    background-color: #757f9a !important;
+    background-color: #E9967A !important;
     border: 1px solid #d7dde8 !important;
-    
-    
 }
 
 .link-button:hover {
@@ -75,8 +73,10 @@
     margin-left: -50vw;
     left: 50%;
     bottom: 0;
-    padding: 10vw;    
-    text-align: center;    
+    padding: 8vw;    
+    text-align: center;  
+    margin-top: 1vw;
+    
   }
   
   .circle {

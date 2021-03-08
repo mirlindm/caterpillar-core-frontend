@@ -400,17 +400,17 @@ class AccessAllocation extends Component {
     render() {
         return(
             <Aux>
-              <Card style={{border: "3px solid #FFE4C4", }}>
-                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm">
+              <Card style={{border: "3px solid #FF7F50", }}>
+                <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm">
                   Please Configure the Policies Below
                 </Alert>  
                 <Card.Body>
                   <Row style={{textAlign: "center"}}>  
                     <Col>
                       <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
-                        <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
-                        <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
-                        <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}> <span style={{color: "#E9967A"}}>  Access Control </span> </Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}> <span style={{color: "#E9967A"}}> Role Binding Policy </span> </Breadcrumb.Item>
+                        <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}> <span style={{color: "#E9967A"}}> Task Role Map </span> </Breadcrumb.Item>
                       </Breadcrumb>
 
                           {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
@@ -425,7 +425,7 @@ class AccessAllocation extends Component {
               <hr style={{backgroundColor: "#FF6347"}}/>
 
               <Card style={{border: "3px solid #FFE4C4", }}>
-                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                   Process Cases Available
                 </Alert>  
                 <Card.Body>
@@ -679,8 +679,8 @@ class AccessAllocation extends Component {
 
                 <hr style={{backgroundColor: "#FF6347"}}/>
 
-                <Card style={{border: "3px solid #FFE4C4", }}>
-                  <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Card style={{border: "3px solid #FF7F50", }}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                       Configure common parameters of nominate, release and vote operations
                   </Alert>  
                   <Card.Body>
@@ -711,30 +711,29 @@ class AccessAllocation extends Component {
                       <Row style={{textAlign: "center"}}>  
                         <Col>
                         <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>
-                          <Breadcrumb.Item onClick={this.changeBreadCrumbNominateHandler}>Nominate</Breadcrumb.Item>
-                          <Breadcrumb.Item onClick={this.changeBreadCrumbReleaseHandler}>Release</Breadcrumb.Item>
-                          <Breadcrumb.Item onClick={this.changeBreadCrumbVoteHandler}>Vote</Breadcrumb.Item>
+                          <Breadcrumb.Item onClick={this.changeBreadCrumbNominateHandler}> <span style={{color: "#E9967A"}}>Nominate</span></Breadcrumb.Item>
+                          <Breadcrumb.Item onClick={this.changeBreadCrumbReleaseHandler}> <span style={{color: "#E9967A"}}>Release</span></Breadcrumb.Item>
+                          <Breadcrumb.Item onClick={this.changeBreadCrumbVoteHandler}> <span style={{color: "#E9967A"}}>Vote</span></Breadcrumb.Item>
                         </Breadcrumb>    
                         </Col>                                                                  
                       </Row> <br/>                                                                       
                     </Card.Body>
                   </Card>   
-
-               
-              <hr/>
+              
+              <br/>
               { this.state.breadCrumbNominate ? 
-                <Card border="success">
-                  <Alert variant="success" size="sm"> 
+                <Card style={{border: "3px solid #FF7F50",}}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Nomination
                  </Alert>  
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label style={{color: "#757f9a"}}> Nominator Address </Form.Label>
+                        <Form.Label style={{color: "#ff3c00"}}> Nominator Address </Form.Label>
                         <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Address" />
                       </Col>
                       <Col>
-                        <Form.Label style={{color: "#757f9a"}}> Nominee Address </Form.Label>
+                        <Form.Label style={{color: "#ff3c00"}}> Nominee Address </Form.Label>
                         <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
                       </Col>
                       <Col>
@@ -765,14 +764,14 @@ class AccessAllocation extends Component {
                 
               { this.state.breadCrumbRelease ? 
               <Aux><hr/>  
-                <Card border="danger">
-                  <Alert variant="danger" size="sm"> 
+                <Card style={{border: "3px solid #FF7F50",}}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Release
                  </Alert>  
                   <Card.Body>
                     <Row style={{display: "flex", justifyContent: "space-around"}} >
                       <Col>
-                        <Form.Label style={{color: "#757f9a"}}> Releaser/Nominator Address  </Form.Label>
+                        <Form.Label style={{color: "#ff3c00"}}> Releaser/Nominator Address  </Form.Label>
                         <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Releaser Address" />
                       </Col>                      
                       <Col>
@@ -785,21 +784,21 @@ class AccessAllocation extends Component {
                                            
               { this.state.breadCrumbVote ?
               <Aux><hr/>  
-                <Card border="success">
-                  <Alert variant="success" size="sm"> 
+                <Card style={{border: "3px solid #FF7F50",}}>
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                     Vote
                  </Alert>  
                   <Card.Body>
                   <Row>  
                       <Col>
-                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.onNomination} id="radio1" name="onNomination" onChange={(event) => { this.onChangeRadioValueHandler({
+                        <Form.Check style={{display: "inline", marginRight: "20px", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.onNomination} id="radio1" name="onNomination" onChange={(event) => { this.onChangeRadioValueHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
                           },
                         })                          
                         }} label="On-nomination" />                        
-                        <Form.Check style={{display: "inline"}} type="checkbox" defaultChecked={this.state.onRelease} id="radio2" name="onRelease" onChange={(event) => { this.onChangeRadioValueHandler({
+                        <Form.Check style={{display: "inline", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.onRelease} id="radio2" name="onRelease" onChange={(event) => { this.onChangeRadioValueHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
@@ -808,14 +807,14 @@ class AccessAllocation extends Component {
                         }} label="On-release" />
                       </Col>                                            
                       <Col>
-                        <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.accept}  id="radio3" name="accept" onChange={(event) => { this.onChangeRadioValueHandler({
+                        <Form.Check style={{display: "inline", marginRight: "20px", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.accept}  id="radio3" name="accept" onChange={(event) => { this.onChangeRadioValueHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
                           },
                         })                          
                         }}  label="Accept" />                    
-                        <Form.Check style={{display: "inline",}} type="checkbox" defaultChecked={this.state.reject} id="radio4" name="reject" onChange={(event) => { this.onChangeRadioValueHandler({
+                        <Form.Check style={{display: "inline", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.reject} id="radio4" name="reject" onChange={(event) => { this.onChangeRadioValueHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
@@ -826,15 +825,15 @@ class AccessAllocation extends Component {
                     </Row> <br/>                                                                       
                   </Card.Body>
                 </Card>         
-                <Card border="success">
+                <Card style={{border: "3px solid #FF7F50",}}>
                 <Card.Body>
                   <Row style={{display: "flex", justifyContent: "space-around"}} >
                     <Col>
-                      <Form.Label style={{color: "#757f9a"}}> Endorser Role </Form.Label>
+                      <Form.Label style={{color: "#ff3c00"}}> Endorser Role </Form.Label>
                       <Form.Control required name="endorserRole" value={this.state.endorserRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Role" />
                     </Col>
                     <Col>
-                      <Form.Label style={{color: "#757f9a"}}> Endorser Address </Form.Label>
+                      <Form.Label style={{color: "#ff3c00"}}> Endorser Address </Form.Label>
                       <Form.Control required name="endorserAddress" value={this.state.endorserAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Address" />
                     </Col> 
                     <Col>
