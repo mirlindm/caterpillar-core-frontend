@@ -365,7 +365,7 @@ class InterpretationEngine extends Component {
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                        Contract Address of Interpreter
+                                        <span style={{color: "#E9967A"}}> Contract Address of Interpreter </span>   
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
@@ -376,7 +376,7 @@ class InterpretationEngine extends Component {
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                        Gas Cost
+                                        <span style={{color: "#E9967A"}}> Gas Cost </span> 
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="1">
@@ -387,7 +387,7 @@ class InterpretationEngine extends Component {
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                        Smart Contract Name
+                                        <span style={{color: "#E9967A"}}> Smart Contract Name </span>     
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="2">
@@ -398,7 +398,7 @@ class InterpretationEngine extends Component {
                             <Card>
                                 <Card.Header>
                                     <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                        Transaction Hash
+                                         <span style={{color: "#E9967A"}}> Transaction Hash </span>  
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="3">
@@ -426,7 +426,7 @@ class InterpretationEngine extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            Query Process Models
+                                            <span style={{color: "#E9967A"}}> Process Models </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="0">                                
@@ -450,7 +450,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                     Smart Contract Information
+                                 <span style={{color: "#E9967A"}}> Smart Contract Information </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="0">
@@ -467,7 +467,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    Process Model Name
+                                    <span style={{color: "#E9967A"}}> Process Model Name </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="1">
@@ -478,7 +478,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                    Process Model ID/mHash
+                                    <span style={{color: "#E9967A"}}> Process Model ID/mHash </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="2">
@@ -489,7 +489,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                    Process ID
+                                    <span style={{color: "#E9967A"}}> Process ID </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="3">
@@ -500,7 +500,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                    iData
+                                    <span style={{color: "#E9967A"}}>  iData </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="4">
@@ -517,7 +517,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                    iFactory
+                                    <span style={{color: "#E9967A"}}> iFactory </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="5">
@@ -534,7 +534,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="6">
-                                    iFlow
+                                    <span style={{color: "#E9967A"}}> iFlow </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="6">
@@ -551,14 +551,14 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="7">
-                                    BPMN Model (XML and Process Model)
+                                     <span style={{color: "#E9967A"}}> BPMN Model - XML and Process Model </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="7">
                                  <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
                              </Accordion.Collapse>
                          </Card>
-                         <Card className="bg-gray-dark" style={{ border: "2px solid #757f9a", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                         <Card className="bg-gray-dark" style={{ border: "2px solid #FFE4C4", width: "110%", marginLeft: "-60px" , height: "100%" }}>
                              <div id="bpmncontainer">
                                  <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
                                  <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
@@ -567,7 +567,7 @@ class InterpretationEngine extends Component {
                          <Card>
                              <Card.Header>
                                  <Accordion.Toggle as={Button} variant="link" eventKey="8">
-                                    Process Model Elements Information
+                                    <span style={{color: "#E9967A"}}> Process Model Elements Information </span>
                                  </Accordion.Toggle>
                              </Card.Header>
                              <Accordion.Collapse eventKey="8">

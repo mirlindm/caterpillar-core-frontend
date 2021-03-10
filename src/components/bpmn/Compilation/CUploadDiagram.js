@@ -562,7 +562,7 @@ class CUploadDiagram extends Component {
                                   <Card>
                                     <Card.Header>
                                       <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                        Bundle ID of Deployed Model
+                                         <span style={{color: "#E9967A"}}> Model Bundle ID </span>
                                       </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
@@ -577,7 +577,7 @@ class CUploadDiagram extends Component {
                                   <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            Contract Name of Deployed Model
+                                          <span style={{color: "#E9967A"}}> Contract Name </span>
                                         </Accordion.Toggle>
                                       </Card.Header>
                                       <Accordion.Collapse eventKey="0">
@@ -587,7 +587,7 @@ class CUploadDiagram extends Component {
                                   <Card>
                                     <Card.Header>
                                       <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                        Solidity Code of Deployed Model
+                                        <span style={{color: "#E9967A"}}> Solidity Code </span>
                                       </Accordion.Toggle>
                                       </Card.Header>
                                         <Accordion.Collapse eventKey="1">
@@ -597,7 +597,7 @@ class CUploadDiagram extends Component {
                                   <Card>
                                     <Card.Header>
                                       <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                        Code Dependencies of Deployed Model
+                                        <span style={{color: "#E9967A"}}> Code Dependencies </span>
                                       </Accordion.Toggle>
                                     </Card.Header>
                                       <Accordion.Collapse eventKey="2">
@@ -613,7 +613,7 @@ class CUploadDiagram extends Component {
                                     <Card>
                                       <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                          Compilation Metadata of Deployed Model
+                                          <span style={{color: "#E9967A"}}> Compilation Metadata of Deployed Model </span>
                                         </Accordion.Toggle>
                                       </Card.Header>
                                         <Accordion.Collapse eventKey="3">

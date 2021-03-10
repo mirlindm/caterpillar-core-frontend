@@ -265,7 +265,7 @@ class ICreateDiagram extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            Transaction Hashes
+                                            <span style={{color: "#E9967A"}}> Transaction Hashes </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="0">
@@ -280,7 +280,7 @@ class ICreateDiagram extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                            BPMN Interpreter
+                                            <span style={{color: "#E9967A"}}> BPMN Interpreter </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="1">
@@ -291,7 +291,7 @@ class ICreateDiagram extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                            iDATA
+                                            <span style={{color: "#E9967A"}}> iDATA </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="2">
@@ -302,7 +302,7 @@ class ICreateDiagram extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                            iFactory - Interpreter Factory
+                                            <span style={{color: "#E9967A"}}> iFactory - Interpreter Factory </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="3">
@@ -313,7 +313,7 @@ class ICreateDiagram extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                            iFlow 
+                                            <span style={{color: "#E9967A"}}> iFlow </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="4">

@@ -401,7 +401,7 @@ class AccessAllocation extends Component {
         return(
             <Aux>
               <Card style={{border: "3px solid #FF7F50", }}>
-                <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm">
+                <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "15px", fontWeight: "500",}} size="sm">
                   Please Configure the Policies Below
                 </Alert>  
                 <Card.Body>
@@ -425,7 +425,7 @@ class AccessAllocation extends Component {
               <hr style={{backgroundColor: "#FF6347"}}/>
 
               <Card style={{border: "3px solid #FFE4C4", }}>
-                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", fontSize: "15px", fontWeight: "500",}} size="sm"> 
                   Process Cases Available
                 </Alert>  
                 <Card.Body>
@@ -455,7 +455,7 @@ class AccessAllocation extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                Access Control
+                              <span style={{color: "#E9967A"}}> Access Control </span>
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="0">
@@ -468,7 +468,7 @@ class AccessAllocation extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                Binding Policy
+                                <span style={{color: "#E9967A"}}> Binding Policy </span>
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="1">
@@ -481,7 +481,7 @@ class AccessAllocation extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                Role Task Map
+                                <span style={{color: "#E9967A"}}>  Role Task Map </span>
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="2">
@@ -500,7 +500,7 @@ class AccessAllocation extends Component {
                         <Card>
                           <Card.Header>
                             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                              State
+                              <span style={{color: "#E9967A"}}> State </span>
                             </Accordion.Toggle>
                           </Card.Header>
                           <Accordion.Collapse eventKey="0">
@@ -680,7 +680,7 @@ class AccessAllocation extends Component {
                 <hr style={{backgroundColor: "#FF6347"}}/>
 
                 <Card style={{border: "3px solid #FF7F50", }}>
-                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                  <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "15px", fontWeight: "500",}} size="sm"> 
                       Configure common parameters of nominate, release and vote operations
                   </Alert>  
                   <Card.Body>
@@ -704,7 +704,7 @@ class AccessAllocation extends Component {
                 <hr style={{backgroundColor: "#FF6347"}}/>
 
                 <Card style={{border: "3px solid #FFE4C4", }}>
-                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "15px", fontWeight: "500",}} size="sm"> 
                       Nominate, Release or Vote Policies
                     </Alert>  
                     <Card.Body>
@@ -746,7 +746,7 @@ class AccessAllocation extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                  Nomination Transaction Hash
+                                  <span style={{color: "#E9967A"}}>  Nomination Transaction Hash </span>
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">

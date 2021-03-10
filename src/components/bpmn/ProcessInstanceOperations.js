@@ -338,11 +338,11 @@ class ProcessInstanceOperations extends Component {
                                     <Card>
                                         <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            Process Instance Transaction Hash
+                                            <span style={{color: "#E9967A"}}> Process Instance Transaction Hash </span>
                                         </Accordion.Toggle>
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="0">
-                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.processInstanceResponse.transactionHash} </pre> </span>  </Card.Body>                          
+                                            <Card.Body> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.processInstanceResponse.transactionHash} </pre> </span>  </Card.Body>                          
                                         </Accordion.Collapse>
                                     </Card>            
                                 </Accordion> 
@@ -354,7 +354,7 @@ class ProcessInstanceOperations extends Component {
                                         <Card>
                                             <Card.Header>
                                             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                Process Instances IDs
+                                                <span style={{color: "#E9967A"}}> Process Instances IDs </span>
                                             </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="0">
@@ -363,7 +363,7 @@ class ProcessInstanceOperations extends Component {
                                                     <li key={id}> 
                                                         {instance} {' '} 
                                                         <Button onClick={() => this.queryProcessStateHandler(instance)} variant="primary"
-                                                            type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
+                                                            type="submit" className="new-buttons" 
                                                             > Query Process State
                                                         </Button>                                                              
                                                     </li>
@@ -378,7 +378,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                    Process State - Element ID
+                                                    <span style={{color: "#E9967A"}}> Process State - Element ID </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="0">
@@ -389,7 +389,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                                    Process State - Element Name
+                                                    <span style={{color: "#E9967A"}}> Process State - Element Name </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="1">
@@ -400,7 +400,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                                    Process State - Input
+                                                <span style={{color: "#E9967A"}}> Process State - Input </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="2">
@@ -411,7 +411,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                                    Process State - Bundle ID
+                                                    <span style={{color: "#E9967A"}}> Process State - Bundle ID </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="3">
@@ -422,7 +422,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                                    Process State - Process Address
+                                                    <span style={{color: "#E9967A"}}> Process State - Process Address </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="4">
@@ -433,7 +433,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                                    Process State - pCases
+                                                    <span style={{color: "#E9967A"}}> Process State - pCases </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="5">
@@ -446,7 +446,7 @@ class ProcessInstanceOperations extends Component {
                                             <Card>
                                             <Card.Header>
                                                 <Accordion.Toggle as={Button} variant="link" eventKey="6">
-                                                    Process State - Hrefs
+                                                    <span style={{color: "#E9967A"}}> Process State - Hrefs </span>
                                                 </Accordion.Toggle>
                                             </Card.Header>
                                             <Accordion.Collapse eventKey="6">
@@ -479,8 +479,8 @@ class ProcessInstanceOperations extends Component {
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Card style={{border: "3px solid #d7dde8", }}>
-                            <Alert variant="info" style={{textAlign: "center", backgroundColor: "#757f9a", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                        <Card style={{border: "3px solid #FF7F50", }}>
+                            <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                             Please Configure the Policies below:
                             </Alert>  
                             <Card.Body>

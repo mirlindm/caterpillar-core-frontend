@@ -174,11 +174,11 @@ class RuntimeRegistry extends Component {
 
     // takes user to Modeler component on click
     goToCompilation = () => {
-        this.props.history.push(`/modeler`);   
+        this.props.history.push(`/compilation`);   
     }
 
     goToInterpretation = () => {
-        this.props.history.push(`/modeler`);   
+        this.props.history.push(`/interpretation`);   
     }
 
     goToAccessPoliciesrHandler = () => {
@@ -259,7 +259,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                           Contract Name
+                                        <span style={{color: "#E9967A"}}> Contract Name </span>
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
@@ -271,7 +271,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                           ABI
+                                            <span style={{color: "#E9967A"}}> ABI </span>   
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="1">
@@ -285,7 +285,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                           Byte Code
+                                            <span style={{color: "#E9967A"}}> Byte Code </span>
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="2">
@@ -299,7 +299,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                           Solidity Code
+                                            <span style={{color: "#E9967A"}}> Solidity Code </span>
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="3">
@@ -313,7 +313,7 @@ class RuntimeRegistry extends Component {
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                            Registry Address
+                                        <span style={{color: "#E9967A"}}> Registry Address </span> 
                                         </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="4">

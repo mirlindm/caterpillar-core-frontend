@@ -287,7 +287,7 @@ class CompilationEngine extends Component {
             <Aux>
               <br/>
               <Card style={{border: "3px solid #FFE4C4", }}>
-                    <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
+                    <Alert size="sm" style={{display: "inline-block", position: "absolute"}}> 
                       <Button onClick={this.queryProcessModels}
                               variant="primary" type="submit" className="new-buttons"
                               style={{ padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
@@ -309,7 +309,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                <span style={{color: "#E9967A"}}>  Process Models </span>
+                                  <span style={{color: "#E9967A"}}> Process Models </span>
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
@@ -335,15 +335,15 @@ class CompilationEngine extends Component {
                         <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                <span style={{color: "#E9967A"}}>  Smart Contract Information </span>  
+                                  <span style={{color: "#E9967A"}}> Smart Contract Information </span>  
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="0">
                                 <Card.Body style={{textAlign: "center"}}>  
-                                  Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.contractName} </pre> </span> <hr/>
-                                  Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.solidityCode} </pre> </span> <hr/>
-                                  Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.bytecode} </pre> </span> <hr/>
-                                  ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
+                                  <span style={{color: "#E9967A"}}> Contract Name: </span> <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.contractName} </pre> </span> <hr/>
+                                  <span style={{color: "#E9967A"}}> Solidity Code: </span>  <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.solidityCode} </pre> </span> <hr/>
+                                  <span style={{color: "#E9967A"}}> Byte Code: </span>  <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.bytecode} </pre> </span> <hr/>
+                                  <span style={{color: "#E9967A"}}> ABI: </span>  <br/> <span style={{color: "#008B8B", fontWeight: "bold", textAlign: "center", fontSize: "17px", }}> <pre> {this.state.retrieveModelMetadataContractName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.retrieveModelMetadataContractName.abi} </pre> </span> <hr/>                                    
                                 </Card.Body>
                               </Accordion.Collapse>
                             </Card>
@@ -351,7 +351,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                  Repo ID
+                                  <span style={{color: "#E9967A"}}> Repo ID </span>
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="1">
@@ -362,7 +362,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                  Root Model ID
+                                  <span style={{color: "#E9967A"}}>  Root Model ID </span>
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="2">
@@ -373,7 +373,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                  Root Model Name
+                                  <span style={{color: "#E9967A"}}> Root Model Name </span> 
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="3">
@@ -384,7 +384,7 @@ class CompilationEngine extends Component {
                             <Card>
                               <Card.Header>
                                 <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                  BPMN Model (XML and Process Model)
+                                  <span style={{color: "#E9967A"}}> BPMN Model - XML and Process Model </span>   
                                 </Accordion.Toggle>
                               </Card.Header>
                               <Accordion.Collapse eventKey="4">
@@ -394,7 +394,7 @@ class CompilationEngine extends Component {
                               </Accordion.Collapse>
                           </Card>
                                   
-                          <Card className="bg-gray-dark" style={{ border: "2px solid #757f9a", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                          <Card className="bg-gray-dark" style={{ border: "2px solid #FFE4C4", width: "110%", marginLeft: "-60px" , height: "100%" }}>
                             <div id="bpmncontainer">
                               <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
                               <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
@@ -404,7 +404,7 @@ class CompilationEngine extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                Worklist ABI
+                                <span style={{color: "#E9967A"}}> Worklist ABI </span> 
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="5">
@@ -415,7 +415,7 @@ class CompilationEngine extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="6">
-                                Process Model Elements Information
+                                <span style={{color: "#E9967A"}}> Process Model Elements Information </span>  
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="6">

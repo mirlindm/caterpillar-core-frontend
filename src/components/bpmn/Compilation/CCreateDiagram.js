@@ -402,7 +402,7 @@ class CCreateDiagram extends Component {
           
           {/* New changes Start - POST 1 */}
           <br/>
-          <Card style={{border: "3px solid #FFE4C4",}}>
+          <Card style={{border: "3px solid #FFE4C4", textAlign: "center"}}>
                 <Alert style={{textAlign: "center"}} variant="light" size="sm"> 
                   <Button onClick={this.deployProcessModels}
                         variant="primary" type="submit" className="new-buttons"
@@ -437,7 +437,7 @@ class CCreateDiagram extends Component {
                           <Card>
                             <Card.Header>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                Bundle ID of Deployed Model
+                              <span style={{color: "#E9967A"}}> Model Bundle ID </span>
                               </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="0">
@@ -451,7 +451,7 @@ class CCreateDiagram extends Component {
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                    Contract Name of Deployed Model
+                                    <span style={{color: "#E9967A"}}> Contract Name </span>
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
@@ -461,7 +461,7 @@ class CCreateDiagram extends Component {
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    Solidity Code of Deployed Model
+                                   <span style={{color: "#E9967A"}}>Solidity Code</span> 
                                   </Accordion.Toggle>
                                 </Card.Header>
                                         <Accordion.Collapse eventKey="1">
@@ -471,7 +471,7 @@ class CCreateDiagram extends Component {
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                    Code Dependencies of Deployed Model
+                                     <span style={{color: "#E9967A"}}> Code Dependencies </span>
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="2">
@@ -487,7 +487,7 @@ class CCreateDiagram extends Component {
                               <Card>
                                 <Card.Header>
                                   <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                    Compilation Metadata of Deployed Model
+                                    <span style={{color: "#E9967A"}}> Compilation Metadata </span>
                                   </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="3">
