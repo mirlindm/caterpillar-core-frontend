@@ -10,7 +10,7 @@ import 'react-notifications/lib/notifications.css';
 import Aux from '../../hoc/Auxiliary';
 import {POLICIES_URL} from '../../Constants';
 
-import {Form, Alert, Button, Accordion, Card, Col, Row, Breadcrumb } from 'react-bootstrap';
+import {Form, Alert, Button, Accordion, Card, Col, Row, Breadcrumb, Modal} from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -57,6 +57,13 @@ class AccessAllocation extends Component {
             // new
             showAccordionOfFindPolicyAddress: false,
             showAccordionOfFindRoleState: false,
+            showAccordionOfNominateCaseCreator: false,
+
+            // modals
+            showCaseCreatorModal: false,
+            showNominateModal: false,
+            showReleaseModal: false,
+            showVoteModal: false,
         }
     } 
     
@@ -106,6 +113,56 @@ class AccessAllocation extends Component {
     changeBreadCrumbTaskRoleMapHandler = () => {
       this.setState({breadCrumbTaskRoleMap: !this.state.breadCrumbTaskRoleMap})
     }
+
+    caseCreatorModalOpen = () => {
+      this.setState({
+        showCaseCreatorModal: true
+      })
+    }
+
+    caseCreatorModalClose = () => {
+      this.setState({
+        showCaseCreatorModal: false
+      })
+    }
+
+    nominateModalOpen = () => {
+      this.setState({
+        showNominateModal: true
+      })
+    }
+
+    nominateModalClose = () => {
+      this.setState({
+        showNominateModal: false
+      })
+    }
+
+    releaseModalOpen = () => {
+      this.setState({
+        showReleaseModal: true
+      })
+    }
+
+    releaseModalClose = () => {
+      this.setState({
+        showReleaseModal: false
+      })
+    }
+
+    voteModalOpen = () => {
+      this.setState({
+        showVoteModal: true
+      })
+    }
+
+    voteModalClose = () => {
+      this.setState({
+        showVoteModal: false
+      })
+    }
+
+
 
      // /rb-opertation/:pCase => findPolicyAddresses
      findPolicyAddresses =  (pCase) => {    
@@ -200,8 +257,8 @@ class AccessAllocation extends Component {
       }
 
       // /rb-opertation/:pCase/nominate-creator
-      nominateCaseCreator =  () => {                
-        let pCase = this.state.pCase;  
+      nominateCaseCreator =  (pCase) => {                
+        // let pCase = this.state.pCase;  
 
         let requestBody = {
           registryAddress: this.props.registryAddress,
@@ -220,7 +277,7 @@ class AccessAllocation extends Component {
             .then(response => {
               if (response.status === 202) {
                 console.log(response);
-                this.setState({caseCreatorResponse: response.data});
+                this.setState({caseCreatorResponse: response.data, showAccordionOfNominateCaseCreator: true});
                 NotificationManager.success('Case creator has been successfully nominated!', response.statusText);
               } else {
                 console.log('ERROR', response);
@@ -432,7 +489,7 @@ class AccessAllocation extends Component {
                   <Row>  
                     <Col>
                       <Alert> 
-                        Select one of the Process Cases: <span style={{  color: "#ff3c00"}}> { this.props.processCaseAddress.length === 0 ? "There are no Process Cases in the store"
+                        <Card><span style={{  color: "#ff3c00"}}> { this.props.processCaseAddress.length === 0 ? "There are no Process Cases in the store"
                           :  this.props.processCaseAddress.map((instance, id) => (
                           <ul key={id}> <br/>
                             <li key={id}> 
@@ -441,10 +498,56 @@ class AccessAllocation extends Component {
                               
                               {/* <Form.Label style={{color: "#757f9a"}}> Role Name </Form.Label> */}
                               <Form.Control required name="roleName" value={this.state.roleName} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Role Name" style={{width: "150px", position: "absolute", display: "inline-block", marginLeft: "170px"}} /> 
-                              <Button onClick={() => this.findRoleState(instance)} className="new-buttons" variant="primary" style={{marginLeft: "330px"}}>Find Role State</Button>
+                              <Button onClick={() => this.findRoleState(instance)} className="new-buttons" variant="primary" style={{marginLeft: "325px", marginRight: "3px"}}>Find Role State</Button>
+                              <Button onClick={this.caseCreatorModalOpen} className="new-buttons" variant="primary" >Nominate Case Creator</Button>
+                              
+                              <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={this.state.showCaseCreatorModal} onHide={this.caseCreatorModalClose} backdrop="static" keyboard={false}>
+                                <Modal.Header closeButton>
+                                  <Modal.Title>Nominate Case Creator</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                <Row style={{display: "flex", justifyContent: "space-around"}} >                                      
+                                      <Col>
+                                        <Form.Label style={{color: "#ff3c00"}}> Nominee Role </Form.Label>
+                                        <Form.Control required name="nomineeRole" value={this.state.nomineeRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Role" />
+                                      </Col>
+                                      <Col>
+                                        <Form.Label style={{color: "#ff3c00"}}> Nominee Address </Form.Label>
+                                        <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
+                                      </Col>
+                                      <Col>
+                                        <Button style={{marginTop: "29px"}} onClick={() => this.nominateCaseCreator(instance)} className="new-buttons" variant="primary">Nominate Case Creator</Button>
+                                        <br/>
+                                      </Col>
+                                    </Row>                                  
+                                      {this.state.showAccordionOfNominateCaseCreator ?                                      
+                                        <Accordion>
+                                        <Card>
+                                          <Card.Header>
+                                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                              Transaction Hash
+                                            </Accordion.Toggle>
+                                          </Card.Header>
+                                          <Accordion.Collapse eventKey="0">
+                                            <Card.Body>  
+                                            <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.caseCreatorResponse.length === 0 ? <span style={{color: "#FA8072"}}> Case creator is not yet nominated </span> : this.state.caseCreatorResponse.transactionHash} </pre> </span>
+                                            </Card.Body>                      
+                                          </Accordion.Collapse>
+                                        </Card>
+                                      </Accordion>
+                                      : null}                                                                     
+                                </Modal.Body>
+                                <Modal.Footer>
+                                  <Button variant="secondary" onClick={this.caseCreatorModalClose}>
+                                    Close
+                                  </Button>                                  
+                                </Modal.Footer>
+                              </Modal>
                             </li>
-                          </ul>
-                        ))} </span> 
+                            {/* <li style={{listStyleType: "none"}}> <br/>                                                                                                                                                                    
+                            </li> <hr/> */}
+                          </ul> 
+                        ))}  </span> </Card>
                       </Alert>
                     </Col>                                                                  
                   </Row> 
@@ -697,11 +800,170 @@ class AccessAllocation extends Component {
                         <Form.Label style={{color: "#ff3c00"}}> Process Case  </Form.Label>
                         <Form.Control required name="pCase" value={this.state.pCase} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Process the Case" />
                       </Col>
+                    </Row> <br/>
+                    <Row>
+                      <Col style={{textAlign: "center"}}> 
+                      <Button onClick={this.nominateModalOpen} className="new-buttons" variant="primary" >Nominate</Button>                  
+                      <Button onClick={this.releaseModalOpen} className="new-buttons" variant="primary" >Release</Button>                  
+                      <Button onClick={this.voteModalOpen} className="new-buttons" variant="primary" >Vote</Button>                  
+                      </Col>                      
                     </Row>                    
                   </Card.Body>
                 </Card>    
+                
+                  <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={this.state.showNominateModal} onHide={this.nominateModalClose} backdrop="static" keyboard={false}>
+                    <Modal.Header closeButton>                      
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Card style={{border: "3px solid #FF7F50",}}>
+                        <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                          Nomination
+                      </Alert>  
+                        <Card.Body>
+                          <Row style={{display: "flex", justifyContent: "space-around"}} >
+                            <Col>
+                              <Form.Label style={{color: "#ff3c00"}}> Nominator Address </Form.Label>
+                              <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominator Address" />
+                            </Col>
+                            <Col>
+                              <Form.Label style={{color: "#ff3c00"}}> Nominee Address </Form.Label>
+                              <Form.Control required name="nomineeAddress" value={this.state.nomineeAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Nominee Address" />
+                            </Col>
+                            <Col>
+                              <Button style={{marginTop: "29px"}} onClick={this.nominate} className="new-buttons" variant="success">Nominate</Button>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col> <br/>
+                              <Accordion>
+                                  <Card>
+                                    <Card.Header>
+                                      <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        <span style={{color: "#E9967A"}}>  Nomination Transaction Hash </span>
+                                      </Accordion.Toggle>
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="0">
+                                      <Card.Body>  
+                                        <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.nominateResponse.length === 0 ? <span style={{color: "#FA8072"}}> No nomination has been performed yet </span> : this.state.nominateResponse.transactionHash} </pre> </span>
+                                      </Card.Body>                      
+                                    </Accordion.Collapse>
+                                  </Card>
+                                </Accordion>
+                            </Col>                      
+                          </Row>                       
+                        </Card.Body>
+                      </Card>                                                                                                                          
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={this.nominateModalClose}>
+                        Close
+                      </Button>                                  
+                    </Modal.Footer>
+                  </Modal>
 
-                <hr style={{backgroundColor: "#FF6347"}}/>
+                  <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={this.state.showReleaseModal} onHide={this.releaseModalClose} backdrop="static" keyboard={false}>
+                    <Modal.Header closeButton>                      
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Card style={{border: "3px solid #FF7F50",}}>
+                        <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                          Release
+                      </Alert>  
+                        <Card.Body>
+                          <Row style={{display: "flex", justifyContent: "space-around"}} >
+                            <Col>
+                              <Form.Label style={{color: "#ff3c00"}}> Releaser/Nominator Address  </Form.Label>
+                              <Form.Control required name="nominatorAddress" value={this.state.nominatorAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Releaser Address" />
+                            </Col>                      
+                            <Col>
+                              <Button style={{marginTop: "29px"}} onClick={this.release} className="new-buttons" variant="danger">Release</Button>
+                            </Col>
+                          </Row>                    
+                        </Card.Body>
+                      </Card>                                                                        
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={this.releaseModalClose}>
+                        Close
+                      </Button>                                  
+                    </Modal.Footer>
+                  </Modal> 
+
+                  <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={this.state.showVoteModal} onHide={this.voteModalClose} backdrop="static" keyboard={false}>
+                    <Modal.Header closeButton>                      
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Aux><hr/>  
+                        <Card style={{border: "3px solid #FF7F50",}}>
+                          <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
+                            Vote
+                        </Alert>  
+                          <Card.Body>
+                          <Row>  
+                              <Col>
+                                <Form.Check style={{display: "inline", marginRight: "20px", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.onNomination} id="radio1" name="onNomination" onChange={(event) => { this.onChangeRadioValueHandler({
+                                  target: {
+                                    name: event.target.name,
+                                    value: event.target.defaultChecked,
+                                  },
+                                })                          
+                                }} label="On-nomination" />                        
+                                <Form.Check style={{display: "inline", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.onRelease} id="radio2" name="onRelease" onChange={(event) => { this.onChangeRadioValueHandler({
+                                  target: {
+                                    name: event.target.name,
+                                    value: event.target.defaultChecked,
+                                  },
+                                })                          
+                                }} label="On-release" />
+                              </Col>                                            
+                              <Col>
+                                <Form.Check style={{display: "inline", marginRight: "20px", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.accept}  id="radio3" name="accept" onChange={(event) => { this.onChangeRadioValueHandler({
+                                  target: {
+                                    name: event.target.name,
+                                    value: event.target.defaultChecked,
+                                  },
+                                })                          
+                                }}  label="Accept" />                    
+                                <Form.Check style={{display: "inline", color: "#ff3c00"}} type="checkbox" defaultChecked={this.state.reject} id="radio4" name="reject" onChange={(event) => { this.onChangeRadioValueHandler({
+                                  target: {
+                                    name: event.target.name,
+                                    value: event.target.defaultChecked,
+                                  },
+                                })                          
+                                }} label="Reject" />                                                                   
+                              </Col>
+                            </Row> <br/>                                                                       
+                          </Card.Body>
+                        </Card>         
+                        <Card style={{border: "3px solid #FF7F50",}}>
+                        <Card.Body>
+                          <Row style={{display: "flex", justifyContent: "space-around"}} >
+                            <Col>
+                              <Form.Label style={{color: "#ff3c00"}}> Endorser Role </Form.Label>
+                              <Form.Control required name="endorserRole" value={this.state.endorserRole} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Role" />
+                            </Col>
+                            <Col>
+                              <Form.Label style={{color: "#ff3c00"}}> Endorser Address </Form.Label>
+                              <Form.Control required name="endorserAddress" value={this.state.endorserAddress} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter the Endorser Address" />
+                            </Col> 
+                            <Col>
+                              <Button style={{marginTop: "29px"}} onClick={this.vote} className="new-buttons" variant="success">Vote</Button>  
+                            </Col>
+                          </Row>
+                        </Card.Body>
+                        </Card>
+                      </Aux>                                                                        
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={this.voteModalClose}>
+                        Close
+                      </Button>                                  
+                    </Modal.Footer>
+                  </Modal>  
+
+                
+
+                {/* <hr style={{backgroundColor: "#FF6347"}}/>
 
                 <Card style={{border: "3px solid #FFE4C4", }}>
                 <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "15px", fontWeight: "500",}} size="sm"> 
@@ -843,7 +1105,7 @@ class AccessAllocation extends Component {
                 </Card.Body>
                 </Card>
               </Aux> 
-              : null }
+              : null } */}
 
                 {/* <Alert variant="warning" size="sm"> 
                     Query the State of the Role

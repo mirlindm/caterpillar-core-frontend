@@ -69,14 +69,16 @@
   .bar {
     background: #FF7F50;
     width: 100vw;
+    height: 30vw;
     position: relative;
     margin-left: -50vw;
     left: 50%;
     bottom: 0;
-    padding: 8vw;    
+    padding: 2vw;    
     text-align: center;  
     margin-top: 1vw;
-    
+    margin-bottom: 4vw;
+    border: 1px solid black;
   }
   
   .circle {

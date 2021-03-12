@@ -61,7 +61,7 @@ class About extends Component {
                     </MDBRow>
                 </MDBContainer>
 
-                <Button className="buttons-welcome" onClick={this.goToWelcomeComponentHandler} style={{ backgroundColor: "#757f9a", width: "10vw" }}>Back Home</Button> {' '}             
+                <Button className="buttons-welcome" onClick={this.goToWelcomeComponentHandler} style={{ backgroundColor: "#757f9a", width: "10vw", }}>Back Home</Button> {' '}             
                 </div>
                 <br/>                   
             </div>
