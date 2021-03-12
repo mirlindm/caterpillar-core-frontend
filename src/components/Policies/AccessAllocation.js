@@ -893,7 +893,7 @@ class AccessAllocation extends Component {
                     <Modal.Header closeButton>                      
                     </Modal.Header>
                     <Modal.Body>
-                      <Aux><hr/>  
+                      <Aux>
                         <Card style={{border: "3px solid #FF7F50",}}>
                           <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                             Vote

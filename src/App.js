@@ -92,7 +92,7 @@ class App extends Component {
                       {/* <Route path="/compilation" exact component={CCreateModel} />*/}
                       {/* <Route path="/interpretation" exact component={ICreateModel} />*/}
                       <Route path="/access" exact component={AccessAllocation} />                    
-                      <Route path="/accessControl" exact component={AccessControl} />                    
+                      <Route path="/policies" exact component={AccessControl} />                    
                       <Route path="/runtimeRegistry" exact component={RuntimeRegistry} />                    
                       <Route path="/logout" exact component={Logout} />
                       <Route path="/about" exact component={About} />

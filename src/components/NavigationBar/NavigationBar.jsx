@@ -22,6 +22,7 @@ class NavigationBar extends Component {
                                 <NavDropdown.Item><Link to={"/compilation"}>Compilation Engine</Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to={"/interpretation"}>Interpretation Engine</Link></NavDropdown.Item>                                                 
                             </NavDropdown>
+                            <li><Link style={{color: "#FFFFFF"}} to={"/policies"} className="nav-link">Policies</Link></li>                             
                             <li><Link style={{color: "#FFFFFF"}} to={"/access"} className="nav-link">Access</Link></li>                             
                             {/* {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>} */}                   
                             <li><Link style={{color: "#FFFFFF"}} to={"/about"} className="nav-link">About</Link></li>                        

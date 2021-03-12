@@ -255,7 +255,7 @@ class RuntimeRegistry extends Component {
                         </div>
 
                         {/* Render Response through Accordion */}
-                    <Accordion style={{marginTop: "10px"}}>
+                        <Accordion style={{marginTop: "10px"}}>
                                 <Card>
                                     <Card.Header>
                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">

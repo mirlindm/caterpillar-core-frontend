@@ -8,7 +8,7 @@ import 'react-notifications/lib/notifications.css';
 import ls from 'local-storage';
 
 
-import {Form, Button, Card, Accordion, Dropdown, Alert} from 'react-bootstrap';
+import {Form, Button, Card, Accordion, Dropdown, Alert, Col} from 'react-bootstrap';
 
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -24,6 +24,10 @@ class AccessControl extends Component {
             accessControlAddress: '',
             accessControlAddressMetadata: [],
             accessControlAddressFromWebSocket: '',
+
+            // Accordion
+            accessControlShowAccordion: false,
+            accessControlAddressShowAccordion: false,
         }
     }
 
@@ -43,7 +47,7 @@ class AccessControl extends Component {
        
       await axios.post(ACCESS_CONTROL_URL)
           .then(response =>  {
-            this.setState({createAccessControl: true, accessControlAddress: response.data});                                                  
+            this.setState({createAccessControl: true, accessControlAddress: response.data, accessControlShowAccordion: true});                                                  
             NotificationManager.success('Access Control Policy Created!', response.statusText);
             console.log(response.data);                                                                           
             console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
@@ -97,7 +101,7 @@ class AccessControl extends Component {
           .then(response => {
             console.log(response);
             if (response.status === 200) {
-              this.setState({accessControlAddressMetadata: response.data});
+              this.setState({accessControlAddressMetadata: response.data, accessControlAddressShowAccordion: true});
               dispatch({type: 'ACCESS_CONTROL_ADDRESS', payload: response.data.address});
               NotificationManager.success('Access Policy Data have been successfully fetched!', response.statusText);
               //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
@@ -133,134 +137,109 @@ class AccessControl extends Component {
     render(){
         return(
             <Aux>
-                             
-                <div  className="ContentUnique"> 
-                  <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
-                      Create new Access Control
-                  </p>
-              
-                  <Dropdown>
-                      <Dropdown.Toggle style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} id="dropdown-basic">
-                          Select from menu
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                          <Dropdown.Item href="#/yes" active onSelect={this.deployAccessControl}>Create a new one</Dropdown.Item>
-                          <Dropdown.Item href="#/no" onSelect={this.useExistingAccessControl}>Use existing one instead</Dropdown.Item>
-                      </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-                { this.state.createAccessControl === true ? <>
-                    <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                      <Card>
-                        <Card.Header>
-                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            1. Access Control Transaction Hash
-                          </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="0">
-                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddress} </pre> </span>  </Card.Body>                      
-                          </Accordion.Collapse>
-                        </Card>            
-                    </Accordion> <br/>
-                    {/* <Alert size="sm" 
-                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please provide the Access Control Address in the Input Field
-                  </Alert>   */}
-                  {/* Access Control Configuration - GET 3 */}
-                  <Alert variant="light" style={{ textAlign: "center",}} > 
-                      Access Control Addresses Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> <p id="here"> {ls.get('aca')} </p> </span> 
-                  </Alert> 
-                  
-                  <Alert variant="light" style={{ textAlign: "center",}} > 
-                     NEEWWWWWW Access Control Addresses Available: <br/> <br/> <span style={{textDecoration: "underline",  color: "#000000"}}> {this.state.accessControlAddressFromWebSocket} </span> 
-                  </Alert>
+                  <Card style={{border: "1px solid #FF7F50", margin: "auto", marginTop: "40px", fontSize: "large" }}>
+                        <Card.Header style={{"textAlign": "center", backgroundColor: "#FF7F50"}}>
+                            <Button onClick={this.deployAccessControl} className="new-buttons" variant="primary" 
+                                style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
+                                Create New Access Control
+                            </Button> <br/>
+                            {this.state.accessControlShowAccordion ? 
+                            <Accordion style={{marginTop: "15px"}}>
+                              <Card>
+                                <Card.Header>
+                                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <span style={{color: "#E9967A"}}>Access Control Transaction Hash</span>
+                                  </Accordion.Toggle>
+                                  </Card.Header>
+                                  <Accordion.Collapse eventKey="0">
+                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddress} </pre> </span>  </Card.Body>                      
+                                  </Accordion.Collapse>
+                                </Card>            
+                            </Accordion> : null }
+                        </Card.Header>                   
+                        <br/>
+                        <Col sm="5" style={{marginLeft: "310px"}}>
+                            <Form.Control required autoComplete="off"
+                                            type="text"
+                                            name="accessControlAddress" style={{textAlign: "center"}}
+                                            
+                                            onChange={this.accessControlAddressChangeHandler}
+                                            className={"bg-light"}
+                                            placeholder="Enter Access Control Address" />
+                        </Col><br/>                                                                                          
+                        
+                        <Card.Footer style={{"textAlign": "center", backgroundColor: "#FF7F50"}}>                                                                    
+                          <Button className="new-buttons" onClick={this.findAccessControlMetadata} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
+                            Load Registry
+                          </Button> {' '}
 
-                  
-                  <Form.Control required type="text" placeholder="Enter the Access Control Address" 
-                    name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
-                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> <br/>
-                    <Button variant="primary"
-                        type="submit" className="new-buttons" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                        > Get Access Control Metadata
-                  </Button> <br/>
-
-                    </>
-                : this.state.createAccessControl === false ? <>
-                  {/* <Alert size="sm"
-                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please provide the Access Control Address in the Input Field
-                  </Alert>   */}
-                  {/* Access Control Configuration - GET 3 */}
-                  <Form.Control required type="text" placeholder="Enter the Access Control Address" 
-                    name="accessControlAddress" onChange={this.accessControlAddressChangeHandler} 
-                    style={{border: "1px solid #757f9a", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                  /> <br/>
-                   <Button variant="primary"
-                        type="submit" className="link-button" onClick={this.findAccessControlMetadata} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                        > Get Access Control Metadata
-                  </Button> <br/>      
-                </>
-                : null
-                }
-              
-                <Accordion style={{padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                      <Card>
-                        <Card.Header>
-                          <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            1. Access Control Contract Name
-                          </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="0">
-                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.contractName} </pre> </span> </Card.Body>                      
-                          </Accordion.Collapse>
-                        </Card>
-
-                        <Card>
-                        <Card.Header>
-                          <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                            2. Access Control Solidity Code
-                          </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="1">
-                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.solidityCode} </pre> </span> </Card.Body>                      
-                          </Accordion.Collapse>
-                        </Card> 
-
-                        <Card>
-                        <Card.Header>
-                          <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                            3. Access Control ABI
-                          </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="2">
-                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.abi} </pre> </span> </Card.Body>                      
-                          </Accordion.Collapse>
-                        </Card>
-
-                        <Card>
+                          <Button onClick={this.resetRegistryInput} className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
+                            Reset
+                          </Button><br/>
+                      { this.state.accessControlAddressShowAccordion ?
+                      <Aux>
+                        <Accordion style={{padding: "5px", marginTop: "15px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                          <Card>
                           <Card.Header>
-                          <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                            4. Access Control Byte Code
-                          </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="3">
-                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.bytecode} </pre> </span> </Card.Body>                      
-                          </Accordion.Collapse>
-                        </Card>                          
+                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                              <span style={{color: "#E9967A"}}>Access Control Contract Name</span>
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="0">
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.contractName} </pre> </span> </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
 
-                        <Card>
+                          <Card>
                           <Card.Header>
-                          <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                            5. Access Control Address
-                          </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="4">
-                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", textDecoration: "underline", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.address} </pre> </span> </Card.Body>                      
-                          </Accordion.Collapse>
-                        </Card>                          
-                  </Accordion>                  
+                            <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                              <span style={{color: "#E9967A"}}>Access Control Solidity Code</span>
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="1">
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.solidityCode} </pre> </span> </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card> 
+
+                          <Card>
+                          <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                              <span style={{color: "#E9967A"}}>Access Control ABI</span>
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="2">
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.abi} </pre> </span> </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>
+
+                          <Card>
+                            <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                              <span style={{color: "#E9967A"}}>Access Control Byte Code</span>
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="3">
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.bytecode} </pre> </span> </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>                          
+
+                          <Card>
+                            <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                              <span style={{color: "#E9967A"}}>Access Control Address</span>
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="4">
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", textDecoration: "underline", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.address} </pre> </span> </Card.Body>                      
+                            </Accordion.Collapse>
+                          </Card>                          
+                        </Accordion> </Aux> 
+                      : null }  
+                                                                                                                      
+                    </Card.Footer>                                                                                
+                  </Card>                                                                                              
                   <NotificationContainer/>
+                  <div style={{marginTop: "60px"}}> </div>
             </Aux>
         );
     }
