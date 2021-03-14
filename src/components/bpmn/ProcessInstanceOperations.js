@@ -4,12 +4,7 @@ import Aux from '../../hoc/Auxiliary';
 
 import './BpmnModelling.css';
 
-// import CCreateDiagram from './Compilation/CCreateDiagram';
-// import CUploadDiagram from './Compilation/CUploadDiagram';
 import AccessControl from '../Policies/AccessControl';
-import RoleBindingPolicy from '../Policies/RoleBindingPolicy';
-import TaskRoleMap from '../Policies/TaskRoleMap';
-
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {COMPILATION_URL, PROCESS_INSTANCE_QUERY_URL} from '../../Constants';
@@ -475,30 +470,11 @@ class ProcessInstanceOperations extends Component {
                 >
                     <Modal.Header closeButton>
                     <Modal.Title id="example-custom-modal-styling-title">
-                        Define Your Access Policies (Access Control, Role Binding Policy and Task-Role Map)
+                        <span style={{color: "#E9967A", textAlign: "center", fontSize: "15px"}}>Define Your Access Policies (Access Control, Role Binding Policy and Task-Role Map)</span>
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Card style={{border: "3px solid #FF7F50", }}>
-                            <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#ffffff", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
-                            Please Configure the Policies below:
-                            </Alert>  
-                            <Card.Body>
-                            <Row style={{textAlign: "center"}}>  
-                                <Col>
-                                <Breadcrumb style={{ display: "flex", justifyContent: "center"}}>            
-                                    <Breadcrumb.Item onClick={this.changeBreadCrumbAccessControlHandler}>Access Control</Breadcrumb.Item>
-                                    <Breadcrumb.Item onClick={this.changeBreadCrumbRoleBindingPolicyHandler}>Role Binding Policy</Breadcrumb.Item>
-                                    <Breadcrumb.Item onClick={this.changeBreadCrumbTaskRoleMapHandler}>Task Role Map</Breadcrumb.Item>
-                                </Breadcrumb>
-
-                                    {this.state.breadCrumbAccessControl ? <AccessControl/> : null } 
-                                    {this.state.breadCrumbRoleBindingPolicy ? <RoleBindingPolicy/> : null } 
-                                    {this.state.breadCrumbTaskRoleMap ? <TaskRoleMap/> : null }   
-                                </Col>                                                                  
-                            </Row> <br/>                                                                       
-                            </Card.Body>
-                        </Card>
+                       <AccessControl/> 
                     </Modal.Body>
                 </Modal>            
             : null}

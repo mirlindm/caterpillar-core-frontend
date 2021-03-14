@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-import AccessControl from './AccessControl';
-import RoleBindingPolicy from './RoleBindingPolicy';
-import TaskRoleMap from './TaskRoleMap';
+// import AccessControl from './AccessControl';
+// import RoleBindingPolicy from './RoleBindingPolicy';
+// import TaskRoleMap from './TaskRoleMap';
 import {connect} from 'react-redux';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -10,7 +10,7 @@ import 'react-notifications/lib/notifications.css';
 import Aux from '../../hoc/Auxiliary';
 import {POLICIES_URL} from '../../Constants';
 
-import {Form, Alert, Button, Accordion, Card, Col, Row, Breadcrumb, Modal} from 'react-bootstrap';
+import {Form, Alert, Button, Accordion, Card, Col, Row, Modal} from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -457,7 +457,7 @@ class AccessAllocation extends Component {
     render() {
         return(
             <Aux>
-              <Card style={{border: "3px solid #FF7F50", }}>
+              {/* <Card style={{border: "3px solid #FF7F50", }}>
                 <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "15px", fontWeight: "500",}} size="sm">
                   Please Configure the Policies Below
                 </Alert>  
@@ -479,10 +479,10 @@ class AccessAllocation extends Component {
               </Card>
                                                                                                                         
                
-              <hr style={{backgroundColor: "#FF6347"}}/>
+              <hr style={{backgroundColor: "#FF6347"}}/> */}
 
-              <Card style={{border: "3px solid #FFE4C4", }}>
-                <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", fontSize: "15px", fontWeight: "500",}} size="sm"> 
+              <Card style={{border: "3px solid #FF7F50", }}>
+                <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#000000", fontSize: "15px", fontWeight: "500",}} size="sm"> 
                   Process Cases Available
                 </Alert>  
                 <Card.Body>

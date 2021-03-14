@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {NavDropdown} from 'react-bootstrap';
+import {NavDropdown, Nav} from 'react-bootstrap';
 import './NavigationBar.css';
 
 //import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
@@ -18,10 +18,12 @@ class NavigationBar extends Component {
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
                             <li><Link to={"/runtimeRegistry"} className="nav-link" style={{color: "	#FFFFFF"}}>Runtime Registry</Link></li>                                                                          
                             {/* <li><Link to={"/modeler"} className="nav-link">BPMN</Link></li>                                                                           */}
-                            <NavDropdown title="Modeler" id="collasible-nav-dropdown">
+                            <NavDropdown title="Modeler" style={{color: "#FFFFFF"}} >
                                 <NavDropdown.Item><Link to={"/compilation"}>Compilation Engine</Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to={"/interpretation"}>Interpretation Engine</Link></NavDropdown.Item>                                                 
                             </NavDropdown>
+
+                            {/* <Nav.Link href="#home"><Link style={{color: "#FFFFFF"}} to={"/policies"} className="nav-link">Policies</Link></Nav.Link> */}
                             <li><Link style={{color: "#FFFFFF"}} to={"/policies"} className="nav-link">Policies</Link></li>                             
                             <li><Link style={{color: "#FFFFFF"}} to={"/access"} className="nav-link">Access</Link></li>                             
                             {/* {isUserLoggedIn && <li><Link to={"/modeler"} className="nav-link">Modeler</Link></li>} */}                   

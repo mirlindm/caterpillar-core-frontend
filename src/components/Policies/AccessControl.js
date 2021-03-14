@@ -400,7 +400,7 @@ class AccessControl extends Component {
         return(
             <Aux>
               <div className="row">
-                <div style={{marginLeft: "auto", marginRight: "auto"}} className="col-sm-8">
+                <div style={{marginLeft: "auto", marginRight: "auto"}} className="col-sm-10">
                   <Card style={{border: "1px solid #000000", }}>
                         <Card.Header style={{"textAlign": "center", backgroundColor: "#FF7F50"}}>
                             <Button onClick={this.deployAccessControl} className="new-buttons" variant="primary" 
@@ -499,7 +499,7 @@ class AccessControl extends Component {
                 </div> 
 
               {/* Role Binding Policy Start */} 
-               <div style={{marginLeft: "auto", marginRight: "auto"}} className="col-sm-8"> <hr/>                 
+               <div style={{marginLeft: "auto", marginRight: "auto"}} className="col-sm-10"> <hr/>                 
                   <Card style={{border: "1px solid #000000", }}>
                         <Card.Header style={{"textAlign": "center", backgroundColor: "#FF7F50"}}>
                             <Button onClick={this.parseAndDeployRBPolicyHandler} className="new-buttons" variant="primary" 
@@ -638,7 +638,7 @@ class AccessControl extends Component {
               {/* Role Binding Policy Finish */}                                 
            
               {/* Task Role Map Policy Start */}          
-              <div style={{marginLeft: "auto", marginRight: "auto"}} className="col-sm-8"> <hr/>
+              <div style={{marginLeft: "auto", marginRight: "auto"}} className="col-sm-10"> <hr/>
                 <Card style={{border: "1px solid #000000", }}>
                     <Card.Header style={{"textAlign": "center", backgroundColor: "#FF7F50"}}>
                             <Button onClick={this.parseAndDeployTaskRoleMapHandler} className="new-buttons" variant="primary" 

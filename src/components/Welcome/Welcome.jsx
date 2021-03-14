@@ -81,8 +81,8 @@ function  Welcome(props) {
                     <p style={{textAlign: "left", color: "#000000"}}> Create new or use an existing Registry to deploy and perform other operations on your models. </p>
                     </MDBCol>
                     <MDBCol md="4">
-                    <h5 style={{textAlign: "left", color: "#FF6347"}}> <Link to={"/access"}>Policies and Access</Link></h5> <br/>
-                    <p style={{textAlign: "left", color: "#000000"}}> Configure the policies and define further access such as Case Creator Nomination, Release, Vote, Nomination.  </p>
+                    <h5 style={{textAlign: "left", color: "#FF6347"}}> <Link to={"/policies"}>Define Policies</Link> | <Link to={"/access"}>Configure Access</Link></h5> 
+                    <p style={{textAlign: "left", color: "#000000"}}> Configure the policies and define further access such as Case Creator Nomination, Release, Vote, Nomination.  </p>                                                           
                     </MDBCol>
                 </MDBRow>
                 </MDBContainer>
