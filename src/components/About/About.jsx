@@ -30,7 +30,7 @@ class About extends Component {
 
         return (
             <div>
-                <div class="bar">
+                <div className="bar">
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="3">

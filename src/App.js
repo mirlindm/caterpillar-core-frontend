@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import {w3cwebsocket as W3CWebSocket } from 'websocket';
-import ls from 'local-storage';
+//import {w3cwebsocket as W3CWebSocket } from 'websocket';
+//import ls from 'local-storage';
 
 import './App.css';
 
@@ -27,7 +27,7 @@ import AccessControl from './components/Policies/AccessControl'
 
 //import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute.jsx';
 
-const client = new W3CWebSocket('ws://127.0.0.1:8090');
+//const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class App extends Component {
   constructor(props) {
@@ -40,33 +40,33 @@ class App extends Component {
 
   componentDidMount() {
   
-    client.onopen = () => {
-      console.log('WebSocket Client Connected from App.js');
-    };    
-    client.onmessage = (message) => {
-      const dataFromServer = JSON.parse(message.data);
-      console.log(dataFromServer);
-      const parsedData = JSON.parse(dataFromServer.policyInfo);
-      console.log("The address from the app component through websocket: " + parsedData.contractAddress);
+    // client.onopen = () => {
+    //   console.log('WebSocket Client Connected from App.js');
+    // };    
+    // client.onmessage = (message) => {
+    //   const dataFromServer = JSON.parse(message.data);
+    //   console.log(dataFromServer);
+    //   const parsedData = JSON.parse(dataFromServer.policyInfo);
+    //   console.log("The address from the app component through websocket: " + parsedData.contractAddress);
       
-      //check here if the info from the message (the name) is access control, then set the ls like below, 
-      // else - set the ls for the role binding policy, else for the task role map ... 
-      if(parsedData.compilationInfo.contractName === "BindingAccessControl"){  
-        this.setState({
-          accessControlAddressFromWebSocket: parsedData.contractAddress
-        })
-        console.log("Done with updating the state!")       
-        ls.set('aca', parsedData.contractAddress)
-        console.log("The new state in App.js: " + this.state.accessControlAddressFromWebSocket)
-      }
+    //   //check here if the info from the message (the name) is access control, then set the ls like below, 
+    //   // else - set the ls for the role binding policy, else for the task role map ... 
+    //   if(parsedData.compilationInfo.contractName === "BindingAccessControl"){  
+    //     this.setState({
+    //       accessControlAddressFromWebSocket: parsedData.contractAddress
+    //     })
+    //     console.log("Done with updating the state!")       
+    //     ls.set('aca', parsedData.contractAddress)
+    //     console.log("The new state in App.js: " + this.state.accessControlAddressFromWebSocket)
+    //   }
             
-    };    
+    // };    
   }
   
-  reduxFunction = (dispatch) => {    
-      console.log("HERE2")
-      dispatch({type: 'ACCESS_CONTROL_ADDRESS_WEBSOCKET', payload: this.state.accessControlAddressFromWebSocket });    
-  }
+  // reduxFunction = (dispatch) => {    
+  //     console.log("HERE2")
+  //     dispatch({type: 'ACCESS_CONTROL_ADDRESS_WEBSOCKET', payload: this.state.accessControlAddressFromWebSocket });    
+  // }
        
   render() {
     

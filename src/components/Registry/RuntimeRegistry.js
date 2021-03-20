@@ -319,7 +319,7 @@ class RuntimeRegistry extends Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="4">
                                         <Card.Body>                                         
-                                            <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", textDecoration: "underline", fontSize: "17px",}}>  
+                                            <span style={{color: "#008B8B", fontWeight: "bolder", textAlign: "center", fontSize: "17px",}}>  
                                                 <pre> {this.state.registryData.address}  </pre>    
                                             </span>                                    
                                         </Card.Body>

@@ -5,7 +5,9 @@ import Aux from '../../hoc/Auxiliary';
 import {ACCESS_CONTROL_URL, RB_POLICY_URL, TASK_ROLE_MAP_URL} from '../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import ls from 'local-storage';
+//import ls from 'local-storage';
+import {w3cwebsocket as W3CWebSocket } from 'websocket';
+
 
 
 import {Form, Button, Card, Accordion, Col} from 'react-bootstrap';
@@ -13,6 +15,7 @@ import {Form, Button, Card, Accordion, Col} from 'react-bootstrap';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
+const client = new W3CWebSocket('ws://127.0.0.1:8090');
 
 class AccessControl extends Component {
     constructor(props) {
@@ -24,6 +27,9 @@ class AccessControl extends Component {
             accessControlAddress: '',
             accessControlAddressMetadata: [],
             accessControlAddressFromWebSocket: '',
+            socketAddress: '',
+            rbPolicySocketAddress: '',
+            trmSocketAddress: '',
 
             //rbPolicy
             createRBPolicy: undefined,
@@ -55,13 +61,30 @@ class AccessControl extends Component {
     }
 
       componentDidMount() {
-        this.setState({
-          accessControlAddressFromWebSocket: ls.get('aca'),
-        })
-    //     console.log("on mount")
-    //     client.onopen = () => {
-    //     console.log('WebSocket Client Connected from access control component!');
-    //   };      
+        client.onopen = () => {
+          console.log('WebSocket Client Connected from AccessPolicies.js');
+        };    
+
+        client.onmessage = (message) => {
+          const dataFromServer = JSON.parse(message.data);
+          console.log(dataFromServer);
+          const parsedData = JSON.parse(dataFromServer.policyInfo);
+          console.log("The address from the app component through websocket: " + parsedData.contractAddress);
+        
+          
+          //check here if the info from the message (the name) is access control, then set the ls like below, 
+          // else - set the ls for the role binding policy, else for the task role map ... 
+          if(parsedData.compilationInfo.contractName === "BindingAccessControl"){  
+            this.setState({socketAddress: parsedData.contractAddress});            
+            console.log("Done with updating the state!")       
+            //ls.set('aca', parsedData.contractAddress)
+            //console.log("The new state in App.js: " + this.state.accessControlAddressFromWebSocket)
+          } else if(parsedData.compilationInfo.contractName === "BindingPolicyContract"){
+            this.setState({rbPolicySocketAddress: parsedData.contractAddress});                        
+          } else {
+            this.setState({trmSocketAddress: parsedData.contractAddress});
+          } 
+        };   
       }
 
 
@@ -73,7 +96,7 @@ class AccessControl extends Component {
             this.setState({createAccessControl: true, accessControlAddress: response.data, accessControlShowAccordion: true});                                                  
             NotificationManager.success('Access Control Policy Created!', response.statusText);
             console.log(response.data);                                                                           
-            console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
+            //console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
           })
           .catch(error => {
             console.log(error);
@@ -111,15 +134,16 @@ class AccessControl extends Component {
       }
   
       accessControlAddressReduxStoreHandler = (dispatch) => {
-        let accessCtrlAddr = this.state.accessControlAddress;        
-        console.log(accessCtrlAddr + ' and registry address: ' + this.props.registryAddress);
+        //let accessCtrlAddr = this.state.accessControlAddress;        
+        
+        //console.log(accessCtrlAddr + ' and registry address: ' + this.props.registryAddress);
         
         if(!this.props.registryAddress) {
           NotificationManager.error("There is no Registry Specified!", 'ERROR');
-        } else if(accessCtrlAddr === '') {
+        } else if(this.state.socketAddress === '') {
           NotificationManager.error("Please provide the Address of the Access Control Policy!", 'ERROR');
         } else {
-          axios.get(ACCESS_CONTROL_URL + '/' + accessCtrlAddr,      
+          axios.get(ACCESS_CONTROL_URL + '/' + this.state.socketAddress,      
         {
           headers: {          
             'accept': 'application/json',
@@ -233,16 +257,16 @@ class AccessControl extends Component {
   }
 
   roleBindingPolicyAddressReduxStoreHandler = (dispatch) => {
-    let rbPolicyAddr = this.state.rbPolicyAddressInput;        
-    console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
+    //let rbPolicyAddr = this.state.rbPolicyAddressInput;        
+    //console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
 
     if(!this.props.registryAddress) {
       NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
     }
-    else if(rbPolicyAddr === '') {
+    else if(this.state.rbPolicySocketAddress === '') {
       NotificationManager.error("Please provide the correct Address of the Role Binding Policy you want to fetch!", 'ERROR');
     } else {
-      axios.get(RB_POLICY_URL + '/' + rbPolicyAddr,      
+      axios.get(RB_POLICY_URL + '/' + this.state.rbPolicySocketAddress,      
     {
       headers: {          
         'accept': 'application/json',
@@ -347,16 +371,16 @@ class AccessControl extends Component {
 
   // GET 5 - Task Role Map - REDUX
   taskRoleMapAddressReduxStoreHandler = (dispatch) => {
-    let trMapAddress = this.state.trMapAddressInput;        
-    console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
+    //let trMapAddress = this.state.trMapAddressInput;        
+    //console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
     
     if(!this.props.registryAddress) {
       NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
     }
-    else if(trMapAddress === '') {
+    else if(this.state.trmSocketAddress === '') {
       NotificationManager.error("Please provide the correct Address of the Task-Role Map Policy you want to fetch!", 'ERROR');
     } else {
-      axios.get(TASK_ROLE_MAP_URL + '/' + trMapAddress,      
+      axios.get(TASK_ROLE_MAP_URL + '/' + this.state.trmSocketAddress,      
     {
       headers: {          
         'accept': 'application/json',
@@ -428,6 +452,7 @@ class AccessControl extends Component {
                                             name="accessControlAddress"                                             
                                             onChange={this.accessControlAddressChangeHandler}
                                             className={"bg-light"}
+                                            value={this.state.socketAddress}
                                             placeholder="Enter Access Control Address" />
                         </Col><br/>                                                                                          
                         
@@ -532,6 +557,7 @@ class AccessControl extends Component {
                         <Col style={{textAlign: "center"}}>
                           <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
                             name="policyBindingAddress"
+                            value={this.state.rbPolicySocketAddress}
                             onChange={this.rbPolicyChangeHandler}
                             className={"bg-light"} 
                             style={{border: "1px solid #757f9a",  textAlign: "center" }}
@@ -671,6 +697,7 @@ class AccessControl extends Component {
                         <Col >
                         <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
                             name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
+                            value={this.state.trmSocketAddress}
                             className={"bg-light"} style={{border: "1px solid #757f9a",  textAlign: "center" }}
                         />
                         </Col><br/>                                                                                          

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {NavDropdown, Nav} from 'react-bootstrap';
+
 import './NavigationBar.css';
 
 //import AuthenticationService from '../AuthenticationService/AuthenticationService.js';
@@ -16,12 +16,16 @@ class NavigationBar extends Component {
                     <ul className="navbar-nav"><li><Link to={`/welcome`} className="navbar-brand">Caterpillar</Link></li></ul>                 
                         <ul className="navbar-nav" style={{color: "	#FFFFFF"}}>
                         {/* {isUserLoggedIn === true ?  <li><Link to={"/registry"} className="nav-link">Old</Link> </li> : null} */}
-                            <li><Link to={"/runtimeRegistry"} className="nav-link" style={{color: "	#FFFFFF"}}>Runtime Registry</Link></li>                                                                          
-                            {/* <li><Link to={"/modeler"} className="nav-link">BPMN</Link></li>                                                                           */}
-                            <NavDropdown title="Modeler" style={{color: "#FFFFFF"}} >
+                            <li><Link to={"/runtimeRegistry"} className="nav-link" style={{color: "#FFFFFF"}}>Registry</Link></li>                                                                                                      
+                            <li><Link to={"/compilation"} className="nav-link" style={{color: "#FFFFFF"}}>Compilation</Link></li>
+                            <li><Link to={"/interpretation"} className="nav-link" style={{color: "#FFFFFF"}}>Interpretation</Link></li>
+                            
+                            {/* <li><Link to={"/modeler"} className="nav-link">BPMN</Link></li>
+                                                                                                       */}
+                            {/* <NavDropdown title="Modeler" style={{color: "#FFFFFF"}} >
                                 <NavDropdown.Item><Link to={"/compilation"}>Compilation Engine</Link></NavDropdown.Item>
                                 <NavDropdown.Item><Link to={"/interpretation"}>Interpretation Engine</Link></NavDropdown.Item>                                                 
-                            </NavDropdown>
+                            </NavDropdown> */}
 
                             {/* <Nav.Link href="#home"><Link style={{color: "#FFFFFF"}} to={"/policies"} className="nav-link">Policies</Link></Nav.Link> */}
                             <li><Link style={{color: "#FFFFFF"}} to={"/policies"} className="nav-link">Policies</Link></li>                             
