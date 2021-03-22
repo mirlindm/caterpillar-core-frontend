@@ -543,10 +543,8 @@ class AccessControl extends Component {
                                  <span style={{color: "#E9967A"}}> Task-Role Map Transaction Hash </span>
                                  </Accordion.Toggle>
                                  </Card.Header>
-                                 <Accordion.Collapse eventKey="0">
-                                   <Card.Body>  
-                                     <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.trMapResponse === '' ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.trMapResponse} </pre> </span> 
-                                   </Card.Body>                      
+                                 <Accordion.Collapse eventKey="0">                             
+                                   <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.rbPolicyResponse === '' ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.rbPolicyResponse} </pre> </span>  </Card.Body>                                                      
                                  </Accordion.Collapse>
                                </Card>            
                              </Accordion>
@@ -567,7 +565,7 @@ class AccessControl extends Component {
                         <Card.Footer style={{"textAlign": "center", backgroundColor: "#FF7F50"}}>                                                                    
                           <Button className="new-buttons" onClick={this.findRBPolicyMetadataHandler} variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} >
                             Load Role Binding Policy Metadata
-                          </Button> <br/>
+                          </Button> <br/> <br/>
 
                       { this.state.rbPolicyAddressShowAccordion ?
                       <Aux>

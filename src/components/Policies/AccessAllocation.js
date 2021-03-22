@@ -277,7 +277,10 @@ class AccessAllocation extends Component {
             .then(response => {
               if (response.status === 202) {
                 console.log(response);
-                this.setState({caseCreatorResponse: response.data, showAccordionOfNominateCaseCreator: true});
+                this.setState({caseCreatorResponse: response.data, 
+                              showAccordionOfNominateCaseCreator: true,
+                              nomineeRole: '',
+                              nomineeAddress: ''});
                 NotificationManager.success('Case creator has been successfully nominated!', response.statusText);
               } else {
                 console.log('ERROR', response);
@@ -297,7 +300,11 @@ class AccessAllocation extends Component {
 
                 NotificationManager.warning(errorMessage, 'OOPS...');
               });
-        }       
+        }
+        this.setState({
+          nomineeRole: '',
+          nomineeAddress: ''
+        });       
   }
 
       // /rb-opertation/:pCase/nominate
@@ -323,7 +330,7 @@ class AccessAllocation extends Component {
             .then(response => {
               if (response.status === 202) {
                 console.log(response);
-                this.setState({nominateResponse: response.data});
+                this.setState({nominateResponse: response.data, showNominateModal: true});
                 NotificationManager.success('Nomination has been successfully made!', response.statusText);
               }  else {
                 console.log('ERROR', response);
@@ -497,7 +504,7 @@ class AccessAllocation extends Component {
                               <Button onClick={() => this.findPolicyAddresses(instance)} className="new-buttons" variant="primary" style={{position: "absolute", display: "inline-block"}}>Find Policy Address</Button>
                               
                               {/* <Form.Label style={{color: "#757f9a"}}> Role Name </Form.Label> */}
-                              <Form.Control required name="roleName" value={this.state.roleName} onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Role Name" style={{width: "150px", position: "absolute", display: "inline-block", marginLeft: "170px"}} /> 
+                              <Form.Control required name="roleName"  onChange={this.inputProcessCaseChangeHandler} placeholder="Enter Role Name" style={{width: "150px", position: "absolute", display: "inline-block", marginLeft: "170px"}} /> 
                               <Button onClick={() => this.findRoleState(instance)} className="new-buttons" variant="primary" style={{marginLeft: "325px", marginRight: "3px"}}>Find Role State</Button>
                               <Button onClick={this.caseCreatorModalOpen} className="new-buttons" variant="primary" >Nominate Case Creator</Button>
                               
@@ -519,7 +526,7 @@ class AccessAllocation extends Component {
                                         <Button style={{marginTop: "29px"}} onClick={() => this.nominateCaseCreator(instance)} className="new-buttons" variant="primary">Nominate Case Creator</Button>
                                         <br/>
                                       </Col>
-                                    </Row>                                  
+                                    </Row> <br/>                                 
                                       {this.state.showAccordionOfNominateCaseCreator ?                                      
                                         <Accordion>
                                         <Card>
@@ -835,6 +842,7 @@ class AccessAllocation extends Component {
                           </Row>
                           <Row>
                             <Col> <br/>
+                            {this.state.showNominateModal ? 
                               <Accordion>
                                   <Card>
                                     <Card.Header>
@@ -848,7 +856,8 @@ class AccessAllocation extends Component {
                                       </Card.Body>                      
                                     </Accordion.Collapse>
                                   </Card>
-                                </Accordion>
+                                </Accordion> 
+                              : null}
                             </Col>                      
                           </Row>                       
                         </Card.Body>
