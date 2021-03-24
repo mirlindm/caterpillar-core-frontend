@@ -12,7 +12,7 @@ import {COMPILATION_URL, PROCESS_INSTANCE_QUERY_URL} from '../../Constants';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
-import {Alert, Row, Col, Card, Accordion, Button, Breadcrumb, Modal} from 'react-bootstrap'; 
+import {Alert, Card, Accordion, Button, Modal} from 'react-bootstrap'; 
 
 class ProcessInstanceOperations extends Component {
 
@@ -271,7 +271,7 @@ class ProcessInstanceOperations extends Component {
     render() {
         return (
             <Aux>
-                <Card style={{border: "3px solid #FF7F50", marginTop: "20px" }}>
+                {/* <Card style={{border: "3px solid #FF7F50", marginTop: "20px" }}>
                     <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
                         Create a Process Instance, Query Process Instances and their State or Execute a Process Instance
                     </Alert>  
@@ -279,21 +279,20 @@ class ProcessInstanceOperations extends Component {
                         <Row style={{textAlign: "center"}}>  
                         <Col>
                             <Breadcrumb style={{ display: "flex", justifyContent: "center",}}>            
-                            <Breadcrumb.Item onClick={this.changeBreadCrumbCreateProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Create or Query Process Instances </span> </Breadcrumb.Item>
+                            <Breadcrumb.Item onClick={this.changeBreadCrumbCreateProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Create or Query Process Instances </span> </Breadcrumb.Item> */}
                             {/* <Breadcrumb.Item onClick={this.changeBreadCrumbQueryProcessInstanceHandler}>Query Process Instances</Breadcrumb.Item> */}
                             {/* <Breadcrumb.Item onClick={this.changeBreadCrumbQueryStatusHandler}>Query Process Instance State</Breadcrumb.Item> */}
-                            <Breadcrumb.Item onClick={this.changeBreadCrumbExecuteProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Execute Process Instance </span></Breadcrumb.Item>
+                            {/* <Breadcrumb.Item onClick={this.changeBreadCrumbExecuteProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Execute Process Instance </span></Breadcrumb.Item>
                             </Breadcrumb>                        
                         </Col>                                                                  
                     </Row> <br/>                                                                       
                     </Card.Body>
-                </Card>
+                </Card> */}
             
                 {/* New changes Start - POST 3 */}
-                { this.state.breadCrumbCreateProcessInstance ?                                            
+                                                            
                 <Aux> 
-                    <br/>           
-                    <Card style={{border: "3px solid #FFE4C4",}}>
+                    <br/>                               
                         <Alert  size="sm"> 
                                 <input required type="text" placeholder="Enter the mHash" 
                                     name="mHash" value={this.state.mHash}
@@ -453,11 +452,8 @@ class ProcessInstanceOperations extends Component {
                                         </Accordion>))} 
                                                                                                
                                 </div>                                                                                      
-
-
-                            : null }                                                                                           
-                    </Card>
-                </Aux> : null}
+                        : null }                                                                                                               
+                </Aux> 
                 {/* New changes End */}  
 
             {/* Shortcut for Defining Access Policies in order to Create Process Instance */}
@@ -636,7 +632,7 @@ class ProcessInstanceOperations extends Component {
             {/* New changes End */}
                     
             {/* New changes Start - POST 3 */}
-            { this.state.breadCrumbExecuteProcessInstance ? 
+            {/* { this.state.breadCrumbExecuteProcessInstance ? 
             <Aux>
                 <br/>
                 <Card style={{border: "1px solid #FFE4C4"}}>
@@ -663,7 +659,7 @@ class ProcessInstanceOperations extends Component {
                         </Row>                    
                         </Card.Body>
                     </Card>
-                    </Aux> : null }                  
+                    </Aux> : null }                   */}
                 {/* New changes End */} 
                                                                                                                                                                                     
             {/* create some space from the footer */}         

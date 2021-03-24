@@ -18,7 +18,7 @@ import {COMPILATION_URL} from '../../../Constants';
 
 import './CCreateDiagram.css';
 
-import { Alert, Card, Button, Accordion, Row, Col, Tabs, Tab } from "react-bootstrap";
+import { Alert, Card, Button, Accordion, Tabs, Tab } from "react-bootstrap";
 
 import axios from 'axios';
 import {connect} from 'react-redux';

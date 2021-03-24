@@ -18,10 +18,11 @@ import {INTERPRETATION_URL} from '../../Constants';
 
 import ICreateDiagram from './Interpretation/ICreateDiagram';
 import IUploadDiagram from './Interpretation/IUploadDiagram';
+import ProcessInstanceOperations from './ProcessInstanceOperations';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-import {Alert, Row, Col, Form, Card, Button, Accordion} from 'react-bootstrap'; 
+import {Alert, Row, Col, Form, Card, Button, Accordion, Tab, Tabs} from 'react-bootstrap'; 
 
 class InterpretationEngine extends Component {
     modeler2 = new BpmnModeler();
@@ -414,177 +415,187 @@ class InterpretationEngine extends Component {
                 <Aux>
                     <br/>
                     <Card style={{border: "3px solid #FFE4C4",}}>
-                        <Alert variant="light" size="sm" style={{display: "inline-block", position: "absolute"}}> 
-                            <Button onClick={this.getInterpreterModelHandler} 
-                                variant="primary" type="submit" 
-                                className="new-buttons" style={{ padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}> 
-                                    Query Process Models
-                            </Button> 
-                        </Alert>  
-
-                                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", display: "inline-block", position: "inherit", marginLeft: "250px"}}>
-                                    <Card>
-                                        <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            <span style={{color: "#E9967A"}}> Process Models </span>
-                                        </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="0">                                
-                                        <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> There are no Models in the database </span> : this.state.getInterpreterModelHandlerSuccessMessage.map((process, id) => (
-                                        <ul key={id}>
-                                            <li key={id}> 
-                                                {process} {' '} 
-                                                <Button onClick={() => this.getInterpreterModelMHashHandler(process)} variant="primary" type="submit" 
-                                                    className="new-buttons"                                                    
-                                                > Retrieve Model Metadata 
-                                                </Button>                                        
-                                            </li> 
-                                        </ul>                                        
-                                        ))} </pre> </span>  </Card.Body>                                
-                                        </Accordion.Collapse>
-                                    </Card>            
-                                </Accordion>
+                        <Alert variant="light" size="sm">
+                        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                            <Tab eventKey="profile" style={{color: "#E9967A"}} title="Process Model Querying"> <br/>
+                                <Alert size="sm"> 
+                                    <Button onClick={this.getInterpreterModelHandler} 
+                                        variant="primary" type="submit" 
+                                        className="new-buttons" style={{ padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}> 
+                                            Query Process Models
+                                    </Button> 
+                                </Alert>
+                                    <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal", }}>
+                                        <Card>
+                                            <Card.Header>
+                                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                <span style={{color: "#E9967A"}}> Process Models </span>
+                                            </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="0">                                
+                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px",  }}> <pre>  {this.state.getInterpreterModelHandlerSuccessMessage.length === 0 ? <span style={{color: "#FA8072"}}> There are no Models in the database </span> : this.state.getInterpreterModelHandlerSuccessMessage.map((process, id) => (
+                                            <ul key={id}>
+                                                <li key={id}> 
+                                                    {process} {' '} 
+                                                    <Button onClick={() => this.getInterpreterModelMHashHandler(process)} variant="primary" type="submit" 
+                                                        className="new-buttons"                                                    
+                                                    > Retrieve Model Metadata 
+                                                    </Button>                                        
+                                                </li> 
+                                            </ul>                                        
+                                            ))} </pre> </span>  </Card.Body>                                
+                                            </Accordion.Collapse>
+                                        </Card>            
+                                    </Accordion>
                                                                                                                               
-                    {this.state.showRetrieveModelMetadataAccordion ?
-                         <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                 <span style={{color: "#E9967A"}}> Smart Contract Information </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="0">
-                                 <Card.Body>                                          
-                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.contractName} </pre> </span> <hr/>
-                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.solidityCode} </pre> </span> <hr/> 
-                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold",fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.abi} </pre> </span> <hr/>
-                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.bytecode} </pre> </span> <hr/>                                     
-                                    Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.address} </pre> </span>     
-                                 </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
-                         
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    <span style={{color: "#E9967A"}}> Process Model Name </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="1">
-                             <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerProcessName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.getInterpreterModelMHashHandlerProcessName} </pre> </span>  </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
+                                    {this.state.showRetrieveModelMetadataAccordion ?
+                                        <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                <span style={{color: "#E9967A"}}> Smart Contract Information </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="0">
+                                                <Card.Body>                                          
+                                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.contractName} </pre> </span> <hr/>
+                                                    Solidity Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.solidityCode} </pre> </span> <hr/> 
+                                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold",fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.abi} </pre> </span> <hr/>
+                                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.bytecode} </pre> </span> <hr/>                                     
+                                                    Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerContractInfo.address} </pre> </span>     
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
+                                        
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                                    <span style={{color: "#E9967A"}}> Process Model Name </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="1">
+                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerProcessName.length === 0 ? <span style={{color: "#FA8072"}}> No information about the model retrieved </span> : this.state.getInterpreterModelMHashHandlerProcessName} </pre> </span>  </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
 
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                    <span style={{color: "#E9967A"}}> Process Model ID/mHash </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="2">
-                                 <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerID} </pre> </span>  </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                                    <span style={{color: "#E9967A"}}> Process Model ID/mHash </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="2">
+                                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerID} </pre> </span>  </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
 
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                    <span style={{color: "#E9967A"}}> Process ID </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="3">
-                                 <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre>{this.state.getInterpreterModelMHashHandlerProcessID}</pre> </span>  </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>                            
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                                                    <span style={{color: "#E9967A"}}> Process ID </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="3">
+                                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre>{this.state.getInterpreterModelMHashHandlerProcessID}</pre> </span>  </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>                            
 
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                    <span style={{color: "#E9967A"}}>  iData </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="4">
-                             <Card.Body>  
-                                 Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.contractName} </pre> </span> <hr/>
-                                 Solidity Code: <br/> <span style={{color: "#008B8B", textAlign: "center", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.solidityCode} </pre> </span> <hr/> 
-                                 ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.abi} </pre> </span> <hr/>
-                                 Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.bytecode} </pre> </span> <hr/>                                     
-                                 Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.address} </pre> </span> 
-                             </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="4">
+                                                    <span style={{color: "#E9967A"}}>  iData </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="4">
+                                            <Card.Body>  
+                                                Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.contractName} </pre> </span> <hr/>
+                                                Solidity Code: <br/> <span style={{color: "#008B8B", textAlign: "center", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.solidityCode} </pre> </span> <hr/> 
+                                                ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.abi} </pre> </span> <hr/>
+                                                Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.bytecode} </pre> </span> <hr/>                                     
+                                                Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIData.address} </pre> </span> 
+                                            </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
 
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                    <span style={{color: "#E9967A"}}> iFactory </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="5">
-                                 <Card.Body>                                          
-                                 Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.contractName} </pre> </span> <hr/>
-                                 Solidity Code: <br/> <span style={{color: "#008B8B", textAlign: "center", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.solidityCode} </pre> </span> <hr/> 
-                                 ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.abi} </pre> </span> <hr/>
-                                 Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.bytecode} </pre> </span> <hr/>                                     
-                                 Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.address} </pre> </span>   
-                                 </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                                                    <span style={{color: "#E9967A"}}> iFactory </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="5">
+                                                <Card.Body>                                          
+                                                Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.contractName} </pre> </span> <hr/>
+                                                Solidity Code: <br/> <span style={{color: "#008B8B", textAlign: "center", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.solidityCode} </pre> </span> <hr/> 
+                                                ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.abi} </pre> </span> <hr/>
+                                                Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.bytecode} </pre> </span> <hr/>                                     
+                                                Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFactory.address} </pre> </span>   
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
 
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="6">
-                                    <span style={{color: "#E9967A"}}> iFlow </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="6">
-                                 <Card.Body>                                          
-                                     Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.contractName} </pre> </span> <hr/>
-                                     Solidity Code: <br/> <span style={{color: "#008B8B", textAlign: "center", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.solidityCode} </pre> </span> <hr/> 
-                                     ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.abi} </pre> </span> <hr/>
-                                     Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.bytecode} </pre> </span> <hr/>                                         
-                                     Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.address} </pre> </span>                                          
-                                 </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="6">
+                                                    <span style={{color: "#E9967A"}}> iFlow </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="6">
+                                                <Card.Body>                                          
+                                                    Contract Name: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.contractName} </pre> </span> <hr/>
+                                                    Solidity Code: <br/> <span style={{color: "#008B8B", textAlign: "center", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.solidityCode} </pre> </span> <hr/> 
+                                                    ABI: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.abi} </pre> </span> <hr/>
+                                                    Byte Code: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.bytecode} </pre> </span> <hr/>                                         
+                                                    Address: <br/> <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}> <pre> {this.state.getInterpreterModelMHashHandlerIFlow.address} </pre> </span>                                          
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
 
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="7">
-                                     <span style={{color: "#E9967A"}}> BPMN Model - XML and Process Model </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="7">
-                                 <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>
-                         <Card className="bg-gray-dark" style={{ border: "2px solid #FFE4C4", width: "110%", marginLeft: "-60px" , height: "100%" }}>
-                             <div id="bpmncontainer">
-                                 <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
-                                 <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
-                             </div>          
-                         </Card>
-                         <Card>
-                             <Card.Header>
-                                 <Accordion.Toggle as={Button} variant="link" eventKey="8">
-                                    <span style={{color: "#E9967A"}}> Process Model Elements Information </span>
-                                 </Accordion.Toggle>
-                             </Card.Header>
-                             <Accordion.Collapse eventKey="8">
-                                 <Card.Body>
-                                 {
-                                     this.state.retrieveModelMetadataElementInfo.map( (element, i)  => {
-                                         return (
-                                             <div key={i}> <p key={i}> Task {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}>  {element.element} </span> </p> <hr/> </div>
-                                             );
-                                     })                                    
-                                 } 
-                                 </Card.Body>
-                             </Accordion.Collapse>
-                         </Card>                  
-                     </Accordion>  
-                    : null}
-                    </Card> </Aux>  : null }
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="7">
+                                                    <span style={{color: "#E9967A"}}> BPMN Model - XML and Process Model </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="7">
+                                                <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center" }}> <pre> {this.state.getInterpreterModelMHashHandlerBpmnModel} </pre> </span> </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
+                                        <Card className="bg-gray-dark" style={{ border: "2px solid #FFE4C4", width: "110%", marginLeft: "-60px" , height: "100%" }}>
+                                            <div id="bpmncontainer">
+                                                <div id="propview2" style={{width: "25%", height: "98vh", float: "right", maxHeight: "98vh", overflowX: "auto" }}> </div>
+                                                <div id="bpmnview2" style={{ width: "75%", height: "98vh", float: "left" }}> </div>
+                                            </div>          
+                                        </Card>
+                                        <Card>
+                                            <Card.Header>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey="8">
+                                                    <span style={{color: "#E9967A"}}> Process Model Elements Information </span>
+                                                </Accordion.Toggle>
+                                            </Card.Header>
+                                            <Accordion.Collapse eventKey="8">
+                                                <Card.Body>
+                                                {
+                                                    this.state.retrieveModelMetadataElementInfo.map( (element, i)  => {
+                                                        return (
+                                                            <div key={i}> <p key={i}> Task {i+1}: <br/> <span key={i} style={{color: "#008B8B",  }}>  {element.element} </span> </p> <hr/> </div>
+                                                            );
+                                                    })                                    
+                                                } 
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>                  
+                                    </Accordion>  
+                                : null}
+                            </Tab>
+                            <Tab eventKey="contact" style={{color: "#E9967A"}} title="Process Instance Operations" > <br/>                                
+                                <ProcessInstanceOperations/>                                             
+                            </Tab>
+                        </Tabs>                             
+                        </Alert>                                 
+                     </Card> 
+                    </Aux>  
+                : null }
                 {/* New changes End */}
 
                 {/* New changes Start - GET 2 */}
