@@ -51,7 +51,8 @@ class RuntimeRegistry extends Component {
                 console.log(response);
                 if(response.status === 201) {       
                     NotificationManager.success('New Runtime Registry: ' + response.data.ID + ' has been created.', response.statusText)             
-                    this.setState({ registry: response.data});
+                    this.setState({ registry: response.data, idOrAddress: response.data.ID});
+                    this.getRegistriesByIdHandler();
                     //setTimeout(() => this.setState({show1: false}), 3000)
                     //return response.data.ID;
                 } else {
@@ -183,6 +184,10 @@ class RuntimeRegistry extends Component {
 
     goToAccessPoliciesrHandler = () => {
         this.props.history.push(`/access`);   
+    }
+
+    goToPoliciesHandler = () => {
+        this.props.history.push(`/policies`);   
     }
 
     passingRegistryIdToSearchInputHandler = () => {
@@ -337,7 +342,11 @@ class RuntimeRegistry extends Component {
                             </Button>
                             {'  '}
                             <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToAccessPoliciesrHandler}>
-                                Proceed to Access Policies
+                                Proceed to Access Configuration
+                            </Button> 
+                            {'  '}
+                            <Button className="new-buttons" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} variant="info" onClick={this.goToPoliciesHandler}>
+                                Proceed to Policies
                             </Button> 
                         </div>                                                        
                     </Aux>
