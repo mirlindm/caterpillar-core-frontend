@@ -8,7 +8,7 @@ import Logo from '../../assets/icons/logo.png';
 
 function Error(props) {
 
-    const iconClickedHandler = (event) => (props.history.push("/login"));
+    const iconClickedHandler = (event) => (props.history.push("/welcome"));
 
     return <div className="text-white">
              <Alert variant="danger" >

@@ -58,6 +58,8 @@ class AccessAllocation extends Component {
             showAccordionOfFindPolicyAddress: false,
             showAccordionOfFindRoleState: false,
             showAccordionOfNominateCaseCreator: false,
+            showAccordionOfNomination: false,
+
 
             // modals
             showCaseCreatorModal: false,
@@ -330,7 +332,7 @@ class AccessAllocation extends Component {
             .then(response => {
               if (response.status === 202) {
                 console.log(response);
-                this.setState({nominateResponse: response.data, showNominateModal: true});
+                this.setState({nominateResponse: response.data, showAccordionOfNomination: true});
                 NotificationManager.success('Nomination has been successfully made!', response.statusText);
               }  else {
                 console.log('ERROR', response);
@@ -842,7 +844,7 @@ class AccessAllocation extends Component {
                           </Row>
                           <Row>
                             <Col> <br/>
-                            {this.state.showNominateModal ? 
+                            {this.state.showAccordionOfNomination ? 
                               <Accordion>
                                   <Card>
                                     <Card.Header>
