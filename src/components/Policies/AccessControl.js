@@ -95,7 +95,8 @@ class AccessControl extends Component {
           .then(response =>  {
             this.setState({createAccessControl: true, accessControlAddress: response.data, accessControlShowAccordion: true});                                                  
             NotificationManager.success('Access Control Policy Created!', response.statusText);
-            console.log(response.data);                                                                           
+            console.log(response.data);
+            setTimeout(() => this.findAccessControlMetadata(), 1000)                                                                          
             //console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
           })
           .catch(error => {
@@ -219,7 +220,8 @@ class AccessControl extends Component {
         if (response.status === 202) {
           this.setState({rbPolicyResponse: response.data, rbPolicyShowAccordion: true});  
           NotificationManager.success('New Role Binding Policy has been successfuly deployed!', response.statusText);
-          
+          setTimeout(() => this.findRBPolicyMetadataHandler(), 1000)    
+       
           // client.onmessage = (message) => {
           //   const dataFromServer = JSON.parse(message.data);
           //   this.setState({
@@ -347,7 +349,9 @@ class AccessControl extends Component {
         console.log(response);          
         if (response.status === 202) {
         this.setState({trMapResponse: response.data, trMapShowAccodrion: true,});                                                  
-        NotificationManager.success('New Task Role Map has been successfuly deployed!', response.statusText);                                                 
+        NotificationManager.success('New Task Role Map has been successfuly deployed!', response.statusText);
+        setTimeout(() => this.findRoleTaskMapMetadata(), 1000) 
+                                                  
       } else {
         console.log('ERROR', response);
       }})
@@ -470,7 +474,7 @@ class AccessControl extends Component {
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="0">
-                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "12px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.contractName} </pre> </span> </Card.Body>                      
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.contractName} </pre> </span> </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>
 
@@ -481,7 +485,7 @@ class AccessControl extends Component {
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="1">
-                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "12px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.solidityCode} </pre> </span> </Card.Body>                      
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.solidityCode} </pre> </span> </Card.Body>                      
                             </Accordion.Collapse>
                           </Card> 
 
@@ -492,7 +496,7 @@ class AccessControl extends Component {
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="2">
-                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "12px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.abi} </pre> </span> </Card.Body>                      
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.abi} </pre> </span> </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>
 
@@ -503,7 +507,7 @@ class AccessControl extends Component {
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="3">
-                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "12px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.bytecode} </pre> </span> </Card.Body>                      
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.bytecode} </pre> </span> </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>                          
 
@@ -514,7 +518,7 @@ class AccessControl extends Component {
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="4">
-                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "12px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.address} </pre> </span> </Card.Body>                      
+                              <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", textAlign: "center", }}>  <pre> {this.state.accessControlAddressMetadata.length === 0 ? <span style={{color: "#FA8072"}}> Server failed to respond. Please try again later. </span> : this.state.accessControlAddressMetadata.address} </pre> </span> </Card.Body>                      
                             </Accordion.Collapse>
                           </Card>                          
                         </Accordion> </Aux> 
