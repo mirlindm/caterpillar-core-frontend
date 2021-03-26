@@ -93,7 +93,7 @@ class ProcessInstanceOperations extends Component {
      // Post Request 3: createNewProcessInstance
      createNewProcessInstanceHandler = () => {
         let mHash = this.state.mHash;
-        //let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
+        
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress);
 
         console.log("Here Post 3 with, and with mHash: " + mHash + ", and also the Access Control Address:" + this.props.accessControlAddress);
@@ -197,10 +197,7 @@ class ProcessInstanceOperations extends Component {
     }
       
       // Get Request 4: queryProcessState
-      queryProcessStateHandler = (pAddress) => {
-        //pAddress is same as mHash
-        //let pAddress = this.state.mHash;         
-
+      queryProcessStateHandler = (pAddress) => {       
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
         if(!this.props.registryAddress) {
@@ -270,27 +267,7 @@ class ProcessInstanceOperations extends Component {
      
     render() {
         return (
-            <Aux>
-                {/* <Card style={{border: "3px solid #FF7F50", marginTop: "20px" }}>
-                    <Alert style={{textAlign: "center", backgroundColor: "#FF7F50", color: "#FFFFFF", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
-                        Create a Process Instance, Query Process Instances and their State or Execute a Process Instance
-                    </Alert>  
-                    <Card.Body>
-                        <Row style={{textAlign: "center"}}>  
-                        <Col>
-                            <Breadcrumb style={{ display: "flex", justifyContent: "center",}}>            
-                            <Breadcrumb.Item onClick={this.changeBreadCrumbCreateProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Create or Query Process Instances </span> </Breadcrumb.Item> */}
-                            {/* <Breadcrumb.Item onClick={this.changeBreadCrumbQueryProcessInstanceHandler}>Query Process Instances</Breadcrumb.Item> */}
-                            {/* <Breadcrumb.Item onClick={this.changeBreadCrumbQueryStatusHandler}>Query Process Instance State</Breadcrumb.Item> */}
-                            {/* <Breadcrumb.Item onClick={this.changeBreadCrumbExecuteProcessInstanceHandler}> <span style={{color: "#E9967A"}}> Execute Process Instance </span></Breadcrumb.Item>
-                            </Breadcrumb>                        
-                        </Col>                                                                  
-                    </Row> <br/>                                                                       
-                    </Card.Body>
-                </Card> */}
-            
-                {/* New changes Start - POST 3 */}
-                                                            
+            <Aux>                                                                                                      
                 <Aux> 
                     <br/>                               
                         <Alert  size="sm"> 
@@ -311,22 +288,7 @@ class ProcessInstanceOperations extends Component {
                                     > Query Process Instances
                                 </Button>                                                                    
                         </Alert>                              
-                            {/* <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                                <Col>                                        
-                                <input required type="text" placeholder="Enter the mHash" 
-                                    name="mHash" value={this.state.mHash}
-                                    onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                                /> {'      '}
-                                <Button onClick={this.createNewProcessInstanceHandler} variant="primary"
-                                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                                        > Create New Process Instance
-                                </Button> {'      '}     
-                                <Button onClick={this.defineAccessPoliciesHandler} variant="primary"
-                                        type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                                        > Define Access Policies
-                                </Button>                      
-                                </Col>
-                            </Row> */} 
+                           
                             { this.state.showAccordionOfCreateProcessInstance ?                            
                                 <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                                     <Card>
@@ -473,198 +435,8 @@ class ProcessInstanceOperations extends Component {
                        <AccessControl/> 
                     </Modal.Body>
                 </Modal>            
-            : null}
-            
-                            
-            {/* New changes Start - GET 1 */}
-            {/* { this.state.breadCrumbQueryProcessInstances ?                                           
-            <Aux>
-                <br/>
-                <Card style={{border: "1px solid #d7dde8"}}>
-                    <Alert variant="primary" size="sm"> 
-                        Query Process Instances
-                    </Alert>  
-                        <Card.Body>
-                        <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                            <Col>
-                            <input required type="text" placeholder="Enter the Process Model mHash" 
-                                name="mHash" value={this.state.mHash}
-                                onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                            /> {'      '}
-                            <Button onClick={this.queryProcessInstancesHandler} variant="primary"
-                                    type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                                    > Query Process Instances
-                            </Button>                                                                    
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col> <br/>
-                                <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                                    <Card>
-                                        <Card.Header>
-                                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            1. Process Instances IDs
-                                            </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="0">
-                                            <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {this.state.queryProcessInstancesResponse.map((instance, id) => <ul key={id}><li key={id}> {instance} </li></ul>)} </pre> </span>  </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>            
-                                </Accordion>
-                            </Col>  
-                        </Row>                    
-                    </Card.Body>
-                </Card>
-            </Aux> : null} */}
-            {/* New changes End */}                       
+            : null }
 
-            {/* New changes Start - GET 2 */}
-            {/* { this.state.breadCrumbQueryProcessState ?
-            <Aux> 
-                <br/>
-                <Card style={{border: "1px solid #d7dde8"}}>
-                    <Alert variant="primary" size="sm"> 
-                        Query Process Instance State
-                    </Alert>  
-                        <Card.Body>
-                        <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                            <Col>
-                            <input required type="text" placeholder="Enter the Process Instance Address" 
-                                name="mHash"
-                                onChange={this.mHashChangeHandler} style={{border: "1px solid #008B8B", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                            /> {'      '}
-                            <Button onClick={this.queryProcessStateHandler} variant="primary"
-                                    type="submit" className="link-button" style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
-                                    > Query Process State
-                            </Button>                                                              
-                            </Col>
-                        </Row>
-                        <Row>
-                        <Col> <br/>
-                            {this.state.queryProcessStateResponse.map((state, id) => (                                                
-                            <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                    1. Process State - Element ID
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="0">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.elementId} </pre> </span>  </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card>
-
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    2. Process State - Element Name
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="1">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.elementName} </pre> </span>  </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card>
-
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
-                                    3. Process State - Input
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="2">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.input[0]} </pre> </span>  </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card>
-
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="3">
-                                    4. Process State - Bundle ID
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="3">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.bundleId} </pre> </span>  </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card> 
-
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                                    5. Process State - Process Address
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="4">
-                                    <Card.Body>  <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.processAddress} </pre> </span>  </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card> 
-
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="5">
-                                    6. Process State - pCases
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="5">
-                                    <Card.Body>  
-                                    <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.pCases[0]} </pre> </span>  
-                                    </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card> 
-
-                                <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="6">
-                                    7. Process State - Hrefs
-                                    </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="6">
-                                    <Card.Body>  
-                                    <span style={{color: "#008B8B", fontWeight: "bold", fontSize: "17px", }}>  <pre> {state.hrefs[0]} </pre> </span>  
-                                    </Card.Body>                          
-                                </Accordion.Collapse>
-                                </Card>                 
-                            </Accordion>))} 
-                        </Col>  
-                        </Row>                    
-                        </Card.Body>
-                    </Card>
-                    </Aux> : null } */}
-            {/* New changes End */}
-                    
-            {/* New changes Start - POST 3 */}
-            {/* { this.state.breadCrumbExecuteProcessInstance ? 
-            <Aux>
-                <br/>
-                <Card style={{border: "1px solid #FFE4C4"}}>
-                    <Alert style={{textAlign: "center", backgroundColor: "#FFE4C4", color: "#000000", borderRadius: "0", fontSize: "17px", fontWeight: "500",}} size="sm"> 
-                        Query Process Instances
-                    </Alert>  
-                        <Card.Body>
-                        <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                            <Col>
-                            <input required type="text" placeholder="Enter the Process Model Address" 
-                                name="mHash"
-                                onChange={this.mHashChangeHandler} style={{border: "1px solid #E9967A", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", }}
-                            /> {'      '}
-                            <Button onClick={this.executeWorkItemHandler} variant="primary"
-                                    type="submit" className="link-button" style={{border: "1px solid #d7dde8", marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal", marginTop: "5px"}}
-                                    > Execute Work Item
-                            </Button>                                                                    
-                            </Col>
-                        </Row>
-                        <Row>
-                        <Col> <br/>
-                            <p> Render Response for PUT 1</p> <br/> <br/>   
-                        </Col>  
-                        </Row>                    
-                        </Card.Body>
-                    </Card>
-                    </Aux> : null }                   */}
-                {/* New changes End */} 
-                                                                                                                                                                                    
-            {/* create some space from the footer */}         
-            
-                
                 <NotificationContainer/>
             </Aux>
         );

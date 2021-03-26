@@ -68,22 +68,15 @@ class InterpretationEngine extends Component {
 
     onChangeCreateModelHandler = (event) => {
         console.log("1: " + event.target.name + " is initially " + event.target.value);
-        //let uploadCheckBox =  document.getElementById("upload");
-        //let createCheckBox =  document.getElementById("create");
+        
         
         if(this.state.uploadModel === true) {
             NotificationManager.warning('You have already chosen to upload your model!', 'OOPS...');                                 
         } else {
             this.setState({
                 [event.target.name]: !event.target.value
-            });
-            //uploadCheckBox.style.pointerEvents = "none";                   
-        }
-        // if(this.state.createModel === true && this.state.uploadModel === false) {
-        //     uploadCheckBox.style.pointerEvents = "none";
-        //  } else {
-        //      uploadCheckBox.style.pointerEvents = "all";
-        //  }    
+            });           
+        }        
         console.log("2: " + event.target.name + " is later " + !event.target.value);                 
       }
 
@@ -293,8 +286,7 @@ class InterpretationEngine extends Component {
               var canvas = this.modeler2.get("canvas");
     
               canvas.zoom("fit-viewport");
-    
-              //this.setState({retrieveModelMetadataBpmnModel: []});
+                  
               this.modeler2 = null;
     
             } catch (err) {
@@ -319,6 +311,7 @@ class InterpretationEngine extends Component {
                           },
                         })                          
                         }} label="Create New Interpreter"/>
+
                         <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.queryModels} id="create" name="queryModels" onChange={(event) => { this.onChangeQueryModelsHandler({
                             target: {
                                 name: event.target.name,
@@ -326,20 +319,15 @@ class InterpretationEngine extends Component {
                             },
                         })                          
                         }} label="Query Process Models"/>
-                        {/* <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.fetchModelMetadata} id="create" name="fetchModelMetadata" onChange={(event) => { this.onChangeFetchModelMetadataHandler({
-                            target: {
-                            name: event.target.name,
-                            value: event.target.defaultChecked,
-                          },
-                        })                          
-                        }} label="Fetch Model Metadata"/> */}
+                        
                         <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.createModel} id="create" name="createModel" onChange={(event) => { this.onChangeCreateModelHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
                           },
                         })                          
-                        }} label="Create Model"/>                        
+                        }} label="Create Model"/> 
+
                         <Form.Check style={{display: "inline"}} type="checkbox" defaultChecked={this.state.uploadModel} id="upload" name="uploadModel" onChange={(event) => { this.onChangeUploadModelHandler({
                           target: {
                             name: event.target.name,
@@ -597,11 +585,7 @@ class InterpretationEngine extends Component {
                     </Aux>  
                 : null }
                 {/* New changes End */}
-
-                {/* New changes Start - GET 2 */}
                
-                {/* New changes End */}
-
                 { this.state.createModel === true ?
                 <ICreateDiagram/>                                        
                 : this.state.uploadModel === true ?

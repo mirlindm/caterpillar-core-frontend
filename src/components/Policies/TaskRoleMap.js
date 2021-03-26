@@ -15,6 +15,7 @@ class TaskRoleMap extends Component {
         super(props);
 
         this.state = {
+
             //trMap
             createTRMap: undefined,
             taskRoleMapInput: '',
@@ -89,8 +90,7 @@ class TaskRoleMap extends Component {
           NotificationManager.error("Please provide valid Task-Role Map Policy!", 'ERROR');
         } else {
           axios.post(TASK_ROLE_MAP_URL, 
-            {
-              //roleTaskPairs: "["+this.state.taskRoleMapPolicy+"]", 
+            {              
               roleTaskPairs: trMap,
               contractName: 'RoleTaskMap',
               registryAddress: this.props.registryAddress
@@ -149,9 +149,8 @@ class TaskRoleMap extends Component {
             if (response.status === 200) {
               this.setState({trMapMetadata: response.data});
               dispatch({type: 'TASK_ROLE_MAP', payload: response.data.contractInfo.address});
-              NotificationManager.success('Task-Role Map data has been successfully fetched!', response.statusText);
-              //this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);   
-            }else {
+              NotificationManager.success('Task-Role Map data has been successfully fetched!', response.statusText);              
+            } else {
               console.log('ERROR', response);
             }}).catch(error => {
               console.log(error);
@@ -184,8 +183,8 @@ class TaskRoleMap extends Component {
     render() {
         return(
             <Aux>
-                 {/* Post Request 5: Task-Role Map */}
-                  {/* Task-Role Map Configuration - POST 5 */}
+
+                 {/* Post Request 5: Task-Role Map */}                  
                 <hr/>
                 <div  className="ContentUnique"> 
                   <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
@@ -253,6 +252,7 @@ class TaskRoleMap extends Component {
                           type="submit" className="new-buttons" onClick={this.parseAndDeployTaskRoleMapHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                           > Deploy Task-Role Map
                   </Button> <br/>
+                  
                   {/* Render Response */}
                   <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                   <Card>
@@ -268,10 +268,7 @@ class TaskRoleMap extends Component {
                       </Accordion.Collapse>
                     </Card>            
                   </Accordion> <br/>
-                  {/* <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Task-Role Map Address in the Input Field
-                  </Alert>   */}
+                  
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
                     name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
@@ -284,10 +281,7 @@ class TaskRoleMap extends Component {
                    <br/>                    
                     </>
                 : this.state.createTRMap === false ? <>
-                  {/* <Alert variant="warning" size="sm"
-                        style={{color: "black", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please, provide the Task-Role Map Address in the Input Field
-                  </Alert>   */}
+                  
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
                     name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
@@ -387,7 +381,6 @@ class TaskRoleMap extends Component {
 
 }
 
-//export default TaskRoleMap;
 export default connect((store) => {
   return {
     registryAddress: store.registryAddress

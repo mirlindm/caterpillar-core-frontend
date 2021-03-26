@@ -65,23 +65,15 @@ class CompilationEngine extends Component {
     }
 
     onChangeCreateModelHandler = (event) => {
-        console.log("1: " + event.target.name + " is initially " + event.target.value);
-        //let uploadCheckBox =  document.getElementById("upload");
-        //let createCheckBox =  document.getElementById("create");
+        console.log("1: " + event.target.name + " is initially " + event.target.value);       
         
         if(this.state.uploadModel === true) {
             NotificationManager.warning('You have already chosen to upload your model!', 'OOPS...');                                 
         } else {
             this.setState({
                 [event.target.name]: !event.target.value
-            });
-            //uploadCheckBox.style.pointerEvents = "none";                   
-        }
-        // if(this.state.createModel === true && this.state.uploadModel === false) {
-        //     uploadCheckBox.style.pointerEvents = "none";
-        //  } else {
-        //      uploadCheckBox.style.pointerEvents = "all";
-        //  }    
+            });           
+        }                 
         console.log("2: " + event.target.name + " is later " + !event.target.value);                 
       }
 
@@ -106,8 +98,9 @@ class CompilationEngine extends Component {
           [event.target.name]: event.target.value
       });
     } 
+
        // GET 1 /models   
-       queryProcessModels = (event) => {
+    queryProcessModels = (event) => {
         
         console.log("Registry Address from Redux Store is here: " + this.props.registryAddress)
 
@@ -148,11 +141,9 @@ class CompilationEngine extends Component {
       }
 
       // GET 2 /models/:mHash or processId as a parameter 
-      retrieveModelMetadata = (mHash) => { 
-        //let mHash = this.state.mHash;
+      retrieveModelMetadata = (mHash) => {         
         this.setState({showRetrieveModelMetadataAccordion: true});
-                
-        
+                        
         axios.get(COMPILATION_URL + '/' +mHash,
           { headers: {
               'accept': 'application/json'
@@ -218,23 +209,12 @@ class CompilationEngine extends Component {
           var canvas = this.modeler2.get("canvas");
 
           canvas.zoom("fit-viewport");
-
-          //this.setState({retrieveModelMetadataBpmnModel: []});
+          
           this.modeler2 = null;
 
         } catch (err) {
           console.log(err.message, err.warnings);
-        }
-        // try {
-        //   const xmlStr = this.state.retrieveModelMetadataBpmnModel;
-        //   const parser = new DOMParser();
-        //   const dom = parser.parseFromString(xmlStr, "application/xml");
-        //   const result = await this.modeler2.open(this.state.retrieveModelMetadataBpmnModel);
-        //   const { warnings } = result;
-        //   console.log(warnings);
-        // } catch (err) {
-        //   console.log(err.message, err.warnings);
-        // }
+        }       
       }
     
     render() {
@@ -256,20 +236,15 @@ class CompilationEngine extends Component {
                           },
                         })                          
                         }} label="Query Process Models"/>
-                        {/* <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.breadCrumbFetchModelMetadata} id="create" name="queryModels" onChange={(event) => { this.changeBreadCrumbFetchModelMetadataHandler({
-                          target: {
-                            name: event.target.name,
-                            value: event.target.defaultChecked,
-                          },
-                        })                          
-                        }} label="Fetch Model Metadata"/>     */}
+                       
                         <Form.Check style={{display: "inline", marginRight: "20px"}} type="checkbox" defaultChecked={this.state.createModel} id="create" name="createModel" onChange={(event) => { this.onChangeCreateModelHandler({
                           target: {
                             name: event.target.name,
                             value: event.target.defaultChecked,
                           },
                         })                          
-                        }} label="Create Model"/>                        
+                        }} label="Create Model"/> 
+
                         <Form.Check style={{display: "inline"}} type="checkbox" defaultChecked={this.state.uploadModel} id="upload" name="uploadModel" onChange={(event) => { this.onChangeUploadModelHandler({
                           target: {
                             name: event.target.name,
@@ -435,40 +410,18 @@ class CompilationEngine extends Component {
                                 <ProcessInstanceOperations/>                                             
                                 </Tab>
                               </Tabs>                                                                                                         
-                          </Alert>                 
-                   
-                      
-                        {/* <Row style={{display: "flex", justifyContent: "space-around"}}>                                           
-                          <Col>                                         */}
-                          {/* <Button onClick={this.queryProcessModels}
-                              variant="primary" type="submit" className="new-buttons"
-                              style={{marginBottom: "8px", padding: "5px", lineHeight: "35px", fontSize: "17px", fontWeight: "normal",}}
-                          > Query Process Models
-                          </Button> */}
-                          {/* </Col>
-                        </Row> */}
-                                  
-                                                              
-               
-
-                  {/* ********************** */}
-                 
-                  {/* *********************** */}
+                          </Alert>                                     
                 </Card>
             </Aux> : null }
             {/* New changes End */}
-                                    
-            {/* New changes Start - GET 2 */}
-
-            {/* New changes End */}
-
+                                               
                 { this.state.createModel === true ?
                 <CCreateDiagram/>                                        
                 : this.state.uploadModel === true ?
                 <CUploadDiagram/>
                 : null
                 }
-                {/* <ProcessInstanceOperations/> */}
+                
                 <NotificationContainer/>                
                 <div style={{marginTop: "65px"}}></div>
             </Aux>

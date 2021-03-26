@@ -17,8 +17,7 @@ class BpmnModelerComponent extends Component {
         super(props);
 
         this.state = {
-            uploadedDiagram: undefined,
-         
+            uploadedDiagram: undefined,         
         }
     }
     

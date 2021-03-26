@@ -32,11 +32,7 @@ class Logout extends Component {
         <div style={{margin: "40px"}}>
             <hr className="style-one" />
 
-            <h2 className="heading-two" onClick={this.handleShow} style={{color: "white", fontWeight: "normal", lineHeight: "48px", textAlign: "center"}}> You are logged out </h2>
-            {/* <Alert onClick={this.handleShow} style={{margin: "auto", cursor: "pointer", marginRight: "200px", marginLeft: "200px", fontSize: "20px", textAlign: "center", color: "black"}} variant="info">
-                    <a>You are logged out </a> <br/>
-            </Alert> */}
-
+            <h2 className="heading-two" onClick={this.handleShow} style={{color: "white", fontWeight: "normal", lineHeight: "48px", textAlign: "center"}}> You are logged out </h2>          
 
             <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>

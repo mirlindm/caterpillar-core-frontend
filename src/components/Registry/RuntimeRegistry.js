@@ -40,7 +40,7 @@ class RuntimeRegistry extends Component {
         this.setState({idOrAddress: ''})
     }
 
-    // post request to create a new runtime registry
+    // POST Request - to create a new runtime registry
     createRegistryHandler = (event) =>  {
         event.preventDefault();
         
@@ -52,9 +52,7 @@ class RuntimeRegistry extends Component {
                 if(response.status === 201) {       
                     NotificationManager.success('New Runtime Registry: ' + response.data.ID + ' has been created.', response.statusText)             
                     this.setState({ registry: response.data, idOrAddress: response.data.ID});
-                    this.getRegistriesByIdHandler();
-                    //setTimeout(() => this.setState({show1: false}), 3000)
-                    //return response.data.ID;
+                    this.getRegistriesByIdHandler();                    
                 } else {
                     console.log(response);
                     NotificationManager.warning("Please check the console for details", response.statusText)
@@ -77,7 +75,7 @@ class RuntimeRegistry extends Component {
         });        
     }
 
-    // Get request to fetch the registries based on the id or address from the database
+    // GET Request - to fetch the registries based on the id or address from the database
     getRegistriesByIdHandler = (e) =>  {  
         if(this.state.idOrAddress.length <= 25) {           
         console.log("REDUCER from RegistryID!!!!!!!!!!!!!!!!!");
@@ -88,10 +86,8 @@ class RuntimeRegistry extends Component {
         }
     }
     
-    // Get request to fetch registry's data based on its ID and dispatch registry's address to redux store
-    getRegistryAddressByID = (dispatch) => {
-        //const URL = 'http://' + window.location.hostname + ':3000/registries/';        
-        
+    // GET Request - to fetch registry's data based on its ID and dispatch registry's address to redux store
+    getRegistryAddressByID = (dispatch) => {            
         if(this.state.idOrAddress === ''){
             NotificationManager.error("Please provide Registry ID or Address to load registry data",'ERROR')
         } else {
@@ -104,8 +100,7 @@ class RuntimeRegistry extends Component {
                 console.log(response);
                 if(response.status === 200) {                    
                     this.setState({ registryData: response.data});      
-                    NotificationManager.success('Registry has been loaded. Its address will be used for the next operations!', response.statusText)
-                    //setTimeout(() => this.setState({show2: false}), 1000)
+                    NotificationManager.success('Registry has been loaded. Its address will be used for the next operations!', response.statusText)                    
                     dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
                 } else {
                     console.log('ERROR', response);
@@ -131,7 +126,7 @@ class RuntimeRegistry extends Component {
         }
     }
 
-    // Get request to fetch registry's data based on its address and dispatch registry's address to redux store
+    // GET Request - to fetch registry's data based on its address and dispatch registry's address to redux store
     getRegistryAddressByAddress = (dispatch) => {                
         if(this.state.idOrAddress === ''){
             NotificationManager.error("Please provide Registry ID or Address to load registry data", 'ERROR')
@@ -146,8 +141,7 @@ class RuntimeRegistry extends Component {
                 console.log(response);
                 if (response.status === 200) {
                     this.setState({registryData: response.data});   
-                    NotificationManager.success('Registry has been loaded. Its address will be used for the next operations!', response.statusText)
-                    //setTimeout(() => this.setState({show2: false}), 1000)      
+                    NotificationManager.success('Registry has been loaded. Its address will be used for the next operations!', response.statusText)                    
                     dispatch({type: 'REGISTRY_ADDRESS', payload: response.data.address});
                 } else {
                     console.log('ERROR', response);
@@ -172,8 +166,7 @@ class RuntimeRegistry extends Component {
             })
         }        
     }
-
-    // takes user to Modeler component on click
+    
     goToCompilation = () => {
         this.props.history.push(`/compilation`);   
     }
@@ -350,10 +343,7 @@ class RuntimeRegistry extends Component {
                             </Button> 
                         </div>                                                        
                     </Aux>
-                    }              
-                                {/* <Button className="new-buttons" variant="primary" style={{ backgroundColor: "#757f9a", border: "3px solid #d7dde8", }} type="submit">
-                                    <FontAwesomeIcon icon={faPlus} /> Create New Registry
-                                </Button>  */}
+                    }                                              
                             </Card.Footer>                                                        
                         </Form>
                     </Card>                                      

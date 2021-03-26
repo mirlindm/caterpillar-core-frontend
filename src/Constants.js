@@ -7,7 +7,3 @@ export const COMPILATION_URL = 'http://' + window.location.hostname + ':3000/mod
 export const PROCESS_INSTANCE_QUERY_URL = 'http://' + window.location.hostname + ':3000/processes';
 export const PROCESS_INSTANCE_EXECUTE_URL = 'http://' + window.location.hostname + ':3000/worklists';
 export const INTERPRETATION_URL = 'http://' + window.location.hostname + ':3000/interpreter';
-
-
-
-

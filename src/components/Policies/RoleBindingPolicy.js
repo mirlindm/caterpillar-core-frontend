@@ -18,7 +18,8 @@ class RoleBindingPolicy extends Component {
         super(props);
 
         this.state = {
-            //rbPolicy
+            
+          //rbPolicy
             createRBPolicy: undefined,
             rbPolicyInput: '',
             rbPolicyResponse: '',
@@ -55,8 +56,7 @@ class RoleBindingPolicy extends Component {
       //Post 4: parseAndDeployRBPolicy
       parseAndDeployRBPolicyHandler = () => {
         let rbPolicy = this.state.rbPolicyInput;
-        console.log("Registry Address: " + this.props.registryAddress);                
-        //console.log(rbPolicy);
+        console.log("Registry Address: " + this.props.registryAddress);                        
         
         if(!this.props.registryAddress) {
           NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
@@ -135,8 +135,7 @@ class RoleBindingPolicy extends Component {
             if (response.status === 200) {
               this.setState({rbPolicyMetadata: response.data});
               dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
-              NotificationManager.success('Role Binding Policy data has been successfully fetched!', response.statusText);
-              //this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
+              NotificationManager.success('Role Binding Policy data has been successfully fetched!', response.statusText);              
             } else {
               console.log('ERROR', response);
             }}).catch(error => {
@@ -166,7 +165,9 @@ class RoleBindingPolicy extends Component {
     render() {
         return(
             <Aux>
+
                 {/* Policy Binding Configuration - POST 4 */}
+              
                 <hr/>
                 <div  className="ContentUnique"> 
                   <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
@@ -197,6 +198,7 @@ class RoleBindingPolicy extends Component {
                           type="submit" className="new-buttons" onClick={this.parseAndDeployRBPolicyHandler} style={{border: "1px solid #008B8B", marginBottom: "8px", padding: "5px", lineHeight: "37px", fontSize: "17px", fontWeight: "normal",}}
                           > Deploy RB Policy
                   </Button> <br/>
+                 
                   {/* Render Response */}
                   <Accordion style={{marginBottom: "5px", padding: "5px", lineHeight: "35px", fontSize: "17px",  fontWeight: "normal",}}>
                   <Card>
@@ -210,10 +212,7 @@ class RoleBindingPolicy extends Component {
                       </Accordion.Collapse>
                     </Card>            
                   </Accordion> <br/>
-                  {/* <Alert size="sm"
-                       style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please provide the Role Binding Policy Address in the Input Field
-                  </Alert>   */}
+                 
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
                     name="policyBindingAddress" onChange={this.rbPolicyChangeHandler} 
@@ -226,10 +225,7 @@ class RoleBindingPolicy extends Component {
                    <br/>                    
                     </>
                 : this.state.createRBPolicy === false ? <>
-                  {/* <Alert size="sm"
-                        style={{backgroundColor: "#757f9a", border: "3px solid #d7dde8", color: "#ffffff", fontSize: "17px", fontWeight: "normal", borderRadius: "10px", marginRight: "250px", marginLeft: "250px", textAlign: "center",}}> 
-                        Please provide the Role Binding Policy Address in the Input Field
-                  </Alert>   */}
+                                  
                   {/* Policy Binding Configuration - GET 4 */}
                   <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
                     name="policyBindingAddress" onChange={this.rbPolicyChangeHandler} 
@@ -334,7 +330,6 @@ class RoleBindingPolicy extends Component {
     }
 }
 
-// export default RoleBindingPolicy;
 export default connect((store) => {
   return {
     registryAddress: store.registryAddress

@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 
-//import {w3cwebsocket as W3CWebSocket } from 'websocket';
-//import ls from 'local-storage';
-
 import './App.css';
 
 import { Container, Row, Col } from 'react-bootstrap';
@@ -24,11 +21,6 @@ import AccessAllocation from './components/Policies/AccessAllocation';
 import AccessControl from './components/Policies/AccessControl'
 
 
-
-//import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute.jsx';
-
-//const client = new W3CWebSocket('ws://127.0.0.1:8090');
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -37,36 +29,6 @@ class App extends Component {
         accessControlAddressFromWebSocket: '',
     }
 }
-
-  componentDidMount() {
-  
-    // client.onopen = () => {
-    //   console.log('WebSocket Client Connected from App.js');
-    // };    
-    // client.onmessage = (message) => {
-    //   const dataFromServer = JSON.parse(message.data);
-    //   console.log(dataFromServer);
-    //   const parsedData = JSON.parse(dataFromServer.policyInfo);
-    //   console.log("The address from the app component through websocket: " + parsedData.contractAddress);
-      
-    //   //check here if the info from the message (the name) is access control, then set the ls like below, 
-    //   // else - set the ls for the role binding policy, else for the task role map ... 
-    //   if(parsedData.compilationInfo.contractName === "BindingAccessControl"){  
-    //     this.setState({
-    //       accessControlAddressFromWebSocket: parsedData.contractAddress
-    //     })
-    //     console.log("Done with updating the state!")       
-    //     ls.set('aca', parsedData.contractAddress)
-    //     console.log("The new state in App.js: " + this.state.accessControlAddressFromWebSocket)
-    //   }
-            
-    // };    
-  }
-  
-  // reduxFunction = (dispatch) => {    
-  //     console.log("HERE2")
-  //     dispatch({type: 'ACCESS_CONTROL_ADDRESS_WEBSOCKET', payload: this.state.accessControlAddressFromWebSocket });    
-  // }
        
   render() {
     
@@ -77,8 +39,7 @@ class App extends Component {
       return (                              
              <Router>               
               <NavigationBar />
-
-              {/* <BpmnModelerComponent></BpmnModelerComponent> */}
+             
               <Container>
                 <Row>
                   <Col lg={12} style={marginTop}>
@@ -88,45 +49,20 @@ class App extends Component {
                       <Route path="/welcome" exact component={Welcome} />
                       <Route path="/registry" exact component={Registry} />
                       <Route path="/compilation" exact component={CompilationEngine} />                    
-                      <Route path="/interpretation" exact component={InterpretationEngine} />                    
-                      {/* <Route path="/compilation" exact component={CCreateModel} />*/}
-                      {/* <Route path="/interpretation" exact component={ICreateModel} />*/}
+                      <Route path="/interpretation" exact component={InterpretationEngine} />                                          
                       <Route path="/access" exact component={AccessAllocation} />                    
                       <Route path="/policies" exact component={AccessControl} />                    
                       <Route path="/runtimeRegistry" exact component={RuntimeRegistry} />                    
                       <Route path="/logout" exact component={Logout} />
                       <Route path="/about" exact component={About} />
-
                       <Route component={Error} />
-                    </Switch>
-                    
-                    </Col>
-                  </Row>
-                </Container>
+                    </Switch>                    
+                  </Col>
+                </Row>
+              </Container>
             
               <Footer/>
-             </Router> 
-
-  
-
-              // <Router>
-              //   <NavigationBar/>
-                  
-              //       <div class="container" style={marginTop}>      
-              //           <Switch>
-              //               <Route path="/" exact component={Login}/>
-              //               <Route path="/login" component={Login}/>
-              //               <AuthenticatedRoute path="/welcome/:username" component={Welcome} />
-              //               <AuthenticatedRoute path="/registry" component={Registry} />
-              //               <AuthenticatedRoute path="/modeler" component={BpmnModelling} />
-              //               <AuthenticatedRoute path="/logout" component={Logout}/>
-              //               <AuthenticatedRoute path="/about" component={About} />
-              //               <Route component={Error}/>
-              //           </Switch>
-                        
-              //       </div>
-              //       <Footer/>
-              //   </Router>
+             </Router>                
 
   );
 }

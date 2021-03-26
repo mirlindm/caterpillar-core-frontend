@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 
-// import {Route, Redirect} from 'react-router-dom';
-
 import RegistryToast from '../RegistryToast/RegistryToast'; 
 import RegistryId from '../RegistryId/RegistryId';
-// import BpmnModelling from '../../bpmn/BpmnModelling';
+
 import './RegistryCreate.css';
 
 import {Card, Alert, Form, Button, Col} from 'react-bootstrap'; 
@@ -56,9 +54,7 @@ class RegistryCreate extends Component {
 
     render() {
         return (
-
             //Create new registry
-
             <div>
                 <div style={{"display" : this.state.show ? "block" : "none"}}>
                     <RegistryToast children={{show: this.state.show, message: "Registry Created Successfully."}} />
@@ -75,8 +71,7 @@ class RegistryCreate extends Component {
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="formGridTitle" >    
                                             {
-                                                this.state.registry.length === 0 ? 
-                                                //remove the onClick from the first paragraph - errorMessage. BPMN Modelling should appear only after the registry has been created. 
+                                                this.state.registry.length === 0 ?                                                 
                                                 <p  style={{textAlign:"center", color: "#008B8B", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
                                                 :
                                                 <div>
@@ -102,14 +97,10 @@ class RegistryCreate extends Component {
                     </Card> 
                                   
                    
-                </div>
-
-                {/* Do we need to fetch registry based on the ID created in registryCreate? If yes, this part below should be deleted and RegistryId Component should be rendered only */}
+                </div>                
                     {
                                 this.state.goTo === 'registryID' ?
-                                // <Route  render={() => (window.location = "https://www.example.com")} />
                                 
-                                // <BpmnModelling createRegistryProp={this.state.registry}/>
                                 <div> 
                                     <Alert variant="warning" 
                                         style={{color: "black",
@@ -132,15 +123,9 @@ class RegistryCreate extends Component {
                     }                    
                 <div style={{marginTop: "70px"}}> </div>
 
-                <div style={{"display" : "none"}}>
-                    {/* pass the registry id prop to 4 components */}
-                    {/* <CCreateDiagram registry={this.state.name} /> */}
-                </div>
-
-                {/* Render the component below only if we need to fetch registry based on the ID created in RegistryCreate */}
-                
-                
-            </div>
+                <div style={{"display" : "none"}}>                    
+            </div>                                               
+        </div>
             
         );
     }

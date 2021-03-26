@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-//import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 
@@ -24,9 +23,7 @@ class About extends Component {
     handleShow = () => this.setState({show: true});
 
 
-    render () {
-
-        //const getUser = sessionStorage.getItem('authenticatedUser').toString();
+    render () {        
 
         return (
             <div>

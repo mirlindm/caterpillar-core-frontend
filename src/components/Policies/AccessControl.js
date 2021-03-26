@@ -5,10 +5,7 @@ import Aux from '../../hoc/Auxiliary';
 import {ACCESS_CONTROL_URL, RB_POLICY_URL, TASK_ROLE_MAP_URL} from '../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-//import ls from 'local-storage';
 import {w3cwebsocket as W3CWebSocket } from 'websocket';
-
-
 
 import {Form, Button, Card, Accordion, Col} from 'react-bootstrap';
 
@@ -22,6 +19,7 @@ class AccessControl extends Component {
         super(props);
 
         this.state = {
+
             //accessControl
             createAccessControl: undefined,
             accessControlAddress: '',
@@ -70,15 +68,11 @@ class AccessControl extends Component {
           console.log(dataFromServer);
           const parsedData = JSON.parse(dataFromServer.policyInfo);
           console.log("The address from the app component through websocket: " + parsedData.contractAddress);
-        
-          
-          //check here if the info from the message (the name) is access control, then set the ls like below, 
-          // else - set the ls for the role binding policy, else for the task role map ... 
+                           
           if(parsedData.compilationInfo.contractName === "BindingAccessControl"){  
             this.setState({socketAddress: parsedData.contractAddress});            
             console.log("Done with updating the state!")       
-            //ls.set('aca', parsedData.contractAddress)
-            //console.log("The new state in App.js: " + this.state.accessControlAddressFromWebSocket)
+            
           } else if(parsedData.compilationInfo.contractName === "BindingPolicyContract"){
             this.setState({rbPolicySocketAddress: parsedData.contractAddress});                        
           } else {
@@ -96,8 +90,7 @@ class AccessControl extends Component {
             this.setState({createAccessControl: true, accessControlAddress: response.data, accessControlShowAccordion: true});                                                  
             NotificationManager.success('Access Control Policy Created!', response.statusText);
             console.log(response.data);
-            setTimeout(() => this.findAccessControlMetadata(), 1000)                                                                          
-            //console.log("DATA FROM WEBSOCKET (from local storage): " + ls.get('accessControlAddress'));
+            setTimeout(() => this.findAccessControlMetadata(), 1000)                                                                                      
           })
           .catch(error => {
             console.log(error);
@@ -134,11 +127,7 @@ class AccessControl extends Component {
         this.setState({createAccessControl: false});
       }
   
-      accessControlAddressReduxStoreHandler = (dispatch) => {
-        //let accessCtrlAddr = this.state.accessControlAddress;        
-        
-        //console.log(accessCtrlAddr + ' and registry address: ' + this.props.registryAddress);
-        
+      accessControlAddressReduxStoreHandler = (dispatch) => {                
         if(!this.props.registryAddress) {
           NotificationManager.error("There is no Registry Specified!", 'ERROR');
         } else if(this.state.socketAddress === '') {
@@ -156,8 +145,7 @@ class AccessControl extends Component {
             if (response.status === 200) {
               this.setState({accessControlAddressMetadata: response.data, accessControlAddressShowAccordion: true});
               dispatch({type: 'ACCESS_CONTROL_ADDRESS', payload: response.data.address});
-              NotificationManager.success('Access Policy Data have been successfully fetched!', response.statusText);
-              //this.props.parentCallback(this.state.accessControlAddressMetadata.address);
+              NotificationManager.success('Access Policy Data have been successfully fetched!', response.statusText);             
             } else {
               console.log('ERROR', response);
             }}).catch(error => {
@@ -201,8 +189,7 @@ class AccessControl extends Component {
   //Post 4: parseAndDeployRBPolicy
   parseAndDeployRBPolicyHandler = () => {
     let rbPolicy = this.state.rbPolicyInput;
-    console.log("Registry Address: " + this.props.registryAddress);                
-    //console.log(rbPolicy);
+    console.log("Registry Address: " + this.props.registryAddress);                    
     
     if(!this.props.registryAddress) {
       NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
@@ -220,23 +207,7 @@ class AccessControl extends Component {
         if (response.status === 202) {
           this.setState({rbPolicyResponse: response.data, rbPolicyShowAccordion: true});  
           NotificationManager.success('New Role Binding Policy has been successfuly deployed!', response.statusText);
-          setTimeout(() => this.findRBPolicyMetadataHandler(), 1000)    
-       
-          // client.onmessage = (message) => {
-          //   const dataFromServer = JSON.parse(message.data);
-          //   this.setState({
-          //     accessControlAddressFromWebSocket: dataFromServer
-          //   })
-          //   console.log(message.data)
-          //   const stateToChange = {};
-          //   if (dataFromServer.type === "userevent") {
-          //     stateToChange.currentUsers = Object.values(dataFromServer.data.users);
-          //   } else if (dataFromServer.type === "contentchange") {
-          //     stateToChange.text = dataFromServer.data.editorContent || dataFromServer.contentDefaultMessage;
-          //   }
-          //   stateToChange.userActivity = dataFromServer.data.userActivity;
-                                
-          // };                    
+          setTimeout(() => this.findRBPolicyMetadataHandler(), 1000)                                        
         } else {
           console.log('ERROR', response);
         }})
@@ -258,10 +229,7 @@ class AccessControl extends Component {
     }        
   }
 
-  roleBindingPolicyAddressReduxStoreHandler = (dispatch) => {
-    //let rbPolicyAddr = this.state.rbPolicyAddressInput;        
-    //console.log(rbPolicyAddr + ' and registry address: ' + this.props.registryAddress);
-
+  roleBindingPolicyAddressReduxStoreHandler = (dispatch) => {    
     if(!this.props.registryAddress) {
       NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
     }
@@ -280,8 +248,7 @@ class AccessControl extends Component {
         if (response.status === 200) {
           this.setState({rbPolicyMetadata: response.data, rbPolicyAddressShowAccordion: true});
           dispatch({type: 'ROLE_BINDING_POLICY', payload: response.data.contractInfo.address});
-          NotificationManager.success('Role Binding Policy data has been successfully fetched!', response.statusText);
-          //this.props.parentCallback(this.state.rbPolicyMetadata.contractInfo.address);
+          NotificationManager.success('Role Binding Policy data has been successfully fetched!', response.statusText);          
         } else {
           console.log('ERROR', response);
         }}).catch(error => {
@@ -336,8 +303,7 @@ class AccessControl extends Component {
       NotificationManager.error("Please provide valid Task-Role Map Policy!", 'ERROR');
     } else {
       axios.post(TASK_ROLE_MAP_URL, 
-        {
-          //roleTaskPairs: "["+this.state.taskRoleMapPolicy+"]", 
+        {        
           roleTaskPairs: trMap,
           contractName: 'RoleTaskMap',
           registryAddress: this.props.registryAddress
@@ -376,9 +342,7 @@ class AccessControl extends Component {
   }
 
   // GET 5 - Task Role Map - REDUX
-  taskRoleMapAddressReduxStoreHandler = (dispatch) => {
-    //let trMapAddress = this.state.trMapAddressInput;        
-    //console.log(trMapAddress + ' and registry address: ' + this.props.registryAddress);
+  taskRoleMapAddressReduxStoreHandler = (dispatch) => {    
     
     if(!this.props.registryAddress) {
       NotificationManager.error("There is no Runtime Registry Specified!", 'ERROR');
@@ -398,9 +362,8 @@ class AccessControl extends Component {
         if (response.status === 200) {
           this.setState({trMapMetadata: response.data, trMapAddressShowAccordion: true});
           dispatch({type: 'TASK_ROLE_MAP', payload: response.data.contractInfo.address});
-          NotificationManager.success('Task-Role Map data has been successfully fetched!', response.statusText);
-          //this.props.parentCallback(this.state.trMapMetadata.contractInfo.address);   
-        }else {
+          NotificationManager.success('Task-Role Map data has been successfully fetched!', response.statusText);          
+        } else {
           console.log('ERROR', response);
         }}).catch(error => {
           console.log(error);

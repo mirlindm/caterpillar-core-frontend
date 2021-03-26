@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-//import BpmnModelling from '../../bpmn/BpmnModelling';
 import './RegistryId.css';
 
 import {Card, Alert, Form, Button, Col, Accordion} from 'react-bootstrap'; 
@@ -29,7 +28,7 @@ class RegistryId extends Component {
         }
     }
 
-      // Set the state to the value of the input with same name as the state
+    // Set the state to the value of the input with same name as the state
     registryChangeHandler = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -38,9 +37,7 @@ class RegistryId extends Component {
 
     getRegistryAddress = (dispatch) => {
         const URL = 'http://localhost:3000/registries/';
-        const id = this.state.id;
-        // const URL_END = '/address';
-        // const address = this.state.address;
+        const id = this.state.id;       
     
         dispatch({type: 'LOADING' })
     
@@ -58,23 +55,9 @@ class RegistryId extends Component {
     }
 
     // Get Request to fetch the registries based on the id on the database
-    getRegistriesByIdHandler = (e) =>  {             
-        //const URL = 'http://localhost:3000/registries/'
-        //const id = this.state.id;
+    getRegistriesByIdHandler = (e) =>  {                     
         console.log("REDUCER from RegistryID!!!!!!!!!!!!!!!!!");
-        this.props.dispatch(this.getRegistryAddress);
-
-        // axios.get(URL+id)
-        // .then(response => response.data             
-        // ).then((data) => {
-        //     console.log(data) 
-        //     this.setState({registriesById: data});
-        // })
-        // .catch(err => {
-        //     if(err)
-        //     this.setState({errorMessage: err.toString()})
-        // })
-     
+        this.props.dispatch(this.getRegistryAddress);     
     }
 
     resetRegistryInput = () => {
@@ -88,8 +71,7 @@ class RegistryId extends Component {
 
     render() {
 
-        return (
-            //Fetch registry by ID
+        return (           
             <div>
                 <div className="Content"  style={{marginBottom: "20px"}}>
                     <Card className={"border border-dark bg-dark text-white"}>
@@ -101,8 +83,7 @@ class RegistryId extends Component {
                         <Form onReset={this.resetRegistryInput} onSubmit={ e => {e.preventDefault(); this.getRegistriesByIdHandler()}} id="registry">
                             <Card.Body>
                                 <Form.Row>
-                                    <Form.Group as={Col} controlId="formGridTitle" >
-                                        {/* <Form.Label>Fetch Registries by Blockchain Address</Form.Label>  */}
+                                    <Form.Group as={Col} controlId="formGridTitle" >                                       
                                         <Form.Control required autoComplete="off"
                                             type="text"
                                             name="id"
@@ -156,7 +137,8 @@ class RegistryId extends Component {
                                 <strong> No registry found!  </strong> 
                             </Alert> :
                             <Aux>
-                                {/* Render Response through Accordion */}
+                            
+                            {/* Render Response through Accordion */}
                             <Accordion>
                                 <Card>
                                     <Card.Header>
@@ -228,27 +210,13 @@ class RegistryId extends Component {
                                 </Card>
                             </Accordion>                                                        
                          </Aux>
-                        }      
-
-                {/* create some space */}                                                   
-                <div style={{marginTop: "20px"}}> </div>
-
-                {/* Once we have an ID of the registry, the goTo state will have the value of 'modelling' and the BpmnModelling Component will be rendered */}
-
-                {/* {
-                    this.state.goTo === 'modelling' ?
-                    // <Route  render={() => (window.location = "https://www.example.com")} />
-                    <BpmnModelling registryIdProp={this.state.registriesById.address} />
-                    : null
-                } */}
-
+                        }                                                                                      
                 <div style={{marginTop: "60px"}}> </div>
             </div>
         );
     }
 }
 
-//export default RegistryId;
 export default connect((store) => {
     return {
       registryAddress: store.registryAddress

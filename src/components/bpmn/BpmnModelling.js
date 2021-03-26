@@ -40,9 +40,7 @@ class BpmnModelling extends Component {
 
     render() {
         return (
-            <Aux>
-                {/* I CAN CONFIGURE HERE THE ENGINE */} 
-                    {/* Prompt user if they want to upload a model or create a new one */}
+            <Aux>               
 
                 <div  className="Content"> 
                     <p style={{color: "white", fontSize: "20px", fontWeight: "normal", lineHeight: "48px" }}>
@@ -205,7 +203,6 @@ class BpmnModelling extends Component {
                     </div>                                        
                     :
                     null
-
                 }
             </Aux>
         );

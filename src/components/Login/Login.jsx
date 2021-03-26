@@ -33,13 +33,11 @@ export default class Login extends Component {
 
         loginClicked(event) {
             event.preventDefault();            
-            //mirlind,pass
+        
             if(this.state.username === 'mirlind' && this.state.password === 'pass'){
                 AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
                 this.props.history.push(`/welcome/${this.state.username}`)
-                window.location.reload();
-                //this.setState({showSuccessMessage:true})
-                //this.setState({hasLoginFailed:false})
+                window.location.reload();                
         }
         else {
             this.setState({showSuccessMessage:false})
@@ -54,16 +52,14 @@ export default class Login extends Component {
                     <div className="inner">
                     <form>
                         <h3 style={{color: "white"}}>Sign in to use Caterpillar <hr style={{backgroundColor: "#008B8B"}} /> </h3>  
-
-                        {/* <InvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/> */}
+                       
                         {this.state.hasLoginFailed && 
                          <Alert variant="warning" >
                          <Alert.Heading style={{fontFamily: "Trocchi", fontSize: "15px", textAlign: "center"}}>  
                          Invalid Credentials. Please Try Again!
                          </Alert.Heading>
                          </Alert>}
-                        {this.state.showSuccessMessage && <div style={{fontFamily: "Trocchi", fontSize: "15px", textAlign: "center"}}>Login Successful</div>}                    
-                        {/* <SuccessLogin showSuccessMessage={this.state.showSuccessMessage} /> */}
+                        {this.state.showSuccessMessage && <div style={{fontFamily: "Trocchi", fontSize: "15px", textAlign: "center"}}>Login Successful</div>}                                            
                         
                         <div className="form-group">
                             <label className="text-white"> Username </label>
@@ -87,13 +83,7 @@ export default class Login extends Component {
                                    onChange={this.inputChangeHandler} 
                                    required />
                         </div>
-
-                        {/* <div className="form-group">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                <label className="custom-control-label text-white" htmlFor="customCheck1">Remember me</label>
-                            </div>
-                        </div> */}
+                        
                         <div style={{marginTop: "20px"}}>
                             <button type="submit" 
                                 style={{border: "1px solid #008B8B"}} 
@@ -101,10 +91,7 @@ export default class Login extends Component {
                                 onClick={this.loginClicked}>
                                     Login
                             </button>
-                        </div>
-
-                        {/* <p className="forgot-password text-right">                
-                        </p> */}
+                        </div>                    
                     </form>
                     
                 </div>
