@@ -195,7 +195,7 @@ class AccessControl extends Component {
   
   //onChangeInput
   rbPolicyChangeHandler = (event) => {
-    this.setState({rbPolicyAddressInput: event.target.value})
+    this.setState({[event.target.name]: event.target.value})
   }
 
   //Post 4: parseAndDeployRBPolicy
@@ -317,7 +317,9 @@ class AccessControl extends Component {
   }
 
   taskRoleMapAddressChangeHandler = (event) => {
-    this.setState({trMapAddressInput: event.target.value});
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
   // POST 5 - Task Role Map
@@ -453,7 +455,7 @@ class AccessControl extends Component {
                         <Col style={{textAlign: "center"}}>
                             <Form.Control required autoComplete="off"
                                             type="text" style={{textAlign: "center"}}
-                                            name="accessControlAddress"                                             
+                                            name="socketAddress"                                             
                                             onChange={this.accessControlAddressChangeHandler}
                                             className={"bg-light"}
                                             value={this.state.socketAddress}
@@ -558,7 +560,7 @@ class AccessControl extends Component {
 
                         <Col style={{textAlign: "center"}}>
                           <Form.Control required type="text" placeholder="Enter the Policy Binding Address" 
-                            name="policyBindingAddress"
+                            name="rbPolicySocketAddress"
                             value={this.state.rbPolicySocketAddress}
                             onChange={this.rbPolicyChangeHandler}
                             className={"bg-light"} 
@@ -698,7 +700,7 @@ class AccessControl extends Component {
                         <br/>
                         <Col >
                         <Form.Control required type="text" placeholder="Enter the Task Role Map Address" 
-                            name="taskRoleMapAddress" onChange={this.taskRoleMapAddressChangeHandler} 
+                            name="trmSocketAddress" onChange={this.taskRoleMapAddressChangeHandler} 
                             value={this.state.trmSocketAddress}
                             className={"bg-light"} style={{border: "1px solid #757f9a",  textAlign: "center" }}
                         />
