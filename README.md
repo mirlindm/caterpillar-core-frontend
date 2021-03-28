@@ -4,7 +4,7 @@
 
 For more information about Caterpillar, you can visit its GitHub Repository: [Caterpillar](https://github.com/orlenyslp/Caterpillar)
 
-## Technologies used
+## Technologies used for the Frontend
 
 > JavaScript ES6, React.js Library, React+Bootstrap, React+Redux, WebSockets, Camunda Plugin.
 
