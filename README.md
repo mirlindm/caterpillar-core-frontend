@@ -78,6 +78,16 @@ There are numerous React components created to communicate and consume the **RES
 <img alt="Compilation 3" src="./src/assets/Screenshots/Compilation 3 (Process Instance Operations and Upload Process Model).png">
 
 <img alt="Interpretation 1" src="./src/assets/Screenshots/Interpretation 1.png">
+<img alt="Policies 1" src="./src/assets/Screenshots/Policies 1 (Access Control and Role Binding Policy).png">
+<img alt="Policies 2" src="./src/assets/Screenshots/Policies 2 (Task-Role Map Policy).png">
+<img alt="Access Operations" src="./src/assets/Screenshots/Access Operations.png">
+
+<img alt="Nomination" src="./src/assets/Screenshots/Nomination.png">
+
+<img alt="About Caterpillar" src="./src/assets/Screenshots/About Page.png">
+<img alt="Error" src="./src/assets/Screenshots/Error.png">
+
+
 
 
 ## Contributing
