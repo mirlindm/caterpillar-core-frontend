@@ -1,4 +1,4 @@
-# **Caterpillar**
+# **Caterpillar Frontend**
 
 **Frontend application** for **Caterpillar**. Caterpillar is a BPMN execution engine on Ethereum. Caterpillar is a Business Process Management System (BPMS) prototype that runs on top of Ethereum and that relies on the translation of process models into smart contracts. 
 
