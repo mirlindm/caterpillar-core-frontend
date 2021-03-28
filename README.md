@@ -72,7 +72,7 @@ There are numerous React components created to communicate and consume the **RES
 ## Frontend Caterpillar Screenshots
 
 ![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
-![Home Page](./src/assets/Screenshots/Home Page.png)
+![Home Page](/src/assets/Screenshots/Home Page.png)
 
 
 ## Contributing
