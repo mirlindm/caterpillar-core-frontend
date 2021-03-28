@@ -71,9 +71,13 @@ There are numerous React components created to communicate and consume the **RES
 
 ## Frontend Caterpillar Screenshots
 
-![Home Page](/src/assets/Screenshots/Home Page.png)
+<img alt="Home Page" src="./src/assets/Screenshots/Home Page.png">
+<img alt="Runtime Registry" src="./src/assets/Screenshots/Runtime Registry.png">
+<img alt="Compilation 1" src="./src/assets/Screenshots/Compilation 1 (Query Process Model and Create Process Model).png">
+<img alt="Compilation 2" src="./src/assets/Screenshots/Compilation 2.png">
+<img alt="Compilation 3" src="./src/assets/Screenshots/Compilation 3 (Process Instance Operations and Upload Process Model).png">
 
-<img src="./src/assets/Screenshots/Home Page.png">
+<img alt="Interpretation 1" src="./src/assets/Screenshots/Interpretation 1.png">
 
 
 ## Contributing
