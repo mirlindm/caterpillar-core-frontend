@@ -73,6 +73,8 @@ There are numerous React components created to communicate and consume the **RES
 
 ![Home Page](/src/assets/Screenshots/Home Page.png)
 
+<img src="./src/assets/Screenshots/Home Page.png">
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
