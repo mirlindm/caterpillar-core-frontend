@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 import Aux from '../../hoc/Auxiliary';
 
@@ -237,17 +238,16 @@ class ProcessInstanceOperations extends Component {
               NotificationManager.warning(errorMessage, 'OOPS...');
             });       
         }       
-      }
+      }    
 
       //Put Request 1
       executeWorkItemHandler =  () => {
-         //wlAddress is same as mHash
-         let wlAddress = '0xA70E385Ca9b2202726CA8D719255Ca228298b7AF'; 
+         //wlAddress is same as mHash         
          //let wiIndex = this.state.queryProcessInstancesResponse[this.state.queryProcessStateResponse.length-1];
          let wiIndex = '5';
          let worklist = this.state.queryProcessStateResponse.map(state => state.hrefs[0]);
          let registryAddress = this.props.registryAddressProp ? this.props.registryAddressProp : this.props.registryIdProp         
-         console.log("PUT1: 1. RegistryAddress" + registryAddress + ", wlAddress: " + wlAddress + ", wiIndex: " + wiIndex);
+         console.log("PUT1: 1. RegistryAddress" + registryAddress  + ", wiIndex: " + wiIndex);
          
         axios.put('http://localhost:3000'+ worklist, {
           "registryAddress": registryAddress,
@@ -321,7 +321,8 @@ class ProcessInstanceOperations extends Component {
                                                         <Button onClick={() => this.queryProcessStateHandler(instance)} variant="primary"
                                                             type="submit" className="new-buttons" 
                                                             > Query Process State
-                                                        </Button>                                                              
+                                                        </Button> {' '}
+                                                        <Button className="new-buttons"><Link to={"/access"} style={{color: "#FFFFFF"}}>Access Configuration</Link> </Button>
                                                     </li>
                                                 </ul>
                                             ))} </pre> </span>  </Card.Body>

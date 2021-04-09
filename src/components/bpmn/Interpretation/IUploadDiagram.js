@@ -14,7 +14,6 @@ import './IUploadDiagram.css';
 import {INTERPRETATION_URL} from '../../../Constants';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import ProcessInstanceOperations from '../ProcessInstanceOperations';
 
 import {Form, Alert, Button, Card, Accordion, } from 'react-bootstrap';
 
@@ -289,8 +288,7 @@ class IUploadDiagram extends Component {
                     </Card>
                     {/* New changes End */} 
                                                                    
-                {/* New changes End */}                                                                        
-                    <ProcessInstanceOperations />
+                {/* New changes End */}                                                                                            
                     <NotificationContainer />                
                     {/* create some space from the footer */}
                     <div style={{marginBottom: "60px"}}></div>

@@ -3,7 +3,7 @@ import Aux from '../../hoc/Auxiliary';
 
 import RegistryToast from '../Registry/RegistryToast/RegistryToast'; 
 
-import {Card, Form, Button, Col, Accordion, Alert} from 'react-bootstrap'; 
+import {Card, Form, Button, Col, Accordion} from 'react-bootstrap'; 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faPlus} from '@fortawesome/free-solid-svg-icons';
 import './Registry.css'
@@ -213,12 +213,7 @@ class RuntimeRegistry extends Component {
                                             {
                                                 this.state.registry.length === 0 ?                                             
                                                 <p  style={{textAlign:"center", color: "#FA8072", marginTop: "20px"}}> {this.state.errorMessage} </p>                                            
-                                                :
-                                                <div>
-                                                    {/* <p style={{textAlign:"center", color: "#757f9a", marginTop: "20px"}}> New Registry ID: <span onClick={this.passingRegistryIdToSearchInputHandler} style={{textDecoration: "underline", cursor: "pointer"}}> {this.state.registry.ID} </span> </p> */}
-                                                    <Alert size="sm" style={{textAlign: "center", color: "#FFFFFF", backgroundColor: "#FF7F50", marginLeft: "300px", marginRight: "300px", fontSize: "15px"}}>Please load the registry below by clicking and loading its data: <br/> <span onClick={this.passingRegistryIdToSearchInputHandler} style={{textDecoration: "underline", cursor: "pointer", fontSize: "20px"}}> {this.state.registry.ID} </span> </Alert>
-                                                </div>                                                                                        
-                                            }                                           
+                                                : null }                                                                                                                                                                                                                                                                      
                                     </Form.Group>
                                 </Form.Row>
                             
